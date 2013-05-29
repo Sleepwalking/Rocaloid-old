@@ -160,9 +160,6 @@ Friend Class SpeechSynthesizer
 		
 		'Synthesize
 		PCalc.PitchCalc(Time)
-		If Time > 0.03488 And Time < 0.03489 Then
-			Time = Time
-		End If
 		Frame1 = PitchSynth1.Synthesize(PCalc, Time)
 		Frame2 = PitchSynth2.Synthesize(PCalc, Time)
 		Dim TR1 As Double, TR2 As Double
