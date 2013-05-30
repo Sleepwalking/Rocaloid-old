@@ -1,0 +1,5 @@
+E:\DSync\Dropbox\RocaBeautiful\CVSCommon\CVSCommon\bin\Debug\CVSCommon.dll
+E:\DSync\Dropbox\RocaBeautiful\CVSCommon\CVSCommon\bin\Debug\CVSCommon.pdb
+E:\DSync\Dropbox\RocaBeautiful\CVSCommon\CVSCommon\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\DSync\Dropbox\RocaBeautiful\CVSCommon\CVSCommon\obj\x86\Debug\CVSCommon.dll
+E:\DSync\Dropbox\RocaBeautiful\CVSCommon\CVSCommon\obj\x86\Debug\CVSCommon.pdb
