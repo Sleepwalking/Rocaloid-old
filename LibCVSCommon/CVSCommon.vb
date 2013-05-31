@@ -19,8 +19,8 @@ Public Module Util
 	Public Function GetSegmentTime(ByRef _Segment As Segment) As Double
 		Dim i As Integer
 		Dim acc As Double = 0
-		For i = 0 To _Segment.SyllableListQ
-			acc += _Segment.SyllableList(i).Transition.Time
+		For i = 0 To _Segment.TPhoneListQ
+			acc += _Segment.TPhoneList(i).Transition.Time
 		Next
 		Return acc
 	End Function
@@ -47,33 +47,33 @@ Public Structure CVS
 	Dim SegmentListQ As Integer
 End Structure
 Public Structure Segment
-	Dim SyllableList() As Syllable
+	Dim TPhoneList() As TPhone
 	Dim FreqList() As FreqSet
-	Dim SyllableListQ As Integer
+	Dim TPhoneListQ As Integer
 	Dim FreqListQ As Integer
 	Dim Effects As EffectCollection
 	Dim StartTime As Double
 End Structure
-Public Structure Syllable
-	Dim Start As SyllableStart
-	Dim Dest As SyllableDest 'Avoided using keyword End.
-	Dim Transition As SyllableTransition
+Public Structure TPhone
+	Dim Start As TStart
+	Dim Dest As TDest 'Avoided using keyword End.
+	Dim Transition As TTransition
 End Structure
 Public Structure FreqSet
 	Dim Time As Double
 	Dim Freq As Double
 End Structure
-Public Structure SyllableStart
+Public Structure TStart
 	Dim Type As Boolean 'True : New, False : Preserved
 	Dim Symbol As String
 	Dim Preserved As Integer
 End Structure
-Public Structure SyllableDest
+Public Structure TDest
 	Dim Type As Boolean 'True : New, False : Preserved
 	Dim Symbol As String
 	Dim Preserved As Integer
 End Structure
-Public Structure SyllableTransition
+Public Structure TTransition
 	Dim StartRatio As Double
 	Dim EndRatio As Double
 	Dim Time As Double

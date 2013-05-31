@@ -60,13 +60,13 @@ Friend Class EnvelopeEffector
 		Dim i As Integer
 		Dim TimeAcc As Double = 0
 		
-		EListQ = _Segment.SyllableListQ + 1
+		EListQ = _Segment.TPhoneListQ + 1
 		ReDim EList(EListQ)
 		
 		EList(0).Amplitude = _Segment.Effects.OpennessList(0)
 		EList(0).Time = 0
 		For i = 1 To EListQ
-			TimeAcc += _Segment.SyllableList(i - 1).Transition.Time
+			TimeAcc += _Segment.TPhoneList(i - 1).Transition.Time
 			EList(i).Amplitude = _Segment.Effects.OpennessList(i)
 			EList(i).Time = TimeAcc
 		Next

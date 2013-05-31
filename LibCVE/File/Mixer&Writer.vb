@@ -56,7 +56,7 @@ Friend Class MixerWriterEffector
 			WriteBlank(Dest - Wave.Pointer)
 		Else
 			For i = Start To Dest - 1
-					Writer.Write(CShort(Wave.Data(i) * 32767))
+				Writer.Write(CShort(Wave.Data(i) * 32767))
 				'Write(Wave.Data(i))
 			Next
 		End If

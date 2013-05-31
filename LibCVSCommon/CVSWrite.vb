@@ -61,15 +61,15 @@ Public Module Write
 		Writer.IndentPush()
 		Writer.NewLine()
 		
-		Writer.WriteWord("SyllableListQ")
-		Writer.WriteWord(_Segment.SyllableListQ + 1)
+		Writer.WriteWord("TPhoneListQ")
+		Writer.WriteWord(_Segment.TPhoneListQ + 1)
 		Writer.NewLine()
 		
-		Writer.WriteWord("SyllableList")
+		Writer.WriteWord("TPhoneList")
 		Writer.IndentPush()
 		Writer.NewLine()
-		For i = 0 To _Segment.SyllableListQ
-			Syllable_Write(_Segment.SyllableList(i))
+		For i = 0 To _Segment.TPhoneListQ
+			TPhone_Write(_Segment.TPhoneList(i))
 		Next
 		Writer.IndentPop()
 		Writer.WriteWord("End")
@@ -100,46 +100,46 @@ Public Module Write
 		Writer.NewLine()
 	End Sub
 	
-	Public Sub Syllable_Write(ByRef _Syllable As Syllable)
-		Writer.WriteWord("Syllable")
+	Public Sub TPhone_Write(ByRef _TPhone As TPhone)
+		Writer.WriteWord("TPhone")
 		Writer.IndentPush()
 		Writer.NewLine()
 		
 		Writer.WriteWord("Start")
 		Writer.WriteWord("Type")
-		If _Syllable.Start.Type = True Then
+		If _TPhone.Start.Type = True Then
 			Writer.WriteWord("New")
 			Writer.WriteWord("Symbol")
-			Writer.WriteWord(_Syllable.Start.Symbol)
+			Writer.WriteWord(_TPhone.Start.Symbol)
 		Else
 			Writer.WriteWord("Preserved")
 			Writer.WriteWord("Preserved")
-			Writer.WriteWord(_Syllable.Start.Preserved)
+			Writer.WriteWord(_TPhone.Start.Preserved)
 		End If
 		Writer.WriteWord("End")
 		Writer.NewLine()
 		
 		Writer.WriteWord("Dest")
 		Writer.WriteWord("Type")
-		If _Syllable.Dest.Type = True Then
+		If _TPhone.Dest.Type = True Then
 			Writer.WriteWord("New")
 			Writer.WriteWord("Symbol")
-			Writer.WriteWord(_Syllable.Dest.Symbol)
+			Writer.WriteWord(_TPhone.Dest.Symbol)
 		Else
 			Writer.WriteWord("Preserved")
 			Writer.WriteWord("Preserved")
-			Writer.WriteWord(_Syllable.Dest.Preserved)
+			Writer.WriteWord(_TPhone.Dest.Preserved)
 		End If
 		Writer.WriteWord("End")
 		Writer.NewLine()
 		
 		Writer.WriteWord("Transition")
 		Writer.WriteWord("StartRatio")
-		Writer.WriteWord(_Syllable.Transition.StartRatio)
+		Writer.WriteWord(_TPhone.Transition.StartRatio)
 		Writer.WriteWord("EndRatio")
-		Writer.WriteWord(_Syllable.Transition.EndRatio)
+		Writer.WriteWord(_TPhone.Transition.EndRatio)
 		Writer.WriteWord("Time")
-		Writer.WriteWord(_Syllable.Transition.Time)
+		Writer.WriteWord(_TPhone.Transition.Time)
 		Writer.WriteWord("End")
 		
 		Writer.IndentPop()

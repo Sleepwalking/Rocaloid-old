@@ -1,0 +1,145 @@
+#CVS 1.6
+CVS
+	SegmentListQ 4
+	SegmentList
+		Segment
+			TPhoneListQ 3
+			TPhoneList
+				TPhone
+					Start Type New Symbol c@ End
+					Dest Type New Symbol a End
+					Transition StartRatio 0 EndRatio 1 Time 0.15 End
+				End
+				TPhone
+					Start Type Preserved Preserved 2 End
+					Dest Type New Symbol NG End
+					Transition StartRatio 0 EndRatio 0.8 Time 0.2 End
+				End
+				TPhone
+					Start Type Preserved Preserved 1 End
+					Dest Type Preserved Preserved 2 End
+					Transition StartRatio 0.8 EndRatio 0.8 Time 0.5 End
+				End
+			End
+			FreqListQ 3
+			FreqList
+				FreqSet Time 0 Freq 340 End
+				FreqSet Time 0.2 Freq 340 End
+				FreqSet Time 0.6 Freq 270 End
+			End
+			Effects
+				ElistEnabled False
+				PElopeEnabled True
+				PresetedEnvelope ADSR
+				ADSR Amplitude 2 Attack 0.1 Decline 0.3 Release 0.1 End
+			End
+			StartTime 0.8
+		End
+		Segment
+			TPhoneListQ 3
+			TPhoneList
+				TPhone
+					Start Type New Symbol c3 End
+					Dest Type New Symbol o End
+					Transition StartRatio 0 EndRatio 1 Time 0.15 End
+				End
+				TPhone
+					Start Type Preserved Preserved 2 End
+					Dest Type New Symbol NG End
+					Transition StartRatio 0 EndRatio 0.8 Time 0.2 End
+				End
+				TPhone
+					Start Type Preserved Preserved 1 End
+					Dest Type Preserved Preserved 2 End
+					Transition StartRatio 0.8 EndRatio 0.8 Time 0.5 End
+				End
+			End
+			FreqListQ 3
+			FreqList
+				FreqSet Time 0 Freq 270 End
+				FreqSet Time 0.2 Freq 270 End
+				FreqSet Time 0.8 Freq 500 End
+			End
+			Effects
+				ElistEnabled False
+				PElopeEnabled True
+				PresetedEnvelope ADSR
+				ADSR Amplitude 2 Attack 0.1 Decline 0.3 Release 0.1 End
+			End
+			StartTime 2.1
+		End
+		Segment
+			TPhoneListQ 3
+			TPhoneList
+				TPhone
+					Start Type New Symbol c3 End
+					Dest Type New Symbol e- End
+					Transition StartRatio 0 EndRatio 1 Time 0.15 End
+				End
+				TPhone
+					Start Type Preserved Preserved 2 End
+					Dest Type New Symbol NG End
+					Transition StartRatio 0 EndRatio 0.8 Time 0.2 End
+				End
+				TPhone
+					Start Type Preserved Preserved 1 End
+					Dest Type Preserved Preserved 2 End
+					Transition StartRatio 0.8 EndRatio 0.8 Time 0.5 End
+				End
+			End
+			FreqListQ 3
+			FreqList
+				FreqSet Time 0 Freq 270 End
+				FreqSet Time 0.2 Freq 270 End
+				FreqSet Time 0.8 Freq 500 End
+			End
+			Effects
+				ElistEnabled False
+				PElopeEnabled True
+				PresetedEnvelope ADSR
+				ADSR Amplitude 2 Attack 0.1 Decline 0.3 Release 0.1 End
+			End
+			StartTime 2.9
+		End
+		Segment
+			TPhoneListQ 3
+			TPhoneList
+				TPhone
+					Start Type New Symbol b@ End
+					Dest Type New Symbol a End
+					Transition StartRatio 0 EndRatio 1 Time 0.15 End
+				End
+				TPhone
+					Start Type Preserved Preserved 2 End
+					Dest Type New Symbol NG End
+					Transition StartRatio 0 EndRatio 0.8 Time 0.2 End
+				End
+				TPhone
+					Start Type Preserved Preserved 1 End
+					Dest Type Preserved Preserved 2 End
+					Transition StartRatio 0.8 EndRatio 0.8 Time 3 End
+				End
+			End
+			FreqListQ 5
+			FreqList
+				FreqSet Time 0 Freq 270 End
+				FreqSet Time 0.2 Freq 270 End
+				FreqSet Time 0.6 Freq 340 End
+				FreqSet Time 2 Freq 1200 End
+				FreqSet Time 3.3 Freq 340 End
+			End
+			Effects
+				ElistEnabled True
+				EnvelopeListQ 5
+				EnvelopeList
+					EnvelopeSet Time 0 Amplitude 0 End
+					EnvelopeSet Time 0.2 Amplitude 2 End
+					EnvelopeSet Time 0.5 Amplitude 1 End
+					EnvelopeSet Time 0.6 Amplitude 0.5 End
+					EnvelopeSet Time 0.85 Amplitude 0 End
+				End
+			End
+			StartTime 3.8
+		End
+	End
+End

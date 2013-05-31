@@ -163,7 +163,7 @@ Friend Class PitchPreSynthesizer
 			PCalc.PitchCalc(Time + 1 / PCalc.GetFreqAt(Time))
 			TR2 = PCalc.TransitionRatio
 			If TR2 > 1 Then TR2 = 1
-			If TR2 < TR1 Then SetDestMixRatio(1) Else SetDestMixRatio(TR2)
+			If TR2 < TR1 Then TR2 = 1
 			#If DebugLevel > 1 Then
 				Console.WriteLine("PitchPreSynthesizer:	Ratio from " & TR1 & " to " & TR2)
 			#End If

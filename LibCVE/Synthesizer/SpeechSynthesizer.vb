@@ -85,7 +85,7 @@ Friend Class SpeechSynthesizer
 		End If
 	End Sub
 	Public Function Synthesize(ByVal Time As Double) As FrameBuffer
-		Time = GetTimePassed(Time) 'Absolute time is useless in Syllables.
+		Time = GetTimePassed(Time) 'Absolute time is useless in Syllable(Segments).
 		
 		If Time < LastTime Then
 			Throw New Exception("Time of Synthesis is smaller than that of the last time!")
@@ -93,69 +93,69 @@ Friend Class SpeechSynthesizer
 		
 		RegulatePitch(Time)
 		
-		Dim LastSyllableNum As Integer, CurrentSyllableNum As Integer
-		Dim CurrentSyllable As CVSCommon.Syllable
-		LastSyllableNum = GetSyllableNumByTime(LastTime)
-		CurrentSyllableNum = GetSyllableNumByTime(Time)
-		If CurrentSyllableNum = -1 Then
-			'After all Syllables
+		Dim LastTPhoneNum As Integer, CurrentTPhoneNum As Integer
+		Dim CurrentTPhone As CVSCommon.TPhone
+		LastTPhoneNum = GetTPhoneNumByTime(LastTime)
+		CurrentTPhoneNum = GetTPhoneNumByTime(Time)
+		If CurrentTPhoneNum = -1 Then
+			'After all TPhones
 			Return GenerateEmptyFrameBuffer()
 		End If
-		CurrentSyllable = Segment.SyllableList(CurrentSyllableNum)
+		CurrentTPhone = Segment.TPhoneList(CurrentTPhoneNum)
 		Dim Frame1 As FrameBuffer, Frame2 As FrameBuffer
-		If CurrentSyllableNum = LastSyllableNum Then
+		If CurrentTPhoneNum = LastTPhoneNum Then
 			'Just continue synthesizing
-		ElseIf CurrentSyllableNum = LastSyllableNum + 1 Then
+		ElseIf CurrentTPhoneNum = LastTPhoneNum + 1 Then
 			'After a transition
 			'First seek for "Preserved"
-			If Not CurrentSyllable.Start.Type Then
-				If CurrentSyllable.Start.Preserved = 1 Then
-					'Preserves the Start of LastSyllable. No real effects.
-					LastSyllableNum = LastSyllableNum
-				ElseIf CurrentSyllable.Start.Preserved = 2 Then
-					'Preserves the End of LastSyllable.
+			If Not CurrentTPhone.Start.Type Then
+				If CurrentTPhone.Start.Preserved = 1 Then
+					'Preserves the Start of LastTPhone. No real effects.
+					LastTPhoneNum = LastTPhoneNum
+				ElseIf CurrentTPhone.Start.Preserved = 2 Then
+					'Preserves the End of LastTPhone.
 					Swap(PitchSynth1, PitchSynth2)
 					#If DebugLevel > 0 Then
 						CreateLog("Speech Synthesizer:	PitchSynth Swaps.")
 					#End If
 				Else
-					Throw New Exception("Invalid Preserve Target as " & CurrentSyllable.Start.Preserved)
+					Throw New Exception("Invalid Preserve Target as " & CurrentTPhone.Start.Preserved)
 				End If
 			End If
-			If Not CurrentSyllable.Dest.Type Then
-				If CurrentSyllable.Dest.Preserved = 2 Then
-					'Preserves the End of LastSyllable. No real effects.
-				ElseIf CurrentSyllable.Dest.Preserved = 1 Then
-					'Preserves the Start of LastSyllable, though no real use.
+			If Not CurrentTPhone.Dest.Type Then
+				If CurrentTPhone.Dest.Preserved = 2 Then
+					'Preserves the End of LastTPhone. No real effects.
+				ElseIf CurrentTPhone.Dest.Preserved = 1 Then
+					'Preserves the Start of LastTPhone, though no real use.
 					Swap(PitchSynth1, PitchSynth2)
 					#If DebugLevel > 0 Then
 						CreateLog("Speech Synthesizer:	PitchSynth Swaps.")
 					#End If
 				Else
-					Throw New Exception("Invalid Preserve Target as " & CurrentSyllable.Dest.Preserved)
+					Throw New Exception("Invalid Preserve Target as " & CurrentTPhone.Dest.Preserved)
 				End If
-				If CurrentSyllable.Dest.Preserved = CurrentSyllable.Start.Preserved Then
-					Throw New Exception("Same Preserve Target as " & CurrentSyllable.Start.Preserved)
+				If CurrentTPhone.Dest.Preserved = CurrentTPhone.Start.Preserved Then
+					Throw New Exception("Same Preserve Target as " & CurrentTPhone.Start.Preserved)
 				End If
 			End If
 			'Second seek for "New"
-			If CurrentSyllable.Start.Type Then
-				PitchSynth1.SetSymbol(CurrentSyllable.Start.Symbol)
+			If CurrentTPhone.Start.Type Then
+				PitchSynth1.SetSymbol(CurrentTPhone.Start.Symbol)
 				#If DebugLevel > 0 Then
-					CreateLog("Speech Synthesizer:	" & CurrentSyllable.Start.Symbol & " -> " & _
+					CreateLog("Speech Synthesizer:	" & CurrentTPhone.Start.Symbol & " -> " & _
 								"PitchSynth1")
 				#End If
 			End If
-			If CurrentSyllable.Dest.Type Then
-				PitchSynth2.SetSymbol(CurrentSyllable.Dest.Symbol)
+			If CurrentTPhone.Dest.Type Then
+				PitchSynth2.SetSymbol(CurrentTPhone.Dest.Symbol)
 				#If DebugLevel > 0 Then
-					CreateLog("Speech Synthesizer:	" & CurrentSyllable.Start.Symbol & " -> " & _
+					CreateLog("Speech Synthesizer:	" & CurrentTPhone.Start.Symbol & " -> " & _
 								"PitchSynth2")
 				#End If
 			End If
 		Else
 			'Error
-			'Throw New Exception("Uncorrect time for synthesis process. Syllable(s) may be skipped.")
+			'Throw New Exception("Uncorrect time for synthesis process. TPhone(s) may be skipped.")
 		End If
 		
 		'Synthesize
@@ -165,10 +165,10 @@ Friend Class SpeechSynthesizer
 		Dim TR1 As Double, TR2 As Double
 		#If PeriodPredictionEnabled Then
 			'MixRatio Prediction
-			TR1 = GetTransitionRatio(CurrentSyllableNum, Time)
+			TR1 = GetTransitionRatio(CurrentTPhoneNum, Time)
 			SetStartMixRatio(TR1)
-			TR2 = GetTransitionRatio(CurrentSyllableNum, Time + Frame2.Length / SampleRate)
-			'In very rare cases, especially when approaching the next syllable, GetTransitionRatio may be different
+			TR2 = GetTransitionRatio(CurrentTPhoneNum, Time + Frame2.Length / SampleRate)
+			'In very rare cases, especially when approaching the next TPhone, GetTransitionRatio may be different
 			'from the real situation (TR2 -> 0, or TR2 > 1).
 			If Math.Abs(TR2 - TR1) > 0.3 AndAlso TR2 < TR1 Then	TR2 = 1
 			If TR2 > 1 Then	TR2 = 1
@@ -180,7 +180,7 @@ Friend Class SpeechSynthesizer
 				Console.WriteLine("SpeechSynthesizer:	Ratio from " & TR1 & " to " & TR2)
 			#End If
 		#Else
-			SetMixRatio(GetTransitionRatio(CurrentSyllableNum, Time))
+			SetMixRatio(GetTransitionRatio(CurrentTPhoneNum, Time))
 		#End If	
 		#If DebugLevel > 1 Then
 			Dim TempWB1 As WaveBuffer = New WaveBuffer(0.1)
@@ -217,12 +217,12 @@ Friend Class SpeechSynthesizer
 		'Time after FreqSets
 		Return Segment.FreqListQ
 	End Function
-	Private Function GetTransitionRatio(ByVal SyllableNum As Integer, _
+	Private Function GetTransitionRatio(ByVal TPhoneNum As Integer, _
 										ByVal Time As Double) As Double
 		Dim Completeness As Double
 		Dim ConsonantLen As Double = 0
 		'Skip the consonant part.
-		If PitchSynth1.Consonant And Segment.SyllableList(SyllableNum).Transition.StartRatio = 0 Then
+		If PitchSynth1.Consonant And Segment.TPhoneList(TPhoneNum).Transition.StartRatio = 0 Then
 			GlobalSendBack.VOT = PitchSynth1.StartPoint
 			ConsonantLen = PitchSynth1.StartPoint / SampleRate
 		End If
@@ -233,49 +233,49 @@ Friend Class SpeechSynthesizer
 		If Time < 0 Then
 			Return 0
 		End If
-		Completeness = GetTimePassedInSyllable(SyllableNum, Time) / _
-					   (Segment.SyllableList(SyllableNum).Transition.Time - ConsonantLen)
+		Completeness = GetTimePassedInTPhone(TPhoneNum, Time) / _
+					   (Segment.TPhoneList(TPhoneNum).Transition.Time - ConsonantLen)
 		
-		Return Completeness * Segment.SyllableList(SyllableNum).Transition.EndRatio + _
-			   (1 - Completeness) * Segment.SyllableList(SyllableNum).Transition.StartRatio
+		Return Completeness * Segment.TPhoneList(TPhoneNum).Transition.EndRatio + _
+			   (1 - Completeness) * Segment.TPhoneList(TPhoneNum).Transition.StartRatio
 	End Function
-	Private Function GetTimePassedInSyllable(ByVal SyllableNum As Integer, _
+	Private Function GetTimePassedInTPhone(ByVal TPhoneNum As Integer, _
 											 ByVal Time As Double) As Double
 		Dim i As Integer
 		Dim acc As Double
-		For i = 0 To SyllableNum - 1
-			acc += Segment.SyllableList(i).Transition.Time
+		For i = 0 To TPhoneNum - 1
+			acc += Segment.TPhoneList(i).Transition.Time
 		Next
 		Return Time - acc
 	End Function
 	Private Function GetTimePassed(ByVal Time As Double) As Double
 		Return Time - Segment.StartTime
 	End Function
-	Private Function GetSyllableNumByTime(ByVal Time As Double) As Integer
+	Private Function GetTPhoneNumByTime(ByVal Time As Double) As Integer
 		If Time < 0 Then
 			Return -1
 		End If
 		Dim i As Integer
 		Dim acc As Double
-		For i = 0 To Segment.SyllableListQ
-			acc += Segment.SyllableList(i).Transition.Time
+		For i = 0 To Segment.TPhoneListQ
+			acc += Segment.TPhoneList(i).Transition.Time
 			If acc >= Time Then
 				Return i
 			End If
 		Next
 		Return -1
 	End Function
-	Private Function GetSyllableByTime(ByVal Time As Double) As CVSCommon.Syllable
-		Dim i As Integer = GetSyllableNumByTime(Time)
+	Private Function GetTPhoneByTime(ByVal Time As Double) As CVSCommon.TPhone
+		Dim i As Integer = GetTPhoneNumByTime(Time)
 		If  i > 0 Then
-			Return Segment.SyllableList(i)
+			Return Segment.TPhoneList(i)
 		End If
-		'Time longer than Syllables
-		Dim EmptySyllable As CVSCommon.Syllable
-		EmptySyllable.Start.Type = True
-		EmptySyllable.Start.Symbol = "NULL"
-		EmptySyllable.Dest.Type = True
-		EmptySyllable.Dest.Symbol = "NULL"
-		Return EmptySyllable
+		'Time longer than TPhones
+		Dim EmptyTPhone As CVSCommon.TPhone
+		EmptyTPhone.Start.Type = True
+		EmptyTPhone.Start.Symbol = "NULL"
+		EmptyTPhone.Dest.Type = True
+		EmptyTPhone.Dest.Symbol = "NULL"
+		Return EmptyTPhone
 	End Function
 End Class

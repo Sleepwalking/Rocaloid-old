@@ -63,17 +63,17 @@ Public Module Read
 		Do
 			StrBuff = Reader.Read()
 			Select Case StrBuff
-				Case "SyllableListQ"
+				Case "TPhoneListQ"
 					StrBuff = Reader.Read()
-					_Segment.SyllableListQ = TestIfIsIntAndPositive(StrBuff) - 1
-					ReDim _Segment.Effects.OpennessList(_Segment.SyllableListQ + 1)
-					For i = 0 To _Segment.SyllableListQ + 1
+					_Segment.TPhoneListQ = TestIfIsIntAndPositive(StrBuff) - 1
+					ReDim _Segment.Effects.OpennessList(_Segment.TPhoneListQ + 1)
+					For i = 0 To _Segment.TPhoneListQ + 1
 						_Segment.Effects.OpennessList(i) = 1
 					Next
-					Array.Resize(_Segment.SyllableList, _Segment.SyllableListQ + 1)
-				Case "SyllableList"
-					For i = 0 To _Segment.SyllableListQ
-						Syllable_Read(_Segment.SyllableList(i))
+					Array.Resize(_Segment.TPhoneList, _Segment.TPhoneListQ + 1)
+				Case "TPhoneList"
+					For i = 0 To _Segment.TPhoneListQ
+						TPhone_Read(_Segment.TPhoneList(i))
 					Next
 					If Reader.Read() <> "End" Then
 						Throw New Exception("List without an End.")
@@ -99,24 +99,24 @@ Public Module Read
 		Loop While StrBuff <> "End"
 	End Sub
 	
-	Public Sub Syllable_Read(ByRef _Syllable As Syllable)
+	Public Sub TPhone_Read(ByRef _TPhone As TPhone)
 		Dim StrBuff As String
 		Do
 			StrBuff = Reader.Read()
 			Select Case StrBuff
 				Case "Start"
-					SyllableStart_Read(_Syllable.Start)
+					TStart_Read(_TPhone.Start)
 				Case "Dest"
-					SyllableDest_Read(_Syllable.Dest)
+					TDest_Read(_TPhone.Dest)
 				Case "Transition"
-					SyllableTransition_Read(_Syllable.Transition)
+					TTransition_Read(_TPhone.Transition)
 				Case Else
 					'Error
 			End Select
 		Loop While StrBuff <> "End"
 	End Sub
 	
-	Public Sub SyllableStart_Read(ByRef _Start As SyllableStart)
+	Public Sub TStart_Read(ByRef _Start As TStart)
 		Dim StrBuff As String
 		Do
 			StrBuff = Reader.Read()
@@ -149,7 +149,7 @@ Public Module Read
 		Loop While StrBuff <> "End"
 	End Sub
 	
-	Public Sub SyllableDest_Read(ByRef _Dest As SyllableDest)
+	Public Sub TDest_Read(ByRef _Dest As TDest)
 		Dim StrBuff As String
 		Do
 			StrBuff = Reader.Read()
@@ -182,7 +182,7 @@ Public Module Read
 		Loop While StrBuff <> "End"
 	End Sub
 	
-	Public Sub SyllableTransition_Read(ByRef _Transition As SyllableTransition)
+	Public Sub TTransition_Read(ByRef _Transition As TTransition)
 		Dim StrBuff As String
 		Do
 			StrBuff = Reader.Read()
