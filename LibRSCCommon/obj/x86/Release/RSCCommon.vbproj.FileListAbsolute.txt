@@ -1,0 +1,5 @@
+E:\DSync\Dropbox\RocaBeautiful\RSCCommon\RSCCommon\bin\Release\RSCCommon.exe.config
+E:\DSync\Dropbox\RocaBeautiful\RSCCommon\RSCCommon\bin\Release\RSCCommon.exe
+E:\DSync\Dropbox\RocaBeautiful\RSCCommon\RSCCommon\bin\Release\CVSCommon.dll
+E:\DSync\Dropbox\RocaBeautiful\RSCCommon\RSCCommon\obj\x86\Release\ResolveAssemblyReference.cache
+E:\DSync\Dropbox\RocaBeautiful\RSCCommon\RSCCommon\obj\x86\Release\RSCCommon.exe
