@@ -20,6 +20,7 @@ Friend Module OverAll
 	Public Const PitchListQ = 59
 	Public Const Pitch_C5 = 48
 	Public Const Pitch_C2 = 12
+	Public Compatibility_DataDir As String = "Data\"
 	Public GlobalSendBack As SpeechSynthesizerSendBack
 	Public ReadOnly WaveHead() As Byte =
 	{

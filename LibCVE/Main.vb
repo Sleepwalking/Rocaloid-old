@@ -26,6 +26,7 @@ Class Main
 		Dim Task_Synthesis As Boolean = True
 		Dim OutputFormatCVS As String = "Formated.cvs"
 		Dim OutputBreakCVS As String = "Broken.cvs"
+		
 		Dim i As Integer
 		For i = 1 To Args.GetUpperBound(0)
 			Select Case Args(i)
@@ -35,6 +36,9 @@ Class Main
 				Case "-cvs"
 					i += 1
 					InputCVS = Args(i)
+				Case "-data"
+					i += 1
+					Compatibility_DataDir = Args(i)
 				Case "-q"
 					CloseAfterRun = True
 				Case "-format"

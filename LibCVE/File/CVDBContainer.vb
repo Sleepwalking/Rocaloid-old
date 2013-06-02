@@ -86,7 +86,7 @@ Friend Class CVDBContainer
 		Dim FrameCount As Integer, DataCount As Integer, SampleCount As Integer
 		'Use direct calculations instead of BitConverter to improve performance.
 		
-		LoaderStream = New FileStream("E:\DSync\Dropbox\RocaBeautiful\CVE1.6\CybervoiceEngine\bin\Debug\Data\" & FileName & ".cbv", FileMode.Open)
+		LoaderStream = New FileStream(Compatibility_DataDir & FileName & ".cbv", FileMode.Open)
 		DataLen = CInt((LoaderStream.Length - 256) / 2) 'Get data length of .cbv files
 		Loader = New BinaryReader(LoaderStream)
 		
