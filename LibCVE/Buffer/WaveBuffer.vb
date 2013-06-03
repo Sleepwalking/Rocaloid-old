@@ -16,7 +16,7 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 0
 Imports System.IO
-Friend Class WaveBuffer
+Public Class WaveBuffer
 	Inherits Buffer
 	Public Data() As Double
 	Public Pointer As Integer

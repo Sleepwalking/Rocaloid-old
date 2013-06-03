@@ -15,7 +15,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Imports System.IO
-Friend Class MixerWriterEffector
+Public Class MixerWriterEffector
 	Private Shared Writer As BinaryWriter
 	Private Shared FileName As String
 	Public Shared Sub SetFileOutput(ByVal File As String)

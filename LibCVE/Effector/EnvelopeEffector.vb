@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Class EnvelopeEffector
+Public Class EnvelopeEffector
 	Public Shared Overloads Sub ADSREnvelope(ByVal _WaveBuffer As WaveBuffer, _
 											 ByVal Amp As Double, _
 											 ByVal Attack As Integer, _

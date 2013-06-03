@@ -16,7 +16,7 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 1
 #Const PeriodPredictionEnabled = True
-Friend Class PitchPreSynthesizer
+Public Class PitchPreSynthesizer
 	Inherits Synthesizer
 	Private PreSynthesizer1 As ConsecutivePreSynthesizer
 	Private PreSynthesizer2 As ConsecutivePreSynthesizer

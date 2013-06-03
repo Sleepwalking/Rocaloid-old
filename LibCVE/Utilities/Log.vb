@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Module Log
+Public Module Log
 	Public Sub CreateLog(ByVal Message As String)
 		Console.WriteLine(Message)
 	End Sub

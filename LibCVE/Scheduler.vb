@@ -74,7 +74,7 @@ Public Class Scheduler
 			CreateLog("Scheduler:	Synthesis finished.")
 		#End If
 	End Sub
-	Friend Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
+	Public Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
 										 ByVal _Segment As CVSCommon.Segment, _
 										 ByVal Wave As WaveBuffer) As Integer
 		Synth.SetSegment(_Segment)

@@ -18,7 +18,7 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 0
 Imports System.IO
-Friend Class CVDBContainer
+Public Class CVDBContainer
 	Public Info As CVDBHeader
 	Public Buffer As MultiFrameBuffer
 	Private Name_ As String

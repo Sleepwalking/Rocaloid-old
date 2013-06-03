@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Class Effector
+Public Class Effector
 	Public Shared Sub Render(ByVal _WaveBuffer As WaveBuffer, ByRef _Segment As CVSCommon.Segment, ByRef SendBack As SpeechSynthesizerSendBack)
 		EnvelopeEffector.OpennessListRender(_WaveBuffer, _Segment)
 		If _Segment.Effects.Shrink <> 0 Then

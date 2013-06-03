@@ -16,7 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 0
-Friend Class PitchCalculator
+Public Class PitchCalculator
 	Private TargetFreq As Double
 	Private TargetTime As Double
 	Private StartFreq As Double

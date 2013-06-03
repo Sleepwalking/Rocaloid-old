@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Module OverAll
+Public Module OverAll
 	Public Const SampleRate = 96000
 	Public Const INFINITY = 99999
 	Public Const PitchListQ = 59

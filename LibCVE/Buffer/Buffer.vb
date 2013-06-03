@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend MustInherit Class Buffer
+Public MustInherit Class Buffer
 	Public Length As Integer
 	Public Name As String
 	Public Sub New()

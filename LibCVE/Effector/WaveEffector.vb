@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Class WaveEffector
+Public Class WaveEffector
 	Public Shared Sub Blur(ByVal _WaveBuffer As WaveBuffer, ByRef _Segment As CVSCommon.Segment)
 		'Blur the end of a word.
 		Dim Temp(50) As Double
