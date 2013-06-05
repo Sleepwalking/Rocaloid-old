@@ -90,6 +90,12 @@ Public Class CVDBContainer
 		DataLen = CInt((LoaderStream.Length - 256) / 2) 'Get data length of .cbv files
 		Loader = New BinaryReader(LoaderStream)
 		
+		If Scheduler.ReadingCollection.Contains(FileName) Then
+			Scheduler.ReadingCollection.Item(FileName).Close()
+			Scheduler.ReadingCollection.Remove(FileName)
+		End If
+		Scheduler.ReadingCollection.Add(LoaderStream, FileName)
+		
 		'Read Header
 		Dim Head(3) As Byte, Information(239) As Byte, BinaryBuffer(512*1024) As Byte
 		Head=Loader.ReadBytes(4)
@@ -227,6 +233,8 @@ Public Class CVDBContainer
 		Loader.Close
 		Loader.Dispose
 		LoaderStream.Dispose
+		
+		Scheduler.ReadingCollection.Remove(FileName)
 	End Sub
 	
 End Class
