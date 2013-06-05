@@ -56,10 +56,17 @@ Public Partial Class MainForm
 	End Sub
 	
 	Sub Timer1Tick(sender As Object, e As EventArgs)
+		Dim CurrentNoteNum As Integer
 		If Operation.SoundIsPlaying Then
 			'This seems to be a bug of ScrollBar, that you need to change the value twice, the first time should be a lower level, and then it will be updated.
 			NBoxScrollBar.Value = 0
 			NBoxScrollBar.Value = CInt(Operation.MainNoteBox.LBound * 100)
+			CurrentNoteNum = CVSOperation.GetSegment(Operation.MainCVS, MainNoteBox.SelectBar)
+			If CurrentNoteNum <> MainNoteBox.DragNoteNum Then
+				MainNoteBox.DragNoteNum = CurrentNoteNum
+				MainNoteBox.SNoteBox.LoadSegment(Operation.MainCVS.SegmentList(CurrentNoteNum))
+				MainNoteBox.SNoteBox.Redraw()
+			End If
 		End If
 	End Sub
 End Class

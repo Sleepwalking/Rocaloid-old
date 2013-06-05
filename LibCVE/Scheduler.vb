@@ -23,20 +23,22 @@ Public Class Scheduler
 	Private Shared Wave1 As WaveBuffer
 	Private Shared Wave2 As WaveBuffer
 	Private Shared SSSendBack As SpeechSynthesizerSendBack
-	Public Shared ReadingCollection As Collection
 	Public Shared Sub Init()
 		Synth1 = New SpeechSynthesizer()
 		'Synth2 = New SpeechSynthesizer()
 		Wave1 = New WaveBuffer(30.0)
 		Wave2 = New WaveBuffer(30.0)
-		ReadingCollection = New Collection()
 	End Sub
 	Public Shared Sub CloseAll()
-		Dim i As Integer
-		For i = 0 To ReadingCollection.Count - 1
-			ReadingCollection.Item(i + 1).Close()
-			ReadingCollection.Remove(i + 1)
-		Next
+		On Error Resume Next
+		Synth1.PitchSynth1.PreSynthesizer1.CVDB.Loader.Close()
+		Synth1.PitchSynth1.PreSynthesizer2.CVDB.Loader.Close()
+		Synth1.PitchSynth2.PreSynthesizer1.CVDB.Loader.Close()
+		Synth1.PitchSynth2.PreSynthesizer2.CVDB.Loader.Close()
+		Synth1.PitchSynth1.PreSynthesizer1.CVDB.Loader.Dispose()
+		Synth1.PitchSynth1.PreSynthesizer2.CVDB.Loader.Dispose()
+		Synth1.PitchSynth2.PreSynthesizer1.CVDB.Loader.Dispose()
+		Synth1.PitchSynth2.PreSynthesizer2.CVDB.Loader.Dispose()
 	End Sub
 	Public Shared Sub OpenCVS(ByVal File As String)
 		CVSCommon.Reader_Open(File)

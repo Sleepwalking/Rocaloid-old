@@ -21,6 +21,8 @@ Imports System.IO
 Public Class CVDBContainer
 	Public Info As CVDBHeader
 	Public Buffer As MultiFrameBuffer
+	Public LoaderStream As FileStream
+	Public Loader As BinaryReader
 	Private Name_ As String
 	Private BaseFrame_ As Integer
 	Public ReadOnly Property BaseFrame() As Integer
@@ -78,8 +80,6 @@ Public Class CVDBContainer
 		Return 0
 	End Function
 	Public Sub Load(ByVal FileName As String)
-		Dim Loader As BinaryReader
-		Dim LoaderStream As FileStream
 		Dim DataLen As Integer
 		Dim Temp16 As Int16
 		Dim b0 As Integer, b1 As Integer
@@ -87,14 +87,9 @@ Public Class CVDBContainer
 		'Use direct calculations instead of BitConverter to improve performance.
 		
 		LoaderStream = New FileStream(Compatibility_DataDir & FileName & ".cbv", FileMode.Open)
+		
 		DataLen = CInt((LoaderStream.Length - 256) / 2) 'Get data length of .cbv files
 		Loader = New BinaryReader(LoaderStream)
-		
-		If Scheduler.ReadingCollection.Contains(FileName) Then
-			Scheduler.ReadingCollection.Item(FileName).Close()
-			Scheduler.ReadingCollection.Remove(FileName)
-		End If
-		Scheduler.ReadingCollection.Add(LoaderStream, FileName)
 		
 		'Read Header
 		Dim Head(3) As Byte, Information(239) As Byte, BinaryBuffer(512*1024) As Byte
@@ -233,8 +228,6 @@ Public Class CVDBContainer
 		Loader.Close
 		Loader.Dispose
 		LoaderStream.Dispose
-		
-		Scheduler.ReadingCollection.Remove(FileName)
 	End Sub
 	
 End Class

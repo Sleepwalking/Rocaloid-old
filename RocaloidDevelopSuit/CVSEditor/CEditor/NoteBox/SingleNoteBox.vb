@@ -65,6 +65,9 @@ Public Class SingleNoteBox
 					GraphicControl.FillRectangle(CurrentBrush, xbound, 0, xdur, 31)
 					GraphicControl.DrawRectangle(CurrentPen, xbound, 0, xdur, 31)
 					GraphicControl.DrawString(SDSymbol.Start & "->" & SDSymbol.Dest, New Font("Arial", 12), TextBrush, xbound + 3, 7)
+					GraphicControl.DrawLine(CurrentPen, _
+						xbound, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.StartRatio), _
+						xbound + xdur, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.EndRatio))
 				End If
 				StartTime = EndTime
 			Next

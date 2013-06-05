@@ -19,7 +19,7 @@
 #Const DebugLevel = 0
 Public Class ConsecutivePreSynthesizer
 	Inherits Synthesizer
-	Private CVDB As CVDBContainer
+	Public CVDB As CVDBContainer
 	Private Pointer As Integer
 	Private SamplesPassed_ As Integer 'Used to synchronize.
 	Public ReadOnly Property Symbol() As String

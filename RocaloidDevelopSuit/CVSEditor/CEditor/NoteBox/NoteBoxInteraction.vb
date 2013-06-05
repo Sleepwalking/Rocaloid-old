@@ -9,7 +9,7 @@ Public Partial Class NoteBox
 	Protected MouseX As Integer
 	Protected IsMouseDown As Boolean = False
 	Protected IsDragging As Boolean = False
-	Protected DragNoteNum As Integer
+	Protected Friend DragNoteNum As Integer
 	
 	Public Overridable Sub NBoxMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDown
 		If Not EditEnabled Then Exit Sub

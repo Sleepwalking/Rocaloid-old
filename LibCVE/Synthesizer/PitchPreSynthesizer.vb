@@ -18,8 +18,8 @@
 #Const PeriodPredictionEnabled = True
 Public Class PitchPreSynthesizer
 	Inherits Synthesizer
-	Private PreSynthesizer1 As ConsecutivePreSynthesizer
-	Private PreSynthesizer2 As ConsecutivePreSynthesizer
+	Public PreSynthesizer1 As ConsecutivePreSynthesizer
+	Public PreSynthesizer2 As ConsecutivePreSynthesizer
 	Private Frame1 As FrameBuffer
 	Private Frame2 As FrameBuffer
 	Private Symbol As String
