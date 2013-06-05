@@ -24,9 +24,19 @@ Public Enum SynthesisState
 End Enum
 
 Public Class MixerWriterEffector
+	Public Shared ReadOnly WaveHead() As Byte =
+	{
+		&H52,&H49,&H46,&H46,&H24,&H10,&H1F,&H00, _
+		&H57,&H41,&H56,&H45,&H66,&H6D,&H74,&H20, _
+		&H10,&H00,&H00,&H00,&H01,&H00,&H01,&H00, _
+		&H44,&HAC,&H00,&H00,&H00,&HEE,&H02,&H00, _
+		&H02,&H00,&H10,&H00,&H64,&H61,&H74,&H61, _
+		&H00,&H10,&H1F,&H00
+	}
 	Private Shared Writer As BinaryWriter
 	Private Shared FileName As String
 	Public Shared SynthesisMode As SynthesisState
+	Public Shared LastWrite As Short
 	Public Shared SynthesisDestCounter As Integer
 	
 	Public Shared Sub SetMemoryOutput(ByRef Buffer() As Byte)
@@ -43,30 +53,21 @@ Public Class MixerWriterEffector
 		Next
 	End Sub
 	Public Shared Overloads Sub Write(ByVal _Double As Double)
-		If SynthesisMode = SynthesisState.RTSynthesis Then
-			Dim TimePassed As Integer = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
-			While Operation.SoundCounter > TimePassed / 1000 * 96000 + 300000
-				TimePassed = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
-				Threading.Thread.Sleep(5)
-			End While
-			Marshal.WriteInt16(Operation.SoundBuffer, (Operation.SoundCounter Mod Operation.SoundLength) * 2 + 44, CShort(_Double * 32767))
-			Operation.SoundCounter += 1
-		Else
-			If SynthesisDestCounter <= 0 Then
-				Threading.Thread.Sleep(1)
-			End If
-			SynthesisDestCounter -= 1
-		End If
+		Write(CShort(_Double * 32767))
 	End Sub
 	Public Shared Overloads Sub Write(ByVal _Short As Short)
 		If SynthesisMode = SynthesisState.RTSynthesis Then
 			Dim TimePassed As Integer = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
-			While Operation.SoundCounter > TimePassed / 1000 * 96000 + 300000
+			While Operation.SoundCounter > TimePassed / 1000 * 44100 + 150000
 				TimePassed = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
 				Threading.Thread.Sleep(5)
 			End While
-			Marshal.WriteInt16(Operation.SoundBuffer, (Operation.SoundCounter Mod Operation.SoundLength) * 2 + 44, _Short)
-			Operation.SoundCounter += 1	
+			If Operation.SoundCounter / 44100 * 96000 < Operation.SoundCounter96 Then
+				Marshal.WriteInt16(Operation.SoundBuffer, (Operation.SoundCounter Mod Operation.SoundLength) * 2 + 44, CShort((_Short + LastWrite) / 2))
+				LastWrite = _Short
+				Operation.SoundCounter += 1
+			End If
+			Operation.SoundCounter96 += 1
 		Else
 			If SynthesisDestCounter <= 0 Then
 				Threading.Thread.Sleep(1)

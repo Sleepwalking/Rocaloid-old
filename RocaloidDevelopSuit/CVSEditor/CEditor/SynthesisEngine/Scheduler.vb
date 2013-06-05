@@ -75,6 +75,7 @@ Public Class Scheduler
 			Swap(Wave1, Wave2)
 		Next
 		MixerWriterEffector.Write(Wave1, Overlap, T1 - Overlap)
+		MixerWriterEffector.WriteBlank(96000 * 10)
 		#If DebugLevel > 0 Then
 			CreateLog("Scheduler:	Synthesis finished.")
 		#End If

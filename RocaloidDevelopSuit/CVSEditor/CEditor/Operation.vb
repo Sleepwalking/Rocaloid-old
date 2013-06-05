@@ -24,27 +24,28 @@ End Enum
 Public Class Operation
 	Public Shared MainCVS As CVS
 	
-	Public Declare Function sndPlaySoundA Lib "winmm.dll" (ByVal pszSound As IntPtr, ByVal fdwSound As SoundFlags) As Boolean
+	Public Declare Function PlaySound Lib "winmm.dll" (ByVal pszSound As IntPtr, ByVal homd As IntPtr, ByVal fdwSound As SoundFlags) As Boolean
 	Public Declare Function timeGetTime Lib "winmm.dll" () As UInteger
 	
 	Public Shared SoundBuffer As IntPtr
 	Public Shared SoundCounter As Integer = 0
+	Public Shared SoundCounter96 As Integer = 0
 	Public Shared SoundLength As Integer
 	Public Shared SoundStartTime As DateTime
-	Public Shared SoundStartMilli As UInteger
 	Public Shared SoundIsPlaying As Boolean = False
 	Public Shared MainNoteBox As NoteBox = MainForm.MainNoteBox
 	Public Shared MainScrollBar As HScrollBar = MainForm.NBoxScrollBar
+	
 	
 	Public Shared SynthesisThread As New Thread(AddressOf Scheduler.RunSynthesizer)
 	Public Shared WithEvents UpdateBarTimer As New System.Timers.Timer(50)
 	
 	Public Shared Sub KeepBar()
-		Dim TimePassed As UInteger
+		Dim TimePassed As TimeSpan
 		
 		If SoundIsPlaying Then
-			TimePassed = timeGetTime - SoundStartMilli
-			MainNoteBox.SelectBar = TimePassed / 1000 + Scheduler.StartSynthesize / 96000
+			TimePassed = (DateTime.Now - SoundStartTime)
+			MainNoteBox.SelectBar = TimePassed.TotalMilliseconds / 1000 + Scheduler.StartSynthesize / 96000
 			If MainNoteBox.SelectBar > MainNoteBox.RBound Then
 				MainNoteBox.LBound = MainNoteBox.RBound
 			End If
@@ -73,20 +74,20 @@ Public Class Operation
 		End While
 		
 		SoundCounter = 0
+		SoundCounter96 = 0
 		SoundStartTime = DateTime.Now
-		SoundStartMilli = timeGetTime()
 		SoundStartTime.AddMilliseconds(-PreSynthesis / 96000 * 1000)
 		MixerWriterEffector.SynthesisMode = SynthesisState.RTSynthesis
-		sndPlaySoundA(SoundBuffer, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY Or SoundFlags.SND_LOOP)
+		PlaySound(SoundBuffer, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY Or SoundFlags.SND_LOOP)
 		SoundIsPlaying = True
 	End Sub
 	
 	Public Shared Sub StopSynthesis()
 		Try
-			sndPlaySoundA(IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY)
-			SynthesisThread.Abort()
+			PlaySound(IntPtr.Zero, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY)
 			SoundIsPlaying = False
 			CybervoiceEngine.Scheduler.CloseAll()
+			SynthesisThread.Abort()
 		Catch
 		End Try
 	End Sub
@@ -98,8 +99,8 @@ Public Class Operation
 	End Sub
 	
 	Public Shared Sub SoundInit()
-		SoundLength = 480000
-		SoundBuffer = Marshal.AllocHGlobal(960050)
+		SoundLength = 220500
+		SoundBuffer = Marshal.AllocHGlobal(441044)
 		MixerWriterEffector.WriteWaveHeader(SoundBuffer, SoundLength)
 		AddHandler UpdateBarTimer.Elapsed, AddressOf KeepBar
 		UpdateBarTimer.Start()

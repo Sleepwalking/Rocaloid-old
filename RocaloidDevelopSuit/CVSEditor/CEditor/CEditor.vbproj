@@ -70,11 +70,9 @@
     <Compile Include="NoteBox\NoteBox.vb" />
     <Compile Include="NoteBox\NoteBoxDraw.vb" />
     <Compile Include="NoteBox\NoteBoxInteraction.vb" />
-    <Compile Include="NoteBox\Operation.vb">
-      <DependentUpon>NoteBoxDraw.vb</DependentUpon>
-    </Compile>
     <Compile Include="NoteBox\SecurePictureBox.vb" />
     <Compile Include="NoteBox\SingleNoteBox.vb" />
+    <Compile Include="Operation.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="SynthesisEngine\Mixer&amp;Writer.vb" />

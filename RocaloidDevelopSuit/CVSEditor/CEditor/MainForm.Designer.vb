@@ -161,6 +161,7 @@ Partial Class MainForm
 		'BarUpdateTimer
 		'
 		Me.BarUpdateTimer.Enabled = true
+		Me.BarUpdateTimer.Interval = 50
 		AddHandler Me.BarUpdateTimer.Tick, AddressOf Me.Timer1Tick
 		'
 		'MainForm
@@ -175,7 +176,6 @@ Partial Class MainForm
 		Me.Controls.Add(Me.MainNoteBox)
 		Me.Controls.Add(Me.MainToolStrip)
 		Me.Controls.Add(Me.MainMenuStrip)
-		Me.MainMenuStrip = Me.MainMenuStrip
 		Me.Name = "MainForm"
 		Me.Text = "CEditor"
 		AddHandler Load, AddressOf Me.MainFormLoad
