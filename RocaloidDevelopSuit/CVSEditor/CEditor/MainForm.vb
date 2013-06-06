@@ -69,4 +69,8 @@ Public Partial Class MainForm
 			End If
 		End If
 	End Sub
+	
+	Sub ConsoleToolStripMenuItemClick(sender As Object, e As EventArgs)
+		My.Forms.Console.Show()
+	End Sub
 End Class

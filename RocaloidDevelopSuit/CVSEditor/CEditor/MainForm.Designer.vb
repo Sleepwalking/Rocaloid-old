@@ -45,6 +45,7 @@ Partial Class MainForm
 		Me.MainSBox = New CEditor.SingleNoteBox()
 		Me.SBoxScrollBar = New System.Windows.Forms.HScrollBar()
 		Me.BarUpdateTimer = New System.Windows.Forms.Timer(Me.components)
+		Me.consoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.MainMenuStrip.SuspendLayout
 		Me.MainToolStrip.SuspendLayout
 		CType(Me.MainNoteBox,System.ComponentModel.ISupportInitialize).BeginInit
@@ -54,7 +55,7 @@ Partial Class MainForm
 		'
 		'MainMenuStrip
 		'
-		Me.MainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.fileToolStripMenuItem})
+		Me.MainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.fileToolStripMenuItem, Me.consoleToolStripMenuItem})
 		Me.MainMenuStrip.Location = New System.Drawing.Point(0, 0)
 		Me.MainMenuStrip.Name = "MainMenuStrip"
 		Me.MainMenuStrip.Size = New System.Drawing.Size(731, 24)
@@ -164,6 +165,13 @@ Partial Class MainForm
 		Me.BarUpdateTimer.Interval = 50
 		AddHandler Me.BarUpdateTimer.Tick, AddressOf Me.Timer1Tick
 		'
+		'consoleToolStripMenuItem
+		'
+		Me.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem"
+		Me.consoleToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
+		Me.consoleToolStripMenuItem.Text = "Console"
+		AddHandler Me.consoleToolStripMenuItem.Click, AddressOf Me.ConsoleToolStripMenuItemClick
+		'
 		'MainForm
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 12!)
@@ -190,6 +198,7 @@ Partial Class MainForm
 		Me.ResumeLayout(false)
 		Me.PerformLayout
 	End Sub
+	Private consoleToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 	Private BarUpdateTimer As System.Windows.Forms.Timer
 	Private SaveCVS As System.Windows.Forms.ToolStripButton
 	Private toolStripSeparator1 As System.Windows.Forms.ToolStripSeparator

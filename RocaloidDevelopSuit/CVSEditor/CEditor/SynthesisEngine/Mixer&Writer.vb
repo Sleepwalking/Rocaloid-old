@@ -59,8 +59,12 @@ Public Class MixerWriterEffector
 		If SynthesisMode = SynthesisState.RTSynthesis Then
 			Dim TimePassed As Integer = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
 			While Operation.SoundCounter > TimePassed / 1000 * 44100 + 150000
-				TimePassed = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
 				Threading.Thread.Sleep(5)
+				'CONSOLE
+				My.Forms.Console.Send("  MixerWriterEffector -> Write : Waiting...")
+				My.Forms.Console.Send("    SoundCounter = " & Operation.SoundCounter)
+				My.Forms.Console.Send("    TimePassed = " & TimePassed / 1000 * 44100)
+				TimePassed = CInt((DateTime.Now - Operation.SoundStartTime).TotalMilliSeconds)
 			End While
 			If Operation.SoundCounter / 44100 * 96000 < Operation.SoundCounter96 Then
 				Marshal.WriteInt16(Operation.SoundBuffer, (Operation.SoundCounter Mod Operation.SoundLength) * 2 + 44, CShort((_Short + LastWrite) / 2))

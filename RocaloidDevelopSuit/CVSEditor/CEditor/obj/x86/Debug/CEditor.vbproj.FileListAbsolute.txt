@@ -12,3 +12,4 @@ D:\My Documents\GitHub\Rocaloid\RocaloidDevelopSuit\CVSEditor\CEditor\bin\Debug\
 D:\My Documents\GitHub\Rocaloid\RocaloidDevelopSuit\CVSEditor\CEditor\bin\Debug\CybervoiceEngine.exe
 D:\My Documents\GitHub\Rocaloid\RocaloidDevelopSuit\CVSEditor\CEditor\bin\Debug\CybervoiceEngine.pdb
 D:\My Documents\GitHub\Rocaloid\RocaloidDevelopSuit\CVSEditor\CEditor\obj\x86\Debug\GenerateResource.read.4.tlog
+D:\My Documents\GitHub\Rocaloid\RocaloidDevelopSuit\CVSEditor\CEditor\obj\x86\Debug\CEditor.Console.resources

@@ -21,8 +21,8 @@ Imports System.IO
 Public Class CVDBContainer
 	Public Info As CVDBHeader
 	Public Buffer As MultiFrameBuffer
-	Public LoaderStream As FileStream
-	Public Loader As BinaryReader
+	Public Shared LoaderStream As FileStream
+	Public Shared Loader As BinaryReader
 	Private Name_ As String
 	Private BaseFrame_ As Integer
 	Public ReadOnly Property BaseFrame() As Integer

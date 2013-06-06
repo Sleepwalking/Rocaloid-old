@@ -31,14 +31,8 @@ Public Class Scheduler
 	End Sub
 	Public Shared Sub CloseAll()
 		On Error Resume Next
-		Synth1.PitchSynth1.PreSynthesizer1.CVDB.Loader.Close()
-		Synth1.PitchSynth1.PreSynthesizer2.CVDB.Loader.Close()
-		Synth1.PitchSynth2.PreSynthesizer1.CVDB.Loader.Close()
-		Synth1.PitchSynth2.PreSynthesizer2.CVDB.Loader.Close()
-		Synth1.PitchSynth1.PreSynthesizer1.CVDB.Loader.Dispose()
-		Synth1.PitchSynth1.PreSynthesizer2.CVDB.Loader.Dispose()
-		Synth1.PitchSynth2.PreSynthesizer1.CVDB.Loader.Dispose()
-		Synth1.PitchSynth2.PreSynthesizer2.CVDB.Loader.Dispose()
+		CVDBContainer.Loader.Close()
+		CVDBContainer.Loader.Dispose()
 	End Sub
 	Public Shared Sub OpenCVS(ByVal File As String)
 		CVSCommon.Reader_Open(File)

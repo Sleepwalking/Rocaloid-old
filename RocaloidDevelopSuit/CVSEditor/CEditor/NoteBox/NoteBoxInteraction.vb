@@ -32,6 +32,7 @@ Public Partial Class NoteBox
 		Next
 	End Sub
 	Public Overridable Sub NBoxMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseMove
+		Focus()
 		If Not EditEnabled Then Exit Sub
 		MouseX = e.X
 		If IsMouseDown Then

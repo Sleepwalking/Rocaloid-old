@@ -73,7 +73,24 @@ Public Class SingleNoteBox
 			Next
 		End With
 	End Sub
+	Public Sub NBoxMouseScroll(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel
+		MouseX = e.X
+		Dim i As Integer
+		If LNoteNum < 0 Then Exit Sub
+		For i = LNoteNum To RNoteNum
+			If NoteList(i).StartPos < MouseX And NoteList(i).EndPos > MouseX Then
+				InnerSegment.TPhoneList(i).Transition.EndRatio += e.Delta / 1800
+				If InnerSegment.TPhoneList(i).Transition.EndRatio < 0 Then InnerSegment.TPhoneList(i).Transition.EndRatio = 0
+				If InnerSegment.TPhoneList(i).Transition.EndRatio > 1 Then InnerSegment.TPhoneList(i).Transition.EndRatio = 1
+				If i < InnerSegment.TPhoneListQ AndAlso InnerSegment.TPhoneList(i + 1).Start.Type = False AndAlso InnerSegment.TPhoneList(i + 1).Start.Preserved = 1 Then
+					InnerSegment.TPhoneList(i + 1).Transition.StartRatio = InnerSegment.TPhoneList(i).Transition.EndRatio 
+				End If
+				Redraw()
+			End If
+		Next
+	End Sub
 	Public Overrides Sub NBoxMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseMove
+		Focus()
 		If Not EditEnabled Then Exit Sub
 		MouseX = e.X
 		If IsMouseDown Then
