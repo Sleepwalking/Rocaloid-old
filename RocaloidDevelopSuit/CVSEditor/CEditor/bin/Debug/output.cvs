@@ -209,17 +209,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.4 Time 0.1 End
+					Transition StartRatio 0 EndRatio 0.533333333333333 Time 0.113679890560876 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.17699808106947 End
+					Transition StartRatio 0.533333333333333 EndRatio 0.8 Time 0.164686179564682 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0985380187083393 End
+					Transition StartRatio 0.8 EndRatio 0.8 Time 0.117821765264813 End
 				End
 			End
 			FreqListQ 3
@@ -287,17 +287,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol i End
-					Transition StartRatio 0 EndRatio 0.5 Time 0.0698473501896334 End
+					Transition StartRatio 0 EndRatio 0.633333333333333 Time 0.0698473501896334 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.5 EndRatio 0.5 Time 0.092071507068153 End
+					Transition StartRatio 0.633333333333333 EndRatio 0.766666666666667 Time 0.092071507068153 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.5 EndRatio 1 Time 0.0793719888518561 End
+					Transition StartRatio 0.766666666666667 EndRatio 1 Time 0.0965896197058506 End
 				End
 			End
 			FreqListQ 3
@@ -318,7 +318,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.7 0.6 0.6 0.5
 			End
-			StartTime 40.8883174682987
+			StartTime 40.8890082644628
 		End
 		Segment
 			TPhoneListQ 2
@@ -331,7 +331,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.22123232789335 End
+					Transition StartRatio 1 EndRatio 1 Time 0.246714421557262 End
 				End
 			End
 			FreqListQ 3
@@ -354,7 +354,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 1
 			End
-			StartTime 41.2143137570394
+			StartTime 41.2443801652893
 		End
 		Segment
 			TPhoneListQ 2
@@ -403,7 +403,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.225821790598781 End
+					Transition StartRatio 1 EndRatio 1 Time 0.262323168009249 End
 				End
 			End
 			FreqListQ 3
@@ -424,7 +424,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.06 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.5 0.5
 			End
-			StartTime 41.9256917511876
+			StartTime 41.9220661157025
 		End
 		Segment
 			TPhoneListQ 4
@@ -643,7 +643,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 1 Time 0.0725548640841087 End
+					Transition StartRatio 0.6 EndRatio 1 Time 0.102857894387139 End
 				End
 			End
 			FreqListQ 3
@@ -674,17 +674,17 @@ CVS
 				TPhone
 					Start Type New Symbol i End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.5 Time 0.110561085507415 End
+					Transition StartRatio 0 EndRatio 0.3 Time 0.110561085507415 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.5 EndRatio 0.5 Time 0.1190657843926 End
+					Transition StartRatio 0.3 EndRatio 0.766666666666667 Time 0.1190657843926 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.5 EndRatio 1 Time 0.110561085507415 End
+					Transition StartRatio 0.766666666666667 EndRatio 1 Time 0.152572104791162 End
 				End
 			End
 			FreqListQ 3
@@ -718,12 +718,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.7 Time 0.0579763410814852 End
+					Transition StartRatio 0 EndRatio 0.3 Time 0.0579763410814852 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.101458596892599 End
+					Transition StartRatio 0.3 EndRatio 0.7 Time 0.101458596892599 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -769,7 +769,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 0.6 Time 0.113220784392599 End
+					Transition StartRatio 0.6 EndRatio 0.6 Time 0.14008028852483 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -813,7 +813,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.157524565064362 End
+					Transition StartRatio 0.7 EndRatio 0.7 Time 0.180940543025794 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -898,7 +898,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.0795347503160579 End
+					Transition StartRatio 1 EndRatio 1 Time 0.107771664916609 End
 				End
 			End
 			FreqListQ 3
@@ -934,7 +934,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.0573407225382785 End
+					Transition StartRatio 1 EndRatio 1 Time 0.0876437528413088 End
 				End
 			End
 			FreqListQ 3
@@ -1014,17 +1014,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol i End
-					Transition StartRatio 0 EndRatio 0.6 Time 0.0749575910814835 End
+					Transition StartRatio 0 EndRatio 0.333333333333333 Time 0.0749575910814835 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 0.6 Time 0.131175784392596 End
+					Transition StartRatio 0.333333333333333 EndRatio 0.733333333333333 Time 0.131175784392596 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 1 Time 0.0936969888518544 End
+					Transition StartRatio 0.733333333333333 EndRatio 1 Time 0.0936969888518544 End
 				End
 			End
 			FreqListQ 3
@@ -1092,17 +1092,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.4 Time 0.0671884244148201 End
+					Transition StartRatio 0 EndRatio 0.333333333333333 Time 0.0671884244148201 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.117579742725935 End
+					Transition StartRatio 0.333333333333333 EndRatio 0.6 Time 0.117579742725935 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0839855305185252 End
+					Transition StartRatio 0.6 EndRatio 1 Time 0.0839855305185252 End
 				End
 			End
 			FreqListQ 3
@@ -1141,7 +1141,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 1 Time 0.0380984944259288 End
+					Transition StartRatio 0.6 EndRatio 1 Time 0.0580709462165624 End
 				End
 			End
 			FreqListQ 3
@@ -1177,7 +1177,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.111755583649388 End
+					Transition StartRatio 1 EndRatio 1 Time 0.135171561610821 End
 				End
 			End
 			FreqListQ 3
@@ -1211,12 +1211,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.8 Time 0.0730689751896332 End
+					Transition StartRatio 0 EndRatio 0.4 Time 0.0730689751896332 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.8 EndRatio 0.8 Time 0.0963181945681529 End
+					Transition StartRatio 0.4 EndRatio 0.8 Time 0.0963181945681529 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -1306,7 +1306,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.0883266698092659 End
+					Transition StartRatio 0.7 EndRatio 0.7 Time 0.104855595429101 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -1352,7 +1352,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 0.6 Time 0.101637242725931 End
+					Transition StartRatio 0.6 EndRatio 0.6 Time 0.129185452092322 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -1463,7 +1463,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.0941150526088964 End
+					Transition StartRatio 1 EndRatio 1 Time 0.105823041589613 End
 				End
 			End
 			FreqListQ 3
@@ -1504,7 +1504,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.0391136704952487 End
+					Transition StartRatio 0.7 EndRatio 0.7 Time 0.0625296484566812 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -1615,7 +1615,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.197772271386432 End
+					Transition StartRatio 1 EndRatio 1 Time 0.23496235403106 End
 				End
 			End
 			FreqListQ 3
@@ -1749,17 +1749,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol n End
-					Transition StartRatio 0 EndRatio 0.4 Time 0.0986969888518556 End
+					Transition StartRatio 0 EndRatio 0.466666666666667 Time 0.0986969888518556 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.0740227416388917 End
+					Transition StartRatio 0.466666666666667 EndRatio 0.666666666666667 Time 0.0740227416388917 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0740227416388917 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0740227416388917 End
 				End
 			End
 			FreqListQ 3
@@ -1891,17 +1891,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.65 Time 0.1 End
+					Transition StartRatio 0 EndRatio 0.716666666666667 Time 0.158457711442786 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.65 EndRatio 0.65 Time 0.541969888518555 End
+					Transition StartRatio 0.716666666666667 EndRatio 0.85 Time 0.48931648885023 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.65 EndRatio 1 Time 0.15 End
+					Transition StartRatio 0.85 EndRatio 1 Time 0.15 End
 				End
 			End
 			FreqListQ 3
@@ -1968,12 +1968,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 0.6 Time 0.1206757843926 End
+					Transition StartRatio 0.6 EndRatio 0.8 Time 0.1206757843926 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 1 Time 0.0861969888518571 End
+					Transition StartRatio 0.8 EndRatio 1 Time 0.0861969888518571 End
 				End
 			End
 			FreqListQ 3
@@ -2109,7 +2109,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.244787955407425 End
+					Transition StartRatio 1 EndRatio 1 Time 0.275467889072433 End
 				End
 			End
 			FreqListQ 3
@@ -2150,7 +2150,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 1 Time 0.0313585346990737 End
+					Transition StartRatio 0.7 EndRatio 1 Time 0.0508444385133357 End
 				End
 			End
 			FreqListQ 3
@@ -2266,12 +2266,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.8 Time 0.0873923013518549 End
+					Transition StartRatio 0 EndRatio 0.733333333333333 Time 0.0873923013518549 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.8 EndRatio 0.8 Time 0.0655442260138912 End
+					Transition StartRatio 0.733333333333333 EndRatio 0.8 Time 0.0908344416026143 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -2315,12 +2315,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.124175784392598 End
+					Transition StartRatio 0.4 EndRatio 0.6 Time 0.124175784392598 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0886969888518556 End
+					Transition StartRatio 0.6 EndRatio 1 Time 0.0886969888518556 End
 				End
 			End
 			FreqListQ 3
@@ -2354,17 +2354,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol n End
-					Transition StartRatio 0 EndRatio 0.4 Time 0.0689575910814866 End
+					Transition StartRatio 0 EndRatio 0.533333333333333 Time 0.0689575910814866 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.120675784392602 End
+					Transition StartRatio 0.533333333333333 EndRatio 0.666666666666667 Time 0.147209781075852 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0861969888518583 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0861969888518583 End
 				End
 			End
 			FreqListQ 3
@@ -2442,7 +2442,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.8 EndRatio 1 Time 0.0712665201018554 End
+					Transition StartRatio 0.8 EndRatio 1 Time 0.100288078974161 End
 				End
 			End
 			FreqListQ 3
@@ -2483,7 +2483,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0272050048425944 End
+					Transition StartRatio 0.4 EndRatio 1 Time 0.0471055023550322 End
 				End
 			End
 			FreqListQ 3
@@ -2524,12 +2524,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.0908384029014851 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.0908384029014851 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0783089680185216 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0783089680185216 End
 				End
 			End
 			FreqListQ 3
@@ -2604,12 +2604,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.1181207843926 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.1181207843926 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0843719888518571 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0843719888518571 End
 				End
 			End
 			FreqListQ 3
@@ -2648,12 +2648,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.0473918056174114 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.0473918056174114 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0408550048425961 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0408550048425961 End
 				End
 			End
 			FreqListQ 3
@@ -2689,12 +2689,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.8 Time 0.0911969888518556 End
+					Transition StartRatio 0 EndRatio 0.733333333333333 Time 0.0911969888518556 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.8 EndRatio 0.8 Time 0.0683977416388917 End
+					Transition StartRatio 0.733333333333333 EndRatio 0.8 Time 0.0683977416388917 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -2733,17 +2733,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.7 Time 0.0583534244148204 End
+					Transition StartRatio 0 EndRatio 0.566666666666667 Time 0.0583534244148204 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.102118492725936 End
+					Transition StartRatio 0.566666666666667 EndRatio 0.766666666666667 Time 0.102118492725936 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 1 Time 0.0729417805185256 End
+					Transition StartRatio 0.766666666666667 EndRatio 1 Time 0.0729417805185256 End
 				End
 			End
 			FreqListQ 3
@@ -2895,12 +2895,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.7 Time 0.0539421744148187 End
+					Transition StartRatio 0 EndRatio 0.433333333333333 Time 0.0763302341163112 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.7 EndRatio 0.7 Time 0.0943988052259328 End
+					Transition StartRatio 0.433333333333333 EndRatio 0.7 Time 0.108080397265734 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -2928,7 +2928,7 @@ CVS
 				ADSR Amplitude 1 Attack 0 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 0.79 0.79 0.7
 			End
-			StartTime 68.1557742788185
+			StartTime 68.1320895522388
 		End
 		Segment
 			TPhoneListQ 4
@@ -2941,12 +2941,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol e End
-					Transition StartRatio 0 EndRatio 0.466666666666667 Time 0.1 End
+					Transition StartRatio 0 EndRatio 0.333333333333334 Time 0.1 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.466666666666667 EndRatio 0.6 Time 0.277377994148186 End
+					Transition StartRatio 0.333333333333334 EndRatio 0.6 Time 0.277377994148186 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -2987,7 +2987,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.20148061174321 End
+					Transition StartRatio 1 EndRatio 1 Time 0.231745951710043 End
 				End
 			End
 			FreqListQ 3
@@ -3023,7 +3023,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.0573407225382785 End
+					Transition StartRatio 1 EndRatio 1 Time 0.0880206562032868 End
 				End
 			End
 			FreqListQ 3
@@ -3202,17 +3202,17 @@ CVS
 				TPhone
 					Start Type New Symbol x# End
 					Dest Type New Symbol a End
-					Transition StartRatio 0 EndRatio 1 Time 0.20248044263111 End
+					Transition StartRatio 0 EndRatio 1 Time 0.190457225384012 End
 				End
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 0.8 Time 0.053989016856295 End
+					Transition StartRatio 0 EndRatio 0.6 Time 0.0655976404052171 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.8 EndRatio 0.8 Time 0.0711673404014797 End
+					Transition StartRatio 0.6 EndRatio 0.8 Time 0.0711673404014797 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -3248,22 +3248,22 @@ CVS
 				TPhone
 					Start Type New Symbol ^3 End
 					Dest Type New Symbol e End
-					Transition StartRatio 0 EndRatio 1 Time 0.183132591081486 End
+					Transition StartRatio 0 EndRatio 1 Time 0.17981584149608 End
 				End
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NN End
-					Transition StartRatio 0 EndRatio 0.4 Time 0.0576638410814858 End
+					Transition StartRatio 0 EndRatio 0.4 Time 0.0875145873501425 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.1009117218926 End
+					Transition StartRatio 0.4 EndRatio 0.6 Time 0.1009117218926 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0720798013518572 End
+					Transition StartRatio 0.6 EndRatio 1 Time 0.0720798013518572 End
 				End
 			End
 			FreqListQ 3
@@ -3330,12 +3330,12 @@ CVS
 				TPhone
 					Start Type New Symbol &[ End
 					Dest Type New Symbol u End
-					Transition StartRatio 0 EndRatio 1 Time 0.163468721315561 End
+					Transition StartRatio 0 EndRatio 1 Time 0.169273033090022 End
 				End
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol o End
-					Transition StartRatio 0 EndRatio 1 Time 0.0176362584281533 End
+					Transition StartRatio 0 EndRatio 1 Time 0.0574372534530289 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -3410,7 +3410,7 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.24018795540742 End
+					Transition StartRatio 1 EndRatio 1 Time 0.26381979620344 End
 				End
 			End
 			FreqListQ 3
@@ -3444,12 +3444,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.316666666666667 Time 0.0587504168338804 End
+					Transition StartRatio 0 EndRatio 0.383333333333334 Time 0.0587504168338804 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.316666666666667 EndRatio 0.65 Time 0.0920403156426013 End
+					Transition StartRatio 0.383333333333334 EndRatio 0.65 Time 0.109453250965984 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -3495,12 +3495,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.0886860591514903 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.0978071205113576 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0764534992685261 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0764534992685261 End
 				End
 			End
 			FreqListQ 3
@@ -3523,7 +3523,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.7 0.62 0.62 0.5
 			End
-			StartTime 74.3139574761522
+			StartTime 74.3111940298507
 		End
 		Segment
 			TPhoneListQ 4
@@ -3686,17 +3686,17 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol NG End
-					Transition StartRatio 0 EndRatio 0.2 Time 0.0884610107396769 End
+					Transition StartRatio 0 EndRatio 0.466666666666667 Time 0.0884610107396769 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.2 EndRatio 0.6 Time 0.0683977416388891 End
+					Transition StartRatio 0.466666666666667 EndRatio 0.666666666666667 Time 0.0683977416388891 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.6 EndRatio 1 Time 0.068397741638889 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.068397741638889 End
 				End
 			End
 			FreqListQ 3
@@ -3982,12 +3982,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 2 End
 					Dest Type New Symbol e End
-					Transition StartRatio 0 EndRatio 1 Time 0.0635067668562974 End
+					Transition StartRatio 0 EndRatio 0.8 Time 0.0635067668562974 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 1 EndRatio 1 Time 0.083713465401483 End
+					Transition StartRatio 0.8 EndRatio 1 Time 0.083713465401483 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
@@ -4033,12 +4033,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.0899487674848185 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.0899487674848185 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0775420409351883 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0775420409351883 End
 				End
 			End
 			FreqListQ 3
@@ -4113,12 +4113,12 @@ CVS
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 0.4 Time 0.126193150301173 End
+					Transition StartRatio 0.4 EndRatio 0.666666666666667 Time 0.126193150301173 End
 				End
 				TPhone
 					Start Type Preserved Preserved 1 End
 					Dest Type Preserved Preserved 2 End
-					Transition StartRatio 0.4 EndRatio 1 Time 0.0539839680185238 End
+					Transition StartRatio 0.666666666666667 EndRatio 1 Time 0.0539839680185238 End
 				End
 			End
 			FreqListQ 3
@@ -8883,7 +8883,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 0.545 0.545 0.3
 			End
-			StartTime 126.380938742673
+			StartTime 126.396456908345
 		End
 	End
 End

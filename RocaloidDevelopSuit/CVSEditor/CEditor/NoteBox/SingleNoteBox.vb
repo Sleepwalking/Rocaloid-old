@@ -4,11 +4,17 @@
 ' 
 '
 Imports CVSCommon
+Public Enum SBoxMode As Integer
+	Non = 0
+	ADSR = 1
+End Enum
 Public Class SingleNoteBox
 	Inherits NoteBox
 	Public InnerSegment As Segment
 	Public Event SegmentUpdate()
+	Public Event ParentNoteBoxUpdate()
 	Private OriginalTime As Double
+	Public Mode As SBoxMode
 	
 	Public Sub New()
 		MyBase.New()
@@ -17,14 +23,18 @@ Public Class SingleNoteBox
 		RNoteNum = -1
 		Loaded = False
 		SelectBarEnabled = False
+		Mode = SBoxMode.Non
 	End Sub
 	
 	Public Sub LoadSegment(ByRef Segment_ As Segment)
 		InnerSegment = Segment_
+		ScrollBar.Value = 0
+		LBound = 0
 		ScrollBar.Maximum = CInt(GetDuration(Segment_) * 100)
 		ScrollBar.LargeChange = CInt(Duration * 100)
 		ReDim NoteList(Segment_.TPhoneListQ)
 		Loaded = True
+		Redraw()
 	End Sub
 	
 	Public Overrides Sub Redraw()
@@ -42,7 +52,9 @@ Public Class SingleNoteBox
 		Dim SDSymbol As TSymbol
 		Dim CurrentBrush As New SolidBrush(Color.Pink)
 		Dim TextBrush As New SolidBrush(Color.Black)
-		Dim CurrentPen As New Pen(Color.DimGray)
+		Dim BorderPen As New Pen(Color.DimGray)
+		Dim TransitionPen As New Pen(Color.Red)
+		Dim EnvelopePen As New Pen(Color.Green)
 		
 		StartTime = 0
 		LNoteNum = -1
@@ -55,6 +67,7 @@ Public Class SingleNoteBox
 					If LNoteNum = -1 Then LNoteNum = i
 					RNoteNum = i
 					
+					'Draw Note
 					xbound = AbsoluteToRelative(StartTime)
 					xdur = CInt((EndTime - StartTime) / Duration * Width)
 					
@@ -63,14 +76,33 @@ Public Class SingleNoteBox
 					SDSymbol = GetTSymbol(InnerSegment, i)
 					
 					GraphicControl.FillRectangle(CurrentBrush, xbound, 0, xdur, 31)
-					GraphicControl.DrawRectangle(CurrentPen, xbound, 0, xdur, 31)
+					GraphicControl.DrawRectangle(BorderPen, xbound, 0, xdur, 31)
 					GraphicControl.DrawString(SDSymbol.Start & "->" & SDSymbol.Dest, New Font("Arial", 12), TextBrush, xbound + 3, 7)
-					GraphicControl.DrawLine(CurrentPen, _
+					
+					'Draw Transition
+					GraphicControl.DrawLine(TransitionPen, _
 						xbound, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.StartRatio), _
 						xbound + xdur, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.EndRatio))
 				End If
 				StartTime = EndTime
 			Next
+			'Draw ADSR
+			If Mode = SBoxMode.ADSR Then
+				With InnerSegment.Effects.ADSR
+					Dim ADSRAmplitudex As Integer, ADSRAmplitudey As Integer, ADSRSustainx As Integer, ADSRReleasex As Integer, ADSRTotalx As Integer
+					Dim TotalLength As Double = CVSOperation.GetDuration(InnerSegment) + InnerSegment.Effects.Shrink + InnerSegment.Effects.ForwardCut
+					ADSRAmplitudex = CInt(AbsoluteToRelative(.Attack))
+					ADSRAmplitudey = 31 - CInt(.Amplitude * 31 * 0.5)
+					ADSRSustainx = ADSRAmplitudex + CInt(AbsoluteToRelative(.Decline))
+					ADSRTotalx = CInt(AbsoluteToRelative(TotalLength))
+					ADSRReleasex = CInt(AbsoluteToRelative(TotalLength - .Release))
+					GraphicControl.DrawLine(EnvelopePen, CInt(AbsoluteToRelative(0)), 31, ADSRAmplitudex, ADSRAmplitudey)
+					GraphicControl.DrawLine(EnvelopePen, ADSRAmplitudex, ADSRAmplitudey, ADSRSustainx, CInt(31 * 0.5))
+					GraphicControl.DrawLine(EnvelopePen, ADSRSustainx, CInt(31 * 0.5), ADSRReleasex, CInt(31 * 0.5))
+					GraphicControl.DrawLine(EnvelopePen, ADSRReleasex, CInt(31 * 0.5), ADSRTotalx, 31)
+					
+				End With
+			End If
 		End With
 	End Sub
 	Public Sub NBoxMouseScroll(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel
@@ -120,5 +152,15 @@ Public Class SingleNoteBox
 				Exit For
 			End If
 		Next
+	End Sub
+	Public Overrides Sub NBoxMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp
+		If Not EditEnabled Then Exit Sub
+		IsMouseDown = False
+		IsDragging = False
+		MouseX = e.X
+		SelectBar = RelativeToAbsolute(MouseX)
+		ScrollBar.Maximum = CInt(GetDuration(InnerSegment) * 100)
+		RaiseEvent ParentNoteBoxUpdate()
+		Redraw()
 	End Sub
 End Class

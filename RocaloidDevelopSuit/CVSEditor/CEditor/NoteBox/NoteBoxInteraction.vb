@@ -39,6 +39,9 @@ Public Partial Class NoteBox
 			'Drag
 			If IsDragging Then
 				InnerCVS.SegmentList(DragNoteNum).StartTime = RelativeToAbsolute(MouseX - MouseDownOffset)
+				If InnerCVS.SegmentList(DragNoteNum).StartTime < 0 Then
+					InnerCVS.SegmentList(DragNoteNum).StartTime = 0
+				End If
 				Redraw()
 			End If
 		End If
@@ -49,6 +52,7 @@ Public Partial Class NoteBox
 		IsDragging = False
 		MouseX = e.X
 		SelectBar = RelativeToAbsolute(MouseX)
+		ScrollBar.Maximum = CInt(GetCVSLength(InnerCVS) * 100)
 		Redraw()
 	End Sub
 End Class

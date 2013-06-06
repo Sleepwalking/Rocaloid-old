@@ -34,7 +34,7 @@ CVS
 				ADSR Amplitude 1 Attack 0.06 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.7 0.7
 			End
-			StartTime 45.4856455304467
+			StartTime 45.156292749658
 		End
 		Segment
 			TPhoneListQ 4

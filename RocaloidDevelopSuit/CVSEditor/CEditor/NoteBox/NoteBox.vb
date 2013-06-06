@@ -53,13 +53,19 @@ Public Partial Class NoteBox
 		Arrange(InnerCVS, Arrangement)
 		ReDim NoteList(CVS.SegmentListQ)
 		Loaded = True
+		SNoteBox.InnerSegment = CVS.SegmentList(0)
 	End Sub
 	
 	Public Shadows Sub Init()
 		MyBase.Init()
 	End Sub
 	
-	Public Sub SNoteBoxUpdate() Handles SNoteBox.SegmentUpdate
+	Private Sub SNoteBoxUpdate() Handles SNoteBox.SegmentUpdate
+		Redraw()
+	End Sub
+	
+	Private Sub NoteBoxUpdate() Handles SNoteBox.ParentNoteBoxUpdate
+		ScrollBar.Maximum = CInt(GetCVSLength(InnerCVS) * 100)
 		Redraw()
 	End Sub
 	

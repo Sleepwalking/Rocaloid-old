@@ -81,7 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="SynthesisEngine\Mixer&amp;Writer.vb" />
     <Compile Include="SynthesisEngine\Scheduler.vb" />
-    <Compile Include="Util.vb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -5,7 +5,7 @@
 '
 Public Partial Class Console
 	Public Shared Log As String = ""
-	Public Shared LogLen As Integer = 100000
+	Public Shared LogLen As Integer = 10000
 	Public Sub Send(ByVal String_ As String)
 		If Log.Length > LogLen Then
 			Log = ""

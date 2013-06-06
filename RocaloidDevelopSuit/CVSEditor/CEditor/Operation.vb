@@ -39,6 +39,8 @@ Public Class Operation
 	Public Shared SynthesisThread As New Thread(AddressOf Scheduler.RunSynthesizer)
 	Public Shared WithEvents UpdateBarTimer As New System.Timers.Timer(40)
 	
+	Public Shared Editor_CVSFile As String
+	
 	Public Shared Sub KeepBar()
 		Dim TimePassed As TimeSpan
 		If SoundIsPlaying Then
@@ -121,6 +123,7 @@ Public Class Operation
 		PlaySound(SoundBuffer, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY Or SoundFlags.SND_LOOP)
 		SoundIsPlaying = True
 		MainNoteBox.EditEnabled = False
+		MainNoteBox.SNoteBox.EditEnabled = False
 		
 		'CONSOLE
 		My.Forms.Console.Send("  Sound started.")
@@ -145,6 +148,7 @@ Public Class Operation
 		
 		SoundIsPlaying = False
 		MainNoteBox.EditEnabled = True
+		MainNoteBox.SNoteBox.EditEnabled = True
 		CybervoiceEngine.Scheduler.CloseAll()
 		
 		'CONSOLE
@@ -168,10 +172,6 @@ Public Class Operation
 	Public Shared Sub LoadCVS(ByVal Path As String)
 		Reader_Open(Path)
 		CVS_Read(MainCVS)
-		Dim i As Integer
-		For i = 0 To MainCVS.SegmentListQ
-			MainCVS.SegmentList(i).StartTime -= 7
-		Next
 		Reader_Close()
 	End Sub
 	

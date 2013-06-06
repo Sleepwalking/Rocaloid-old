@@ -17,7 +17,7 @@ Public Partial Class MainForm
 	End Sub
 	
 	Sub MainFormLoad(sender As Object, e As EventArgs)
-		Operation.LoadCVS("x.cvs")
+		Operation.LoadCVS("default.cvs")
 		MainNoteBox.ScrollBar = NBoxScrollBar
 		MainNoteBox.SNoteBox = MainSBox
 		MainNoteBox.LoadCVS(Operation.MainCVS)
@@ -35,17 +35,17 @@ Public Partial Class MainForm
 	Sub MainFormResize(sender As Object, e As EventArgs)
 		MainNoteBox.Resize(Width - 8)
 		MainSBox.Resize(Width - 8)
-		VerticalScale.Left = Width - 141
+		HorizontalScale.Left = Width - 141
+		RadioButton2.Left = HorizontalScale.Left - 83
+		RadioButton1.Left = radioButton2.Left - 93
+		ADSR_Box.Width = Me.Width - 8
 	End Sub
 	
 	Sub VerticalScaleScroll(sender As Object, e As EventArgs)
-		MainNoteBox.Scale(VerticalScale.Value / 2)
+		MainNoteBox.Scale(HorizontalScale.Value / 2)
 		MainNoteBox.Redraw()
 	End Sub
 	
-	Sub SaveCVSClick(sender As Object, e As EventArgs)
-		Operation.SaveCVS("output.cvs")
-	End Sub
 	
 	Sub SynthesisAndPlayClick(sender As Object, e As EventArgs)
 		Operation.StartSynthesis(MainNoteBox.SelectBar)
@@ -73,4 +73,71 @@ Public Partial Class MainForm
 	Sub ConsoleToolStripMenuItemClick(sender As Object, e As EventArgs)
 		My.Forms.Console.Show()
 	End Sub
+	
+	Sub Menu_OpenClick(sender As Object, e As EventArgs)
+		Dim FileAddr As String
+		Dialog_OpenFile.ShowDialog()
+		FileAddr = Dialog_OpenFile.FileName
+		If FileAddr = "" Then Exit Sub
+		If System.IO.File.Exists(FileAddr) Then
+			Operation.Editor_CVSFile = FileAddr
+			Operation.LoadCVS(FileAddr)
+			MainNoteBox.LoadCVS(Operation.MainCVS)
+			MainSBox.LoadSegment(Operation.MainCVS.SegmentList(0))
+			MainNoteBox.Redraw()
+		Else
+			MsgBox("Invalid file path!", , "CVS Editor")
+		End If
+	End Sub
+	
+	Sub Menu_SaveClick(sender As Object, e As EventArgs)
+		Dim DoSave As Boolean = CBool(MsgBox("Are you sure to overwrite?", MsgBoxStyle.YesNo, "CVS Editor"))
+		If DoSave Then
+			Operation.SaveCVS(Operation.Editor_CVSFile)
+		End If
+	End Sub
+	
+	Sub Menu_SaveAsClick(sender As Object, e As EventArgs)
+		Dim FileAddr As String
+		Dialog_SaveFile.ShowDialog()
+		FileAddr = Dialog_SaveFile.FileName
+		If FileAddr = "" Then
+			Exit Sub
+		End If
+		Operation.Editor_CVSFile = FileAddr
+		Operation.SaveCVS(FileAddr)		
+	End Sub
+	
+	Sub SaveCVSClick(sender As Object, e As EventArgs)
+		If Operation.Editor_CVSFile = "" Then
+			Dim FileAddr As String
+			Dialog_SaveFile.ShowDialog()
+			FileAddr = Dialog_SaveFile.FileName
+			If FileAddr = "" Then
+				Exit Sub
+			End If
+			Operation.Editor_CVSFile = FileAddr
+		End If
+		
+		Dim DoSave As Boolean = True
+		If System.IO.File.Exists(Operation.Editor_CVSFile) Then DoSave = CBool(MsgBox("Are you sure to overwrite?", MsgBoxStyle.YesNo, "CVS Editor"))
+		If DoSave Then
+			Operation.SaveCVS(Operation.Editor_CVSFile)
+		End If
+	End Sub
+	
+	Sub RadioButton1CheckedChanged(sender As Object, e As EventArgs)
+		MainSBox.Mode = SBoxMode.Non
+		MainSBox.Redraw()
+	End Sub
+	
+	Sub RadioButton2CheckedChanged(sender As Object, e As EventArgs)
+		MainSBox.Mode = SBoxMode.ADSR
+		MainSBox.Redraw()
+	End Sub
+	
+	Sub MainFormFormClosing(sender As Object, e As FormClosingEventArgs)
+		Operation.StopSynthesis()
+	End Sub
+	
 End Class
