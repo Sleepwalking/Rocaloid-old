@@ -36,7 +36,8 @@ Public Class Operation
 	Public Shared MainNoteBox As NoteBox = MainForm.MainNoteBox
 	Public Shared MainScrollBar As HScrollBar = MainForm.NBoxScrollBar
 	
-	Public Shared SynthesisThread As New Thread(AddressOf Scheduler.RunSynthesizer)
+	Public Shared RTSynthesisThread As New Thread(AddressOf Scheduler.RunSynthesizer)
+	Public Shared CVESynthesisThread As New Thread(AddressOf CybervoiceEngine.Scheduler.RunSynthesizer)
 	Public Shared WithEvents UpdateBarTimer As New System.Timers.Timer(40)
 	
 	Public Shared Editor_CVSFile As String
@@ -58,12 +59,24 @@ Public Class Operation
 		End If
 	End Sub
 	
+	Public Shared Sub CVESynthesis(ByVal Path As String)
+		CybervoiceEngine.Scheduler.Init()
+		CybervoiceEngine.Scheduler.CVS_ = MainCVS
+		CybervoiceEngine.MixerWriterEffector.TotalCount = CInt(CVSOperation.GetCVSLength(MainCVS) * 96000)
+		CybervoiceEngine.MixerWriterEffector.WriterCounter = 0
+		CybervoiceEngine.Scheduler.SetFileOutput(Path)
+		CVESynthesisThread = New Thread(AddressOf CybervoiceEngine.Scheduler.RunSynthesizer)
+		CVESynthesisThread.Start()
+		SoundStartTime = DateTime.Now
+		SynthesisForm.Show()
+	End Sub
+	
 	Public Shared Sub StartSynthesis(ByVal Optional StartTime As Double = 0)
 		If SoundIsPlaying Then Exit Sub
 		
 		PlaySound(IntPtr.Zero, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_FILENAME)
 		
-		SynthesisThread = New Thread(AddressOf Scheduler.RunSynthesizer)
+		RTSynthesisThread = New Thread(AddressOf Scheduler.RunSynthesizer)
 		Scheduler.CVS_ = MainCVS
 		
 		'CONSOLE
@@ -86,7 +99,7 @@ Public Class Operation
 		My.Forms.Console.Send("  Scheduler -> Start Synthesize = " & Scheduler.StartSynthesize)
 		My.Forms.Console.Send("  MixerWriterEffector -> SynthesisDestCounter = " & MixerWriterEffector.SynthesisDestCounter)
 		
-		SynthesisThread.Start()
+		RTSynthesisThread.Start()
 		
 		'CONSOLE
 		My.Forms.Console.Send("  Synthesis thread started.")
@@ -133,7 +146,7 @@ Public Class Operation
 		'CONSOLE
 		My.Forms.Console.Send("  Aborting synthesis thread...")
 		Try
-			SynthesisThread.Abort()
+			RTSynthesisThread.Abort()
 			'CONSOLE
 			My.Forms.Console.Send("  Synthesis thread was aborted successfully.")
 		Catch

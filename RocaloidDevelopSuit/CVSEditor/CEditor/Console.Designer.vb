@@ -87,6 +87,7 @@ Partial Class Console
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
 		Me.Name = "Console"
 		Me.Text = "Console"
+		Me.TopMost = true
 		AddHandler Load, AddressOf Me.ConsoleLoad
 		Me.ResumeLayout(false)
 		Me.PerformLayout

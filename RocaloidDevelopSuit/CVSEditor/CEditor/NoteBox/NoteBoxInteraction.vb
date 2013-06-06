@@ -26,6 +26,7 @@ Public Partial Class NoteBox
 					SNoteBox.LoadSegment(InnerCVS.SegmentList(i))
 					SNoteBox.Redraw()
 					Redraw()
+					RaiseEvent Selected(DragNoteNum)
 					Exit For
 				End If
 			End If

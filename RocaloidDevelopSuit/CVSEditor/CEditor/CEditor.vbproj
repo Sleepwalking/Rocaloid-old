@@ -81,6 +81,10 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="SynthesisEngine\Mixer&amp;Writer.vb" />
     <Compile Include="SynthesisEngine\Scheduler.vb" />
+    <Compile Include="SynthesisForm.Designer.vb">
+      <DependentUpon>SynthesisForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SynthesisForm.vb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -94,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SynthesisForm.resx">
+      <DependentUpon>SynthesisForm.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

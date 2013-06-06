@@ -20,6 +20,7 @@ Public Partial Class NoteBox
 	Private InnerCVS As CVSCommon.CVS
 	Private Arrangement() As Boolean
 	Protected Loaded As Boolean
+	Public Event Selected(ByVal SegmentIndex As Integer)
 	
 	Public Sub New()
 		MyBase.New()

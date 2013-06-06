@@ -86,6 +86,14 @@ Public Class CVDBContainer
 		Dim FrameCount As Integer, DataCount As Integer, SampleCount As Integer
 		'Use direct calculations instead of BitConverter to improve performance.
 		
+		Try
+			If LoaderStream.CanRead Then
+				LoaderStream.Close
+				LoaderStream.Dispose
+			End If
+		Catch
+		End Try
+		
 		LoaderStream = New FileStream(Compatibility_DataDir & FileName & ".cbv", FileMode.Open)
 		
 		DataLen = CInt((LoaderStream.Length - 256) / 2) 'Get data length of .cbv files

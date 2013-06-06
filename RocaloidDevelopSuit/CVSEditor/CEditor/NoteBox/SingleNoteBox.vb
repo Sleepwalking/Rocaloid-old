@@ -7,6 +7,7 @@ Imports CVSCommon
 Public Enum SBoxMode As Integer
 	Non = 0
 	ADSR = 1
+	Shrink = 2
 End Enum
 Public Class SingleNoteBox
 	Inherits NoteBox
@@ -37,6 +38,13 @@ Public Class SingleNoteBox
 		Redraw()
 	End Sub
 	
+	Public Sub ReloadSegment(ByRef Segment_ As Segment)
+		InnerSegment = Segment_
+		ReDim NoteList(Segment_.TPhoneListQ)
+		Loaded = True
+		Redraw()
+	End Sub
+	
 	Public Overrides Sub Redraw()
 		GraphicControl.Clear(Color.White)
 		If Not Loaded Then Exit Sub
@@ -55,6 +63,7 @@ Public Class SingleNoteBox
 		Dim BorderPen As New Pen(Color.DimGray)
 		Dim TransitionPen As New Pen(Color.Red)
 		Dim EnvelopePen As New Pen(Color.Green)
+		Dim CutPen As New Pen(Color.Blue)
 		
 		StartTime = 0
 		LNoteNum = -1
@@ -75,14 +84,14 @@ Public Class SingleNoteBox
 					NoteList(i).Duration = xdur
 					SDSymbol = GetTSymbol(InnerSegment, i)
 					
-					GraphicControl.FillRectangle(CurrentBrush, xbound, 0, xdur, 31)
-					GraphicControl.DrawRectangle(BorderPen, xbound, 0, xdur, 31)
+					GraphicControl.FillRectangle(CurrentBrush, xbound, 0, xdur, Height - 1)
+					GraphicControl.DrawRectangle(BorderPen, xbound, 0, xdur, Height - 1)
 					GraphicControl.DrawString(SDSymbol.Start & "->" & SDSymbol.Dest, New Font("Arial", 12), TextBrush, xbound + 3, 7)
 					
 					'Draw Transition
 					GraphicControl.DrawLine(TransitionPen, _
-						xbound, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.StartRatio), _
-						xbound + xdur, CSng(31 - 31 * InnerSegment.TPhoneList(i).Transition.EndRatio))
+						xbound, CSng(Height - 1 - Height * InnerSegment.TPhoneList(i).Transition.StartRatio), _
+						xbound + xdur, CSng(Height - 1 - Height * InnerSegment.TPhoneList(i).Transition.EndRatio))
 				End If
 				StartTime = EndTime
 			Next
@@ -92,17 +101,28 @@ Public Class SingleNoteBox
 					Dim ADSRAmplitudex As Integer, ADSRAmplitudey As Integer, ADSRSustainx As Integer, ADSRReleasex As Integer, ADSRTotalx As Integer
 					Dim TotalLength As Double = CVSOperation.GetDuration(InnerSegment) + InnerSegment.Effects.Shrink + InnerSegment.Effects.ForwardCut
 					ADSRAmplitudex = CInt(AbsoluteToRelative(.Attack))
-					ADSRAmplitudey = 31 - CInt(.Amplitude * 31 * 0.5)
+					ADSRAmplitudey = Height - 1 - CInt(.Amplitude * Height * 0.5)
 					ADSRSustainx = ADSRAmplitudex + CInt(AbsoluteToRelative(.Decline))
 					ADSRTotalx = CInt(AbsoluteToRelative(TotalLength))
 					ADSRReleasex = CInt(AbsoluteToRelative(TotalLength - .Release))
-					GraphicControl.DrawLine(EnvelopePen, CInt(AbsoluteToRelative(0)), 31, ADSRAmplitudex, ADSRAmplitudey)
-					GraphicControl.DrawLine(EnvelopePen, ADSRAmplitudex, ADSRAmplitudey, ADSRSustainx, CInt(31 * 0.5))
-					GraphicControl.DrawLine(EnvelopePen, ADSRSustainx, CInt(31 * 0.5), ADSRReleasex, CInt(31 * 0.5))
-					GraphicControl.DrawLine(EnvelopePen, ADSRReleasex, CInt(31 * 0.5), ADSRTotalx, 31)
-					
+					GraphicControl.DrawLine(EnvelopePen, CInt(AbsoluteToRelative(0)), Height - 1, ADSRAmplitudex, ADSRAmplitudey)
+					GraphicControl.DrawLine(EnvelopePen, ADSRAmplitudex, ADSRAmplitudey, ADSRSustainx, CInt(Height * 0.5))
+					GraphicControl.DrawLine(EnvelopePen, ADSRSustainx, CInt(Height * 0.5), ADSRReleasex, CInt(Height * 0.5))
+					GraphicControl.DrawLine(EnvelopePen, ADSRReleasex, CInt(Height * 0.5), ADSRTotalx, Height)
 				End With
 			End If
+			
+			'Draw Shrinkage
+			If Mode = SBoxMode.Shrink Then
+				With InnerSegment.Effects
+					Dim ForwardCutx As Integer, Shrinkx As Integer
+					ForwardCutx = CInt(AbsoluteToRelative(.ForwardCut))
+					Shrinkx = CInt(AbsoluteToRelative(.ForwardCut + .Shrink))
+					GraphicControl.DrawLine(CutPen, ForwardCutx, 0, ForwardCutx, Height - 1)
+					GraphicControl.DrawLine(EnvelopePen, Shrinkx, 0, Shrinkx, Height - 1)
+				End With
+			End If
+			
 		End With
 	End Sub
 	Public Sub NBoxMouseScroll(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel

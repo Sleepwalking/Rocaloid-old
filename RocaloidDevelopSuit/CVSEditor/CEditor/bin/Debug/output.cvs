@@ -31,7 +31,7 @@ CVS
 					EnvelopeSet Time 0.359752538740757 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0.06 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 1.8 Attack 0.06 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.7 0.7
 			End
 			StartTime 38.4856455304467
@@ -123,7 +123,7 @@ CVS
 					EnvelopeSet Time 0.340787955407421 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 1.84 Attack 0.01 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.7 0.6 0.6 0.5
 			End
 			StartTime 39.2055860245949
@@ -193,7 +193,7 @@ CVS
 					EnvelopeSet Time 0.284393977703714 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 1.9 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 0.5 0.5
 			End
 			StartTime 39.8091619354097
@@ -237,7 +237,7 @@ CVS
 					EnvelopeSet Time 0.52553609977781 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1.2 Attack 0.1 Decline 0.1 Release 0.1 End
+				ADSR Amplitude 1.8 Attack 0.1 Decline 0.1 Release 0.1 End
 				OpennessList 0.5 1 0.72 0.72 0.3
 			End
 			StartTime 40.0435559131134
@@ -467,7 +467,7 @@ CVS
 					EnvelopeSet Time 0.741575910814852 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 0.64 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 0.545 0.545 0.3
 			End
 			StartTime 42.238311458453
@@ -748,7 +748,7 @@ CVS
 					EnvelopeSet Time 0.426787955407426 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0.05 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 0.76 Attack 0.05 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 0.79 0.79 0.7
 			End
 			StartTime 45.3557692219285
@@ -1161,7 +1161,7 @@ CVS
 					EnvelopeSet Time 0.192039811037048 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 0.72 Attack 0.03 Decline 0.1 Release 0.07 End
 				OpennessList 0.6 0.54 0.54 0.5
 			End
 			StartTime 50.904730675114
@@ -1919,7 +1919,7 @@ CVS
 					EnvelopeSet Time 0.934501138518555 Amplitude 1 End
 				End
 				PresetedEnvelope ADSR
-				ADSR Amplitude 1 Attack 0.06 Decline 0.1 Release 0.07 End
+				ADSR Amplitude 0.64 Attack 0.07 Decline 0.1 Release 0.07 End
 				OpennessList 1 1 0.545 0.545 0.3
 			End
 			StartTime 58.6395742551144
