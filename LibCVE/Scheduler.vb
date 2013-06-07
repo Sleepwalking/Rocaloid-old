@@ -28,6 +28,7 @@ Public Class Scheduler
 		'Synth2 = New SpeechSynthesizer()
 		Wave1 = New WaveBuffer(30.0)
 		Wave2 = New WaveBuffer(30.0)
+		CVDBContainer.LoaderLock = New Object()
 	End Sub
 	Public Shared Sub CloseAll()
 		On Error Resume Next

@@ -37,10 +37,12 @@ Partial Class MainForm
 		Me.Menu_Open = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Menu_Save = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Menu_SaveAs = New System.Windows.Forms.ToolStripMenuItem()
+		Me.toolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
 		Me.Menu_Synthesis = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Menu_Console = New System.Windows.Forms.ToolStripMenuItem()
 		Me.MainToolStrip = New System.Windows.Forms.ToolStrip()
 		Me.SynthesisAndPlay = New System.Windows.Forms.ToolStripButton()
+		Me.SynthesisSegment = New System.Windows.Forms.ToolStripButton()
 		Me.SynthesisStop = New System.Windows.Forms.ToolStripButton()
 		Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
 		Me.SaveCVS = New System.Windows.Forms.ToolStripButton()
@@ -97,7 +99,7 @@ Partial Class MainForm
 		'
 		'fileToolStripMenuItem
 		'
-		Me.fileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Menu_Open, Me.Menu_Save, Me.Menu_SaveAs, Me.Menu_Synthesis})
+		Me.fileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Menu_Open, Me.Menu_Save, Me.Menu_SaveAs, Me.toolStripSeparator2, Me.Menu_Synthesis})
 		Me.fileToolStripMenuItem.Name = "fileToolStripMenuItem"
 		Me.fileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
 		Me.fileToolStripMenuItem.Text = "File"
@@ -123,6 +125,11 @@ Partial Class MainForm
 		Me.Menu_SaveAs.Text = "Save As"
 		AddHandler Me.Menu_SaveAs.Click, AddressOf Me.Menu_SaveAsClick
 		'
+		'toolStripSeparator2
+		'
+		Me.toolStripSeparator2.Name = "toolStripSeparator2"
+		Me.toolStripSeparator2.Size = New System.Drawing.Size(117, 6)
+		'
 		'Menu_Synthesis
 		'
 		Me.Menu_Synthesis.Name = "Menu_Synthesis"
@@ -140,7 +147,7 @@ Partial Class MainForm
 		'MainToolStrip
 		'
 		Me.MainToolStrip.BackColor = System.Drawing.Color.Transparent
-		Me.MainToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SynthesisAndPlay, Me.SynthesisStop, Me.toolStripSeparator1, Me.SaveCVS})
+		Me.MainToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SynthesisAndPlay, Me.SynthesisSegment, Me.SynthesisStop, Me.toolStripSeparator1, Me.SaveCVS})
 		Me.MainToolStrip.Location = New System.Drawing.Point(0, 24)
 		Me.MainToolStrip.Name = "MainToolStrip"
 		Me.MainToolStrip.Size = New System.Drawing.Size(731, 25)
@@ -156,6 +163,16 @@ Partial Class MainForm
 		Me.SynthesisAndPlay.Size = New System.Drawing.Size(23, 22)
 		Me.SynthesisAndPlay.Text = "Play"
 		AddHandler Me.SynthesisAndPlay.Click, AddressOf Me.SynthesisAndPlayClick
+		'
+		'SynthesisSegment
+		'
+		Me.SynthesisSegment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+		Me.SynthesisSegment.Image = CType(resources.GetObject("SynthesisSegment.Image"),System.Drawing.Image)
+		Me.SynthesisSegment.ImageTransparentColor = System.Drawing.Color.Magenta
+		Me.SynthesisSegment.Name = "SynthesisSegment"
+		Me.SynthesisSegment.Size = New System.Drawing.Size(23, 22)
+		Me.SynthesisSegment.Text = "Play Segment"
+		AddHandler Me.SynthesisSegment.Click, AddressOf Me.ToolStripButton1Click
 		'
 		'SynthesisStop
 		'
@@ -195,6 +212,7 @@ Partial Class MainForm
 		'
 		'NBoxScrollBar
 		'
+		Me.NBoxScrollBar.CausesValidation = false
 		Me.NBoxScrollBar.Location = New System.Drawing.Point(0, 119)
 		Me.NBoxScrollBar.Name = "NBoxScrollBar"
 		Me.NBoxScrollBar.Size = New System.Drawing.Size(731, 21)
@@ -226,6 +244,7 @@ Partial Class MainForm
 		'
 		'SBoxScrollBar
 		'
+		Me.SBoxScrollBar.CausesValidation = false
 		Me.SBoxScrollBar.Location = New System.Drawing.Point(0, 215)
 		Me.SBoxScrollBar.Name = "SBoxScrollBar"
 		Me.SBoxScrollBar.Size = New System.Drawing.Size(731, 21)
@@ -460,10 +479,12 @@ Partial Class MainForm
 		Me.Controls.Add(Me.MainNoteBox)
 		Me.Controls.Add(Me.MainToolStrip)
 		Me.Controls.Add(Me.MainMenuStrip)
+		Me.KeyPreview = true
 		Me.Name = "MainForm"
-		Me.Text = "CEditor"
+		Me.Text = "Rocaloid CVS Editor"
 		AddHandler FormClosing, AddressOf Me.MainFormFormClosing
 		AddHandler Load, AddressOf Me.MainFormLoad
+		AddHandler KeyDown, AddressOf Me.MainFormKeyDown
 		AddHandler Resize, AddressOf Me.MainFormResize
 		Me.MainMenuStrip.ResumeLayout(false)
 		Me.MainMenuStrip.PerformLayout
@@ -485,6 +506,8 @@ Partial Class MainForm
 		Me.ResumeLayout(false)
 		Me.PerformLayout
 	End Sub
+	Private SynthesisSegment As System.Windows.Forms.ToolStripButton
+	Private toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
 	Private Shrink_CutBar As System.Windows.Forms.TrackBar
 	Private Shrink_Cut As System.Windows.Forms.Label
 	Private Shrink_ShrinkBar As System.Windows.Forms.TrackBar

@@ -85,6 +85,11 @@ Public Partial Class MainForm
 		Operation.StartSynthesis(MainNoteBox.SelectBar)
 	End Sub
 	
+	Sub ToolStripButton1Click(sender As Object, e As EventArgs)
+		MainNoteBox.SelectBar = Operation.MainCVS.SegmentList(MainNoteBox.DragNoteNum).StartTime + 0.01
+		Operation.StartSegmentSynthesis(MainNoteBox.SelectBar)
+	End Sub
+	
 	Sub SynthesisStopClick(sender As Object, e As EventArgs)
 		Operation.StopSynthesis()
 	End Sub
@@ -96,7 +101,7 @@ Public Partial Class MainForm
 			NBoxScrollBar.Value = 0
 			NBoxScrollBar.Value = CInt(Operation.MainNoteBox.LBound * 100)
 			CurrentNoteNum = CVSOperation.GetSegment(Operation.MainCVS, MainNoteBox.SelectBar)
-			If CurrentNoteNum <> MainNoteBox.DragNoteNum Then
+			If Not Operation.SynthesizingSegment AndAlso CurrentNoteNum <> MainNoteBox.DragNoteNum Then
 				MainNoteBox.DragNoteNum = CurrentNoteNum
 				MainNoteBox.SNoteBox.LoadSegment(Operation.MainCVS.SegmentList(CurrentNoteNum))
 				ShowEffects(Operation.MainCVS.SegmentList(CurrentNoteNum).Effects)
@@ -126,7 +131,18 @@ Public Partial Class MainForm
 	End Sub
 	
 	Sub Menu_SaveClick(sender As Object, e As EventArgs)
-		Dim DoSave As Boolean = CBool(MsgBox("Are you sure to overwrite?", MsgBoxStyle.YesNo, "CVS Editor"))
+		If Operation.Editor_CVSFile = "" Then
+			Dim FileAddr As String
+			Dialog_SaveFile.ShowDialog()
+			FileAddr = Dialog_SaveFile.FileName
+			If FileAddr = "" Then
+				Exit Sub
+			End If
+			Operation.Editor_CVSFile = FileAddr
+		End If
+		
+		Dim DoSave As Boolean = True
+		If System.IO.File.Exists(Operation.Editor_CVSFile) Then DoSave = CBool(MsgBox("Are you sure to overwrite?", MsgBoxStyle.YesNo, "CVS Editor"))
 		If DoSave Then
 			Operation.SaveCVS(Operation.Editor_CVSFile)
 		End If
@@ -241,4 +257,32 @@ Public Partial Class MainForm
 		Operation.CVESynthesis(FileAddr)			
 	End Sub
 	
+	Sub MainFormKeyDown(sender As Object, e As KeyEventArgs)
+		Select Case e.KeyCode
+			Case Keys.ShiftKey
+				ToolStripButton1Click(New Object, New EventArgs)
+			Case Keys.Space
+				If Operation.SoundIsPlaying Then
+					Operation.StopSynthesis()
+				Else
+					SynthesisAndPlayClick(New Object, New EventArgs)
+				End If
+			Case Keys.D
+				MainNoteBox.Focus()
+				If MainNoteBox.DragNoteNum < Operation.MainCVS.SegmentListQ Then MainNoteBox.DragNoteNum += 1
+				If MainNoteBox.RBound < CVSOperation.GetEndTime(Operation.MainCVS.SegmentList(MainNoteBox.DragNoteNum)) Then
+					MainNoteBox.LBound += CVSOperation.GetDuration(Operation.MainCVS.SegmentList(MainNoteBox.DragNoteNum))
+				End If
+				MainNoteBox.Scale(MainNoteBox.Duration)
+				MainNoteBox.Redraw()
+			Case Keys.A
+				MainNoteBox.Focus()
+				If MainNoteBox.DragNoteNum > 0 Then MainNoteBox.DragNoteNum -= 1
+				If MainNoteBox.LBound > Operation.MainCVS.SegmentList(MainNoteBox.DragNoteNum).StartTime Then
+					MainNoteBox.LBound = Operation.MainCVS.SegmentList(MainNoteBox.DragNoteNum).StartTime
+				End If
+				MainNoteBox.Scale(MainNoteBox.Duration)
+				MainNoteBox.Redraw()
+		End Select
+	End Sub
 End Class

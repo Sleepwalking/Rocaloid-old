@@ -35,6 +35,8 @@ Public Class Operation
 	Public Shared SoundIsPlaying As Boolean = False
 	Public Shared MainNoteBox As NoteBox = MainForm.MainNoteBox
 	Public Shared MainScrollBar As HScrollBar = MainForm.NBoxScrollBar
+	Public Shared SynthesizingSegment As Boolean
+	Public Shared SynthesisSegmentNum As Integer
 	
 	Public Shared RTSynthesisThread As New Thread(AddressOf Scheduler.RunSynthesizer)
 	Public Shared CVESynthesisThread As New Thread(AddressOf CybervoiceEngine.Scheduler.RunSynthesizer)
@@ -52,8 +54,15 @@ Public Class Operation
 				'CONSOLE
 				My.Forms.Console.Send("  Music bar reaches next page.")
 			End If
-			If MainNoteBox.SelectBar > CVSOperation.GetEndTime(MainCVS.SegmentList(MainCVS.SegmentListQ)) Then
-				StopSynthesis()
+			If SynthesizingSegment Then
+				If MainNoteBox.SelectBar > CVSOperation.GetEndTime(MainCVS.SegmentList(SynthesisSegmentNum)) Then
+					StopSynthesis()
+					MainNoteBox.DragNoteNum = SynthesisSegmentNum
+				End If
+			Else
+				If MainNoteBox.SelectBar > CVSOperation.GetEndTime(MainCVS.SegmentList(MainCVS.SegmentListQ)) Then
+					StopSynthesis()
+				End If
 			End If
 			MainNoteBox.Redraw()
 		End If
@@ -134,6 +143,80 @@ Public Class Operation
 		My.Forms.Console.Send("  SoundStartTime = " & SoundStartTime)
 		
 		PlaySound(SoundBuffer, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY Or SoundFlags.SND_LOOP)
+		SynthesizingSegment = False
+		SoundIsPlaying = True
+		MainNoteBox.EditEnabled = False
+		MainNoteBox.SNoteBox.EditEnabled = False
+		
+		'CONSOLE
+		My.Forms.Console.Send("  Sound started.")
+	End Sub
+	
+	Public Shared Sub StartSegmentSynthesis(ByVal Optional StartTime As Double = 0)
+		If SoundIsPlaying Then Exit Sub
+		
+		PlaySound(IntPtr.Zero, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_FILENAME)
+		
+		RTSynthesisThread = New Thread(AddressOf Scheduler.RunSegmentSynthesis)
+		Scheduler.CVS_ = MainCVS
+		
+		'CONSOLE
+		My.Forms.Console.Send("  Synthesis thread created.")
+		
+		Dim StartSegment As Integer = CVSOperation.GetSegment(MainCVS, StartTime)
+		Dim PreSynthesis As Integer = 0
+		
+		'CONSOLE
+		My.Forms.Console.Send("  Start segment = " & StartSegment)
+		My.Forms.Console.Send("  PreSynthesis = " & PreSynthesis)
+		
+		Scheduler.NowSynthesizing = StartSegment
+		SynthesisSegmentNum = StartSegment
+		Scheduler.StartSynthesize = CInt(StartTime * 96000)
+		SoundCounter = 0
+		MixerWriterEffector.SynthesisMode = SynthesisState.PreSynthesis
+		MixerWriterEffector.SynthesisDestCounter = PreSynthesis
+		
+		'CONSOLE
+		My.Forms.Console.Send("  Scheduler -> Start Synthesize = " & Scheduler.StartSynthesize)
+		My.Forms.Console.Send("  MixerWriterEffector -> SynthesisDestCounter = " & MixerWriterEffector.SynthesisDestCounter)
+		
+		RTSynthesisThread.Start()
+		
+		'CONSOLE
+		My.Forms.Console.Send("  Synthesis thread started.")
+		
+		While MixerWriterEffector.SynthesisDestCounter > 0
+			Threading.Thread.Sleep(1)
+			'CONSOLE
+			My.Forms.Console.Send("  Waiting for pre synthesis...")
+			My.Forms.Console.Send("    MixerWriterEffector -> SynthesisDestCounter = " & MixerWriterEffector.SynthesisDestCounter)
+		End While
+		
+		SoundCounter = 0
+		SoundCounter96 = 0
+		SoundStartTime = DateTime.Now
+		SoundStartTime.AddMilliseconds(-PreSynthesis / 96000 * 1000)
+		MixerWriterEffector.SynthesisMode = SynthesisState.RTSynthesis
+		
+		'CONSOLE
+		My.Forms.Console.Send("  SoundStartTime = " & SoundStartTime)
+		
+		While SoundCounter96 < 10000
+			Threading.Thread.Sleep(1)
+			'CONSOLE
+			My.Forms.Console.Send("  Waiting for synthesizing head...")
+			My.Forms.Console.Send("    SoundCounter96 = " & SoundCounter96)
+		End While
+		
+		SoundStartTime = DateTime.Now
+		SoundStartTime.AddMilliseconds(-PreSynthesis / 96000 * 1000)
+		
+		'CONSOLE
+		My.Forms.Console.Send("  SoundStartTime = " & SoundStartTime)
+		
+		PlaySound(SoundBuffer, IntPtr.Zero, SoundFlags.SND_ASYNC Or SoundFlags.SND_MEMORY Or SoundFlags.SND_LOOP)
+		SynthesizingSegment = True
 		SoundIsPlaying = True
 		MainNoteBox.EditEnabled = False
 		MainNoteBox.SNoteBox.EditEnabled = False
@@ -146,7 +229,9 @@ Public Class Operation
 		'CONSOLE
 		My.Forms.Console.Send("  Aborting synthesis thread...")
 		Try
-			RTSynthesisThread.Abort()
+			SyncLock CybervoiceEngine.CVDBContainer.LoaderLock
+				RTSynthesisThread.Abort()
+			End SyncLock
 			'CONSOLE
 			My.Forms.Console.Send("  Synthesis thread was aborted successfully.")
 		Catch

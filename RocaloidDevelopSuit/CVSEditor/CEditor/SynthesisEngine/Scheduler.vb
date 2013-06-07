@@ -80,7 +80,15 @@ Public Class Scheduler
 			CreateLog("Scheduler:	Synthesis finished.")
 		#End If
 	End Sub
-	Public Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
+	
+	Public Shared Sub RunSegmentSynthesis()
+		Dim T1 As Integer
+		T1 = SegmentSynthesize(Synth1, CVS_.SegmentList(NowSynthesizing), Wave1)
+		MixerWriterEffector.Write(Wave1, 0, T1)
+		MixerWriterEffector.WriteBlank(96000 * 10)
+	End Sub
+	
+	Private Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
 										 ByVal _Segment As CVSCommon.Segment, _
 										 ByVal Wave As WaveBuffer) As Integer
 		Synth.SetSegment(_Segment)
