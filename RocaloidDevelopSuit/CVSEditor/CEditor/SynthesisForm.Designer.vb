@@ -67,6 +67,7 @@ Partial Class SynthesisForm
 		Me.Controls.Add(Me.Synthesis_Bar)
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
 		Me.Name = "SynthesisForm"
+		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "CVE Synthesis"
 		Me.TopMost = true
 		Me.ResumeLayout(false)

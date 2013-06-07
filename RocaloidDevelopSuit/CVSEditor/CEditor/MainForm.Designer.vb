@@ -466,7 +466,7 @@ Partial Class MainForm
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 12!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.SystemColors.Control
-		Me.ClientSize = New System.Drawing.Size(731, 411)
+		Me.ClientSize = New System.Drawing.Size(731, 399)
 		Me.Controls.Add(Me.Shrink_Box)
 		Me.Controls.Add(Me.radioButton3)
 		Me.Controls.Add(Me.ADSR_Box)
@@ -481,6 +481,7 @@ Partial Class MainForm
 		Me.Controls.Add(Me.MainMenuStrip)
 		Me.KeyPreview = true
 		Me.Name = "MainForm"
+		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "Rocaloid CVS Editor"
 		AddHandler FormClosing, AddressOf Me.MainFormFormClosing
 		AddHandler Load, AddressOf Me.MainFormLoad

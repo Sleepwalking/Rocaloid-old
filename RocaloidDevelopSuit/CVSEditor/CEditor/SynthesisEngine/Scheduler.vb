@@ -1,5 +1,5 @@
-'    把所有合成器、缓冲器、效果器和CVS读写汇聚在一起的调度器。
-'    The final class which puts all of the Synthesizers, Buffers, Effectors & CVS together.
+'    实时的调度器。
+'    The real time scheduler.
 '    Copyright (C) 2013 Sleepwalking
 '
 '    This program is free software: you can redistribute it and/or modify
