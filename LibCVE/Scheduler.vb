@@ -16,7 +16,7 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 1
 Public Class Scheduler
-	Private Shared CVS_ As CVSCommon.CVS
+	Public Shared CVS_ As CVSCommon.CVS
 	Private Shared Synth1 As SpeechSynthesizer
 	'May enable Synth2 to achieve multi-thread in future.
 	'Public Shared Synth2 As SpeechSynthesizer
@@ -28,6 +28,12 @@ Public Class Scheduler
 		'Synth2 = New SpeechSynthesizer()
 		Wave1 = New WaveBuffer(30.0)
 		Wave2 = New WaveBuffer(30.0)
+		CVDBContainer.LoaderLock = New Object()
+	End Sub
+	Public Shared Sub CloseAll()
+		On Error Resume Next
+		CVDBContainer.Loader.Close()
+		CVDBContainer.Loader.Dispose()
 	End Sub
 	Public Shared Sub OpenCVS(ByVal File As String)
 		CVSCommon.Reader_Open(File)
@@ -74,7 +80,7 @@ Public Class Scheduler
 			CreateLog("Scheduler:	Synthesis finished.")
 		#End If
 	End Sub
-	Friend Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
+	Public Shared Function SegmentSynthesize(ByVal Synth As SpeechSynthesizer, _
 										 ByVal _Segment As CVSCommon.Segment, _
 										 ByVal Wave As WaveBuffer) As Integer
 		Synth.SetSegment(_Segment)

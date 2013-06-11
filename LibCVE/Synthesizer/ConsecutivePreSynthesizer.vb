@@ -17,9 +17,9 @@
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 0
-Friend Class ConsecutivePreSynthesizer
+Public Class ConsecutivePreSynthesizer
 	Inherits Synthesizer
-	Private CVDB As CVDBContainer
+	Public CVDB As CVDBContainer
 	Private Pointer As Integer
 	Private SamplesPassed_ As Integer 'Used to synchronize.
 	Public ReadOnly Property Symbol() As String

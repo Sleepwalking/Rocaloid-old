@@ -15,9 +15,11 @@
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Imports System.IO
-Friend Class MixerWriterEffector
+Public Class MixerWriterEffector
 	Private Shared Writer As BinaryWriter
 	Private Shared FileName As String
+	Public Shared WriterCounter As Integer
+	Public Shared TotalCount As Integer
 	Public Shared Sub SetFileOutput(ByVal File As String)
 		Try
 			Writer = New BinaryWriter(New FileStream(File, FileMode.Create))
@@ -35,6 +37,7 @@ Friend Class MixerWriterEffector
 	Public Shared Overloads Sub Write(ByVal _Double As Double)
 		Try
 			Writer.Write(CShort(_Double * 32767))
+			WriterCounter += 1
 		Catch
 			CreateLog("ERROR. File occupied by another program.")
 		End Try
@@ -42,6 +45,7 @@ Friend Class MixerWriterEffector
 	Public Shared Overloads Sub Write(ByVal _Short As Short)
 		Try
 			Writer.Write(_Short)
+			WriterCounter += 1
 		Catch
 			CreateLog("ERROR. File occupied by another program.")
 		End Try
@@ -51,12 +55,14 @@ Friend Class MixerWriterEffector
 		If Dest > Wave.Pointer Then
 			For i = Start To Wave.Pointer - 1
 				Writer.Write(CShort(Wave.Data(i) * 32767))
+				WriterCounter += 1
 				'Write(Wave.Data(i))
 			Next
 			WriteBlank(Dest - Wave.Pointer)
 		Else
 			For i = Start To Dest - 1
 				Writer.Write(CShort(Wave.Data(i) * 32767))
+				WriterCounter += 1
 				'Write(Wave.Data(i))
 			Next
 		End If

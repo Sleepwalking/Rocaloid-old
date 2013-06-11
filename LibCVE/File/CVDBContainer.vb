@@ -18,9 +18,12 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 0
 Imports System.IO
-Friend Class CVDBContainer
+Public Class CVDBContainer
 	Public Info As CVDBHeader
 	Public Buffer As MultiFrameBuffer
+	Public Shared LoaderStream As FileStream
+	Public Shared Loader As BinaryReader
+	Public Shared LoaderLock As Object
 	Private Name_ As String
 	Private BaseFrame_ As Integer
 	Public ReadOnly Property BaseFrame() As Integer
@@ -78,15 +81,18 @@ Friend Class CVDBContainer
 		Return 0
 	End Function
 	Public Sub Load(ByVal FileName As String)
-		Dim Loader As BinaryReader
-		Dim LoaderStream As FileStream
 		Dim DataLen As Integer
 		Dim Temp16 As Int16
 		Dim b0 As Integer, b1 As Integer
 		Dim FrameCount As Integer, DataCount As Integer, SampleCount As Integer
 		'Use direct calculations instead of BitConverter to improve performance.
 		
-		LoaderStream = New FileStream(Compatibility_DataDir & FileName & ".cbv", FileMode.Open)
+		SyncLock LoaderLock
+		Try
+			LoaderStream = New FileStream(Compatibility_DataDir & FileName & ".cbv", FileMode.Open)
+		Catch
+		End Try
+		
 		DataLen = CInt((LoaderStream.Length - 256) / 2) 'Get data length of .cbv files
 		Loader = New BinaryReader(LoaderStream)
 		
@@ -227,6 +233,7 @@ Friend Class CVDBContainer
 		Loader.Close
 		Loader.Dispose
 		LoaderStream.Dispose
+		End SyncLock
 	End Sub
 	
 End Class

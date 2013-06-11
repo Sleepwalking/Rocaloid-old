@@ -16,10 +16,10 @@
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #Const DebugLevel = 1
 #Const PeriodPredictionEnabled = True
-Friend Class SpeechSynthesizer
+Public Class SpeechSynthesizer
 	Inherits Synthesizer
-	Private PitchSynth1 As PitchPreSynthesizer
-	Private PitchSynth2 As PitchPreSynthesizer
+	Public PitchSynth1 As PitchPreSynthesizer
+	Public PitchSynth2 As PitchPreSynthesizer
 	Private PCalc As PitchCalculator
 	Private Segment As CVSCommon.Segment
 	Private LastTime As Double

@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend MustInherit Class Synthesizer
+Public MustInherit Class Synthesizer
 	Private MixRatio As Double = 0
 	Private MixRatio2 As Double = 0
 	Public Sub SetMixRatio(ByVal _MixRatio As Double)

@@ -14,7 +14,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-Friend Module ByteOperator
+Public Module ByteOperator
 	Public Function ByteToString(ByVal _Byte() As Byte, ByVal _Length As Integer) As String
 		Dim i As Integer, Str As String
 		Str = ""
