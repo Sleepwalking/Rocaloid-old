@@ -1,7 +1,0 @@
-D:\My Documents\GitHub\Rocaloid\LibCVE\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\My Documents\GitHub\Rocaloid\LibCVE\bin\Debug\CybervoiceEngine.exe.config
-D:\My Documents\GitHub\Rocaloid\LibCVE\bin\Debug\CybervoiceEngine.exe
-D:\My Documents\GitHub\Rocaloid\LibCVE\bin\Debug\CybervoiceEngine.pdb
-D:\My Documents\GitHub\Rocaloid\LibCVE\bin\Debug\CVSCommon.dll
-D:\My Documents\GitHub\Rocaloid\LibCVE\obj\x86\Debug\CybervoiceEngine.exe
-D:\My Documents\GitHub\Rocaloid\LibCVE\obj\x86\Debug\CybervoiceEngine.pdb
