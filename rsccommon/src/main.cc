@@ -20,18 +20,26 @@
 
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
+#include "../SPKit/structure/array.h"
 #include "../lib/Overall.h"
 #include "../SPKit/io/terminal.h"
 
 using namespace converter;
+
 int main()
 {
-	string x="Hello world";
-	//cout << "Hello world!" << endl;
-	//cout <<x <<endl;
-	wLine(x);
-	//using namespace Overall;
-	wLine(Overall::PitchList[0]);
+	int i=10,j=100;
+	array<double> x;
+
+	Overall::PtrSwap(i, j);
+	Overall::ObjSwap(i,j);
+	wLine(CInt(i));
+	wLine(CInt(j));
+	//for(i=0;i<12*2;i++)
+	//wLine(Overall::PitchList[i]+Overall::PitchList[i+24]);
+	wLine(Overall::GetPitchByFreq(440.0));
+	wLine(Overall::GetFreqByPitch("C3"));
+	wLine(Overall::GetDoubleSum(x));
 	return 0;
 }
 

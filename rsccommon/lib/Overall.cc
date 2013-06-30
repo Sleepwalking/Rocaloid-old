@@ -20,11 +20,13 @@
 //数据大丢失
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
+#include "../SPKit/structure/array.h"
 #include "Overall.h"
-#include <iostream>
+
 namespace Overall
-{
-	byte WaveHeader[]={
+{//全局模块
+	int VOT;
+	const byte WaveHeader[]={
 			0x52,0x49,0x46,0x46,0x24,0x10,0x1F,0x00,
 			0x57,0x41,0x56,0x45,0x66,0x6D,0x74,0x20,
 			0x10,0x00,0x00,0x00,0x01,0x00,0x01,0x00,
@@ -32,7 +34,7 @@ namespace Overall
 			0x02,0x00,0x10,0x00,0x64,0x61,0x74,0x61,
 			0x00,0x10,0x1F,0x00
 	};
-	string PitchList[]={
+	const string PitchList[]={
 		"C1","C#1","D1","D#1","E1","F1","F#1","G1","G#1","A1","A#1","B1",
 		"C2","C#2","D2","D#2","E2","F2","F#2","G2","G#2","A2","A#2","B2", 
 		"C3","C#3","D3","D#3","E3","F3","F#3","G3","G#3","A3","A#3","B3", 
@@ -52,4 +54,63 @@ namespace Overall
 		1043.478, 1108.73, 1174.659, 1244.508, 1318.51, 1396.913, 
 		1479.978, 1567.982, 1661.219, 1760, 1864.655, 1975.533
 	};
+
+	void PtrSwap(int &p1, int &p2)
+	{
+		int Temp=p1;
+		p1=p2;
+		p2=Temp;
+	}
+
+	double GetDoubleSum(array<double>& Arr)
+	{
+		double Acc;
+		int i;
+		for(i=0;i<=Arr.pointer;i++)
+			Acc+=Arr[i];
+		return Acc;
+	}
+
+	int FreqToPeriod(double Freq)
+	{//频率到样本周期
+		return 1/(Freq * SampleRate);
+	}
+
+	double GetFreqByPitch(string Pitch)
+	{//取音高查表法
+		int i;
+		for(i=0;i<=PitchListQ;i++)
+		{
+			if(Pitch == PitchList[i])
+			{
+				return FreqList[i];
+			}
+		}
+		return 0;
+	}
+
+	string GetPitchByFreq(double Freq)
+	{//从频率取表示
+		int i;
+		for(i=0;i<=PitchListQ;i++)
+		{
+			if ( ( (FreqList[i] + FreqList[i + 1]) / 2 <= Freq) && ( FreqList[i + 1] + FreqList[i + 2] ) / 2 > Freq )
+			{
+				return PitchList[i + 1];
+			}
+		}
+		if ( Freq < (FreqList[0] + FreqList[1])/2 ) return PitchList[0];
+	return PitchList[PitchListQ];
+	}
+	
+	QuadEqu GenerateQuadEquation(double x1, double y1, 
+										 double x2, double y2,  
+										double x3, double y3 )
+	{
+		QuadEqu result;
+		result.a = ((y1 - y2) / (x1 - x2) - (y2 - y3) / (x2 - x3)) / (x1 - x3);
+		result.b= (y1 - y2) / (x1 - x2) - result.a * (x1 + x2);
+		result.c = y1 - result.b * x1 - result.a * x1 * x1;
+		return result;
+	}
 }

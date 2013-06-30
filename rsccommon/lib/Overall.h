@@ -20,8 +20,11 @@
 #ifndef OVERALL_H
 #define OVERALL_H
 
+
+
 namespace Overall
 {
+
 #define SampleRate  96000
 #define INFINITY  99999
 #define PitchListQ  59
@@ -29,8 +32,32 @@ namespace Overall
 #define Pitch_C2  12
 #define WaveHeadLength  44
 
-extern  byte WaveHeader[];
-extern  string PitchList[];
+extern const byte WaveHeader[];
+extern const string PitchList[];
 extern const double FreqList[];
+extern int VOT;//Attack Time
+	
+template <class T>
+static inline void ObjSwap(T &a, T &b)
+{//泛型交换
+	T tmp = a;
+	a = b;
+	b = tmp;
+}
+
+struct QuadEqu
+{
+	double a;
+	double b;
+	double c;
+};
+
+void PtrSwap(int &p1, int &p2);
+extern double GetFreqByPitch(string Pitch);
+extern double GetDoubleSum(array<double>& Arr);
+extern string GetPitchByFreq(double Freq);
+QuadEqu GenerateQuadEquation(double x1, double y1, 
+										 double x2, double y2,  
+										double x3, double y3 );
 }
 #endif /*OVERALL_H */
