@@ -5,4 +5,5 @@ lib_LTLIBRARIES =  \
 	librsccommon.la
 
 librsccommon_la_SOURCES =  \
-	test.cc
+	Overall.cc \
+	Overall.h
