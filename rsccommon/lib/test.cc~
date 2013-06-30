@@ -17,7 +17,7 @@
  */
 
 #include <iostream>
-#include "../SPKit/spkit.h"
+
 int test()
 {
 	std::cout << "Hello world!" << std::endl;

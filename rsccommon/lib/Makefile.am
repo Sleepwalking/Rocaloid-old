@@ -5,4 +5,7 @@ lib_LTLIBRARIES =  \
 	librsccommon.la
 
 librsccommon_la_SOURCES =  \
-	test.cc
+	Overall.cc
+
+librsccommon_la_CFLAGS = -O2 \
+	-g 

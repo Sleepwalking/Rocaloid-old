@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ## Created by Anjuta
 
-SUBDIRS = src po lib
+SUBDIRS = src po lib SPKit
 
 rsccommondocdir = ${prefix}/doc/rsccommon
 rsccommondoc_DATA = \
