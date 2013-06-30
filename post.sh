@@ -8,4 +8,5 @@ echo '输入更新评论'
 read commit
 git add .
 git commit -m "$commit"
+git push
 echo '更新完成'
