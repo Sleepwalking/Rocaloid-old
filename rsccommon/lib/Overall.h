@@ -19,10 +19,7 @@
  */
 #ifndef OVERALL_H
 #define OVERALL_H
-class Overall
-{
-	public:
-		WaveHeader();
-		
+extern byte WaveHeader[];
+extern string PitchList[];
 
 #endif /*OVERALL_H */
