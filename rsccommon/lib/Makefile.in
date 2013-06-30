@@ -74,7 +74,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librsccommon_la_LIBADD =
-am_librsccommon_la_OBJECTS = Overall.lo
+am_librsccommon_la_OBJECTS = test.lo
 librsccommon_la_OBJECTS = $(am_librsccommon_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -262,10 +262,7 @@ lib_LTLIBRARIES = \
 	librsccommon.la
 
 librsccommon_la_SOURCES = \
-	Overall.cc
-
-librsccommon_la_CFLAGS = -O2 \
-	-g 
+	test.cc
 
 all: all-am
 
@@ -341,7 +338,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Overall.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

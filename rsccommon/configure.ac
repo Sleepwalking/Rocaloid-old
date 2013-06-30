@@ -38,8 +38,4 @@ Makefile
 src/Makefile
 po/Makefile.in
 lib/Makefile
-SPKit/Makefile
-SPKit/io/Makefile
-SPKit/misc/Makefile
-SPKit/structure/Makefile
 ])

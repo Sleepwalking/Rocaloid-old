@@ -1,5 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
+ * test.cc only For Test
  * Copyright (C) 2013 Sleepwalking & rgwan <dv.xw@qq.com>
  * 
  * RSCCommon is free software: you can redistribute it and/or modify it
@@ -17,7 +18,7 @@
  */
 
 #include <iostream>
-#include "../SPKit/spkit.h"
+
 int test()
 {
 	std::cout << "Hello world!" << std::endl;

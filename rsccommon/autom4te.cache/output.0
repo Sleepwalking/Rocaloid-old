@@ -16397,7 +16397,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile po/Makefile.in lib/Makefile SPKit/Makefile SPKit/io/Makefile SPKit/misc/Makefile SPKit/structure/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile po/Makefile.in lib/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -17520,10 +17520,6 @@ do
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
-    "SPKit/Makefile") CONFIG_FILES="$CONFIG_FILES SPKit/Makefile" ;;
-    "SPKit/io/Makefile") CONFIG_FILES="$CONFIG_FILES SPKit/io/Makefile" ;;
-    "SPKit/misc/Makefile") CONFIG_FILES="$CONFIG_FILES SPKit/misc/Makefile" ;;
-    "SPKit/structure/Makefile") CONFIG_FILES="$CONFIG_FILES SPKit/structure/Makefile" ;;
     "po/stamp-it") CONFIG_COMMANDS="$CONFIG_COMMANDS po/stamp-it" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
