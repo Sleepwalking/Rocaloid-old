@@ -17,11 +17,21 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
 
+#include "../SPKit/defs.h"
+#include "../SPKit/structure/string.h"
+#include "../lib/Overall.h"
+#include "../SPKit/io/terminal.h"
+
+using namespace converter;
 int main()
 {
-	std::cout << "Hello world!" << std::endl;
+	string x="Hello world";
+	//cout << "Hello world!" << endl;
+	//cout <<x <<endl;
+	wLine(x);
+	//using namespace Overall;
+	wLine(Overall::PitchList[0]);
 	return 0;
 }
 

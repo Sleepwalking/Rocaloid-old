@@ -16,11 +16,11 @@ bin_PROGRAMS =  \
 	rsctool
 
 rsctool_SOURCES =  \
-	main.cc \
-	../SPKit/structure/array.h \
-	../SPKit/structure/string.cc \
-	../SPKit/structure/string.h \
-	../SPKit/io/fileStream.cc \
-	../SPKit/io/fileStream.h \
-	../SPKit/io/memoryStream.h \
-	../SPKit/io/terminal.h
+	main.cc
+
+rsctool_CFLAGS = -O2 \
+	-Wall \
+	-g 
+
+rsctool_LDFLAGS = -lrsccommon \
+	-L../lib/.libs/ 

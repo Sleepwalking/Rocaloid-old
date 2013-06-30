@@ -19,7 +19,18 @@
  */
 #ifndef OVERALL_H
 #define OVERALL_H
-extern byte WaveHeader[];
-extern string PitchList[];
 
+namespace Overall
+{
+#define SampleRate  96000
+#define INFINITY  99999
+#define PitchListQ  59
+#define Pitch_C5  48
+#define Pitch_C2  12
+#define WaveHeadLength  44
+
+extern  byte WaveHeader[];
+extern  string PitchList[];
+extern const double FreqList[];
+}
 #endif /*OVERALL_H */
