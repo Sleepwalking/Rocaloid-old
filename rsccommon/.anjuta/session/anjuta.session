@@ -7,7 +7,7 @@ Shortcut=rsccommon//src//rsctool%%%rsccommon//lib//librsccommon.la
 Expand=rsctool%%%rsccommon%%%rsccommon//lib%%%rsccommon//src%%%rsccommon//src//rsctool
 
 [File Loader]
-Files=../../src/main.cc#22%%%../../lib/test.cc#22%%%../../lib/Overall.h#1
+Files=../../src/main.cc#22%%%../../lib/Overall.h#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
