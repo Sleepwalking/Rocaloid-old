@@ -1,0 +1,29 @@
+[Anjuta]
+Maximized=1
+Geometry=1024x691+0+24
+
+[File Loader]
+Files=../../src/main.cc#22%%%../../lib/test.cc#22
+
+[Document Manager]
+bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Project Manager]
+Shortcut=rsccommon//src//rsctool%%%rsccommon//lib//librsccommon.la
+Expand=rsctool%%%rsccommon%%%rsccommon//lib%%%rsccommon//src%%%rsccommon//src//rsctool
+
+[Execution]
+Program uri=../../src/src/rsctool
+Run in terminal=2
+Working directories=../../../rsccommon
+
+[Build]
+Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
+Selected Configuration=Debug
+BuildArgs/Default=--enable-maintainer-mode
+BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
+BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
+BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
+
+[Debugger]
+Stop at beginning=2
