@@ -3,19 +3,18 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [Project Manager]
-Shortcut=rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/
+Shortcut=rocaloidengine//src%%%rocaloidengine//src
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/
 
 [File Loader]
-Files=../../src/main.cc#25%%%../../SPKit/misc/converter.cc#4%%%../../SPKit/misc/converter.h#6%%%../../configure.ac#1
+Files=../../LibCVSCommon/CVSReader.cc#349%%%../../LibCVSCommon/CVSCommon.cc#27%%%../../LibCVSCommon/RDLIO.cc#108%%%../../src/main.cc#27
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Execution]
-Program uri=../../Debug/src/rsctool%%%../../src/src/rsctool
 Run in terminal=2
-Working directories=../../../../Rocaloid%%%../../../rsccommon
+Working directories=../../../rocaloidengine
 
 [Build]
 Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized

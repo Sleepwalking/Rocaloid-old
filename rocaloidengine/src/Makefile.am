@@ -1,3 +1,11 @@
+
+
+rsctool_CXXFLAGS = -O2 \
+	-Wall \
+	-g  \
+	-I@top_srcdir@/LibCVSCommon/ \
+	 -I@top_srcdir@/LibCyberBase/ \
+	 -I@top_srcdir@/SPKit/
 ## Process this file with automake to produce Makefile.in
 
 .AM_CPPFLAGS = \
@@ -16,12 +24,11 @@ bin_PROGRAMS =  \
 rsctool_SOURCES =  \
 	main.cc
 
-rsctool_CFLAGS = -O2 \
-	-Wall \
-	-g 
-
 rsctool_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 
+	-L../LibCyberBase/.libs/ \
+	-L../LibCVSCommon/.libs/ \
+	-lCVSCommon 
 
 SUBDIRS = \
-	../LibCyberBase/
+	../LibCyberBase/ \
+	../LibCVSCommon/

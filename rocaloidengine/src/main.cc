@@ -18,14 +18,14 @@
  */
 
 #include <stdio.h>
-#include "../SPKit/defs.h"
-#include "../SPKit/structure/string.h"
-#include "../SPKit/structure/array.h"
-#include "../SPKit/io/fileStream.h"
-#include "../SPKit/io/terminal.h"
-#include "../LibCyberBase/Overall.h"
-#include "../LibCyberBase/CVSCommon.h"
-#include "../LibCyberBase/RDLIO.h"
+#include "defs.h"
+#include "structure/string.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
+#include "io/terminal.h"
+#include "Overall.h"
+#include "CVSCommon.h"
+#include "RDLIO.h"
 
 
 
@@ -36,16 +36,7 @@ int main()
 	int i=10,j=100;
 	array<double> x;
 	array<string> z;
-	string filename="/home/rgwan/ramdisk/test.rdl";
-	RDLWriter* rdl = new RDLWriter(filename);
-	rdl->WriteWord("	Hello world,	Rocal   oid!");
-	rdl->NewLine ();
-	rdl->Close ();
-	delete rdl;
-	RDLReader *rdl1=new RDLReader(filename);
-	wLine(rdl1->Read());
-	wLine(rdl1->Read());
-	rdl1 -> Close();
+
 	
 /*	x.push(10);
 	x.push(10);
