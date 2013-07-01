@@ -22,7 +22,9 @@ libCyberBase_la_SOURCES =  \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
 	../SPKit/structure/array.cc \
-	../SPKit/io/terminal.cc
+	../SPKit/io/terminal.cc \
+	RDLIO.cc \
+	RDLIO.h
 
 libCyberBase_la_CFLAGS = -O2 \
 	-Wall \

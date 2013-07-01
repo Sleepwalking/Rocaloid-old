@@ -75,7 +75,8 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = Overall.lo fileStream.lo converter.lo \
-	string.lo stringStream.lo memoryStream.lo array.lo terminal.lo
+	string.lo stringStream.lo memoryStream.lo array.lo terminal.lo \
+	RDLIO.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -296,7 +297,9 @@ libCyberBase_la_SOURCES = \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
 	../SPKit/structure/array.cc \
-	../SPKit/io/terminal.cc
+	../SPKit/io/terminal.cc \
+	RDLIO.cc \
+	RDLIO.h
 
 libCyberBase_la_CFLAGS = -O2 \
 	-Wall \
@@ -377,6 +380,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Overall.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RDLIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/converter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileStream.Plo@am__quote@

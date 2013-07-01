@@ -9,9 +9,7 @@ libCVSCommon_la_SOURCES =  CVSCommon.cc \
 	CVSReader.cc \
 	CVSReader.h \
 	CVSWriter.cc \
-	CVSWriter.h \
-	RDLIO.cc \
-	RDLIO.h
+	CVSWriter.h
 
 libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/\
 	 -I@top_srcdir@/SPKit/\
