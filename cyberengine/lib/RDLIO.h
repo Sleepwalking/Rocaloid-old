@@ -33,16 +33,38 @@
 	bool TestIfIsBoolean(string _String);
 	int TestIfIsPresetedEnvelope(string _String);
 }
+
 class RDLReader
 {
 	public:
 		string Read();
+		RDLReader();
+		void Close();
 	private:
 		//Private Reader As StreamReader
 		string LineBuffer ;
 		int LineBufferQ ;
 		int LineBufferPointer; 
 		string StrStore;
+};
+
+class RDLWriter
+{
+	public:
+		RDLWriter();
+		bool NewLineValid;
+		void WriteWord(string _String);
+		void WriteWord(int Integer);
+		void WriteWord(double Double);
+		void WriteWord(bool Boolean);
+		void WritePresetedEnvelope(int _Envelopes);
+		void NewLine();
+		void IndentPush();
+		void IndentPop();
+		void Close();
+	private:
+		string Indent;
+		int LastWrite;
 };
  #endif /*RDLIO _H */
  

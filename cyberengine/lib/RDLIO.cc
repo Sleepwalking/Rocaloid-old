@@ -109,3 +109,85 @@ using namespace Overall;
 		Exception(_String + " is not a valid PresetedEnvelope!");
 	}
 }
+
+//class RDLReader
+RDLReader::RDLReader()
+{
+	LineBufferQ = 0;
+	LineBufferPointer = 0;
+}
+void RDLReader::Close()
+{
+		//Reader.Close()
+}
+
+//class RDLWriter
+using namespace converter;
+RDLWriter::RDLWriter()
+{
+	//Writer = New StreamWriter(File)
+	Indent = CStr("");
+	LastWrite = 0;
+}
+void RDLWriter::WriteWord(string _String)
+{
+		switch( LastWrite)
+		{
+			case 0:
+				//Writer.Write(_String);
+			break;
+			case 1:
+				//Writer.Write(Indent & _String);
+			break;
+			case 2:
+				//Writer.Write(" " & _String);
+			break;
+		}
+		LastWrite = 2;
+}
+void RDLWriter::WriteWord(int Integer)
+{
+	WriteWord (CStr(Integer));
+}
+void RDLWriter::WriteWord(double Double)
+{
+	WriteWord (CStr(Double));
+}
+void RDLWriter::WriteWord(bool Boolean)
+{
+	WriteWord (CStr(Boolean));
+}
+void RDLWriter::WritePresetedEnvelope(int _Envelopes)
+{
+	switch(_Envelopes)
+	{
+		//case Envelopes.ADSR:
+			WriteWord("ADSR");
+	}
+}
+void RDLWriter::NewLine()
+{
+	if(NewLineValid)
+	{
+		//Writer.WriteLine
+		LastWrite=1;
+	}
+}
+void RDLWriter::IndentPush()
+{
+	if(NewLineValid)
+	{
+		Indent=Indent+" ";
+	}
+}
+void RDLWriter::IndentPop()
+{
+	if(NewLineValid)
+	{
+		Indent = left(Indent, Indent.getLength() - 1);
+	}
+}
+void RDLWriter::Close()
+{
+	//Write.Close
+}

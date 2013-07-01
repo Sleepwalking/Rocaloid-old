@@ -8,7 +8,7 @@
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * RSCCommon is distributed in the hope that it will be useful, but
+ * RSCTool is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -45,7 +45,7 @@ int main()
 	wLine(GetDoubleSum(x));
 	wLine(y);
 	wLine(RDLIO::TestIfIsInt("123.4"));
-	wLine(RDLIO::TestIfIsBoolean("True"));
+	wLine(RDLIO::TestIfIsPresetedEnvelope("ADSR"));
 	//Exception("Joke");
 	return 0; 
 }
