@@ -1,4 +1,9 @@
 #include "fileStream.h"
+#include "../structure/string.h"
+#include "../structure/array.h"
+#include "../misc/memopr.h"
+#include <string.h>
+#include <stdlib.h>
 char fModes[5][5] = {"rb", "wb", "rwb+", "ab+", "wb+"};
 binaryStream::binaryStream()
 {
@@ -277,6 +282,7 @@ string textStream::readWord()
 		fread(&tmpchar, 1, 1, fStream);
 	}
 	
+	fseek(fStream, filePtr, SEEK_SET);
 	do
 	{
 		fread(&tmpchar, 1, 1, fStream);

@@ -36,14 +36,17 @@ int main()
 	int i=10,j=100;
 	array<double> x;
 	array<string> z;
-	string y;
-	RDLWriter* rdl = new RDLWriter("/home/rgwan/test.rdl");
-	rdl->WriteWord("Hello world,Rocaloid!");
+	string filename="/home/rgwan/ramdisk/test.rdl";
+	RDLWriter* rdl = new RDLWriter(filename);
+	rdl->WriteWord("	Hello world,	Rocal   oid!");
 	rdl->NewLine ();
 	rdl->Close ();
 	delete rdl;
-	RDLReader *rdl1=new RDLReader("/home/rgwan/test.rdl");
+	RDLReader *rdl1=new RDLReader(filename);
+	wLine(rdl1->Read());
+	wLine(rdl1->Read());
 	rdl1 -> Close();
+	
 /*	x.push(10);
 	x.push(10);
 	PtrSwap(i, j);

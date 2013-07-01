@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "../SPKit/defs.h"
+#include "../SPKit/io/terminal.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/misc/converter.h"
 #include "../SPKit/structure/array.h"
@@ -124,7 +125,7 @@ RDLReader::RDLReader(string File)
 }
 string RDLReader::Read()
 {
-	return Reader.readLine();
+	return Reader.readWord();
 }
 void RDLReader::Close()
 {
@@ -135,8 +136,7 @@ void RDLReader::Close()
 
 RDLWriter::RDLWriter(string FileName)
 {
-	if(Writer.open(FileName,READWRITE)==false)
-		Writer.open(FileName,CREATE);
+	Writer.open(FileName,CREATE);
 	Indent = "";
 	LastWrite = 0;
 }

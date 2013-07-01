@@ -5,21 +5,18 @@
 #include "../misc/memopr.h"
 #include "../misc/converter.h"
 using namespace converter;
-class terminal
+namespace terminal
 {
-	public:
 		static string readLine();
 		
-		static void write(const char* str);
-		static void write(string str);
+		void write(const char* str);
+		void write(string str);
 		template <class T> static void write(T source);
 		
-		static void writeLine(const char* str);
-		static void writeLine(string str);
+		void writeLine(const char* str);
+		void writeLine(string str);
 		template <class T> static void writeLine(T source);
-};
-
-string terminal::readLine()
+string inline readLine()
 {
 	char buffer[4096];
 	string ret;
@@ -30,39 +27,42 @@ string terminal::readLine()
 
 inline void directPrint(const char* str)
 {
-	printf(str, 0);
+	puts(str);
 }
-void terminal::write(const char* str)
+void inline write(const char* str)
 {
 	directPrint(str);
 }
-void terminal::write(string str)
+void inline write(string str)
 {
 	char* chars = str.toChars();
 	directPrint(chars);
 	mem_free(chars);
 }
-template <class T> void terminal::write(T source)
+template <class T> void write(T source)
 {
 	terminal:write(CStr(source));
 }
-void terminal::writeLine(const char* str)
+void inline writeLine(const char* str)
 {
 	directPrint(str);
-	directPrint("\n");
+	//directPrint("\n");
 }
-void terminal::writeLine(string str)
+void inline writeLine(string str)
 {
 	char* chars = str.toChars();
 	directPrint(chars);
-	directPrint("\n");
+	//directPrint("\n");
 	mem_free(chars);
 }
-template <class T> void terminal::writeLine(T source)
+template <class T> void writeLine(T source)
 {
 	char* chars = CStr(source).toChars();
 	directPrint(chars);
-	directPrint("\n");
+	//directPrint("\n");
 	mem_free(chars);
 }
+};
+
+
 #endif
