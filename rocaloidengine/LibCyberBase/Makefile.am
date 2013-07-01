@@ -19,10 +19,6 @@ libCyberBase_la_SOURCES =  \
 	../SPKit/structure/string.cc \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h \
-	RDLIO.cc \
-	RDLIO.h \
-	CVSCommon.cc \
-	CVSCommon.h \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
 	../SPKit/structure/array.cc \

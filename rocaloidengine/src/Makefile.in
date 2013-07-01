@@ -47,14 +47,14 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_rsctool_OBJECTS = main.$(OBJEXT)
+am_rsctool_OBJECTS = rsctool-main.$(OBJEXT)
 rsctool_OBJECTS = $(am_rsctool_OBJECTS)
 rsctool_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 rsctool_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(rsctool_CXXFLAGS) \
 	$(CXXFLAGS) $(rsctool_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -273,6 +273,13 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+rsctool_CXXFLAGS = -O2 \
+	-Wall \
+	-g  \
+	-I@top_srcdir@/LibCVSCommon/ \
+	 -I@top_srcdir@/LibCyberBase/ \
+	 -I@top_srcdir@/SPKit/
+
 .AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
@@ -285,15 +292,14 @@ AM_CFLAGS = \
 rsctool_SOURCES = \
 	main.cc
 
-rsctool_CFLAGS = -O2 \
-	-Wall \
-	-g 
-
 rsctool_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 
+	-L../LibCyberBase/.libs/ \
+	-L../LibCVSCommon/.libs/ \
+	-lCVSCommon 
 
 SUBDIRS = \
-	../LibCyberBase/
+	../LibCyberBase/ \
+	../LibCVSCommon/
 
 all: all-recursive
 
@@ -382,7 +388,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-main.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -404,6 +410,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
+rsctool-main.o: main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-main.o -MD -MP -MF $(DEPDIR)/rsctool-main.Tpo -c -o rsctool-main.o `test -f 'main.cc' || echo '$(srcdir)/'`main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-main.Tpo $(DEPDIR)/rsctool-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cc' object='rsctool-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-main.o `test -f 'main.cc' || echo '$(srcdir)/'`main.cc
+
+rsctool-main.obj: main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-main.obj -MD -MP -MF $(DEPDIR)/rsctool-main.Tpo -c -o rsctool-main.obj `if test -f 'main.cc'; then $(CYGPATH_W) 'main.cc'; else $(CYGPATH_W) '$(srcdir)/main.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-main.Tpo $(DEPDIR)/rsctool-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cc' object='rsctool-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-main.obj `if test -f 'main.cc'; then $(CYGPATH_W) 'main.cc'; else $(CYGPATH_W) '$(srcdir)/main.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
