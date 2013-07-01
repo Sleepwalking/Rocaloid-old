@@ -75,7 +75,7 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = Overall.lo fileStream.lo converter.lo \
-	string.lo RDLIO.lo
+	string.lo RDLIO.lo CVSCommon.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -294,7 +294,9 @@ libCyberBase_la_SOURCES = \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h \
 	RDLIO.cc \
-	RDLIO.h
+	RDLIO.h \
+	CVSCommon.cc \
+	CVSCommon.h
 
 libCyberBase_la_CFLAGS = -Os \
 	-Wall 
@@ -373,6 +375,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CVSCommon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Overall.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RDLIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/converter.Plo@am__quote@

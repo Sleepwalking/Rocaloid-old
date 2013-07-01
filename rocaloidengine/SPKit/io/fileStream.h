@@ -20,7 +20,7 @@ class binaryStream
 		binaryStream();
 		~binaryStream();
 		
-		bool open(string& path, openMode fileMode);
+		//bool open(string& path, openMode fileMode);
 		bool open(string path, openMode fileMode);
 		bool open(const char* path, openMode fileMode);
 		void close();

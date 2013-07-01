@@ -38,7 +38,7 @@ class RDLReader
 {
 	public:
 		string Read();
-		RDLReader();
+		RDLReader(string File);
 		void Close();
 	private:
 		//Private Reader As StreamReader
@@ -46,12 +46,13 @@ class RDLReader
 		int LineBufferQ ;
 		int LineBufferPointer; 
 		string StrStore;
+		textStream Reader;
 };
 
 class RDLWriter
 {
 	public:
-		RDLWriter();
+		RDLWriter(string File);
 		bool NewLineValid;
 		void WriteWord(string _String);
 		void WriteWord(int Integer);
@@ -65,6 +66,7 @@ class RDLWriter
 	private:
 		string Indent;
 		int LastWrite;
+		textStream Writer;
 };
  #endif /*RDLIO _H */
  

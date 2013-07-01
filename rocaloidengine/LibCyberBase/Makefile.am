@@ -20,7 +20,9 @@ libCyberBase_la_SOURCES =  \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h \
 	RDLIO.cc \
-	RDLIO.h
+	RDLIO.h \
+	CVSCommon.cc \
+	CVSCommon.h
 
 libCyberBase_la_CFLAGS = -Os \
 	-Wall 

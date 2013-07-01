@@ -21,6 +21,7 @@
 #include "../SPKit/structure/string.h"
 #include "../SPKit/misc/converter.h"
 #include "../SPKit/structure/array.h"
+#include "../SPKit/io/fileStream.h"
 #include "Overall.h"
 #include "RDLIO.h"
 
@@ -111,7 +112,7 @@ using namespace Overall;
 }
 
 //class RDLReader
-RDLReader::RDLReader()
+RDLReader::RDLReader(string File)
 {
 	LineBufferQ = 0;
 	LineBufferPointer = 0;
@@ -123,9 +124,9 @@ void RDLReader::Close()
 
 //class RDLWriter
 using namespace converter;
-RDLWriter::RDLWriter()
+RDLWriter::RDLWriter(string File)
 {
-	//Writer = New StreamWriter(File)
+	Writer.open(File,READWRITE);
 	Indent = CStr("");
 	LastWrite = 0;
 }
@@ -134,13 +135,13 @@ void RDLWriter::WriteWord(string _String)
 		switch( LastWrite)
 		{
 			case 0:
-				//Writer.Write(_String);
+				Writer.write(_String);
 			break;
 			case 1:
-				//Writer.Write(Indent & _String);
+				Writer.write(Indent + _String);
 			break;
 			case 2:
-				//Writer.Write(" " & _String);
+				Writer.write(CStr(" ") + _String);
 			break;
 		}
 		LastWrite = 2;
@@ -169,7 +170,7 @@ void RDLWriter::NewLine()
 {
 	if(NewLineValid)
 	{
-		//Writer.WriteLine
+		Writer.write("\n");
 		LastWrite=1;
 	}
 }
@@ -189,5 +190,5 @@ void RDLWriter::IndentPop()
 }
 void RDLWriter::Close()
 {
-	//Write.Close
+	Writer.close();
 }
