@@ -25,9 +25,7 @@
 #include "io/terminal.h"
 #include "Overall.h"
 #include "CVSCommon.h"
-#include "RDLIO.h"
-
-
+#include "CVSWriter.h"
 
 using namespace Overall;
 
@@ -36,24 +34,12 @@ int main()
 	int i=10,j=100;
 	array<double> x;
 	array<string> z;
+	string str;
+	CVSReader::Open(
+	CVSWriter::Save("/home/rgwan/ramdisk/test.cvs");
+	CVSWriter::Close();
 
-	
-/*	x.push(10);
-	x.push(10);
-	PtrSwap(i, j);
-	ObjSwap(i,j);
-	wLine(CInt(i));
-	wLine(CInt(j));
-	//for(i=0;i<12*2;i++)
-	//wLine(Overall::PitchList[i]+Overall::PitchList[i+24]);
-	wLine(GetPitchByFreq(440.0));
-	wLine(GetFreqByPitch("C3"));
-	wLine(GetDoubleSum(x));
-	wLine(y);
-	wLine(RDLIO::TestIfIsInt("123.4"));
-	wLine(RDLIO::TestIfIsPresetedEnvelope("ADSR"));*/
-	
-	//Exception("Joke");
+
 	return 0; 
 }
 

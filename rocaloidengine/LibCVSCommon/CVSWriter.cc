@@ -20,12 +20,12 @@
 //  CVS文件写入函数
 //  Provides CVS writing functions.
 #include <stdio.h>
-#include "../SPKit/defs.h"
-#include "../SPKit/io/terminal.h"
-#include "../SPKit/structure/string.h"
-#include "../SPKit/misc/converter.h"
-#include "../SPKit/structure/array.h"
-#include "../SPKit/io/fileStream.h"
+#include "defs.h"
+#include "io/terminal.h"
+#include "structure/string.h"
+#include "misc/converter.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
 
 #include "Overall.h"
 #include "CVSCommon.h"
@@ -37,7 +37,7 @@ namespace CVSWriter
 	using namespace CVSCommon;
 	RDLWriter Writer;
 	
-	void Writer_Save(string File)
+	void Save(string File)
 	{
 		Writer.Open(File);
 		Writer.WriteWord("#CVS");
@@ -45,7 +45,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void Writer_Close()
+	void Close()
 	{
 		Writer.Close();
 	}
@@ -118,7 +118,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void ADSREnvelope_Write( ADSREnvelope _ADSR)
+	void ADSREnvelope_Write(ADSREnvelope _ADSR)
 	{
 		Writer.WriteWord("ADSR");
 		
@@ -210,11 +210,11 @@ namespace CVSWriter
 		if (_Effects.PElopeEnabled )
 		{
 			Writer.WriteWord("PresetedEnvelope");
-			Writer.WritePresetedEnvelope(Envelopes(_Effects.PresetedEnvelope));
+			Writer.WritePresetedEnvelope(_Effects.PresetedEnvelope);
 			Writer.NewLine();
-			switch (Envelopes(_Effects.PresetedEnvelope))
+			switch (_Effects.PresetedEnvelope)
 			{
-				case  (ADSR):
+				case  E_ADSR:
 					ADSREnvelope_Write(_Effects.ADSR);
 					break;
 			}

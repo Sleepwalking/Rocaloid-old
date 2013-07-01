@@ -2,15 +2,12 @@
 Maximized=1
 Geometry=1024x691+0+24
 
-[Project Manager]
-Shortcut=rocaloidengine//src%%%rocaloidengine//src
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/
-
-[File Loader]
-Files=../../LibCVSCommon/CVSReader.cc#349%%%../../LibCVSCommon/CVSCommon.cc#27%%%../../LibCVSCommon/RDLIO.cc#108%%%../../src/main.cc#27
-
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Project Manager]
+Shortcut=rocaloidengine//src//rsctool%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la
+Expand=rocaloidengine%%%rocaloidengine//src
 
 [Execution]
 Run in terminal=2

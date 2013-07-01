@@ -25,13 +25,12 @@
 #include "../SPKit/io/fileStream.h"
 
 #include "Overall.h"
-#include "CVSCommon.h"
 #include "RDLIO.h"
 
 using namespace Overall;
  namespace RDLIO
 {	
-	void TestIfIsNumber(string _String)
+	bool TestIfIsNumber(string _String)
 	{
 		char *str=_String.unsafeHandle ();
 		int i,len=_String.getLength();
@@ -40,24 +39,26 @@ using namespace Overall;
 		{
 			if((str[i] < '0' || str[i] > '9') && str[i]!='.')
 			{
-				Exception( _String + "  is n't a number!");
+				//Exception( _String + "  is n't a number!");
+				return false;
 			}
 		}
+		return true;
 	}
 	int TestIfIsDouble(string _String)
 	{
-		TestIfIsNumber(_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		return converter::CDbl(_String);
 	}
 	int TestIfIsInt(string _String)
 	{
-		TestIfIsNumber(_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		return converter::CInt(_String);
 	}
 	double TestIfIsDoubleAndPositive(string _String)
 	{
 		double x;
-		TestIfIsNumber (_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		x= converter::CDbl(_String);
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
@@ -67,7 +68,7 @@ using namespace Overall;
 	int TestIfIsIntAndPositive(string _String) 
 	{
 		int x;
-		TestIfIsNumber (_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		x= converter::CInt(_String);
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
@@ -76,7 +77,7 @@ using namespace Overall;
 	double TestIfIsDoubleNotNegative(string _String)
 	{
 		double x;
-		TestIfIsNumber (_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		x= converter::CDbl(_String);
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
@@ -86,7 +87,7 @@ using namespace Overall;
 	int TestIfIsIntNotNegative(string _String) 
 	{
 		int x;
-		TestIfIsNumber (_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
 		x= converter::CInt(_String);
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
@@ -96,7 +97,7 @@ using namespace Overall;
 	{
 		string t;
 		t=lowerCase(_String);
-		if (t== converter::CStr("true"))
+		if ( t == converter::CStr("true"))
 		{
 			return true;
 		}
@@ -105,23 +106,26 @@ using namespace Overall;
 			return false;
 		}
 		Exception ( _String + "  is not a boolean. Only true or false are allowed.");
+		return false;
 	}
 	int TestIfIsPresetedEnvelope(string _String)
 	{
 		if( _String == converter::CStr("ADSR"))
 			return 0;
-		Exception(_String + " is not a valid PresetedEnvelope!");
+		else
+			Exception(_String + " is not a valid PresetedEnvelope!");
+		return -1;
 	}
 }
 
 using namespace converter;
 //class RDLReader
-RDLReader::RDLReader(string File)
+void RDLReader::Open(string FileName)
 {
 	LineBufferQ = 0;
 	LineBufferPointer = 0;
-	if(Reader.open(File,READONLY)==false)
-		Exception(CStr("This file: ") + File + " is not found!");
+	if(Reader.open(FileName,READONLY)==false)
+		Exception(CStr("This file: ") + FileName + " is not found!");
 }
 string RDLReader::Read()
 {
@@ -134,9 +138,10 @@ void RDLReader::Close()
 
 //class RDLWriter
 
-RDLWriter::RDLWriter(string FileName)
+void RDLWriter::Open(string FileName)
 {
-	Writer.open(FileName,CREATE);
+	if(Writer.open(FileName,CREATE)==false)
+		Exception(CStr("I CANNOT Create File: ") + FileName);
 	Indent = "";
 	LastWrite = 0;
 }
@@ -177,11 +182,11 @@ void RDLWriter::WriteWord(bool Boolean)
 	WriteWord (CStr(Boolean));
 }
 
-void RDLWriter::WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes)
+void RDLWriter::WritePresetedEnvelope(int  _Envelopes)
 {
 	switch(_Envelopes)
 	{
-		case CVSCommon::ADSR:
+		case E_ADSR:
 			WriteWord("ADSR");
 		break;
 	}

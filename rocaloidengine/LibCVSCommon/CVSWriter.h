@@ -17,14 +17,14 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
- #ifndef CVSWriter_H
- #define CVSWriter_H
+ #ifndef CVSH
+ #define CVSH
 
  namespace CVSWriter
 {
 	using namespace CVSCommon;
-	void Writer_Save(string File);
-	void Writer_Close();
+	void Save(string File);
+	void Close();
 	void TPhone_Write(TPhone _TPhone);
 	void Freq_Write(FreqSet _Freq);
 	void ADSREnvelope_Write( ADSREnvelope _ADSR);

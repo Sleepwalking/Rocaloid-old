@@ -76,7 +76,6 @@
 		double Release;
 	};
 
-
 	struct EffectCollection
 	{
 		double Shrink;
@@ -105,12 +104,10 @@
 		array<Segment>  SegmentList;
 		int SegmentListQ;
 	};
-	enum Envelopes
-	{
-		ADSR = 0
-	};
 
 	#define CVS_VERSION "1.6"
+	#define CStr(x) converter::CStr(x)
+	#define CInt(x) converter::CInt(x)
 }
 
  #endif /*NOMMOCSVC _H */

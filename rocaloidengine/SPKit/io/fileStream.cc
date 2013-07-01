@@ -146,7 +146,7 @@ ulong binaryStream::readULong()
 }
 string binaryStream::readString()
 {
-	int count;
+	//int count;
 	char tmpchar;
 	array<char> tmp;
 	string ret;

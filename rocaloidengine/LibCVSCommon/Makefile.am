@@ -4,17 +4,18 @@
 lib_LTLIBRARIES =  \
 	libCVSCommon.la
 
-libCVSCommon_la_SOURCES =  CVSCommon.cc \
+#libCVSCommon_la_CXXFLAGS = 
+
+libCVSCommon_la_SOURCES =  \
+	CVSCommon.cc \
 	CVSCommon.h \
 	CVSReader.cc \
 	CVSReader.h \
 	CVSWriter.cc \
-	CVSWriter.h \
-	RDLIO.cc \
-	RDLIO.h
+	CVSWriter.h
 
-libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/\
-	 -I@top_srcdir@/SPKit/\
+libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
+	-I@top_srcdir@/SPKit/ \
 	-O2 \
 	-Wall \
 	-g 

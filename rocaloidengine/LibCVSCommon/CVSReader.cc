@@ -18,31 +18,32 @@
   * along with this program. if (not, see <http://www.gnu.org/licenses/>.
   */
 #include <stdio.h>
-#include "../SPKit/defs.h"
-#include "../SPKit/io/terminal.h"
-#include "../SPKit/structure/string.h"
-#include "../SPKit/misc/converter.h"
-#include "../SPKit/structure/array.h"
-#include "../SPKit/io/fileStream.h"
+#include "defs.h"
+#include "io/terminal.h"
+#include "structure/string.h"
+#include "misc/converter.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
 
 #include "Overall.h"
 #include "CVSCommon.h"
 #include "RDLIO.h"
 #include "CVSReader.h"
 
- /*namespace CVSReader
+namespace CVSReader
 {
+	using namespace CVSCommon;
 	RDLReader Reader;
 	
 	void Reader_Open(string File)
 	{
 		Reader.Open(File);
-		if (!(Reader.Read() == converter::CStr("#CVS")))
+		if (!(Reader.Read() == CStr("#CVS")))
 		{
 			//Not Cybervoice Script
 			Exception("The file is not a Cybervoice Script !");
 		}
-		if (!(Reader.Read() == converter::CStr(CVS_VERSION)) )
+		if (!(Reader.Read() == CStr(CVS_VERSION)) )
 		{//Version mismatch
 			Exception("Wrong CVS version.");
 		}
@@ -52,303 +53,409 @@
 	{
 		Reader.Close();
 	}
+
+	void inline Detect_WrongEnd()
+	{
+		if ( ! (Reader.Read() == "End" ) )
+		{
+			Exception("List without an End.");
+		}
+	}
+
+	void BreathStruct_Read(BreathStruct & _Breath)
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Magnitude" )
+			{
+					StrBuff = Reader.Read();
+					_Breath.Magnitude = RDLIO::TestIfIsDouble(StrBuff);
+			}
+		}
+	}	
+
+	void EnvelopeSet_Read( EnvelopeSet & _EnvelopeSet)
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Time")
+			{
+					StrBuff = Reader.Read();
+					_EnvelopeSet.Time = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Amplitude" )
+			{
+					StrBuff = Reader.Read();
+					_EnvelopeSet.Amplitude = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else
+			{
+					//Error
+			}
+		}
+	}
+	
+	void ADSREnvelope_Read(ADSREnvelope & _ADSREnvelope  )
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Amplitude" )
+			{
+					StrBuff = Reader.Read();
+					_ADSREnvelope.Amplitude = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Attack" )
+			{
+					StrBuff = Reader.Read();
+					_ADSREnvelope.Attack = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Decline" )
+			{
+					StrBuff = Reader.Read();
+					_ADSREnvelope.Decline = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Release" )
+			{
+					StrBuff = Reader.Read();
+					_ADSREnvelope.Release = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else
+			{
+					//Error
+			}
+		}
+	}
+	
+	
+	void Effects_Read(EffectCollection & _Effects)
+	{
+		string StrBuff;
+		int i ;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Shrink" )
+			{
+				StrBuff = Reader.Read();
+				_Effects.Shrink = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "ForwardCut" )
+			{
+					StrBuff = Reader.Read();
+					_Effects.ForwardCut = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "EnvelopeListQ")
+			{
+				StrBuff = Reader.Read();
+				_Effects.EnvelopeListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
+				_Effects.EnvelopeList.setUbound ( _Effects.EnvelopeListQ + 1);
+			}
+			else if ( StrBuff == "EnvelopeList" )
+			{
+				for ( i=0 ; i<= _Effects.EnvelopeListQ ; i++)
+					EnvelopeSet_Read(_Effects.EnvelopeList[i]);
+				Detect_WrongEnd ();
+			}
+			else if ( StrBuff == "ElistEnabled" )
+			{
+					StrBuff = Reader.Read();
+					_Effects.ElistEnabled = RDLIO::TestIfIsBoolean(StrBuff);
+			}
+			else if ( StrBuff == "PElopeEnabled" )
+			{
+					StrBuff = Reader.Read();
+					_Effects.PElopeEnabled = RDLIO::TestIfIsBoolean(StrBuff);
+			}
+			else if ( StrBuff == "PresetedEnvelope" )
+			{
+					StrBuff = Reader.Read();
+					_Effects.PresetedEnvelope = RDLIO::TestIfIsPresetedEnvelope(StrBuff);
+			}
+			else if ( StrBuff == "ADSR" )
+			{
+				ADSREnvelope_Read(_Effects.ADSR);
+			}
+			else if ( StrBuff == "OpennessList" )
+			{
+				for ( i=0 ; i<= _Effects.OpennessList.getUbound () ; i++ )
+				{
+						StrBuff = Reader.Read();
+						_Effects.OpennessList[i] = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+				}
+			}
+			else if ( StrBuff == "Vibration")
+			{
+					//Preserved
+			}
+			else if ( StrBuff == "Breath")
+			{
+					BreathStruct_Read(_Effects.Breath);
+			}
+			else
+			{
+					//Error
+			}
+		}
+	}
+	
+	void FreqSet_Read( FreqSet & _FreqSet )
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Time" )
+			{
+					StrBuff = Reader.Read();
+					_FreqSet.Time = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Freq" )
+			{
+					StrBuff = Reader.Read();
+					_FreqSet.Freq = RDLIO::TestIfIsDoubleAndPositive(StrBuff);
+			}
+			else 
+			{
+					//Error
+			}
+		}
+	}
+	
+	void TStart_Read(TStart & _Start)
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Type" ) 
+			{
+				StrBuff = Reader.Read();
+				StrBuff = lowerCase(StrBuff);
+				if (StrBuff == "new" )
+				{
+					_Start.Type = true;
+				}
+				else if (StrBuff == "preserved" )
+				{
+						_Start.Type = false;
+				}
+				else
+				{
+						Exception( CStr ("Invalid syllable type identifier as ") + StrBuff + ".");
+				}
+			}
+			else if ( StrBuff ==  "Symbol" )
+			{
+					StrBuff = Reader.Read();
+					_Start.Symbol = StrBuff;
+			}
+			else if ( StrBuff ==  "Preserved" )
+			{
+				StrBuff = Reader.Read();
+				if ( RDLIO::TestIfIsNumber(StrBuff) )
+				{
+					_Start.Preserved = CInt(StrBuff);
+				}
+				else
+				{
+					Exception( CStr ("Invalid preserved buffer as ") + StrBuff + ".");
+				}
+				if (_Start.Preserved != 1 && _Start.Preserved != 2 )
+						Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");				
+			}
+			else
+			{
+				//Error
+			}
+		}
+	}
+	
+	void TDest_Read(TDest & _Dest)
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Type" ) 
+			{
+				StrBuff = Reader.Read();
+				StrBuff = lowerCase(StrBuff);
+				if (StrBuff == "new" )
+				{
+					_Dest.Type = true;
+				}
+				else if (StrBuff == "preserved" )
+				{
+						_Dest.Type = false;
+				}
+				else
+				{
+						Exception( CStr ("Invalid syllable type identifier as ") + StrBuff + ".");
+				}
+			}
+			else if ( StrBuff ==  "Symbol" )
+			{
+					StrBuff = Reader.Read();
+					_Dest.Symbol = StrBuff;
+			}
+			else if ( StrBuff ==  "Preserved" )
+			{
+				StrBuff = Reader.Read();
+				if ( RDLIO::TestIfIsNumber(StrBuff) )
+				{
+					_Dest.Preserved = CInt(StrBuff);
+				}
+				else
+				{
+					Exception( CStr ("Invalid preserved buffer as ") + StrBuff + ".");
+				}
+				if (_Dest.Preserved != 1 && _Dest.Preserved != 2 )
+						Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");				
+			}
+			else
+			{
+				//Error
+			}
+		}
+	}
+	
+	void TTransition_Read(TTransition &  _Transition)
+	{
+		string StrBuff ;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "StartRatio")
+			{
+					StrBuff = Reader.Read();
+					_Transition.StartRatio = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "EndRatio")
+			{
+					StrBuff = Reader.Read();
+					_Transition.EndRatio = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+			}
+			else if ( StrBuff == "Time" )
+			{
+					StrBuff = Reader.Read();
+					_Transition.Time = RDLIO::TestIfIsDoubleAndPositive(StrBuff);
+			}
+			else
+			{
+					//Error
+			}
+		}
+}
+	
+	void TPhone_Read(TPhone & _TPhone)
+	{
+		string StrBuff;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "Start")
+			{
+				TStart_Read(_TPhone.Start);
+			}
+			else if ( StrBuff == "Dest" )
+			{
+				TDest_Read(_TPhone.Dest);
+			}
+			else if ( StrBuff == "Transition" ) 
+			{
+				TTransition_Read(_TPhone.Transition);
+			}
+			else
+			{
+				//Error
+			}
+		}
+	}
+	
+	void Segment_Read(Segment & _Segment )
+	{
+		string StrBuff;
+		int i;
+		while( ! (StrBuff == "End") )
+		{
+			StrBuff = Reader.Read();
+			if ( StrBuff == "TPhoneListQ" )
+			{
+				StrBuff = Reader.Read();
+				_Segment.TPhoneListQ =RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
+				_Segment.Effects.OpennessList.setUbound (_Segment.TPhoneListQ + 1);
+				for (i = 0 ; i <=  (_Segment.TPhoneListQ + 1) ; i++ )
+				{
+					_Segment.Effects.OpennessList[i] = 1;
+				}
+				_Segment.TPhoneList.setUbound ( _Segment.TPhoneListQ + 1);
+			}
+			else if ( StrBuff == "TPhoneList")
+			{
+				for ( i=0 ; i <=  _Segment.TPhoneListQ ; i++)
+					TPhone_Read(_Segment.TPhoneList[i]);
+				Detect_WrongEnd();
+			}
+			else if ( StrBuff == "FreqListQ" )
+			{
+				StrBuff = Reader.Read();
+				_Segment.FreqListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
+				_Segment.FreqList.setUbound (_Segment.FreqListQ + 1);
+			}
+			else if ( StrBuff == "FreqList" )
+			{
+				for ( i=0 ; i<= _Segment.FreqListQ ; i++)
+					FreqSet_Read(_Segment.FreqList[i]);
+				Detect_WrongEnd();
+			}
+			else if ( StrBuff == "Effects" )
+			{
+				Effects_Read(_Segment.Effects);
+			}
+			else if( StrBuff == "StartTime")
+			{
+				_Segment.StartTime = RDLIO::TestIfIsDoubleNotNegative(Reader.Read());
+			}
+			else
+			{
+				//Throw New Exception("Invalid identifier as " & StrBuff & ".")
+			}
+		}
+	}
 	
 	void CVS_Read(CVS  _CVS)
 	{
-		string StrBuff
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "SegmentListQ"
-					StrBuff = Reader.Read()
-					_CVS.SegmentListQ = TestIfIsIntAndPositive(StrBuff) - 1
-					Array.Resize(_CVS.SegmentList, _CVS.SegmentListQ + 1)
-				Case "SegmentList"
-					Dim i As Integer
-					For i = 0 To _CVS.SegmentListQ
-						Segment_Read(_CVS.SegmentList(i))
-					Next
-					if (Reader.Read() != "End" )
+		string StrBuff;
+		while(!(  StrBuff == CStr("End") ) )
 		{
-						Throw New Exception("List without an End.")
-		}
-				Case Else
+			StrBuff = Reader.Read();
+			if ( StrBuff == "SegmentListQ")
+			{
+				StrBuff = Reader.Read();
+				_CVS.SegmentListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
+				_CVS.SegmentList.setUbound ( _CVS.SegmentListQ + 1 );
+			}
+			else if ( StrBuff ==  "SegmentList")
+			{
+				int i;
+				for ( i=0 ; i<=_CVS.SegmentListQ ; i++)
+					Segment_Read(_CVS.SegmentList[i]);
+				 if ( ! (Reader.Read() == "End" ) )
+				{
+					Exception("List without an End.");
+				}
+			}
+			else
+			{
 					//Throw New Exception("Invalid identifier as " & StrBuff & ".")
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void Segment_Read(ByRef _Segment As Segment)
-		Dim StrBuff As String
-		Dim i As Integer
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "TPhoneListQ"
-					StrBuff = Reader.Read()
-					_Segment.TPhoneListQ = TestIfIsIntAndPositive(StrBuff) - 1
-					ReDim _Segment.Effects.OpennessList(_Segment.TPhoneListQ + 1)
-					For i = 0 To _Segment.TPhoneListQ + 1
-						_Segment.Effects.OpennessList(i) = 1
-					Next
-					Array.Resize(_Segment.TPhoneList, _Segment.TPhoneListQ + 1)
-				Case "TPhoneList"
-					For i = 0 To _Segment.TPhoneListQ
-						TPhone_Read(_Segment.TPhoneList(i))
-					Next
-					if (Reader.Read() != "End" )
-		{
-						Throw New Exception("List without an End.")
+			}
 		}
-				Case "FreqListQ"
-					StrBuff = Reader.Read()
-					_Segment.FreqListQ = TestIfIsIntAndPositive(StrBuff) - 1
-					Array.Resize(_Segment.FreqList, _Segment.FreqListQ + 1)
-				Case "FreqList"
-					For i = 0 To _Segment.FreqListQ
-						FreqSet_Read(_Segment.FreqList(i))
-					Next
-					if (Reader.Read() != "End" )
-		{
-						Throw New Exception("List without an End.")
-		}
-				Case "Effects"
-					Effects_Read(_Segment.Effects)
-				Case "StartTime"
-					_Segment.StartTime = TestIfIsDoubleNotNegative(Reader.Read())
-				Case Else
-					//Throw New Exception("Invalid identifier as " & StrBuff & ".")
-			End Select
-		Loop While StrBuff != "End"
-}
+	}
 	
-	void TPhone_Read(ByRef _TPhone As TPhone)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Start"
-					TStart_Read(_TPhone.Start)
-				Case "Dest"
-					TDest_Read(_TPhone.Dest)
-				Case "Transition"
-					TTransition_Read(_TPhone.Transition)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void TStart_Read(ByRef _Start As TStart)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Type"
-					StrBuff = Reader.Read().ToLower()
-					if (StrBuff = "new" )
-		{
-						_Start.Type = True
-					Elseif (StrBuff = "preserved" )
-		{
-						_Start.Type = False
-					Else
-						Throw New Exception("Invalid syllable type identifier as " & StrBuff & ".")
-		}
-				Case "Symbol"
-					StrBuff = Reader.Read()
-					_Start.Symbol = StrBuff
-				Case "Preserved"
-					StrBuff = Reader.Read()
-					Try
-						_Start.Preserved = CInt(StrBuff)
-					Catch
-						Throw New Exception("Invalid preserved buffer as " & StrBuff & ".")
-					End Try
-					if (_Start.Preserved != 1 AndAlso _Start.Preserved != 2 )
-		{
-						Throw New Exception("Invalid preserved buffer as " & StrBuff & ".")							
-		}
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-		}
-	
-	void TDest_Read(ByRef _Dest As TDest)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Type"
-					StrBuff = Reader.Read().ToLower()
-					if (StrBuff = "new" )
-		{
-						_Dest.Type = True
-					Elseif (StrBuff = "preserved" )
-		{
-						_Dest.Type = False
-					Else
-						Throw New Exception("Invalid syllable type identifier as " & StrBuff & ".")
-		}
-				Case "Symbol"
-					StrBuff = Reader.Read()
-					_Dest.Symbol = StrBuff
-				Case "Preserved"
-					StrBuff = Reader.Read()
-					Try
-						_Dest.Preserved = CInt(StrBuff)
-					Catch
-						Throw New Exception("Invalid preserved buffer as " & StrBuff & ".")
-					End Try
-					if (_Dest.Preserved != 1 AndAlso _Dest.Preserved != 2 )
-		{
-						Throw New Exception("Invalid preserved buffer as " & StrBuff & ".")							
-		}
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-		}
-	
-	void TTransition_Read(ByRef _Transition As TTransition)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "StartRatio"
-					StrBuff = Reader.Read()
-					_Transition.StartRatio = TestIfIsDoubleNotNegative(StrBuff)
-				Case "EndRatio"
-					StrBuff = Reader.Read()
-					_Transition.EndRatio = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Time"
-					StrBuff = Reader.Read()
-					_Transition.Time = TestIfIsDoubleAndPositive(StrBuff)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void FreqSet_Read(ByRef _FreqSet As FreqSet)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Time"
-					StrBuff = Reader.Read()
-					_FreqSet.Time = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Freq"
-					StrBuff = Reader.Read()
-					_FreqSet.Freq = TestIfIsDoubleAndPositive(StrBuff)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void Effects_Read(ByRef _Effects As EffectCollection)
-		Dim StrBuff As String
-		Dim i As Integer
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Shrink"
-					StrBuff = Reader.Read()
-					_Effects.Shrink = TestIfIsDoubleNotNegative(StrBuff)
-				Case "ForwardCut"
-					StrBuff = Reader.Read()
-					_Effects.ForwardCut = TestIfIsDoubleNotNegative(StrBuff)
-				Case "EnvelopeListQ"
-					StrBuff = Reader.Read()
-					_Effects.EnvelopeListQ = TestIfIsIntAndPositive(StrBuff) - 1
-					Array.Resize(_Effects.EnvelopeList, _Effects.EnvelopeListQ + 1)
-				Case "EnvelopeList"
-					For i = 0 To _Effects.EnvelopeListQ
-						EnvelopeSet_Read(_Effects.EnvelopeList(i))
-					Next
-					if (Reader.Read() != "End" )
-		{
-						Throw New Exception("List without an End.")
-		}
-				Case "ElistEnabled"
-					StrBuff = Reader.Read()
-					_Effects.ElistEnabled = TestIfIsBoolean(StrBuff)
-				Case "PElopeEnabled"
-					StrBuff = Reader.Read()
-					_Effects.PElopeEnabled = TestIfIsBoolean(StrBuff)
-				Case "PresetedEnvelope"
-					StrBuff = Reader.Read()
-					_Effects.PresetedEnvelope = TestIfIsPresetedEnvelope(StrBuff)
-				Case "ADSR"
-					ADSREnvelope_Read(_Effects.ADSR)
-				Case "OpennessList"
-					For i = 0 To _Effects.OpennessList.GetUpperBound(0)
-						StrBuff = Reader.Read()
-						_Effects.OpennessList(i) = TestIfIsDoubleNotNegative(StrBuff)
-					Next
-				Case "Vibration"
-					//Preserved
-				Case "Breath"
-					BreathStruct_Read(_Effects.Breath)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void EnvelopeSet_Read(ByRef _EnvelopeSet As EnvelopeSet)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Time"
-					StrBuff = Reader.Read()
-					_EnvelopeSet.Time = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Amplitude"
-					StrBuff = Reader.Read()
-					_EnvelopeSet.Amplitude = TestIfIsDoubleNotNegative(StrBuff)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void ADSREnvelope_Read(ByRef _ADSREnvelope As ADSREnvelope)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Amplitude"
-					StrBuff = Reader.Read()
-					_ADSREnvelope.Amplitude = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Attack"
-					StrBuff = Reader.Read()
-					_ADSREnvelope.Attack = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Decline"
-					StrBuff = Reader.Read()
-					_ADSREnvelope.Decline = TestIfIsDoubleNotNegative(StrBuff)
-				Case "Release"
-					StrBuff = Reader.Read()
-					_ADSREnvelope.Release = TestIfIsDoubleNotNegative(StrBuff)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-	
-	void BreathStruct_Read(ByRef _Breath As BreathStruct)
-		Dim StrBuff As String
-		Do
-			StrBuff = Reader.Read()
-			Select Case StrBuff
-				Case "Magnitude"
-					StrBuff = Reader.Read()
-					_Breath.Magnitude = TestIfIsDouble(StrBuff)
-				Case Else
-					//Error
-			End Select
-		Loop While StrBuff != "End"
-}
-};*/
+};

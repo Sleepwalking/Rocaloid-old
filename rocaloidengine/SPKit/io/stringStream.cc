@@ -104,7 +104,7 @@ void stringStream::prevLine()
 void split(string& source, array<string>& dest)
 {
 	int sourcelen = source.getLength();
-	int wordnum = 0;
+	//int wordnum = 0;
 	char* tmpchars = (char*)mem_malloc(sourcelen + 1);
 	memcpy(tmpchars, source.unsafeHandle(), sourcelen);
 	tmpchars[sourcelen] = 0;

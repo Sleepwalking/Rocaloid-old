@@ -23,6 +23,7 @@
  namespace RDLIO
 {
 	#define Trim(x) trim(x)
+	bool TestIfIsNumber(string _String);
 	int TestIfIsInt(string _String);
 	int TestIfIsDouble(string _String);
 	double TestIfIsDoubleAndPositive(string _String);
@@ -33,11 +34,13 @@
 	int TestIfIsPresetedEnvelope(string _String);
 }
 
+#define     E_ADSR	0
+
 class RDLReader
 {
 	public:
-		string Read();
-		RDLReader(string FileName);
+		string Read();	
+		void Open(string FileName);
 		void Close();
 	private:
 		//Private Reader As StreamReader
@@ -51,7 +54,7 @@ class RDLReader
 class RDLWriter
 {
 	public:
-		RDLWriter(string FileName);
+		void Open(string FileName);
 		bool NewLineValid;
 		void WriteWord(string _String);
 		void WriteWord(int Integer);
@@ -59,7 +62,7 @@ class RDLWriter
 		void WriteWord(bool Boolean);
 		void WriteWord(const char * _String);
 		~RDLWriter();
-		void WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes);
+		void WritePresetedEnvelope(int _Envelopes);
 		void NewLine();
 		void IndentPush();
 		void IndentPop();
