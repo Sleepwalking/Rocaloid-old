@@ -2,9 +2,9 @@
 
 
 lib_LTLIBRARIES =  \
-	librsccommon.la
+	libcyberbase.la
 
-librsccommon_la_SOURCES =  \
+libcyberbase_la_SOURCES =  \
 	Overall.cc \
 	Overall.h \
 	../SPKit/io/fileStream.cc \
@@ -19,3 +19,6 @@ librsccommon_la_SOURCES =  \
 	../SPKit/structure/string.cc \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h
+
+libcyberbase_la_CFLAGS = -Os \
+	-Wall 

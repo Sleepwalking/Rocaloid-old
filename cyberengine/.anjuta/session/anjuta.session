@@ -3,11 +3,10 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [Project Manager]
-Shortcut=rsccommon//src//rsctool%%%rsccommon//lib//librsccommon.la
-Expand=rsctool%%%rsccommon%%%rsccommon//lib%%%rsccommon//src%%%rsccommon//src//rsctool
+Expand=cyberengine%%%cyberengine//lib
 
 [File Loader]
-Files=../../src/main.cc#22%%%../../lib/Overall.h#1
+Files=../../lib/Overall.cc#21
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n

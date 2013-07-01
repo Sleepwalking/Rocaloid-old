@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-//数据大丢失
+
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"
@@ -56,14 +56,14 @@ namespace Overall
 	};
 
 	void PtrSwap(int &p1, int &p2)
-	{
+	{//指针交换
 		int Temp=p1;
 		p1=p2;
 		p2=Temp;
 	}
 
 	double GetDoubleSum(array<double>& Arr)
-	{
+	{//取数组和
 		double Acc;
 		int i;
 		for(i=0;i<=Arr.pointer;i++)

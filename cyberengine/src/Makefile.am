@@ -22,5 +22,5 @@ rsctool_CFLAGS = -O2 \
 	-Wall \
 	-g 
 
-rsctool_LDFLAGS = -lrsccommon \
+rsctool_LDFLAGS = -lcyberbase \
 	-L../lib/.libs/ 
