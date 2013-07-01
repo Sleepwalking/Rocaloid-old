@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(rsccommon, 0.1-trunk)
+AC_INIT(cyberengine, 0.1-trunk)
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -19,7 +19,7 @@ dnl Internationalization
 dnl ***************************************************************************
 IT_PROG_INTLTOOL([0.35.0])
 
-GETTEXT_PACKAGE=rsccommon
+GETTEXT_PACKAGE=cyberengine
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
 AM_GLIB_GNU_GETTEXT

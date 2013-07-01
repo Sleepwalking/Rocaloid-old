@@ -30,7 +30,8 @@ int main()
 {
 	int i=10,j=100;
 	array<double> x;
-
+	x.push(10);
+	x.push(10);
 	Overall::PtrSwap(i, j);
 	Overall::ObjSwap(i,j);
 	wLine(CInt(i));
