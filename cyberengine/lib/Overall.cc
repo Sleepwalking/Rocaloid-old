@@ -21,7 +21,9 @@
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"
+#include "../SPKit/io/terminal.h"
 #include "Overall.h"
+
 
 namespace Overall
 {//全局模块
@@ -112,5 +114,12 @@ namespace Overall
 		result.b= (y1 - y2) / (x1 - x2) - result.a * (x1 + x2);
 		result.c = y1 - result.b * x1 - result.a * x1 * x1;
 		return result;
+	}
+	
+	void Exception(string errorMsg)
+	{
+		wLine("Fatal Error:");
+		wLine(errorMsg);
+		exit(0);
 	}
 }

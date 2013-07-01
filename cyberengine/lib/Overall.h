@@ -59,5 +59,6 @@ extern string GetPitchByFreq(double Freq);
 QuadEqu GenerateQuadEquation(double x1, double y1, 
 										 double x2, double y2,  
 										double x3, double y3 );
+extern void Exception(string errorMsg);
 }
 #endif /*OVERALL_H */

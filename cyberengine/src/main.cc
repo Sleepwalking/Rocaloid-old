@@ -22,25 +22,30 @@
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"
 #include "../lib/Overall.h"
+#include "../lib/RDLIO.h"
 #include "../SPKit/io/terminal.h"
 
-using namespace converter;
+using namespace Overall;
 
 int main()
 {
 	int i=10,j=100;
 	array<double> x;
+	string y;
 	x.push(10);
 	x.push(10);
-	Overall::PtrSwap(i, j);
-	Overall::ObjSwap(i,j);
+	PtrSwap(i, j);
+	ObjSwap(i,j);
 	wLine(CInt(i));
 	wLine(CInt(j));
 	//for(i=0;i<12*2;i++)
 	//wLine(Overall::PitchList[i]+Overall::PitchList[i+24]);
-	wLine(Overall::GetPitchByFreq(440.0));
-	wLine(Overall::GetFreqByPitch("C3"));
-	wLine(Overall::GetDoubleSum(x));
-	return 0;
+	wLine(GetPitchByFreq(440.0));
+	wLine(GetFreqByPitch("C3"));
+	wLine(GetDoubleSum(x));
+	wLine(y);
+	wLine(RDLIO::TestIfIsInt("123.4h"));
+	//Exception("Joke");
+	return 0; 
 }
 

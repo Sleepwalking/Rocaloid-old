@@ -2,14 +2,15 @@
 Maximized=1
 Geometry=1024x691+0+24
 
-[Project Manager]
-Expand=cyberengine%%%cyberengine//lib
-
 [File Loader]
-Files=../../lib/Overall.cc#21
+Files=../../lib/RDLIO.cc#55%%%../../src/main.cc#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Project Manager]
+Shortcut=cyberengine%%%cyberengine
+Expand=cyberengine%%%cyberengine//src%%%cyberengine//src//../lib/%%%cyberengine//src//../lib///libcyberbase.la%%%cyberengine//src//rsctool
 
 [Execution]
 Program uri=../../src/src/rsctool
