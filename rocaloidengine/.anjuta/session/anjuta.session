@@ -3,16 +3,16 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [Project Manager]
-Expand=cyberengine%%%cyberengine//src%%%cyberengine//src//../lib/%%%cyberengine//src//../lib///libcyberbase.la%%%cyberengine//src//rsctool
+Shortcut=rocaloidengine//src//rsctool%%%rocaloidengine//src//../LibCyberBase///libcyberbase.la
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libcyberbase.la
 
 [File Loader]
-Files=../../lib/RDLIO.cc#91%%%../../src/main.cc#48%%%../../lib/Overall.cc#1%%%../../SPKit/misc/converter.cc#4%%%../../SPKit/misc/converter.h#8%%%../../lib/RDLIO.h#46
+Files=../../src/main.cc#48%%%../../SPKit/misc/converter.cc#4%%%../../SPKit/misc/converter.h#6
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Execution]
-Program arguments=
 Program uri=../../Debug/src/rsctool%%%../../src/src/rsctool
 Run in terminal=2
 Working directories=../../../../Rocaloid%%%../../../rsccommon

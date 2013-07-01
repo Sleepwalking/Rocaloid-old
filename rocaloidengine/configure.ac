@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(cyberengine, 0.1-trunk)
+AC_INIT(rocaloidengine, 0.1-trunk)
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -37,5 +37,5 @@ AC_OUTPUT([
 Makefile
 src/Makefile
 po/Makefile.in
-lib/Makefile
+LibCyberBase/Makefile
 ])

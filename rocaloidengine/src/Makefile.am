@@ -1,8 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-## Created by Anjuta
-SUBDIRS = ../lib/
-AM_CPPFLAGS = \
+.AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\"
@@ -22,5 +20,8 @@ rsctool_CFLAGS = -O2 \
 	-Wall \
 	-g 
 
-rsctool_LDFLAGS = -lcyberbase \
+rsctool_LDFLAGS = -lCyberBase \
 	-L../lib/.libs/ 
+
+SUBDIRS = \
+	../LibCyberBase/

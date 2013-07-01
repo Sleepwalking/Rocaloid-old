@@ -2,9 +2,9 @@
 
 
 lib_LTLIBRARIES =  \
-	libcyberbase.la
+	libCyberBase.la
 
-libcyberbase_la_SOURCES =  \
+libCyberBase_la_SOURCES =  \
 	Overall.cc \
 	Overall.h \
 	../SPKit/io/fileStream.cc \
@@ -22,5 +22,5 @@ libcyberbase_la_SOURCES =  \
 	RDLIO.cc \
 	RDLIO.h
 
-libcyberbase_la_CFLAGS = -Os \
+libCyberBase_la_CFLAGS = -Os \
 	-Wall 
