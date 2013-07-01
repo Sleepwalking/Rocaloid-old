@@ -1,6 +1,9 @@
 #ifndef STRINGSTREAM_H
 #define STRINGSTREAM_H
+#include "memoryStream.h"
+#include "../structure/string.h"
 
+class memoryStream;
 class string;
 class stringStream: public memoryStream
 {
@@ -18,9 +21,13 @@ class stringStream: public memoryStream
 
 		inline void writeLine(string data);
 };
+
 inline void stringStream::writeLine(string data)
 {
 	write(data + "\n");
 }
-void split(string& source, array<string>& dest);
+
+template <class T> stringStream::stringStream(T* ptr) : memoryStream(ptr){}
+
+
 #endif

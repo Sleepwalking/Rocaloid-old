@@ -1,11 +1,7 @@
 #ifndef FILESTREAM_H
 #define FILESTREAM_H
 #include "../defs.h"
-#include "../structure/string.h"
-#include "../structure/array.h"
-#include "../misc/memopr.h"
 #include <stdio.h>
-#include <stdlib.h>
 enum openMode
 {
 	READONLY = 0,
@@ -14,6 +10,7 @@ enum openMode
 	APPEND = 3,
 	CREATE = 4
 };
+class string;
 class binaryStream
 {
 	public:

@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <stdio.h>
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"

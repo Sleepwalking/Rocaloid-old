@@ -1,10 +1,6 @@
 #ifndef STRING_H
 #define STRING_H
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "../misc/memopr.h"
-#include "array.h"
+template <class T> class array;
 class string
 {
 	public:

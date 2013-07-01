@@ -24,7 +24,9 @@ libCyberBase_la_SOURCES =  \
 	CVSCommon.cc \
 	CVSCommon.h \
 	../SPKit/io/stringStream.cc \
-	../SPKit/io/memoryStream.cc
+	../SPKit/io/memoryStream.cc \
+	../SPKit/structure/array.cc \
+	../SPKit/io/terminal.cc
 
 libCyberBase_la_CFLAGS = -O2 \
 	-Wall \

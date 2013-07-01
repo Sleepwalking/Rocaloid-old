@@ -1,6 +1,6 @@
 #ifndef MEMORYSTREAM_H
 #define MEMORYSTREAM_H
-
+#include "../defs.h"
 class string;
 class memoryStream
 {
@@ -41,6 +41,16 @@ class memoryStream
 		void* baseptr;
 		long offset;
 };
+template <class T>  memoryStream::memoryStream(T* ptr)
+{
+	baseptr = (void*) ptr;
+	offset = 0;
+}
+template <class T> void memoryStream::setBase(T* ptr)
+{
+	baseptr = (void*) ptr;
+}
+
 inline void memoryStream::setPosition(long newoffset)
 {
 	offset = newoffset;
@@ -150,13 +160,4 @@ inline void memoryStream::write(ulong data)
 	offset += sizeof(ulong);
 }
 
-template <class T>  memoryStream::memoryStream(T* ptr)
-{
-	baseptr = (void*) ptr;
-	offset = 0;
-}
-template <class T> void memoryStream::setBase(T* ptr)
-{
-	baseptr = (void*) ptr;
-}
 #endif

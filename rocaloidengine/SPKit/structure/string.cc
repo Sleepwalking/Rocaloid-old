@@ -1,13 +1,17 @@
+#include "string.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "../misc/memopr.h"
+#include "array.h"
 
 //#define MEMCHECK
-//****** String Class ******
-
-#include "string.h"
 #ifdef MEMCHECK
 static int ccount;
 static int dcount = 0;
 #endif
 
+//****** String Class ******
 string::string()
 {
 	#ifdef MEMCHECK

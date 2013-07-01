@@ -1,6 +1,49 @@
 #include "converter.h"
+#include "../structure/string.h"
+#include "../misc/memopr.h"
+#include "../defs.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 namespace converter
 {
+	inline string CStr(char source)
+	{
+		return CStr(&source);
+	}
+	inline string CStr(string& source)
+	{
+		return source;
+	}
+	inline char CChar(string& source)
+	{
+		return source[0];
+	}
+	inline byte CByte(char* source)
+	{
+		return (byte)atoi(source);
+	}
+	inline int CInt(char* source)
+	{
+		return atoi(source);
+	}
+	inline uint CUInt(char* source)
+	{
+		return (uint)atol(source);
+	}
+	inline long CLng(char* source)
+	{
+		return atol(source);
+	}
+	inline float CSng(char* source)
+	{
+		return (float)atof(source);
+	}
+	inline double CDbl(char* source)
+	{
+		return atof(source);
+	}
+	
 	string CStr(const char* source)
 	{
 		string ret;

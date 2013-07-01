@@ -1,10 +1,7 @@
 #ifndef CONVERTER_H
 #define CONVERTER_H
-#include "../structure/string.h"
-#include "../misc/memopr.h"
+class string;
 #include "../defs.h"
-#include <stdlib.h>
-#include <stdio.h>
 namespace converter
 {
 	string CStr(const char* source);
@@ -97,14 +94,6 @@ namespace converter
 	inline double CDbl(double source);
 	inline double CDbl(long source);
 	
-	inline string CStr(char source)
-	{
-		return CStr(&source);
-	}
-	inline string CStr(string& source)
-	{
-		return source;
-	}
 	
 	inline bool CBool(bool source)
 	{
@@ -135,10 +124,6 @@ namespace converter
 		return (int)source;
 	}
 	
-	inline char CChar(string& source)
-	{
-		return source[0];
-	}
 	inline char CChar(char* source)
 	{
 		return source[0];
@@ -168,10 +153,6 @@ namespace converter
 		return (int)source;
 	}
 	
-	inline byte CByte(char* source)
-	{
-		return (byte)atoi(source);
-	}
 	inline byte CByte(char source)
 	{
 		return (byte)source;
@@ -197,10 +178,6 @@ namespace converter
 		return (byte)source;
 	}
 	
-	inline int CInt(char* source)
-	{
-		return atoi(source);
-	}
 	inline int CInt(char source)
 	{
 		return (int)source;
@@ -226,10 +203,6 @@ namespace converter
 		return (int)source;
 	}
 	
-	inline uint CUInt(char* source)
-	{
-		return (uint)atol(source);
-	}
 	inline uint CUInt(bool source)
 	{
 		return (uint)source;
@@ -259,10 +232,6 @@ namespace converter
 		return (uint)source;
 	}
 	
-	inline long CLng(char* source)
-	{
-		return atol(source);
-	}
 	inline long CLng(bool source)
 	{
 		return (long)source;
@@ -292,10 +261,6 @@ namespace converter
 		return source;
 	}
 	
-	inline float CSng(char* source)
-	{
-		return (float)atof(source);
-	}
 	inline float CSng(bool source)
 	{
 		return (float)source;
@@ -325,10 +290,6 @@ namespace converter
 		return (float)source;
 	}
 	
-	inline double CDbl(char* source)
-	{
-		return atof(source);
-	}
 	inline double CDbl(bool source)
 	{
 		return (double)source;
