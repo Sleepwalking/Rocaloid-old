@@ -21,8 +21,8 @@
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"
-#include "../lib/Overall.h"
-#include "../lib/RDLIO.h"
+#include "../LibCyberBase/Overall.h"
+#include "../LibCyberBase/RDLIO.h"
 #include "../SPKit/io/terminal.h"
 
 using namespace Overall;

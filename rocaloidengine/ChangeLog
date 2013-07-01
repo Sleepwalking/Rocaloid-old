@@ -1,3 +1,6 @@
+===trunk-20130701===
+Move CyberEngine to Rocaloid Engine
+Add RDLIO
 ===trunk-20130701====
 Modify RSCCommon to cyberengine.
 This package included:

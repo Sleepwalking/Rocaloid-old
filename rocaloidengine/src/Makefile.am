@@ -21,7 +21,7 @@ rsctool_CFLAGS = -O2 \
 	-g 
 
 rsctool_LDFLAGS = -lCyberBase \
-	-L../lib/.libs/ 
+	-L../LibCyberBase/.libs/ 
 
 SUBDIRS = \
 	../LibCyberBase/

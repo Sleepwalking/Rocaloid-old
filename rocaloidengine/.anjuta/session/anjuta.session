@@ -3,11 +3,11 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [Project Manager]
-Shortcut=rocaloidengine//src//rsctool%%%rocaloidengine//src//../LibCyberBase///libcyberbase.la
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libcyberbase.la
+Shortcut=
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/
 
 [File Loader]
-Files=../../src/main.cc#48%%%../../SPKit/misc/converter.cc#4%%%../../SPKit/misc/converter.h#6
+Files=../../src/main.cc#25%%%../../SPKit/misc/converter.cc#4%%%../../SPKit/misc/converter.h#6%%%../../configure.ac#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
