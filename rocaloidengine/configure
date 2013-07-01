@@ -4862,7 +4862,7 @@ fi
 
 
 
-GETTEXT_PACKAGE=cyberengine
+GETTEXT_PACKAGE=rocaloidengine
 
 
 cat >>confdefs.h <<_ACEOF

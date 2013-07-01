@@ -3,7 +3,7 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [Project Manager]
-Shortcut=
+Shortcut=rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
 Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/
 
 [File Loader]
