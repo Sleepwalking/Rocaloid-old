@@ -82,8 +82,8 @@ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 libCVSCommon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) \
-	$(libCVSCommon_la_LDFLAGS) $(LDFLAGS) -o $@
+	$(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -297,9 +297,6 @@ libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
 	-O2 \
 	-Wall \
 	-g 
-
-libCVSCommon_la_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 
 
 all: all-am
 

@@ -26,16 +26,17 @@
 #include "io/fileStream.h"
 
 #include "Overall.h"
-#include "CVSCommon.h"
 #include "RDLIO.h"
+#include "CVSCommon.h"
 #include "CVSReader.h"
 
 namespace CVSReader
 {
 	using namespace CVSCommon;
 	RDLReader Reader;
-	
-	void Reader_Open(string File)
+	bool isOpen=false;
+	#define Exception(x)    Reader.Close();Overall::Exception(x)
+	void Open(string File)
 	{
 		Reader.Open(File);
 		if (!(Reader.Read() == CStr("#CVS")))
@@ -47,11 +48,13 @@ namespace CVSReader
 		{//Version mismatch
 			Exception("Wrong CVS version.");
 		}
+		isOpen=true;
 	}
 	
-	void Reader_Close()
+	void Close()
 	{
 		Reader.Close();
+		isOpen=false;
 	}
 
 	void inline Detect_WrongEnd()
@@ -65,6 +68,7 @@ namespace CVSReader
 	void BreathStruct_Read(BreathStruct & _Breath)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -79,6 +83,7 @@ namespace CVSReader
 	void EnvelopeSet_Read( EnvelopeSet & _EnvelopeSet)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -102,6 +107,7 @@ namespace CVSReader
 	void ADSREnvelope_Read(ADSREnvelope & _ADSREnvelope  )
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -132,11 +138,11 @@ namespace CVSReader
 		}
 	}
 	
-	
 	void Effects_Read(EffectCollection & _Effects)
 	{
 		string StrBuff;
 		int i ;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -207,6 +213,7 @@ namespace CVSReader
 	void FreqSet_Read( FreqSet & _FreqSet )
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -230,6 +237,7 @@ namespace CVSReader
 	void TStart_Read(TStart & _Start)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -258,16 +266,20 @@ namespace CVSReader
 			else if ( StrBuff ==  "Preserved" )
 			{
 				StrBuff = Reader.Read();
+	
 				if ( RDLIO::TestIfIsNumber(StrBuff) )
 				{
-					_Start.Preserved = CInt(StrBuff);
+					_Start.Preserved = CInt(StrBuff.toChars ());
 				}
 				else
 				{
+					
 					Exception( CStr ("Invalid preserved buffer as ") + StrBuff + ".");
 				}
-				if (_Start.Preserved != 1 && _Start.Preserved != 2 )
-						Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");				
+				if ( (_Start.Preserved != 1) && (_Start.Preserved != 2) )
+				{
+					Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");			
+				}
 			}
 			else
 			{
@@ -279,6 +291,7 @@ namespace CVSReader
 	void TDest_Read(TDest & _Dest)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -309,14 +322,16 @@ namespace CVSReader
 				StrBuff = Reader.Read();
 				if ( RDLIO::TestIfIsNumber(StrBuff) )
 				{
-					_Dest.Preserved = CInt(StrBuff);
+					_Dest.Preserved = CInt(StrBuff.toChars ());
 				}
 				else
 				{
 					Exception( CStr ("Invalid preserved buffer as ") + StrBuff + ".");
 				}
-				if (_Dest.Preserved != 1 && _Dest.Preserved != 2 )
-						Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");				
+				if ( (_Dest.Preserved != 1) && (_Dest.Preserved != 2) )
+				{
+					Exception( CStr ("Invalid preserved buffer as " ) + StrBuff + ".");			
+				}		
 			}
 			else
 			{
@@ -328,6 +343,7 @@ namespace CVSReader
 	void TTransition_Read(TTransition &  _Transition)
 	{
 		string StrBuff ;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -344,6 +360,7 @@ namespace CVSReader
 			else if ( StrBuff == "Time" )
 			{
 					StrBuff = Reader.Read();
+					//printf("%s",StrBuff.toChars ());
 					_Transition.Time = RDLIO::TestIfIsDoubleAndPositive(StrBuff);
 			}
 			else
@@ -351,11 +368,12 @@ namespace CVSReader
 					//Error
 			}
 		}
-}
+	}
 	
 	void TPhone_Read(TPhone & _TPhone)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
@@ -382,11 +400,13 @@ namespace CVSReader
 	{
 		string StrBuff;
 		int i;
+		if(isOpen != true) return;
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
 			if ( StrBuff == "TPhoneListQ" )
 			{
+				printf("    TPhoneListQ\n");
 				StrBuff = Reader.Read();
 				_Segment.TPhoneListQ =RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
 				_Segment.Effects.OpennessList.setUbound (_Segment.TPhoneListQ + 1);
@@ -395,32 +415,43 @@ namespace CVSReader
 					_Segment.Effects.OpennessList[i] = 1;
 				}
 				_Segment.TPhoneList.setUbound ( _Segment.TPhoneListQ + 1);
+				printf("    End TPhoneListQ\n");
 			}
 			else if ( StrBuff == "TPhoneList")
 			{
+				printf("    TPhoneList\n");
 				for ( i=0 ; i <=  _Segment.TPhoneListQ ; i++)
 					TPhone_Read(_Segment.TPhoneList[i]);
 				Detect_WrongEnd();
+				printf("    End TPhoneList\n");
 			}
 			else if ( StrBuff == "FreqListQ" )
 			{
+				printf("    FreqListQ\n");
 				StrBuff = Reader.Read();
 				_Segment.FreqListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
 				_Segment.FreqList.setUbound (_Segment.FreqListQ + 1);
+				printf("    End FreqListQ\n");
 			}
 			else if ( StrBuff == "FreqList" )
 			{
+				printf("    FreqList\n");
 				for ( i=0 ; i<= _Segment.FreqListQ ; i++)
 					FreqSet_Read(_Segment.FreqList[i]);
 				Detect_WrongEnd();
+				printf("    End FreqList\n");
 			}
 			else if ( StrBuff == "Effects" )
 			{
+				printf("    Effects\n");
 				Effects_Read(_Segment.Effects);
+				printf("    End Effects\n");
 			}
 			else if( StrBuff == "StartTime")
 			{
+				printf("    StartTime\n");
 				_Segment.StartTime = RDLIO::TestIfIsDoubleNotNegative(Reader.Read());
+				printf("    End StartTime\n");
 			}
 			else
 			{
@@ -429,33 +460,39 @@ namespace CVSReader
 		}
 	}
 	
-	void CVS_Read(CVS  _CVS)
+	void Read(CVS & _CVS)
 	{
 		string StrBuff;
+		if(isOpen != true) return;
 		while(!(  StrBuff == CStr("End") ) )
 		{
 			StrBuff = Reader.Read();
 			if ( StrBuff == "SegmentListQ")
 			{
+				printf("SegListQ\n");
 				StrBuff = Reader.Read();
 				_CVS.SegmentListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
 				_CVS.SegmentList.setUbound ( _CVS.SegmentListQ + 1 );
+				printf("End SegListQ\n");
 			}
 			else if ( StrBuff ==  "SegmentList")
 			{
 				int i;
+				printf("Seg List\n");
 				for ( i=0 ; i<=_CVS.SegmentListQ ; i++)
 					Segment_Read(_CVS.SegmentList[i]);
-				 if ( ! (Reader.Read() == "End" ) )
+				if ( ! (Reader.Read() == "End" ) )
 				{
 					Exception("List without an End.");
 				}
+				printf("End Seg List\n");
 			}
 			else
 			{
 					//Throw New Exception("Invalid identifier as " & StrBuff & ".")
 			}
 		}
+		printf("Hi段错误！\n");
 	}
 	
 };

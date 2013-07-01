@@ -32,7 +32,7 @@
 	void BreathStruct_Write(BreathStruct _Breath );
 	void Effects_Write(EffectCollection _Effects);
 	void Segment_Write (Segment _Segment);
-	void CVS_Write(CVS _CVS);
+	void Write(CVS _CVS);
 };
  #endif /*retirWSVC _H */
  

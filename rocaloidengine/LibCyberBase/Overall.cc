@@ -104,7 +104,7 @@ namespace Overall
 			}
 		}
 		if ( Freq < (FreqList[0] + FreqList[1])/2 ) return PitchList[0];
-	return PitchList[PitchListQ];
+		return PitchList[PitchListQ];
 	}
 	
 	QuadEqu GenerateQuadEquation(double x1, double y1, 

@@ -17,12 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../SPKit/defs.h"
-#include "../SPKit/io/terminal.h"
-#include "../SPKit/structure/string.h"
-#include "../SPKit/misc/converter.h"
-#include "../SPKit/structure/array.h"
-#include "../SPKit/io/fileStream.h"
+#include "defs.h"
+#include "io/terminal.h"
+#include "structure/string.h"
+#include "misc/converter.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
 
 #include "Overall.h"
 #include "RDLIO.h"
@@ -34,10 +34,9 @@ using namespace Overall;
 	{
 		char *str=_String.unsafeHandle ();
 		int i,len=_String.getLength();
-		_String=Trim(_String);
-		for(i=0;i<=len;i++)
+		for(i=0;i<len;i++)
 		{
-			if((str[i] < '0' || str[i] > '9') && str[i]!='.')
+			if((str[i] < '0' || str[i] > '9') && str[i]!='.' )
 			{
 				//Exception( _String + "  is n't a number!");
 				return false;
@@ -45,21 +44,24 @@ using namespace Overall;
 		}
 		return true;
 	}
-	int TestIfIsDouble(string _String)
+	double TestIfIsDouble(string _String)
 	{
-		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		return converter::CDbl(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		return converter::CDbl(_String.toChars ());
 	}
 	int TestIfIsInt(string _String)
 	{
+		_String=Trim(_String);
 		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		return converter::CInt(_String);
+		return converter::CInt(_String.toChars ());
 	}
 	double TestIfIsDoubleAndPositive(string _String)
 	{
 		double x;
-		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CDbl(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CDbl(_String.toChars ());
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
 		return x;
@@ -68,8 +70,9 @@ using namespace Overall;
 	int TestIfIsIntAndPositive(string _String) 
 	{
 		int x;
-		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CInt(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CInt(_String.toChars ());
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
 		return x;
@@ -77,8 +80,9 @@ using namespace Overall;
 	double TestIfIsDoubleNotNegative(string _String)
 	{
 		double x;
-		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CDbl(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CDbl(_String.toChars ());
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;
@@ -87,8 +91,9 @@ using namespace Overall;
 	int TestIfIsIntNotNegative(string _String) 
 	{
 		int x;
-		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CInt(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CInt(_String.toChars ());
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;
@@ -96,6 +101,7 @@ using namespace Overall;
 	bool TestIfIsBoolean(string _String)
 	{
 		string t;
+		_String=Trim(_String);
 		t=lowerCase(_String);
 		if ( t == converter::CStr("true"))
 		{
@@ -110,6 +116,7 @@ using namespace Overall;
 	}
 	int TestIfIsPresetedEnvelope(string _String)
 	{
+		_String=Trim(_String);
 		if( _String == converter::CStr("ADSR"))
 			return 0;
 		else

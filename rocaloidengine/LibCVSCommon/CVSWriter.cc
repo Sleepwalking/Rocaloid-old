@@ -36,22 +36,25 @@ namespace CVSWriter
 {
 	using namespace CVSCommon;
 	RDLWriter Writer;
-	
+	bool isOpen=false;
 	void Save(string File)
 	{
 		Writer.Open(File);
 		Writer.WriteWord("#CVS");
 		Writer.WriteWord(CVS_VERSION);
 		Writer.NewLine();
+		isOpen=true;
 	}
 	
 	void Close()
 	{
 		Writer.Close();
+		isOpen=false;
 	}
 	
 	void TPhone_Write(TPhone _TPhone)
 	{
+		if(isOpen != true) return;
 		Writer.WriteWord("TPhone");
 		Writer.IndentPush();
 		Writer.NewLine();
@@ -107,6 +110,7 @@ namespace CVSWriter
 	
 	void Freq_Write(FreqSet _Freq)
 	{
+		if(isOpen != true) return;
 		Writer.WriteWord("FreqSet");
 		
 		Writer.WriteWord("Time");
@@ -120,6 +124,7 @@ namespace CVSWriter
 	
 	void ADSREnvelope_Write(ADSREnvelope _ADSR)
 	{
+		if(isOpen != true) return;
 		Writer.WriteWord("ADSR");
 		
 		Writer.WriteWord("Amplitude");
@@ -137,6 +142,7 @@ namespace CVSWriter
 	
 	void EnvelopeSet_Write(EnvelopeSet _EnvelopeSet )
 	{
+		if(isOpen != true) return;
 		Writer.WriteWord("EnvelopeSet");
 		
 		Writer.WriteWord("Time");
@@ -150,6 +156,7 @@ namespace CVSWriter
 	
 	void BreathStruct_Write(BreathStruct _Breath )
 	{
+		if(isOpen != true) return;
 		Writer.WriteWord("Breath");
 		Writer.IndentPush();
 		Writer.NewLine();
@@ -166,6 +173,7 @@ namespace CVSWriter
 	void Effects_Write(EffectCollection _Effects)
 	{
 		int i;
+		if(isOpen != true) return;
 		Writer.WriteWord("Effects");
 		Writer.IndentPush();
 		Writer.NewLine();
@@ -234,8 +242,10 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
+	
 	void Segment_Write (Segment _Segment)
 	{
+		if(isOpen != true) return;
 		int i;
 		Writer.WriteWord("Segment");
 		Writer.IndentPush();
@@ -277,8 +287,9 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void CVS_Write( CVS _CVS)
+	void Write( CVS _CVS)
 	{
+		if(isOpen != true) return;
 		int i;
 		Writer.WriteWord("CVS");
 		Writer.IndentPush();

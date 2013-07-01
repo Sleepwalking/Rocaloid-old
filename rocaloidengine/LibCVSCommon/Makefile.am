@@ -19,6 +19,3 @@ libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
 	-O2 \
 	-Wall \
 	-g 
-
-libCVSCommon_la_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 

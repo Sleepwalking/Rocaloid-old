@@ -78,11 +78,15 @@ am_libCyberBase_la_OBJECTS = libCyberBase_la-Overall.lo \
 	libCyberBase_la-fileStream.lo libCyberBase_la-converter.lo \
 	libCyberBase_la-string.lo libCyberBase_la-stringStream.lo \
 	libCyberBase_la-memoryStream.lo libCyberBase_la-array.lo \
-	libCyberBase_la-terminal.lo libCyberBase_la-RDLIO.lo
+	libCyberBase_la-RDLIO.lo libCyberBase_la-terminal.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+libCyberBase_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -278,6 +282,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+libCyberBase_la_CXXFLAGS = -O2 \
+	-Wall \
+	-g  -I@top_srcdir@/SPKit/
+
 lib_LTLIBRARIES = \
 	libCyberBase.la
 
@@ -287,7 +295,6 @@ libCyberBase_la_SOURCES = \
 	../SPKit/io/fileStream.cc \
 	../SPKit/io/fileStream.h \
 	../SPKit/io/memoryStream.h \
-	../SPKit/io/terminal.h \
 	../SPKit/misc/converter.cc \
 	../SPKit/misc/converter.h \
 	../SPKit/misc/listopr.h \
@@ -299,13 +306,10 @@ libCyberBase_la_SOURCES = \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
 	../SPKit/structure/array.cc \
-	../SPKit/io/terminal.cc \
 	RDLIO.cc \
-	RDLIO.h
-
-libCyberBase_la_CPPFLAGS = -O2 \
-	-Wall \
-	-g 
+	RDLIO.h \
+	../SPKit/io/terminal.cc \
+	../SPKit/io/terminal.h 
 
 all: all-am
 
@@ -373,7 +377,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libCyberBase.la: $(libCyberBase_la_OBJECTS) $(libCyberBase_la_DEPENDENCIES) $(EXTRA_libCyberBase_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libCyberBase_la_OBJECTS) $(libCyberBase_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(libCyberBase_la_LINK) -rpath $(libdir) $(libCyberBase_la_OBJECTS) $(libCyberBase_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -413,67 +417,67 @@ distclean-compile:
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
 libCyberBase_la-Overall.lo: Overall.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-Overall.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-Overall.Tpo -c -o libCyberBase_la-Overall.lo `test -f 'Overall.cc' || echo '$(srcdir)/'`Overall.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-Overall.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-Overall.Tpo -c -o libCyberBase_la-Overall.lo `test -f 'Overall.cc' || echo '$(srcdir)/'`Overall.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-Overall.Tpo $(DEPDIR)/libCyberBase_la-Overall.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Overall.cc' object='libCyberBase_la-Overall.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-Overall.lo `test -f 'Overall.cc' || echo '$(srcdir)/'`Overall.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-Overall.lo `test -f 'Overall.cc' || echo '$(srcdir)/'`Overall.cc
 
 libCyberBase_la-fileStream.lo: ../SPKit/io/fileStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-fileStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-fileStream.Tpo -c -o libCyberBase_la-fileStream.lo `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-fileStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-fileStream.Tpo -c -o libCyberBase_la-fileStream.lo `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-fileStream.Tpo $(DEPDIR)/libCyberBase_la-fileStream.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/fileStream.cc' object='libCyberBase_la-fileStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-fileStream.lo `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-fileStream.lo `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
 
 libCyberBase_la-converter.lo: ../SPKit/misc/converter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-converter.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-converter.Tpo -c -o libCyberBase_la-converter.lo `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-converter.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-converter.Tpo -c -o libCyberBase_la-converter.lo `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-converter.Tpo $(DEPDIR)/libCyberBase_la-converter.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/misc/converter.cc' object='libCyberBase_la-converter.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-converter.lo `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-converter.lo `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
 
 libCyberBase_la-string.lo: ../SPKit/structure/string.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-string.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-string.Tpo -c -o libCyberBase_la-string.lo `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-string.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-string.Tpo -c -o libCyberBase_la-string.lo `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-string.Tpo $(DEPDIR)/libCyberBase_la-string.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/string.cc' object='libCyberBase_la-string.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-string.lo `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-string.lo `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
 
 libCyberBase_la-stringStream.lo: ../SPKit/io/stringStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-stringStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-stringStream.Tpo -c -o libCyberBase_la-stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-stringStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-stringStream.Tpo -c -o libCyberBase_la-stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-stringStream.Tpo $(DEPDIR)/libCyberBase_la-stringStream.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/stringStream.cc' object='libCyberBase_la-stringStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
 
 libCyberBase_la-memoryStream.lo: ../SPKit/io/memoryStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-memoryStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-memoryStream.Tpo -c -o libCyberBase_la-memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-memoryStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-memoryStream.Tpo -c -o libCyberBase_la-memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-memoryStream.Tpo $(DEPDIR)/libCyberBase_la-memoryStream.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/memoryStream.cc' object='libCyberBase_la-memoryStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
 
 libCyberBase_la-array.lo: ../SPKit/structure/array.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-array.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-array.Tpo -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-array.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-array.Tpo -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-array.Tpo $(DEPDIR)/libCyberBase_la-array.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/array.cc' object='libCyberBase_la-array.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
-
-libCyberBase_la-terminal.lo: ../SPKit/io/terminal.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-terminal.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-terminal.Tpo -c -o libCyberBase_la-terminal.lo `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-terminal.Tpo $(DEPDIR)/libCyberBase_la-terminal.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/terminal.cc' object='libCyberBase_la-terminal.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-terminal.lo `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
 
 libCyberBase_la-RDLIO.lo: RDLIO.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-RDLIO.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-RDLIO.Tpo -c -o libCyberBase_la-RDLIO.lo `test -f 'RDLIO.cc' || echo '$(srcdir)/'`RDLIO.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-RDLIO.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-RDLIO.Tpo -c -o libCyberBase_la-RDLIO.lo `test -f 'RDLIO.cc' || echo '$(srcdir)/'`RDLIO.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-RDLIO.Tpo $(DEPDIR)/libCyberBase_la-RDLIO.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RDLIO.cc' object='libCyberBase_la-RDLIO.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libCyberBase_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-RDLIO.lo `test -f 'RDLIO.cc' || echo '$(srcdir)/'`RDLIO.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-RDLIO.lo `test -f 'RDLIO.cc' || echo '$(srcdir)/'`RDLIO.cc
+
+libCyberBase_la-terminal.lo: ../SPKit/io/terminal.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-terminal.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-terminal.Tpo -c -o libCyberBase_la-terminal.lo `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-terminal.Tpo $(DEPDIR)/libCyberBase_la-terminal.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/terminal.cc' object='libCyberBase_la-terminal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-terminal.lo `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

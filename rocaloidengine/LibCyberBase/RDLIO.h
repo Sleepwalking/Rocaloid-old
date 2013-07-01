@@ -25,7 +25,7 @@
 	#define Trim(x) trim(x)
 	bool TestIfIsNumber(string _String);
 	int TestIfIsInt(string _String);
-	int TestIfIsDouble(string _String);
+	double TestIfIsDouble(string _String);
 	double TestIfIsDoubleAndPositive(string _String);
 	int TestIfIsIntAndPositive(string _String) ;
 	double TestIfIsDoubleNotNegative(string _String);

@@ -12,10 +12,9 @@ string terminal::readLine()
 	ret = buffer;
 	return ret;
 }
-
-void directPrint(const char* str)
+void terminal::directPrint(const char* str)
 {
-	printf(str, 0);
+	puts(str);
 }
 void terminal::write(const char* str)
 {
@@ -27,26 +26,15 @@ void terminal::write(string str)
 	directPrint(chars);
 	mem_free(chars);
 }
-template <class T> void terminal::write(T source)
-{
-	terminal:write(CStr(source));
-}
+
 void terminal::writeLine(const char* str)
 {
 	directPrint(str);
-	directPrint("\n");
+	//directPrint("\n");
 }
 void terminal::writeLine(string str)
 {
 	char* chars = str.toChars();
 	directPrint(chars);
-	directPrint("\n");
-	mem_free(chars);
-}
-template <class T> void terminal::writeLine(T source)
-{
-	char* chars = CStr(source).toChars();
-	directPrint(chars);
-	directPrint("\n");
 	mem_free(chars);
 }

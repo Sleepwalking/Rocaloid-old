@@ -18,27 +18,35 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "defs.h"
 #include "structure/string.h"
 #include "structure/array.h"
 #include "io/fileStream.h"
+#include "misc/converter.h"
 #include "io/terminal.h"
 #include "Overall.h"
+#include "RDLIO.h"
 #include "CVSCommon.h"
 #include "CVSWriter.h"
+#include "CVSReader.h"
 
 using namespace Overall;
 
 int main()
 {
-	int i=10,j=100;
+	//int i=10,j=100;
 	array<double> x;
 	array<string> z;
 	string str;
-	CVSReader::Open(
-	CVSWriter::Save("/home/rgwan/ramdisk/test.cvs");
-	CVSWriter::Close();
+	//exit(0);
+	
+	CVSCommon::CVS cvs;
+	CVSReader::Open("/home/rgwan/ramdisk/Compiled.cvs");
+	CVSReader::Read(cvs);
+	CVSReader::Close();
 
+	
 
 	return 0; 
 }

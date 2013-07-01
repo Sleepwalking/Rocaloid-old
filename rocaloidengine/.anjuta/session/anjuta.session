@@ -2,14 +2,18 @@
 Maximized=1
 Geometry=1024x691+0+24
 
+[Project Manager]
+Shortcut=rocaloidengine//src
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
+
+[File Loader]
+Files=../../LibCVSCommon/CVSReader.h#25%%%../../LibCVSCommon/CVSReader.cc#356%%%../../LibCyberBase/Overall.h#62%%%../../src/main.cc#45%%%../../LibCyberBase/RDLIO.cc#20
+
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
-[Project Manager]
-Shortcut=rocaloidengine//src//rsctool%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la
-Expand=rocaloidengine%%%rocaloidengine//src
-
 [Execution]
+Program uri=../../Debug/src/rsctool
 Run in terminal=2
 Working directories=../../../rocaloidengine
 
@@ -22,4 +26,5 @@ BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' '
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
+Breakpoint=1:../../LibCVSCommon/CVSReader.cc:48:0:%%%1:../../src/main.cc:43:0:
 Stop at beginning=2
