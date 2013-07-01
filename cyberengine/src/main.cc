@@ -44,7 +44,8 @@ int main()
 	wLine(GetFreqByPitch("C3"));
 	wLine(GetDoubleSum(x));
 	wLine(y);
-	wLine(RDLIO::TestIfIsInt("123.4h"));
+	wLine(RDLIO::TestIfIsInt("123.4"));
+	wLine(RDLIO::TestIfIsBoolean("True"));
 	//Exception("Joke");
 	return 0; 
 }

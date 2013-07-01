@@ -38,11 +38,11 @@ class RDLReader
 	public:
 		string Read();
 	private:
-		Private Reader As StreamReader
+		//Private Reader As StreamReader
 		string LineBuffer ;
 		int LineBufferQ ;
 		int LineBufferPointer; 
 		string StrStore;
-
+};
  #endif /*RDLIO _H */
  
