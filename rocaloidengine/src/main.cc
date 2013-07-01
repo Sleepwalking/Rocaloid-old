@@ -21,9 +21,13 @@
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/structure/array.h"
-#include "../LibCyberBase/Overall.h"
-#include "../LibCyberBase/RDLIO.h"
+#include "../SPKit/io/fileStream.h"
 #include "../SPKit/io/terminal.h"
+#include "../LibCyberBase/Overall.h"
+#include "../LibCyberBase/CVSCommon.h"
+#include "../LibCyberBase/RDLIO.h"
+
+
 
 using namespace Overall;
 
@@ -32,7 +36,12 @@ int main()
 	int i=10,j=100;
 	array<double> x;
 	string y;
-	x.push(10);
+	RDLWriter rdl = new RDLWriter("/home/rgwan/test.rdl");
+	rdl.WriteWord("Hello world,Rocaloid!");
+	rdl.NewLine ();
+	rdl.Close ();
+
+/*	x.push(10);
 	x.push(10);
 	PtrSwap(i, j);
 	ObjSwap(i,j);
@@ -45,7 +54,8 @@ int main()
 	wLine(GetDoubleSum(x));
 	wLine(y);
 	wLine(RDLIO::TestIfIsInt("123.4"));
-	wLine(RDLIO::TestIfIsPresetedEnvelope("ADSR"));
+	wLine(RDLIO::TestIfIsPresetedEnvelope("ADSR"));*/
+	
 	//Exception("Joke");
 	return 0; 
 }

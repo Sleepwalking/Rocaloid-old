@@ -75,10 +75,7 @@
 		double Decline;
 		double Release;
 	};
-	enum Envelopes
-	{
-		ADSR = 0
-	};
+
 
 	struct EffectCollection
 	{
@@ -108,6 +105,11 @@
 		array<Segment>  SegmentList;
 		int SegmentListQ;
 	};
+	enum Envelopes
+	{
+		ADSR = 0
+	};
 }
+
  #endif /*NOMMOCSVC _H */
  

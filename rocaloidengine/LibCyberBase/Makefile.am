@@ -24,5 +24,6 @@ libCyberBase_la_SOURCES =  \
 	CVSCommon.cc \
 	CVSCommon.h
 
-libCyberBase_la_CFLAGS = -Os \
-	-Wall 
+libCyberBase_la_CFLAGS = -O2 \
+	-Wall \
+	-g 

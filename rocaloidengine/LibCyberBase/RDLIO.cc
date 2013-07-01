@@ -23,6 +23,7 @@
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
 #include "Overall.h"
+#include "CVSCommon.h"
 #include "RDLIO.h"
 
 using namespace Overall;
@@ -111,44 +112,56 @@ using namespace Overall;
 	}
 }
 
+using namespace converter;
 //class RDLReader
 RDLReader::RDLReader(string File)
 {
 	LineBufferQ = 0;
 	LineBufferPointer = 0;
+	if(Reader.open(File,READONLY)==false)
+		Exception(CStr("This file: ") + File + " is not found!");
 }
 void RDLReader::Close()
 {
-		//Reader.Close()
+		Reader.close();
 }
 
 //class RDLWriter
-using namespace converter;
-RDLWriter::RDLWriter(string File)
+
+RDLWriter::RDLWriter(string FileName)
 {
-	Writer.open(File,READWRITE);
-	Indent = CStr("");
+	if(Writer.open(FileName,READWRITE)==false)
+		Writer.open(FileName,CREATE);
+	Indent = "";
 	LastWrite = 0;
+}
+RDLWriter::~RDLWriter()
+{
+	Writer.close();
 }
 void RDLWriter::WriteWord(string _String)
 {
-		switch( LastWrite)
-		{
-			case 0:
-				Writer.write(_String);
-			break;
-			case 1:
-				Writer.write(Indent + _String);
-			break;
-			case 2:
-				Writer.write(CStr(" ") + _String);
-			break;
-		}
-		LastWrite = 2;
+	switch( LastWrite)
+	{
+		case 0:
+			Writer.write(_String);
+		break;
+		case 1:
+			Writer.write(Indent + _String);
+		break;
+		case 2:
+			Writer.write(CStr(" ") + _String);
+		break;
+	}
+	LastWrite = 2;
 }
 void RDLWriter::WriteWord(int Integer)
 {
 	WriteWord (CStr(Integer));
+}
+void RDLWriter::WriteWord(const char * _String)
+{
+	WriteWord (CStr(_String));
 }
 void RDLWriter::WriteWord(double Double)
 {
@@ -158,12 +171,14 @@ void RDLWriter::WriteWord(bool Boolean)
 {
 	WriteWord (CStr(Boolean));
 }
-void RDLWriter::WritePresetedEnvelope(int _Envelopes)
+
+void RDLWriter::WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes)
 {
 	switch(_Envelopes)
 	{
-		//case Envelopes.ADSR:
+		case CVSCommon::ADSR:
 			WriteWord("ADSR");
+		break;
 	}
 }
 void RDLWriter::NewLine()

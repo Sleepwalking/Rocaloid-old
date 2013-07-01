@@ -38,7 +38,7 @@ class RDLReader
 {
 	public:
 		string Read();
-		RDLReader(string File);
+		RDLReader(string FileName);
 		void Close();
 	private:
 		//Private Reader As StreamReader
@@ -52,13 +52,15 @@ class RDLReader
 class RDLWriter
 {
 	public:
-		RDLWriter(string File);
+		RDLWriter(string FileName);
 		bool NewLineValid;
 		void WriteWord(string _String);
 		void WriteWord(int Integer);
 		void WriteWord(double Double);
 		void WriteWord(bool Boolean);
-		void WritePresetedEnvelope(int _Envelopes);
+		void WriteWord(const char * _String);
+		~RDLWriter();
+		void WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes);
 		void NewLine();
 		void IndentPush();
 		void IndentPop();

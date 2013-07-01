@@ -24,7 +24,10 @@
 #include "../SPKit/io/fileStream.h"
 #include "Overall.h"
 #include "CVSCommon.h"
-
+	enum Envelopes
+	{
+		ADSR = 0
+	};
 using namespace converter;
 namespace CVSCommon
 {
