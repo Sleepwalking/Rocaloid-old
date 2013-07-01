@@ -358,5 +358,4 @@ namespace converter
 		return (double)source;
 	}
 }
-
 #endif

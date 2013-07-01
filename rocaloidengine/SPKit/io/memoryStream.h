@@ -1,8 +1,7 @@
 #ifndef MEMORYSTREAM_H
 #define MEMORYSTREAM_H
-#include "../misc/memopr.h"
-#include "../defs.h"
-#include <string.h>
+
+class string;
 class memoryStream
 {
 	public:
@@ -42,16 +41,6 @@ class memoryStream
 		void* baseptr;
 		long offset;
 };
-template <class T>  memoryStream::memoryStream(T* ptr)
-{
-	baseptr = (void*) ptr;
-	offset = 0;
-}
-template <class T> void memoryStream::setBase(T* ptr)
-{
-	baseptr = (void*) ptr;
-}
-
 inline void memoryStream::setPosition(long newoffset)
 {
 	offset = newoffset;
@@ -114,23 +103,6 @@ inline ulong memoryStream::readULong()
 	offset += sizeof(ulong);
 	return ret;
 }
-string memoryStream::readString()
-{
-	char* ptr = (char*)((byte*)baseptr + offset);
-	string ret;
-	ret = ptr;	
-	offset += ret.getLength() + 1;
-	return ret;
-}
-int memoryStream::readChars(char* buffer)
-{
-	char* ptr = (char*)((byte*)baseptr + offset);
-	int len = strlen(ptr);
-	strcpy(buffer, ptr);
-
-	offset += len + 1;
-	return len;
-}
 
 inline void memoryStream::write(bool data)
 {
@@ -177,27 +149,14 @@ inline void memoryStream::write(ulong data)
 	*((ulong*)((byte*)baseptr + offset)) = data;
 	offset += sizeof(ulong);
 }
-void memoryStream::write(string data)
+
+template <class T>  memoryStream::memoryStream(T* ptr)
 {
-	char* ptr = (char*)((byte*)baseptr + offset);
-	memcpy(ptr, data.unsafeHandle(), data.getLength());
-	offset += data.getLength();
-	*(char*)((byte*)baseptr + offset) = 0;
-	offset ++;
+	baseptr = (void*) ptr;
+	offset = 0;
 }
-void memoryStream::writeChars(const char* buffer)
+template <class T> void memoryStream::setBase(T* ptr)
 {
-	int bufferlen = strlen(buffer);
-	char* ptr = (char*)((byte*)baseptr + offset);
-	memcpy(ptr, buffer, bufferlen);
-	offset += bufferlen;
-	*(char*)((byte*)baseptr + offset) = 0;
-	offset ++;
-}
-void memoryStream::writeBuffer(void* buffer, long byteCount)
-{
-	char* ptr = (char*)((byte*)baseptr + offset);
-	memcpy(ptr, buffer, byteCount);
-	offset += byteCount;
+	baseptr = (void*) ptr;
 }
 #endif

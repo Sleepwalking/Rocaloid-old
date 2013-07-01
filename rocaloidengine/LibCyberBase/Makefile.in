@@ -75,7 +75,8 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = Overall.lo fileStream.lo converter.lo \
-	string.lo RDLIO.lo CVSCommon.lo
+	string.lo RDLIO.lo CVSCommon.lo stringStream.lo \
+	memoryStream.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -296,7 +297,9 @@ libCyberBase_la_SOURCES = \
 	RDLIO.cc \
 	RDLIO.h \
 	CVSCommon.cc \
-	CVSCommon.h
+	CVSCommon.h \
+	../SPKit/io/stringStream.cc \
+	../SPKit/io/memoryStream.cc
 
 libCyberBase_la_CFLAGS = -O2 \
 	-Wall \
@@ -381,7 +384,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RDLIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/converter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileStream.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memoryStream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/string.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stringStream.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -424,6 +429,20 @@ string.lo: ../SPKit/structure/string.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/string.cc' object='string.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o string.lo `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
+
+stringStream.lo: ../SPKit/io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT stringStream.lo -MD -MP -MF $(DEPDIR)/stringStream.Tpo -c -o stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/stringStream.Tpo $(DEPDIR)/stringStream.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/stringStream.cc' object='stringStream.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o stringStream.lo `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
+
+memoryStream.lo: ../SPKit/io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT memoryStream.lo -MD -MP -MF $(DEPDIR)/memoryStream.Tpo -c -o memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/memoryStream.Tpo $(DEPDIR)/memoryStream.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/memoryStream.cc' object='memoryStream.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

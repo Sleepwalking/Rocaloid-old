@@ -7,7 +7,6 @@
 #include "io/memoryStream.h"
 #include "io/terminal.h"
 #include "misc/converter.h"
-
 using namespace converter;
 int main()
 {
@@ -37,5 +36,16 @@ int main()
 	wLine(CStr("Last because: ") + CStr(loc) + CStr("\t") + mid(wholestr, loc - 50, 100));
 	fs.close();
 	mem_free(membuffer);
+
+	string a = "  sfe ewfw wef   ";
+	wLine(CStr("ltrim: '") + ltrim(a) + "'");
+	wLine(CStr("rtrim: '") + rtrim(a) + "'");
+	wLine(CStr("trim: '") + trim(a) + "'");
+
+	array<string> passage;
+	split(wholestr, passage);
+
+	lfor(i, 50, wLine(passage[i]););
+	
 	return 0;
 }

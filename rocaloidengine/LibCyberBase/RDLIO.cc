@@ -22,6 +22,7 @@
 #include "../SPKit/misc/converter.h"
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
+
 #include "Overall.h"
 #include "CVSCommon.h"
 #include "RDLIO.h"
@@ -120,6 +121,10 @@ RDLReader::RDLReader(string File)
 	LineBufferPointer = 0;
 	if(Reader.open(File,READONLY)==false)
 		Exception(CStr("This file: ") + File + " is not found!");
+}
+string RDLReader::Read()
+{
+	return Reader.readLine();
 }
 void RDLReader::Close()
 {

@@ -23,7 +23,6 @@
  namespace RDLIO
 {
 	#define Trim(x) trim(x)
-	#define SliceTo(x) ltrim(x)
 	int TestIfIsInt(string _String);
 	int TestIfIsDouble(string _String);
 	double TestIfIsDoubleAndPositive(string _String);
@@ -42,7 +41,7 @@ class RDLReader
 		void Close();
 	private:
 		//Private Reader As StreamReader
-		string LineBuffer ;
+		array<string> LineBuffer ;
 		int LineBufferQ ;
 		int LineBufferPointer; 
 		string StrStore;

@@ -59,13 +59,13 @@ namespace converter
 	
 	bool CBool(string& source)
 	{
-		if(lowerCase(source) == CStr("true"))
+		if(source == CStr("true"))
 			return true;
 		return false;
 	}
 	bool CBool(char* source)
 	{
-		if(!strcmp(source, "true"))
+		if(strcmp(source, "true"))
 			return true;
 		return false;
 	}

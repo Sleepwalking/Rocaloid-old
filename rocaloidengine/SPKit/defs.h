@@ -40,5 +40,4 @@ typedef long int int64;
 #define wLine(x) terminal::writeLine(x)
 #define rLine(x) terminal::readLine(x)
 #define wr(x) terminal::write(x)
-
 #endif

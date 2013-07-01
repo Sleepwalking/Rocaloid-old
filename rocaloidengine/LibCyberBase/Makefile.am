@@ -22,7 +22,9 @@ libCyberBase_la_SOURCES =  \
 	RDLIO.cc \
 	RDLIO.h \
 	CVSCommon.cc \
-	CVSCommon.h
+	CVSCommon.h \
+	../SPKit/io/stringStream.cc \
+	../SPKit/io/memoryStream.cc
 
 libCyberBase_la_CFLAGS = -O2 \
 	-Wall \

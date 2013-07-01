@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "../misc/memopr.h"
+#include "array.h"
 class string
 {
 	public:
@@ -50,8 +51,9 @@ int instr(string& whole, string part, int from);
 int instr(string& whole, string part);
 int instrRev(string& whole, string part, int from);
 int instrRev(string& whole, string part);
-string strim(string &source);
-string trim(string &source);
+string trim(string& source);
 string ltrim(string& source);
 string rtrim(string& source);
+void split(string& source, array<string>& dest); //Defined in stringStream.h
+
 #endif

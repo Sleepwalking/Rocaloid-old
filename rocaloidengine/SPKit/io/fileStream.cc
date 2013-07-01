@@ -16,23 +16,7 @@ void binaryStream::refreshLength()
 	length = ftell(fStream);
 	fseek(fStream, filePtr, SEEK_SET);
 }
-/*bool binaryStream::open(string& path, openMode fileMode)
-{
-	char* chars = path.toChars();
-	char* fmode = fModes[fileMode];
-	
-	fStream = fopen(chars, fmode);
-	
-	mem_free(chars);
-	isOpen = true;
-	if(fStream == 0)
-		isOpen = false;
-	filePtr = 0;
 
-	if(isOpen)
-		refreshLength();
-	return isOpen;
-}*/
 bool binaryStream::open(string path, openMode fileMode)
 {
 	char* chars = path.toChars();

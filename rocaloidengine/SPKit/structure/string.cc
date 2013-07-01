@@ -1,7 +1,8 @@
-#include "string.h"
+
 //#define MEMCHECK
 //****** String Class ******
 
+#include "string.h"
 #ifdef MEMCHECK
 static int ccount;
 static int dcount = 0;
@@ -227,94 +228,6 @@ string upperCase(string& source)
 			ret[i] = source[i];
 	return ret;
 }
-
-string trim(string& source)
-{
-	string ret;
-	int start, end, i, sourcelen, retlen;
-	sourcelen = source.getLength();
-	for(i = 0;i < sourcelen;i ++)
-		if(source[i] != ' ' && source[i] !='\t')
-		{
-			start = i;
-			break;
-		}
-	for(i = sourcelen - 1;i >= 0;i --)
-		if(source[i] != ' ' && source[i] !='\t')
-		{
-			end = i;
-			break;
-		}
-	retlen = end - start + 1;
-	ret.allocLength(retlen);
-	for(i = 0;i < retlen;i ++)
-		ret[i] = source[i + start];
-	return ret;
-}
-
-string strim(string &source)
-{
-	int i,j;
-	int len = source.getLength();
-	int retlen = 0;//真实长度
-	string ret;
-	char *sourceptr = source.unsafeHandle ();
-	for(i=0;i<=len;i++)
-	{//length
-		if( sourceptr[i] !=' ' && sourceptr[i] !='\t')
-			retlen++;
-	}	
-	retlen --;
-	ret.allocLength (retlen);
-	char *retptr=ret.unsafeHandle();
-	
-	for(i=0;i<=len;i++)
-	{//copy
-		if( sourceptr[i] !=' '  && sourceptr[i] !='\t')
-		{
-			retptr[j]=sourceptr[i];
-			j++;
-		}
-	}		
-	return ret;
-}
-
-string ltrim(string& source)
-{
-	string ret;
-	int start, i, sourcelen, retlen;
-	sourcelen = source.getLength();
-	for(i = 0;i < sourcelen;i ++)
-		if(source[i] != ' ' && source[i] !='\t')
-		{
-			start = i;
-			break;
-		}
-	retlen = sourcelen - start + 1;
-	ret.allocLength(retlen);
-	for(i = 0;i < retlen;i ++)
-		ret[i] = source[i + start];
-	return ret;
-}
-
-string rtrim(string& source)
-{
-	string ret;
-	int start, end, i, sourcelen, retlen;
-	sourcelen = source.getLength();
-	for(i = sourcelen - 1;i >= 0;i --)
-		if(source[i] != ' ' && source[i] !='\t')
-		{
-			end = i;
-			break;
-		}
-	retlen = end + 1;
-	ret.allocLength(retlen);
-	for(i = 0;i < retlen;i ++)
-		ret[i] = source[i];
-	return ret;
-}
-
 int instr(string& whole, string part, int from)
 {
 	int i, j;
@@ -341,7 +254,7 @@ int instrRev(string& whole, string part, int from)
 	if(from > end)
 		from = end;
 	int partlen = part.getLength();
-	for(i = from;i > 0;i --)
+	for(i = from;i >= 0;i --)
 	{
 		for(j = 0;j < partlen;j ++)
 			if(part[j] != whole[i + j])
@@ -354,4 +267,63 @@ int instrRev(string& whole, string part, int from)
 int instrRev(string& whole, string part)
 {
 	return instrRev(whole, part, whole.getLength());
+}
+string trim(string& source)
+{
+	string ret;
+	int start, end, i, sourcelen, retlen;
+	sourcelen = source.getLength();
+	for(i = 0;i < sourcelen;i ++)
+		if(source[i] != ' ' && source[i] != '\t')
+		{
+			start = i;
+			break;
+		}
+	for(i = sourcelen - 1;i >= 0;i --)
+		if(source[i] != ' ' && source[i] != '\t')
+		{
+			end = i;
+			break;
+		}
+	retlen = end - start + 1;
+	ret.allocLength(retlen);
+	for(i = 0;i < retlen;i ++)
+		ret[i] = source[i + start];
+	return ret;
+}
+string ltrim(string& source)
+{
+	string ret;
+	int start, end, i, sourcelen, retlen;
+	sourcelen = source.getLength();
+	start = 0;
+	for(i = sourcelen - 1;i >= 0;i --)
+		if(source[i] != ' ' && source[i] != '\t')
+		{
+			end = i;
+			break;
+		}
+	retlen = end - start + 1;
+	ret.allocLength(retlen);
+	for(i = 0;i < retlen;i ++)
+		ret[i] = source[i + start];
+	return ret;
+}
+string rtrim(string& source)
+{
+	string ret;
+	int start, end, i, sourcelen, retlen;
+	sourcelen = source.getLength();
+	end = sourcelen - 1;
+	for(i = 0;i < sourcelen;i ++)
+		if(source[i] != ' ' && source[i] != '\t')
+		{
+			start = i;
+			break;
+		}
+	retlen = end - start + 1;
+	ret.allocLength(retlen);
+	for(i = 0;i < retlen;i ++)
+		ret[i] = source[i + start];
+	return ret;
 }

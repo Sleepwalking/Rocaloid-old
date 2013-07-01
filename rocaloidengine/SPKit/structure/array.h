@@ -38,11 +38,12 @@ template <class T> class array
 template <class T> array<T>::array()
 {
 	size = 0;
-	ubound = -1;
+	ubound = 0;
 	sizePerT = sizeof(T);
 	baseptr = 0;
 	pointer = -1;
 	objectType = false;
+	setUbound(1);
 }
 template <class T> array<T>::~array()
 {

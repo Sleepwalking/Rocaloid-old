@@ -24,4 +24,5 @@ inline void mem_free(void* memptr)
 #endif
 	free(memptr);
 }
+
 #endif
