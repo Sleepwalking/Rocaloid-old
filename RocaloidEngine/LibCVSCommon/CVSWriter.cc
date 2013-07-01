@@ -135,7 +135,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void EnvelopeSet_Write(EnvelopeSet _EnvelopeSet )
+	void EnvelopeSet_Write(EnvelopeSet _EnvelopeSet)
 	{
 		Writer.WriteWord("EnvelopeSet");
 		
@@ -148,7 +148,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void BreathStruct_Write(BreathStruct _Breath )
+	void BreathStruct_Write(BreathStruct _Breath)
 	{
 		Writer.WriteWord("Breath");
 		Writer.IndentPush();
@@ -200,14 +200,14 @@ namespace CVSWriter
 			Writer.WriteWord("EnvelopeList");
 			Writer.IndentPush();
 			Writer.NewLine();
-			for (i = 0 ;i<=_Effects.EnvelopeListQ;i++)
+			for (i = 0 ;i <= _Effects.EnvelopeListQ;i ++)
 				EnvelopeSet_Write(_Effects.EnvelopeList[i]);
 			Writer.IndentPop();
 			Writer.WriteWord("End");
 			Writer.NewLine();
 		}
 		
-		if (_Effects.PElopeEnabled )
+		if (_Effects.PElopeEnabled)
 		{
 			Writer.WriteWord("PresetedEnvelope");
 			Writer.WritePresetedEnvelope(Envelopes(_Effects.PresetedEnvelope));
@@ -226,7 +226,7 @@ namespace CVSWriter
 		}
 		
 		Writer.WriteWord("OpennessList");
-		for(i = 0 ;i<= _Effects.OpennessList.pointer;i++)
+		for(i = 0 ;i <= _Effects.OpennessList.pointer;i ++)
 			Writer.WriteWord(_Effects.OpennessList[i]);
 		Writer.NewLine();
 		
@@ -248,7 +248,7 @@ namespace CVSWriter
 		Writer.WriteWord("TPhoneList");
 		Writer.IndentPush();
 		Writer.NewLine();
-		for(i=0;i<= _Segment.TPhoneListQ;i++)
+		for(i = 0;i <= _Segment.TPhoneListQ;i ++)
 			TPhone_Write(_Segment.TPhoneList[i]);
 		Writer.IndentPop();
 		Writer.WriteWord("End");
@@ -261,7 +261,7 @@ namespace CVSWriter
 		Writer.WriteWord("FreqList");
 		Writer.IndentPush();
 		Writer.NewLine();
-		for(i=0;i<=_Segment.FreqListQ;i++)
+		for(i = 0;i <= _Segment.FreqListQ;i ++)
 			Freq_Write(_Segment.FreqList[i]);
 		Writer.IndentPop();
 		Writer.WriteWord("End");
@@ -291,7 +291,7 @@ namespace CVSWriter
 		Writer.WriteWord("SegmentList");
 		Writer.IndentPush();
 		Writer.NewLine();
-		for(i=0;i<= _CVS.SegmentListQ;i++)
+		for(i = 0;i <= _CVS.SegmentListQ;i++)
 		{
 			Segment_Write(_CVS.SegmentList[i]);
 		}

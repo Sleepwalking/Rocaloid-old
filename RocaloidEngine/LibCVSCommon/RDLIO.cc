@@ -29,14 +29,14 @@
 #include "RDLIO.h"
 
 using namespace Overall;
- namespace RDLIO
+namespace RDLIO
 {	
 	void TestIfIsNumber(string _String)
 	{
-		char *str=_String.unsafeHandle ();
-		int i,len=_String.getLength();
-		_String=Trim(_String);
-		for(i=0;i<=len;i++)
+		char *str = _String.unsafeHandle ();
+		int i,len = _String.getLength();
+		_String = Trim(_String);
+		for(i = 0;i <= len;i ++)
 		{
 			if((str[i] < '0' || str[i] > '9') && str[i]!='.')
 			{
@@ -58,8 +58,8 @@ using namespace Overall;
 	{
 		double x;
 		TestIfIsNumber (_String);
-		x= converter::CDbl(_String);
-		if(x<=0)
+		x = converter::CDbl(_String);
+		if(x <= 0)
 			Exception ( _String + "  is n't positive!");
 		return x;
 	}		
@@ -68,8 +68,8 @@ using namespace Overall;
 	{
 		int x;
 		TestIfIsNumber (_String);
-		x= converter::CInt(_String);
-		if(x<=0)
+		x = converter::CInt(_String);
+		if(x <= 0)
 			Exception ( _String + "  is n't positive!");
 		return x;
 	}		
@@ -77,8 +77,8 @@ using namespace Overall;
 	{
 		double x;
 		TestIfIsNumber (_String);
-		x= converter::CDbl(_String);
-		if(x<0)
+		x = converter::CDbl(_String);
+		if(x < 0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;
 	}		
@@ -87,16 +87,16 @@ using namespace Overall;
 	{
 		int x;
 		TestIfIsNumber (_String);
-		x= converter::CInt(_String);
-		if(x<0)
+		x = converter::CInt(_String);
+		if(x < 0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;
 	}		
 	bool TestIfIsBoolean(string _String)
 	{
 		string t;
-		t=lowerCase(_String);
-		if (t== converter::CStr("true"))
+		t = lowerCase(_String);
+		if (t == converter::CStr("true"))
 		{
 			return true;
 		}
@@ -120,7 +120,7 @@ void RDLReader::Open(string FileName)
 {
 	LineBufferQ = 0;
 	LineBufferPointer = 0;
-	if(Reader.open(FileName,READONLY)==false)
+	if(Reader.open(FileName, READONLY) == false)
 		Exception(CStr("This file: ") + FileName + " is not found!");
 }
 string RDLReader::Read()
@@ -136,7 +136,7 @@ void RDLReader::Close()
 
 void RDLWriter::Open(string FileName)
 {
-	if(Writer.open(FileName,CREATE)==false)
+	if(Writer.open(FileName, CREATE) == false)
 		Exception(CStr("I CANNOT Create File: ") + FileName);
 	Indent = "";
 	LastWrite = 0;
@@ -192,14 +192,14 @@ void RDLWriter::NewLine()
 	if(NewLineValid)
 	{
 		Writer.write("\n");
-		LastWrite=1;
+		LastWrite = 1;
 	}
 }
 void RDLWriter::IndentPush()
 {
 	if(NewLineValid)
 	{
-		Indent=Indent+" ";
+		Indent = Indent + " ";
 	}
 }
 void RDLWriter::IndentPop()

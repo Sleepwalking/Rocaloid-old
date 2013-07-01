@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+	 *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,8 +20,6 @@
 #ifndef OVERALL_H
 #define OVERALL_H
 
-
-
 namespace Overall
 {
 
@@ -32,33 +30,36 @@ namespace Overall
 #define Pitch_C2  12
 #define WaveHeadLength  44
 
-extern const byte WaveHeader[];
-extern const string PitchList[];
-extern const double FreqList[];
-extern int VOT;//Attack Time
-	
-template <class T>
-static inline void ObjSwap(T &a, T &b)
-{//泛型交换
-	T tmp = a;
-	a = b;
-	b = tmp;
-}
+	extern const byte WaveHeader[];
+	extern const string PitchList[];
+	extern const double FreqList[];
+	extern int VOT;//Attack Time
 
-struct QuadEqu
-{
-	double a;
-	double b;
-	double c;
-};
+	template <class T> static inline void ObjSwap(T &a, T &b)
+	{
+		//Generic ByRef Swap.
+		T tmp = a;
+		a = b;
+		b = tmp;
+	}
 
-void PtrSwap(int &p1, int &p2);
-extern double GetFreqByPitch(string Pitch);
-extern double GetDoubleSum(array<double>& Arr);
-extern string GetPitchByFreq(double Freq);
-QuadEqu GenerateQuadEquation(double x1, double y1, 
-										 double x2, double y2,  
-										double x3, double y3 );
-extern void Exception(string errorMsg);
+	struct QuadResult
+	{
+		double a;
+		double b;
+		double c;
+	};
+
+	void PtrSwap(int &p1, int &p2);
+	extern double GetFreqByPitch(string Pitch);
+	extern double GetDoubleSum(array<double>& Arr);
+	extern string GetPitchByFreq(double Freq);
+	QuadResult GenerateQuadEquation
+	(
+		 double x1, double y1,
+		 double x2, double y2,
+		 double x3, double y3
+	);
+	extern void Exception(string errorMsg);
 }
 #endif /*OVERALL_H */
