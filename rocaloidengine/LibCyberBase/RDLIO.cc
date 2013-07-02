@@ -25,6 +25,7 @@
 #include "structure/array.h"
 #include "io/fileStream.h"
 #include <vector>
+#include "io/stringStream.h"
 #include "Overall.h"
 #include "RDLIO.h"
 
@@ -134,20 +135,23 @@ using namespace converter;
 //class RDLReader
 void RDLReader::Open(string FileName)
 {
-	LineBufferQ = 0;
-	LineBufferPointer = 0;
 	if(Reader.open(FileName,READONLY)==false)
 		Exception(CStr("This file: ") + FileName + " is not found!");
+	buffer = mem_malloc(Reader.getLength());
+	Reader.readBuffer(buffer, Reader.getLength());
+	SReader = new stringStream(buffer);
+	SReader -> setPosition(0);
+	Reader.close();
 }
 string RDLReader::Read()
 {
-	string res;
-	res=Reader.readWord();
-	return res;
+	return SReader -> readWord();;
 }
 void RDLReader::Close()
 {
-		Reader.close();
+	delete SReader;
+	mem_free(buffer);
+	buffer = 0;
 }
 
 //class RDLWriter

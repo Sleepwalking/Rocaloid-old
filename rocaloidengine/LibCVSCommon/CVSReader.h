@@ -22,11 +22,9 @@
 
 namespace CVSReader
 {
-	//#define Exception(x) Overall::Exception(x);
-	using namespace CVSCommon;
 	void Open(string File);
 	void Close();
-
+	using namespace CVSCommon;
 	void BreathStruct_Read(BreathStruct & _Breath);
 	void EnvelopeSet_Read( EnvelopeSet & _EnvelopeSet);
 	void ADSREnvelope_Read(ADSREnvelope & _ADSREnvelope  );
@@ -38,6 +36,7 @@ namespace CVSReader
 	void TPhone_Read(TPhone & _TPhone);
 	void Segment_Read(Segment & _Segment );
 	void Read(CVS & _CVS);
+	RDLReader Reader;
 };
 
  #endif /*REDAERSVC _H */

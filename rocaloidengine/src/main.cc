@@ -25,6 +25,7 @@
 #include "io/fileStream.h"
 #include "misc/converter.h"
 #include "io/terminal.h"
+#include "io/stringStream.h"
 #include "Overall.h"
 #include "RDLIO.h"
 #include "CVSCommon.h"
@@ -36,16 +37,15 @@ using namespace converter;
 
 int main()
 {
-	//int i=10,j=100;
-	//printf("uBound=%d\n",RDLIO::TestIfIsIntAndPositive(CStr("1")) );	
+
 	CVSCommon::CVS cvs;
-	CVSReader::Open("/home/rgwan/ramdisk/Compiled.cvs");
+	CVSReader::Open("/home/rgwan/ramdisk/1.cvs");
 	CVSWriter::Save("/home/rgwan/ramdisk/test2.cvs");
 	CVSReader::Read(cvs);
 	CVSWriter::Write(cvs);
 	CVSReader::Close();
-	//rLine();
 	CVSWriter::Close();
+	//复制CVS文件验证读写函数
 	//exit(0);
 	//while(1);
 	//delete &cvs;

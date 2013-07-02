@@ -45,10 +45,10 @@ class RDLReader
 	private:
 		//Private Reader As StreamReader
 		//array<string> LineBuffer ;
-		int LineBufferQ ;
-		int LineBufferPointer; 
+		void* buffer;
 		string StrStore;
 		textStream Reader;
+		stringStream* SReader;
 };
 
 class RDLWriter
@@ -71,6 +71,7 @@ class RDLWriter
 		string Indent;
 		int LastWrite;
 		textStream Writer;
+
 };
  #endif /*RDLIO _H */
  

@@ -26,7 +26,7 @@
 #include "misc/converter.h"
 #include <vector>
 #include "io/fileStream.h"
-
+#include "io/stringStream.h"
 #include "Overall.h"
 #include "CVSCommon.h"
 #include "RDLIO.h"
@@ -234,7 +234,8 @@ namespace CVSWriter
 		}
 		
 		Writer.WriteWord("OpennessList");
-		for(i = 0 ;i<= _Effects.OpennessList.size ();i++)
+		int ubound = _Effects.OpennessList.size ();
+		for(i = 0 ;i<= ubound;i++)
 			Writer.WriteWord(_Effects.OpennessList[i]);
 		Writer.NewLine();
 		

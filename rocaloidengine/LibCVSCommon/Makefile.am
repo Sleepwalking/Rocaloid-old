@@ -18,5 +18,4 @@ libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
 	-I@top_srcdir@/SPKit/ \
 	-O2 \
 	-Wall \
-	-g \
-	-DCVSCOMMON_DEBUG 
+	-g 
