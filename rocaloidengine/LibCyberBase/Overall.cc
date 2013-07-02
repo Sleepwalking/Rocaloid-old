@@ -68,7 +68,7 @@ namespace Overall
 
 	double GetDoubleSum(array<double>& Arr)
 	{//取数组和
-		double Acc;
+		double Acc=0;
 		int i;
 		for(i=0;i<=Arr.pointer;i++)
 			Acc+=Arr[i];

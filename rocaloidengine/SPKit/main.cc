@@ -48,6 +48,11 @@ int main()
 	wLine(CStr("rtrim: '") + rtrim(a) + "'");
 	wLine(CStr("trim: '") + trim(a) + "'");
 
+	wLine(CStr(a == "  sfe ewfa wef   "));
+	wLine(CStr(a == "  sfe ewfw wef   "));
+	wLine(CStr(a != "  sfe ewfa wef   "));
+	wLine(CStr(a != "  sfe ewfw wef   "));
+	wLine(CStr(a != a));
 	//array<string> passage;
 	//split(wholestr, passage);
 

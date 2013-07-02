@@ -31,25 +31,22 @@
 #include "CVSWriter.h"
 #include "CVSReader.h"
 
-using namespace Overall;
+using namespace converter;
+
 
 int main()
 {
 	//int i=10,j=100;
-	array<double> x;
-	array<string> z;
-	string str;
-	//exit(0);
-	
 	CVSCommon::CVS cvs;
-	CVSReader::Open("/home/rgwan/ramdisk/Compiled.cvs");
+	CVSReader::Open("/home/rgwan/ramdisk/test1.cvs");
+	CVSWriter::Save("/home/rgwan/ramdisk/test2.cvs");
 	CVSReader::Read(cvs);
+	CVSWriter::Write(cvs);
+	wLine(cvs.SegmentListQ);
 	CVSReader::Close();
-
-	
-
-	
-
-	return 0; 
+	CVSWriter::Close();
+	//exit(0);
+	//while(1);
+	return 0;
 }
 

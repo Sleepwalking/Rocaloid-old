@@ -160,7 +160,7 @@ namespace CVSReader
 			{
 				StrBuff = Reader.Read();
 				_Effects.EnvelopeListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_Effects.EnvelopeList.setUbound ( _Effects.EnvelopeListQ + 1);
+				_Effects.EnvelopeList.setUbound ( _Effects.EnvelopeListQ );
 			}
 			else if ( StrBuff == "EnvelopeList" )
 			{
@@ -189,10 +189,16 @@ namespace CVSReader
 			}
 			else if ( StrBuff == "OpennessList" )
 			{
+#ifdef CVSCOMMON_DEBUG	
+				printf("			OpennessList upper = %d\n",_Effects.OpennessList.getUbound ());
+#endif
 				for ( i=0 ; i<= _Effects.OpennessList.getUbound () ; i++ )
 				{
 						StrBuff = Reader.Read();
 						_Effects.OpennessList[i] = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
+#ifdef CVSCOMMON_DEBUG
+						printf("			O:%f\n",_Effects.OpennessList[i]);
+#endif
 				}
 			}
 			else if ( StrBuff == "Vibration")
@@ -269,7 +275,8 @@ namespace CVSReader
 	
 				if ( RDLIO::TestIfIsNumber(StrBuff) )
 				{
-					_Start.Preserved = CInt(StrBuff.toChars ());
+					_Start.Preserved = CInt(StrBuff);
+					
 				}
 				else
 				{
@@ -322,7 +329,7 @@ namespace CVSReader
 				StrBuff = Reader.Read();
 				if ( RDLIO::TestIfIsNumber(StrBuff) )
 				{
-					_Dest.Preserved = CInt(StrBuff.toChars ());
+					_Dest.Preserved = CInt(StrBuff);
 				}
 				else
 				{
@@ -401,98 +408,139 @@ namespace CVSReader
 		string StrBuff;
 		int i;
 		if(isOpen != true) return;
+#ifdef CVSCOMMON_DEBUG
+					printf("	Seg Start\n");
+#endif
 		while( ! (StrBuff == "End") )
 		{
 			StrBuff = Reader.Read();
 			if ( StrBuff == "TPhoneListQ" )
 			{
-				printf("    TPhoneListQ\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("	    TPhoneListQ\n");
+#endif
 				StrBuff = Reader.Read();
 				_Segment.TPhoneListQ =RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
+				
 				_Segment.Effects.OpennessList.setUbound (_Segment.TPhoneListQ + 1);
 				for (i = 0 ; i <=  (_Segment.TPhoneListQ + 1) ; i++ )
 				{
 					_Segment.Effects.OpennessList[i] = 1;
 				}
-				_Segment.TPhoneList.setUbound ( _Segment.TPhoneListQ + 1);
-				printf("    End TPhoneListQ\n");
+				_Segment.TPhoneList.setUbound ( _Segment.TPhoneListQ );
+#ifdef CVSCOMMON_DEBUG
+					printf("	    End TPhoneListQ\n");
+#endif
 			}
 			else if ( StrBuff == "TPhoneList")
 			{
-				printf("    TPhoneList\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("	    TPhoneList\n");
+#endif
 				for ( i=0 ; i <=  _Segment.TPhoneListQ ; i++)
 					TPhone_Read(_Segment.TPhoneList[i]);
 				Detect_WrongEnd();
-				printf("    End TPhoneList\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("	    End TPhoneList\n");
+#endif
 			}
 			else if ( StrBuff == "FreqListQ" )
 			{
-				printf("    FreqListQ\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("	    FreqListQ\n");
+#endif
 				StrBuff = Reader.Read();
 				_Segment.FreqListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_Segment.FreqList.setUbound (_Segment.FreqListQ + 1);
-				printf("    End FreqListQ\n");
+				_Segment.FreqList.setUbound (_Segment.FreqListQ );
+#ifdef CVSCOMMON_DEBUG
+					printf("	    End FreqListQ\n");
+#endif
 			}
 			else if ( StrBuff == "FreqList" )
 			{
-				printf("    FreqList\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		FreqList\n");
+#endif
 				for ( i=0 ; i<= _Segment.FreqListQ ; i++)
 					FreqSet_Read(_Segment.FreqList[i]);
 				Detect_WrongEnd();
-				printf("    End FreqList\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		End FreqList\n");
+#endif
 			}
 			else if ( StrBuff == "Effects" )
 			{
-				printf("    Effects\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		Effects\n");
+#endif
 				Effects_Read(_Segment.Effects);
-				printf("    End Effects\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		End Effects\n");
+#endif
 			}
 			else if( StrBuff == "StartTime")
 			{
-				printf("    StartTime\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		StartTime\n");
+#endif
 				_Segment.StartTime = RDLIO::TestIfIsDoubleNotNegative(Reader.Read());
-				printf("    End StartTime\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("		End StartTime\n");
+#endif
 			}
 			else
 			{
 				//Throw New Exception("Invalid identifier as " & StrBuff & ".")
 			}
 		}
+#ifdef CVSCOMMON_DEBUG
+		printf("	End Seg\n");
+#endif
 	}
 	
 	void Read(CVS & _CVS)
 	{
 		string StrBuff;
-		if(isOpen != true) return;
+		if(isOpen != true) return ;
 		while(!(  StrBuff == CStr("End") ) )
 		{
 			StrBuff = Reader.Read();
 			if ( StrBuff == "SegmentListQ")
 			{
-				printf("SegListQ\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("SegListQ\n");
+#endif
 				StrBuff = Reader.Read();
 				_CVS.SegmentListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_CVS.SegmentList.setUbound ( _CVS.SegmentListQ + 1 );
-				printf("End SegListQ\n");
+				_CVS.SegmentList.setUbound ( _CVS.SegmentListQ );
+#ifdef CVSCOMMON_DEBUG
+					printf("End SegListQ\n");
+#endif
 			}
 			else if ( StrBuff ==  "SegmentList")
 			{
 				int i;
-				printf("Seg List\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("Seg List\n");
+#endif
 				for ( i=0 ; i<=_CVS.SegmentListQ ; i++)
 					Segment_Read(_CVS.SegmentList[i]);
 				if ( ! (Reader.Read() == "End" ) )
 				{
 					Exception("List without an End.");
 				}
-				printf("End Seg List\n");
+#ifdef CVSCOMMON_DEBUG
+					printf("End Seg List\n");
+#endif
 			}
 			else
 			{
 					//Throw New Exception("Invalid identifier as " & StrBuff & ".")
 			}
 		}
-		printf("Hi段错误！\n");
+#ifdef CVSCOMMON_DEBUG
+		printf("All done.\n");
+#endif
 	}
 	
 };

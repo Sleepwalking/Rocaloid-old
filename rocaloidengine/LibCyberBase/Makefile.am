@@ -1,7 +1,8 @@
 
 libCyberBase_la_CXXFLAGS = -O2 \
 	-Wall \
-	-g  -I@top_srcdir@/SPKit/
+	-g  -I@top_srcdir@/SPKit/ \
+	#-DMEMCHECK
 ## Process this file with automake to produce Makefile.in
 
 

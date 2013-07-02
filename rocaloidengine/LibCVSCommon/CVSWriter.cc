@@ -52,7 +52,7 @@ namespace CVSWriter
 		isOpen=false;
 	}
 	
-	void TPhone_Write(TPhone _TPhone)
+	void TPhone_Write(TPhone & _TPhone)
 	{
 		if(isOpen != true) return;
 		Writer.WriteWord("TPhone");
@@ -108,7 +108,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void Freq_Write(FreqSet _Freq)
+	void Freq_Write(FreqSet & _Freq)
 	{
 		if(isOpen != true) return;
 		Writer.WriteWord("FreqSet");
@@ -122,7 +122,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void ADSREnvelope_Write(ADSREnvelope _ADSR)
+	void ADSREnvelope_Write(ADSREnvelope & _ADSR)
 	{
 		if(isOpen != true) return;
 		Writer.WriteWord("ADSR");
@@ -140,7 +140,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void EnvelopeSet_Write(EnvelopeSet _EnvelopeSet )
+	void EnvelopeSet_Write(EnvelopeSet & _EnvelopeSet )
 	{
 		if(isOpen != true) return;
 		Writer.WriteWord("EnvelopeSet");
@@ -154,7 +154,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 	
-	void BreathStruct_Write(BreathStruct _Breath )
+	void BreathStruct_Write(BreathStruct & _Breath )
 	{
 		if(isOpen != true) return;
 		Writer.WriteWord("Breath");
@@ -170,7 +170,7 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 
-	void Effects_Write(EffectCollection _Effects)
+	void Effects_Write(EffectCollection & _Effects)
 	{
 		int i;
 		if(isOpen != true) return;
@@ -185,7 +185,7 @@ namespace CVSWriter
 			Writer.NewLine();
 		}
 		
-		if (_Effects.ForwardCut == 0)
+		if (_Effects.ForwardCut != 0)
 		{
 			Writer.WriteWord("ForwardCut");
 			Writer.WriteWord(_Effects.ForwardCut);
@@ -234,16 +234,17 @@ namespace CVSWriter
 		}
 		
 		Writer.WriteWord("OpennessList");
-		for(i = 0 ;i<= _Effects.OpennessList.pointer;i++)
+		for(i = 0 ;i<= _Effects.OpennessList.getUbound ();i++)
 			Writer.WriteWord(_Effects.OpennessList[i]);
 		Writer.NewLine();
 		
 		Writer.IndentPop();
 		Writer.WriteWord("End");
 		Writer.NewLine();
+		
 	}
 	
-	void Segment_Write (Segment _Segment)
+	void Segment_Write (Segment & _Segment)
 	{
 		if(isOpen != true) return;
 		int i;
@@ -287,7 +288,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void Write( CVS _CVS)
+	void Write(CVS & _CVS)
 	{
 		if(isOpen != true) return;
 		int i;
@@ -304,8 +305,15 @@ namespace CVSWriter
 		Writer.NewLine();
 		for(i=0;i<= _CVS.SegmentListQ;i++)
 		{
+#ifdef CVSCOMMON_DEBUG
+			printf("Seg start\n");
+#endif
 			Segment_Write(_CVS.SegmentList[i]);
+#ifdef CVSCOMMON_DEBUG
+			printf("Seg Done\n");
+#endif
 		}
+		
 		Writer.IndentPop();
 		Writer.WriteWord("End");
 		

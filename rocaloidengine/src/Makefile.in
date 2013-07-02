@@ -278,7 +278,8 @@ rsctool_CXXFLAGS = -O2 \
 	-g  \
 	-I@top_srcdir@/LibCVSCommon/ \
 	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/SPKit/
+	 -I@top_srcdir@/SPKit/ \
+	 -DCVSCOMMON_DEBUG
 
 .AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \

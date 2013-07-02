@@ -142,6 +142,36 @@ bool string::operator ==(const string& rhs)
 			return false;
 	return true;	
 }
+bool string::operator ==(const char* rhs)
+{
+	int i;
+	for(i = 0;i < length;i ++)
+		if(rhs[i] != baseptr[i] || rhs[i] == 0)
+			return false;
+	if(rhs[length] != 0)
+		return false;
+	return true;
+}
+bool string::operator !=(const string& rhs)
+{
+	int i;
+	if(rhs.length != length)
+		return true;
+	for(i = 0;i < rhs.length;i ++)
+		if(rhs.baseptr[i] != baseptr[i])
+			return true;
+	return false;
+}
+bool string::operator !=(const char* rhs)
+{
+	int i;
+	for(i = 0;i < length;i ++)
+		if(rhs[i] != baseptr[i] || rhs[i] == 0)
+			return true;
+	if(rhs[length] != 0)
+		return true;
+	return false;
+}
 char* string::toChars()
 {
 	char* retptr = (char*)mem_malloc(length + 1);

@@ -136,7 +136,9 @@ void RDLReader::Open(string FileName)
 }
 string RDLReader::Read()
 {
-	return Reader.readWord();
+	string res;
+	res=Reader.readWord();
+	return res;
 }
 void RDLReader::Close()
 {
@@ -151,6 +153,7 @@ void RDLWriter::Open(string FileName)
 		Exception(CStr("I CANNOT Create File: ") + FileName);
 	Indent = "";
 	LastWrite = 0;
+	NewLineValid=true;
 }
 RDLWriter::~RDLWriter()
 {
@@ -210,7 +213,7 @@ void RDLWriter::IndentPush()
 {
 	if(NewLineValid)
 	{
-		Indent=Indent+" ";
+		Indent=Indent+"\t";
 	}
 }
 void RDLWriter::IndentPop()

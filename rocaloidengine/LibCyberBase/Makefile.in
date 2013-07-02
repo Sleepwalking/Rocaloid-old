@@ -284,7 +284,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 libCyberBase_la_CXXFLAGS = -O2 \
 	-Wall \
-	-g  -I@top_srcdir@/SPKit/
+	-g  -I@top_srcdir@/SPKit/ \
+	#-DMEMCHECK
 
 lib_LTLIBRARIES = \
 	libCyberBase.la

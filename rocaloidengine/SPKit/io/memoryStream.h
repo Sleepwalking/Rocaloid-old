@@ -14,6 +14,7 @@ class memoryStream
 		inline bool readBool();
 		inline char readChar();
 		inline byte readByte();
+		inline short int readShort();
 		inline int readInt();
 		inline uint readUInt();
 		inline float readFloat();
@@ -28,6 +29,7 @@ class memoryStream
 		inline void write(bool data);
 		inline void write(char data);
 		inline void write(byte data);
+		inline void write(short int data);
 		inline void write(int data);
 		inline void write(uint data);
 		inline void write(float data);
@@ -75,6 +77,12 @@ inline byte memoryStream::readByte()
 {
 	byte ret = *((byte*)baseptr + offset);
 	offset ++;
+	return ret;
+}
+inline short int memoryStream::readShort()
+{
+	short int ret = *((short int*)((byte*)baseptr + offset));
+	offset += sizeof(short int);
 	return ret;
 }
 inline int memoryStream::readInt()
@@ -128,6 +136,11 @@ inline void memoryStream::write(byte data)
 {
 	*((byte*)((byte*)baseptr + offset)) = data;
 	offset ++;
+}
+inline void memoryStream::write(short int data)
+{
+	*((short int*)((byte*)baseptr + offset)) = data;
+	offset += sizeof(short int);
 }
 inline void memoryStream::write(int data)
 {

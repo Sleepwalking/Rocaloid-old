@@ -8,14 +8,6 @@
 namespace converter
 {
 
-	inline string CStr(string& source)
-	{
-		return source;
-	}
-	char CChar(string& source)
-	{
-		return source[0];
-	}
 	
 	string CStr(const char* source)
 	{

@@ -2,13 +2,14 @@
 #define CONVERTER_H
 class string;
 #include "../defs.h"
+#include "../structure/string.h"
 #include <stdlib.h>
 namespace converter
 {
 	string CStr(const char* source);
 	string CStr(bool source);
-	string CStr(char source);
-	string CStr(string& source);
+	inline string CStr(char source);
+	inline string CStr(string& source);
 	string CStr(byte source);
 	string CStr(int source);
 	string CStr(long source);
@@ -86,7 +87,7 @@ namespace converter
 	#define CFlt(x) (CSng(x))
 	
 	double CDbl(string& source);
-	double CDbl(char* source);
+	inline double CDbl(char* source);
 	inline double CDbl(char source);
 	inline double CDbl(bool source);
 	inline double CDbl(byte source);
@@ -319,9 +320,17 @@ namespace converter
 	{
 		return (double)source;
 	}
-	inline double CDbl(char* source)
+	inline string CStr(char source)
 	{
-		return atof(source);
+		return CStr(&source);
+	}
+	inline string CStr(string& source)
+	{
+		return source;
+	}
+	inline char CChar(string& source)
+	{
+		return source[0];
 	}
 	inline byte CByte(char* source)
 	{
@@ -343,6 +352,9 @@ namespace converter
 	{
 		return (float)atof(source);
 	}
-
+	inline double CDbl(char* source)
+	{
+		return atof(source);
+	}
 }
 #endif

@@ -21,6 +21,9 @@ class string
 		string& operator +=(const char* rhs);
 
 		bool operator ==(const string& rhs);
+		bool operator ==(const char* rhs);
+		bool operator !=(const string& rhs);
+		bool operator !=(const char* rhs);
 
 		char* toChars();
 		inline char* unsafeHandle();

@@ -96,6 +96,14 @@ char binaryStream::readChar()
 	fseek(fStream, filePtr, SEEK_SET);
 	return tmp;
 }
+short int binaryStream::readShort()
+{
+	short int tmp;
+	fread(&tmp, sizeof(short int), 1, fStream);
+	filePtr += sizeof(short int);
+	fseek(fStream, filePtr, SEEK_SET);
+	return tmp;
+}
 uint binaryStream::readUInt()
 {
 	uint tmp;
@@ -146,7 +154,7 @@ ulong binaryStream::readULong()
 }
 string binaryStream::readString()
 {
-	//int count;
+	int count;
 	char tmpchar;
 	array<char> tmp;
 	string ret;
@@ -199,6 +207,12 @@ void binaryStream::write(char data)
 {
 	fwrite(&data, 1, 1, fStream);
 	filePtr ++;
+	fseek(fStream, filePtr, SEEK_SET);
+}
+void binaryStream::write(short int data)
+{
+	fwrite(&data, sizeof(short int), 1, fStream);
+	filePtr += sizeof(short int);
 	fseek(fStream, filePtr, SEEK_SET);
 }
 void binaryStream::write(uint data)

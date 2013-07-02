@@ -7,7 +7,7 @@ Shortcut=rocaloidengine//src
 Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
 
 [File Loader]
-Files=../../LibCVSCommon/CVSReader.h#25%%%../../LibCVSCommon/CVSReader.cc#356%%%../../LibCyberBase/Overall.h#62%%%../../src/main.cc#45%%%../../LibCyberBase/RDLIO.cc#20
+Files=../../LibCVSCommon/CVSReader.cc#197%%%../../LibCVSCommon/CVSCommon.h#89%%%../../SPKit/io/terminal.cc#16%%%../../SPKit/io/terminal.h#5%%%../../SPKit/structure/array.cc#4%%%../../SPKit/structure/array.h#1%%%../../SPKit/misc/converter.cc#52%%%../../SPKit/io/fileStream.cc#1%%%../../SPKit/structure/string.cc#35%%%../../src/main.cc#41%%%../../LibCVSCommon/CVSCommon.cc#41%%%../../LibCyberBase/RDLIO.h#58%%%../../LibCVSCommon/CVSWriter.cc#237%%%../../LibCVSCommon/CVSWriter.h#31
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
@@ -18,13 +18,14 @@ Run in terminal=2
 Working directories=../../../rocaloidengine
 
 [Build]
-Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
-Selected Configuration=Debug
+Configuration list=1:Default:Debug%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
+Selected Configuration=Default
 BuildArgs/Default=--enable-maintainer-mode
 BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
 BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
-Breakpoint=1:../../LibCVSCommon/CVSReader.cc:48:0:%%%1:../../src/main.cc:43:0:
+Watch=cvs
+Breakpoint=0:../../LibCVSCommon/CVSReader.cc:41:0:%%%0:../../LibCVSCommon/CVSReader.cc:495:0:%%%0:../../LibCVSCommon/CVSReader.cc:466:0:%%%0:../../src/main.cc:43:0:%%%0:../../LibCVSCommon/CVSWriter.cc:294:0:%%%0:../../src/main.cc:45:0:%%%0:../../src/main.cc:44:0:%%%0:../../src/main.cc:46:0:%%%0:../../src/main.cc:41:0:%%%0:../../src/main.cc:38:0:
 Stop at beginning=2

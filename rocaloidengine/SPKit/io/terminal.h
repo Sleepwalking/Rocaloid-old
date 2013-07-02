@@ -1,33 +1,30 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 #include "../structure/string.h"
-#include "../misc/converter.h"
 #include <stdlib.h>
-namespace terminal
+class terminal
 {
-		string readLine();
+	public:
+		static string readLine();
 		
-		void write(const char* str);
-		void write(string str);
+		static void write(const char* str);
+		static void write(string str);
 		template <class T> static void write(T source);
 		
-		 void writeLine(const char* str);
-		 void writeLine(string str);
+		static void writeLine(const char* str);
+		static void writeLine(string str);
 		template <class T> static void writeLine(T source);
-
-		void directPrint(const char* str);
-	
-		template <class T> void write(T source)
-		{
-			terminal:write(CStr(source));
-		}
-		template <class T> void writeLine(T source)
-		{
-			char* chars = converter::CStr(source).toChars();
-			directPrint(chars);
-			free(chars);
-		}
 };
-
-
+extern void directPrint(const char* str);
+template <class T> void terminal::write(T source)
+{
+	terminal:write(CStr(source));
+}
+template <class T> void terminal::writeLine(T source)
+{
+	char* chars = CStr(source).toChars();
+	directPrint(chars);
+	directPrint("\n");
+	free(chars);
+}
 #endif
