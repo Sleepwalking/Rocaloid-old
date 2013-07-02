@@ -6,7 +6,8 @@ rsctool_CXXFLAGS = -O2 \
 	-I@top_srcdir@/LibCVSCommon/ \
 	 -I@top_srcdir@/LibCyberBase/ \
 	 -I@top_srcdir@/SPKit/ \
-	 -DCVSCOMMON_DEBUG
+	 -DCVSCOMMON_DEBUG \
+	 -DMEMCHECK
 ## Process this file with automake to produce Makefile.in
 
 .AM_CPPFLAGS = \
@@ -23,12 +24,35 @@ bin_PROGRAMS =  \
 	rsctool
 
 rsctool_SOURCES =  \
-	main.cc
+	main.cc \
+	CVSCommon.cc \
+	CVSCommon.h \
+	CVSReader.cc \
+	CVSReader.h \
+	CVSWriter.cc \
+	CVSWriter.h \
+	../LibCyberBase/Overall.cc \
+	../LibCyberBase/Overall.h \
+	../LibCyberBase/RDLIO.cc \
+	../LibCyberBase/RDLIO.h \
+	../SPKit/structure/string.cc \
+	../SPKit/structure/string.h \
+	../SPKit/misc/converter.cc \
+	../SPKit/misc/converter.h \
+	../SPKit/misc/listopr.h \
+	../SPKit/misc/memopr.h \
+	../SPKit/io/fileStream.cc \
+	../SPKit/io/fileStream.h \
+	../SPKit/io/memoryStream.cc \
+	../SPKit/io/memoryStream.h \
+	../SPKit/io/stringStream.cc \
+	../SPKit/io/stringStream.h \
+	../SPKit/io/terminal.cc \
+	../SPKit/io/terminal.h \
+	../SPKit/defs.h
 
-rsctool_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ \
-	-L../LibCVSCommon/.libs/ \
-	-lCVSCommon 
+rsctool_LDFLAGS = -L../LibCyberBase/.libs/ \
+	-L../LibCVSCommon/.libs/ 
 
 SUBDIRS = \
 	../LibCyberBase/ \

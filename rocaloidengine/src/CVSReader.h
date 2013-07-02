@@ -1,5 +1,5 @@
  /*
-  * CVSCommon.cc
+  * CVSReader.h
   *
   * Copyright (C) 2013 - Rocaloid Development Group(RDG)
   *
@@ -17,34 +17,28 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#include "defs.h"
-#include "structure/string.h"
-#include "misc/converter.h"
-#include "cvector.h"
-#include "io/fileStream.h"
-#include "Overall.h"
-#include "CVSCommon.h"
+ #ifndef CVSREADER_H
+ #define CVSREADER_H
 
-using namespace converter;
-namespace CVSCommon
+namespace CVSReader
 {
-	double GetSegmentTime(Segment &_Segment)
-	{
-		int i ;
-		double acc =0;
-		for( i = 0 ;i<=_Segment.TPhoneListQ;i++)
-		{
-			acc += _Segment.TPhoneList[i].Transition.Time;
-		}
-		return acc;
-	}
-	bool IsConsonant(string Symbol)
-	{
-		if (Symbol.getLength() == 1)
-			return false;
-		if (Symbol==CStr("e-")) return false;
-		if (Symbol==CStr("NN")) return false;
-		if (Symbol==CStr("NN")) return false;
-		return true;						
-	}
-}
+	//#define Exception(x) Overall::Exception(x);
+	using namespace CVSCommon;
+	void Open(string File);
+	void Close();
+
+	void BreathStruct_Read(BreathStruct & _Breath);
+	void EnvelopeSet_Read( EnvelopeSet & _EnvelopeSet);
+	void ADSREnvelope_Read(ADSREnvelope & _ADSREnvelope  );
+	void Effects_Read(EffectCollection & _Effects);
+	void FreqSet_Read( FreqSet & _FreqSet );
+	void TStart_Read(TStart & _Start);
+	void TDest_Read(TDest & _Dest);
+	void TTransition_Read(TTransition &  _Transition);
+	void TPhone_Read(TPhone & _TPhone);
+	void Segment_Read(Segment & _Segment );
+	void Read(CVS & _CVS);
+};
+
+ #endif /*REDAERSVC _H */
+ 

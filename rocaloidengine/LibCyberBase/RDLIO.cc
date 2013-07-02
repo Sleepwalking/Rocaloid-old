@@ -19,11 +19,12 @@
  */
 #include "defs.h"
 #include "io/terminal.h"
+#include "misc/memopr.h"
 #include "structure/string.h"
 #include "misc/converter.h"
 #include "structure/array.h"
 #include "io/fileStream.h"
-
+#include <vector>
 #include "Overall.h"
 #include "RDLIO.h"
 
@@ -32,36 +33,39 @@ using namespace Overall;
 {	
 	bool TestIfIsNumber(string _String)
 	{
-		char *str=_String.unsafeHandle ();
+		char *str=_String.toChars ();
 		int i,len=_String.getLength();
+		bool res = true;
 		for(i=0;i<len;i++)
 		{
 			if((str[i] < '0' || str[i] > '9') && str[i]!='.' )
 			{
 				//Exception( _String + "  is n't a number!");
-				return false;
+				res = false;
 			}
 		}
-		return true;
+		mem_free(str);
+		return res;
 	}
 	double TestIfIsDouble(string _String)
 	{
 		_String=Trim(_String);
 		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		return converter::CDbl(_String.toChars ());
+		return converter::CDbl(_String);
 	}
 	int TestIfIsInt(string _String)
 	{
 		_String=Trim(_String);
 		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		return converter::CInt(_String.toChars ());
+		return converter::CInt(_String);
 	}
 	double TestIfIsDoubleAndPositive(string _String)
 	{
 		double x;
 		_String=Trim(_String);
 		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CDbl(_String.toChars ());
+		x= converter::CDbl(_String);
+		//printf("x=%f\n",x);
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
 		return x;
@@ -72,7 +76,8 @@ using namespace Overall;
 		int x;
 		_String=Trim(_String);
 		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CInt(_String.toChars ());
+		x= converter::CInt(_String);
+		
 		if(x<=0)
 			Exception ( _String + "  is n't positive!");
 		return x;
@@ -82,7 +87,7 @@ using namespace Overall;
 		double x;
 		_String=Trim(_String);
 		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CDbl(_String.toChars ());
+		x= converter::CDbl(_String);
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;
@@ -93,7 +98,7 @@ using namespace Overall;
 		int x;
 		_String=Trim(_String);
 		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
-		x= converter::CInt(_String.toChars ());
+		x= converter::CInt(_String);
 		if(x<0)
 			Exception ( _String + "  is n't positive or 0!");
 		return x;

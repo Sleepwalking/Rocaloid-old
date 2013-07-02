@@ -26,7 +26,7 @@ string::string(const string& source)
 		printf("String Ctor %d\n", ++ ccount);
 	#endif
 	baseptr = (char*)mem_malloc(source.length);
-	for(length = 0;length < source.length;length ++)
+ 	for(length = 0;length < source.length;length ++)
 		baseptr[length] = source.baseptr[length];
 }
 string::string(const char* source)

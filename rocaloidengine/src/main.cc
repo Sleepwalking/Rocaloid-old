@@ -13,7 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License along
+ * You should have received a copy of the GNU General Public License alonghttp://login.skype.com/
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include "defs.h"
 #include "structure/string.h"
-#include "structure/array.h"
+#include "cvector.h"
 #include "io/fileStream.h"
 #include "misc/converter.h"
 #include "io/terminal.h"
@@ -37,16 +37,19 @@ using namespace converter;
 int main()
 {
 	//int i=10,j=100;
+	//printf("uBound=%d\n",RDLIO::TestIfIsIntAndPositive(CStr("1")) );	
 	CVSCommon::CVS cvs;
-	CVSReader::Open("/home/rgwan/ramdisk/test1.cvs");
+	CVSReader::Open("/home/rgwan/ramdisk/Compiled.cvs");
 	CVSWriter::Save("/home/rgwan/ramdisk/test2.cvs");
 	CVSReader::Read(cvs);
 	CVSWriter::Write(cvs);
-	wLine(cvs.SegmentListQ);
 	CVSReader::Close();
+	//rLine();
 	CVSWriter::Close();
 	//exit(0);
 	//while(1);
-	return 0;
+	//delete &cvs;
+	//wLine("尼玛段错误！");
+	//return 0;
 }
 

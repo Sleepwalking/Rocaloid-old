@@ -2,15 +2,15 @@
 Maximized=1
 Geometry=1024x691+0+24
 
-[Project Manager]
-Shortcut=rocaloidengine//src
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
-
 [File Loader]
-Files=../../LibCVSCommon/CVSReader.cc#197%%%../../LibCVSCommon/CVSCommon.h#89%%%../../SPKit/io/terminal.cc#16%%%../../SPKit/io/terminal.h#5%%%../../SPKit/structure/array.cc#4%%%../../SPKit/structure/array.h#1%%%../../SPKit/misc/converter.cc#52%%%../../SPKit/io/fileStream.cc#1%%%../../SPKit/structure/string.cc#35%%%../../src/main.cc#41%%%../../LibCVSCommon/CVSCommon.cc#41%%%../../LibCyberBase/RDLIO.h#58%%%../../LibCVSCommon/CVSWriter.cc#237%%%../../LibCVSCommon/CVSWriter.h#31
+Files=../../LibCyberBase/RDLIO.cc#135%%%../../LibCyberBase/RDLIO.h#61%%%../../src/CVSReader.cc#546%%%../../SPKit/misc/converter.h#1%%%../../src/main.cc#23%%%../../SPKit/io/terminal.cc#1%%%../../SPKit/io/terminal.h#1%%%../../src/CVSCommon.h#99
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Project Manager]
+Shortcut=rocaloidengine//src
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
 
 [Execution]
 Program uri=../../Debug/src/rsctool
@@ -27,5 +27,4 @@ BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS
 
 [Debugger]
 Watch=cvs
-Breakpoint=0:../../LibCVSCommon/CVSReader.cc:41:0:%%%0:../../LibCVSCommon/CVSReader.cc:495:0:%%%0:../../LibCVSCommon/CVSReader.cc:466:0:%%%0:../../src/main.cc:43:0:%%%0:../../LibCVSCommon/CVSWriter.cc:294:0:%%%0:../../src/main.cc:45:0:%%%0:../../src/main.cc:44:0:%%%0:../../src/main.cc:46:0:%%%0:../../src/main.cc:41:0:%%%0:../../src/main.cc:38:0:
 Stop at beginning=2

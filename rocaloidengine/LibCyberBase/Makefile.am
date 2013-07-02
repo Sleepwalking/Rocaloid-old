@@ -1,8 +1,7 @@
 
 libCyberBase_la_CXXFLAGS = -O2 \
 	-Wall \
-	-g  -I@top_srcdir@/SPKit/ \
-	#-DMEMCHECK
+	-g  -I@top_srcdir@/SPKit/
 ## Process this file with automake to produce Makefile.in
 
 
@@ -19,13 +18,11 @@ libCyberBase_la_SOURCES =  \
 	../SPKit/misc/converter.h \
 	../SPKit/misc/listopr.h \
 	../SPKit/misc/memopr.h \
-	../SPKit/structure/array.h \
 	../SPKit/structure/string.cc \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
-	../SPKit/structure/array.cc \
 	RDLIO.cc \
 	RDLIO.h \
 	../SPKit/io/terminal.cc \

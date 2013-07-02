@@ -20,7 +20,7 @@
 #include "defs.h"
 #include "structure/string.h"
 #include "misc/converter.h"
-#include "cvector.h"
+#include <vector>
 #include "io/fileStream.h"
 #include "Overall.h"
 #include "CVSCommon.h"

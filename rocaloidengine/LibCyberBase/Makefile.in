@@ -77,8 +77,8 @@ libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = libCyberBase_la-Overall.lo \
 	libCyberBase_la-fileStream.lo libCyberBase_la-converter.lo \
 	libCyberBase_la-string.lo libCyberBase_la-stringStream.lo \
-	libCyberBase_la-memoryStream.lo libCyberBase_la-array.lo \
-	libCyberBase_la-RDLIO.lo libCyberBase_la-terminal.lo
+	libCyberBase_la-memoryStream.lo libCyberBase_la-RDLIO.lo \
+	libCyberBase_la-terminal.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -284,8 +284,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 libCyberBase_la_CXXFLAGS = -O2 \
 	-Wall \
-	-g  -I@top_srcdir@/SPKit/ \
-	#-DMEMCHECK
+	-g  -I@top_srcdir@/SPKit/
 
 lib_LTLIBRARIES = \
 	libCyberBase.la
@@ -300,13 +299,11 @@ libCyberBase_la_SOURCES = \
 	../SPKit/misc/converter.h \
 	../SPKit/misc/listopr.h \
 	../SPKit/misc/memopr.h \
-	../SPKit/structure/array.h \
 	../SPKit/structure/string.cc \
 	../SPKit/structure/string.h \
 	../SPKit/defs.h \
 	../SPKit/io/stringStream.cc \
 	../SPKit/io/memoryStream.cc \
-	../SPKit/structure/array.cc \
 	RDLIO.cc \
 	RDLIO.h \
 	../SPKit/io/terminal.cc \
@@ -388,7 +385,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-Overall.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-RDLIO.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-converter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-fileStream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-memoryStream.Plo@am__quote@
@@ -458,13 +454,6 @@ libCyberBase_la-memoryStream.lo: ../SPKit/io/memoryStream.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/memoryStream.cc' object='libCyberBase_la-memoryStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-memoryStream.lo `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
-
-libCyberBase_la-array.lo: ../SPKit/structure/array.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-array.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-array.Tpo -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-array.Tpo $(DEPDIR)/libCyberBase_la-array.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/array.cc' object='libCyberBase_la-array.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-array.lo `test -f '../SPKit/structure/array.cc' || echo '$(srcdir)/'`../SPKit/structure/array.cc
 
 libCyberBase_la-RDLIO.lo: RDLIO.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-RDLIO.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-RDLIO.Tpo -c -o libCyberBase_la-RDLIO.lo `test -f 'RDLIO.cc' || echo '$(srcdir)/'`RDLIO.cc

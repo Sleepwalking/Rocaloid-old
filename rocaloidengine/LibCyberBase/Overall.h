@@ -54,7 +54,7 @@ struct QuadEqu
 
 void PtrSwap(int &p1, int &p2);
 extern double GetFreqByPitch(string Pitch);
-extern double GetDoubleSum(array<double>& Arr);
+extern double GetDoubleSum(std::vector<double>& Arr);
 extern string GetPitchByFreq(double Freq);
 QuadEqu GenerateQuadEquation(double x1, double y1, 
 										 double x2, double y2,  

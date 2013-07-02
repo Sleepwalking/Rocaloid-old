@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include "../SPKit/defs.h"
 #include "../SPKit/structure/string.h"
-#include "../SPKit/structure/array.h"
+#include "cvector.h"
 #include "../SPKit/io/terminal.h"
 #include "Overall.h"
 
@@ -58,7 +58,6 @@ namespace Overall
 		1043.478, 1108.73, 1174.659, 1244.508, 1318.51, 1396.913, 
 		1479.978, 1567.982, 1661.219, 1760, 1864.655, 1975.533
 	};
-
 	void PtrSwap(int &p1, int &p2)
 	{//指针交换
 		int Temp=p1;
@@ -66,11 +65,11 @@ namespace Overall
 		p2=Temp;
 	}
 
-	double GetDoubleSum(array<double>& Arr)
+	double GetDoubleSum(std::vector<double> & Arr)
 	{//取数组和
 		double Acc=0;
-		int i;
-		for(i=0;i<=Arr.pointer;i++)
+		unsigned int i;
+		for(i=0;i<=Arr.size();i++)
 			Acc+=Arr[i];
 		return Acc;
 	}

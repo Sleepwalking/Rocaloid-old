@@ -44,7 +44,7 @@ class RDLReader
 		void Close();
 	private:
 		//Private Reader As StreamReader
-		array<string> LineBuffer ;
+		//array<string> LineBuffer ;
 		int LineBufferQ ;
 		int LineBufferPointer; 
 		string StrStore;

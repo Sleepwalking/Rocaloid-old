@@ -22,7 +22,7 @@
 #include "io/terminal.h"
 #include "structure/string.h"
 #include "misc/converter.h"
-#include "cvector.h"
+#include <vector>
 #include "io/fileStream.h"
 
 #include "Overall.h"
@@ -160,7 +160,7 @@ namespace CVSReader
 			{
 				StrBuff = Reader.Read();
 				_Effects.EnvelopeListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_Effects.EnvelopeList.resize ( _Effects.EnvelopeListQ );
+				_Effects.EnvelopeList.resize ( _Effects.EnvelopeListQ +1);
 			}
 			else if ( StrBuff == "EnvelopeList" )
 			{
@@ -192,7 +192,7 @@ namespace CVSReader
 #ifdef CVSCOMMON_DEBUG	
 				printf("			OpennessList upper = %d\n",_Effects.OpennessList.size ());
 #endif
-				for ( i=0 ; i<= _Effects.OpennessList.size () ; i++ )
+				for ( i=0 ; i< _Effects.OpennessList.size () ; i++ )
 				{
 						StrBuff = Reader.Read();
 						_Effects.OpennessList[i] = RDLIO::TestIfIsDoubleNotNegative(StrBuff);
@@ -416,18 +416,20 @@ namespace CVSReader
 			StrBuff = Reader.Read();
 			if ( StrBuff == "TPhoneListQ" )
 			{
+
 #ifdef CVSCOMMON_DEBUG
 					printf("	    TPhoneListQ\n");
 #endif
 				StrBuff = Reader.Read();
 				_Segment.TPhoneListQ =RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
 				
-				_Segment.Effects.OpennessList.resize (_Segment.TPhoneListQ + 1);
+				_Segment.Effects.OpennessList.resize (_Segment.TPhoneListQ + 2);
+				
 				for (i = 0 ; i <=  (_Segment.TPhoneListQ + 1) ; i++ )
 				{
 					_Segment.Effects.OpennessList[i] = 1;
 				}
-				_Segment.TPhoneList.resize ( _Segment.TPhoneListQ );
+				_Segment.TPhoneList.resize ( _Segment.TPhoneListQ + 1);
 #ifdef CVSCOMMON_DEBUG
 					printf("	    End TPhoneListQ\n");
 #endif
@@ -451,7 +453,7 @@ namespace CVSReader
 #endif
 				StrBuff = Reader.Read();
 				_Segment.FreqListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_Segment.FreqList.resize (_Segment.FreqListQ );
+				_Segment.FreqList.resize (_Segment.FreqListQ +1 );
 #ifdef CVSCOMMON_DEBUG
 					printf("	    End FreqListQ\n");
 #endif
@@ -512,7 +514,7 @@ namespace CVSReader
 #endif
 				StrBuff = Reader.Read();
 				_CVS.SegmentListQ = RDLIO::TestIfIsIntAndPositive(StrBuff) - 1;
-				_CVS.SegmentList.resize ( _CVS.SegmentListQ );
+				_CVS.SegmentList.resize ( _CVS.SegmentListQ + 1 );
 #ifdef CVSCOMMON_DEBUG
 					printf("End SegListQ\n");
 #endif
