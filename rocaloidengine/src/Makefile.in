@@ -47,13 +47,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_rsctool_OBJECTS = rsctool-main.$(OBJEXT) \
-	rsctool-CVSCommon.$(OBJEXT) rsctool-CVSReader.$(OBJEXT) \
-	rsctool-CVSWriter.$(OBJEXT) rsctool-Overall.$(OBJEXT) \
-	rsctool-RDLIO.$(OBJEXT) rsctool-string.$(OBJEXT) \
-	rsctool-converter.$(OBJEXT) rsctool-fileStream.$(OBJEXT) \
-	rsctool-memoryStream.$(OBJEXT) rsctool-stringStream.$(OBJEXT) \
-	rsctool-terminal.$(OBJEXT)
+am_rsctool_OBJECTS = rsctool-main.$(OBJEXT)
 rsctool_OBJECTS = $(am_rsctool_OBJECTS)
 rsctool_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -85,22 +79,6 @@ CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD " $@;
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC    " $@;
-CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
@@ -301,8 +279,7 @@ rsctool_CXXFLAGS = -O2 \
 	-I@top_srcdir@/LibCVSCommon/ \
 	 -I@top_srcdir@/LibCyberBase/ \
 	 -I@top_srcdir@/SPKit/ \
-	 -DCVSCOMMON_DEBUG \
-	 -DMEMCHECK
+	 -DCVSCOMMON_DEBUG
 
 .AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
@@ -314,35 +291,12 @@ AM_CFLAGS = \
 	 -g
 
 rsctool_SOURCES = \
-	main.cc \
-	CVSCommon.cc \
-	CVSCommon.h \
-	CVSReader.cc \
-	CVSReader.h \
-	CVSWriter.cc \
-	CVSWriter.h \
-	../LibCyberBase/Overall.cc \
-	../LibCyberBase/Overall.h \
-	../LibCyberBase/RDLIO.cc \
-	../LibCyberBase/RDLIO.h \
-	../SPKit/structure/string.cc \
-	../SPKit/structure/string.h \
-	../SPKit/misc/converter.cc \
-	../SPKit/misc/converter.h \
-	../SPKit/misc/listopr.h \
-	../SPKit/misc/memopr.h \
-	../SPKit/io/fileStream.cc \
-	../SPKit/io/fileStream.h \
-	../SPKit/io/memoryStream.cc \
-	../SPKit/io/memoryStream.h \
-	../SPKit/io/stringStream.cc \
-	../SPKit/io/stringStream.h \
-	../SPKit/io/terminal.cc \
-	../SPKit/io/terminal.h \
-	../SPKit/defs.h
+	main.cc
 
 rsctool_LDFLAGS = -L../LibCyberBase/.libs/ \
-	-L../LibCVSCommon/.libs/ 
+	-L../LibCVSCommon/.libs/ \
+	-lCyberBase \
+	-lCVSCommon 
 
 SUBDIRS = \
 	../LibCyberBase/ \
@@ -435,18 +389,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-CVSCommon.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-CVSReader.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-CVSWriter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-Overall.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-RDLIO.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-converter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-fileStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-memoryStream.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-string.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-stringStream.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-terminal.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -482,160 +425,6 @@ rsctool-main.obj: main.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cc' object='rsctool-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-main.obj `if test -f 'main.cc'; then $(CYGPATH_W) 'main.cc'; else $(CYGPATH_W) '$(srcdir)/main.cc'; fi`
-
-rsctool-CVSCommon.o: CVSCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSCommon.o -MD -MP -MF $(DEPDIR)/rsctool-CVSCommon.Tpo -c -o rsctool-CVSCommon.o `test -f 'CVSCommon.cc' || echo '$(srcdir)/'`CVSCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSCommon.Tpo $(DEPDIR)/rsctool-CVSCommon.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSCommon.cc' object='rsctool-CVSCommon.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSCommon.o `test -f 'CVSCommon.cc' || echo '$(srcdir)/'`CVSCommon.cc
-
-rsctool-CVSCommon.obj: CVSCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSCommon.obj -MD -MP -MF $(DEPDIR)/rsctool-CVSCommon.Tpo -c -o rsctool-CVSCommon.obj `if test -f 'CVSCommon.cc'; then $(CYGPATH_W) 'CVSCommon.cc'; else $(CYGPATH_W) '$(srcdir)/CVSCommon.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSCommon.Tpo $(DEPDIR)/rsctool-CVSCommon.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSCommon.cc' object='rsctool-CVSCommon.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSCommon.obj `if test -f 'CVSCommon.cc'; then $(CYGPATH_W) 'CVSCommon.cc'; else $(CYGPATH_W) '$(srcdir)/CVSCommon.cc'; fi`
-
-rsctool-CVSReader.o: CVSReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSReader.o -MD -MP -MF $(DEPDIR)/rsctool-CVSReader.Tpo -c -o rsctool-CVSReader.o `test -f 'CVSReader.cc' || echo '$(srcdir)/'`CVSReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSReader.Tpo $(DEPDIR)/rsctool-CVSReader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSReader.cc' object='rsctool-CVSReader.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSReader.o `test -f 'CVSReader.cc' || echo '$(srcdir)/'`CVSReader.cc
-
-rsctool-CVSReader.obj: CVSReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSReader.obj -MD -MP -MF $(DEPDIR)/rsctool-CVSReader.Tpo -c -o rsctool-CVSReader.obj `if test -f 'CVSReader.cc'; then $(CYGPATH_W) 'CVSReader.cc'; else $(CYGPATH_W) '$(srcdir)/CVSReader.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSReader.Tpo $(DEPDIR)/rsctool-CVSReader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSReader.cc' object='rsctool-CVSReader.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSReader.obj `if test -f 'CVSReader.cc'; then $(CYGPATH_W) 'CVSReader.cc'; else $(CYGPATH_W) '$(srcdir)/CVSReader.cc'; fi`
-
-rsctool-CVSWriter.o: CVSWriter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSWriter.o -MD -MP -MF $(DEPDIR)/rsctool-CVSWriter.Tpo -c -o rsctool-CVSWriter.o `test -f 'CVSWriter.cc' || echo '$(srcdir)/'`CVSWriter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSWriter.Tpo $(DEPDIR)/rsctool-CVSWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSWriter.cc' object='rsctool-CVSWriter.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSWriter.o `test -f 'CVSWriter.cc' || echo '$(srcdir)/'`CVSWriter.cc
-
-rsctool-CVSWriter.obj: CVSWriter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-CVSWriter.obj -MD -MP -MF $(DEPDIR)/rsctool-CVSWriter.Tpo -c -o rsctool-CVSWriter.obj `if test -f 'CVSWriter.cc'; then $(CYGPATH_W) 'CVSWriter.cc'; else $(CYGPATH_W) '$(srcdir)/CVSWriter.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-CVSWriter.Tpo $(DEPDIR)/rsctool-CVSWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSWriter.cc' object='rsctool-CVSWriter.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-CVSWriter.obj `if test -f 'CVSWriter.cc'; then $(CYGPATH_W) 'CVSWriter.cc'; else $(CYGPATH_W) '$(srcdir)/CVSWriter.cc'; fi`
-
-rsctool-Overall.o: ../LibCyberBase/Overall.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-Overall.o -MD -MP -MF $(DEPDIR)/rsctool-Overall.Tpo -c -o rsctool-Overall.o `test -f '../LibCyberBase/Overall.cc' || echo '$(srcdir)/'`../LibCyberBase/Overall.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-Overall.Tpo $(DEPDIR)/rsctool-Overall.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../LibCyberBase/Overall.cc' object='rsctool-Overall.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-Overall.o `test -f '../LibCyberBase/Overall.cc' || echo '$(srcdir)/'`../LibCyberBase/Overall.cc
-
-rsctool-Overall.obj: ../LibCyberBase/Overall.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-Overall.obj -MD -MP -MF $(DEPDIR)/rsctool-Overall.Tpo -c -o rsctool-Overall.obj `if test -f '../LibCyberBase/Overall.cc'; then $(CYGPATH_W) '../LibCyberBase/Overall.cc'; else $(CYGPATH_W) '$(srcdir)/../LibCyberBase/Overall.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-Overall.Tpo $(DEPDIR)/rsctool-Overall.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../LibCyberBase/Overall.cc' object='rsctool-Overall.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-Overall.obj `if test -f '../LibCyberBase/Overall.cc'; then $(CYGPATH_W) '../LibCyberBase/Overall.cc'; else $(CYGPATH_W) '$(srcdir)/../LibCyberBase/Overall.cc'; fi`
-
-rsctool-RDLIO.o: ../LibCyberBase/RDLIO.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-RDLIO.o -MD -MP -MF $(DEPDIR)/rsctool-RDLIO.Tpo -c -o rsctool-RDLIO.o `test -f '../LibCyberBase/RDLIO.cc' || echo '$(srcdir)/'`../LibCyberBase/RDLIO.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-RDLIO.Tpo $(DEPDIR)/rsctool-RDLIO.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../LibCyberBase/RDLIO.cc' object='rsctool-RDLIO.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-RDLIO.o `test -f '../LibCyberBase/RDLIO.cc' || echo '$(srcdir)/'`../LibCyberBase/RDLIO.cc
-
-rsctool-RDLIO.obj: ../LibCyberBase/RDLIO.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-RDLIO.obj -MD -MP -MF $(DEPDIR)/rsctool-RDLIO.Tpo -c -o rsctool-RDLIO.obj `if test -f '../LibCyberBase/RDLIO.cc'; then $(CYGPATH_W) '../LibCyberBase/RDLIO.cc'; else $(CYGPATH_W) '$(srcdir)/../LibCyberBase/RDLIO.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-RDLIO.Tpo $(DEPDIR)/rsctool-RDLIO.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../LibCyberBase/RDLIO.cc' object='rsctool-RDLIO.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-RDLIO.obj `if test -f '../LibCyberBase/RDLIO.cc'; then $(CYGPATH_W) '../LibCyberBase/RDLIO.cc'; else $(CYGPATH_W) '$(srcdir)/../LibCyberBase/RDLIO.cc'; fi`
-
-rsctool-string.o: ../SPKit/structure/string.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-string.o -MD -MP -MF $(DEPDIR)/rsctool-string.Tpo -c -o rsctool-string.o `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-string.Tpo $(DEPDIR)/rsctool-string.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/string.cc' object='rsctool-string.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-string.o `test -f '../SPKit/structure/string.cc' || echo '$(srcdir)/'`../SPKit/structure/string.cc
-
-rsctool-string.obj: ../SPKit/structure/string.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-string.obj -MD -MP -MF $(DEPDIR)/rsctool-string.Tpo -c -o rsctool-string.obj `if test -f '../SPKit/structure/string.cc'; then $(CYGPATH_W) '../SPKit/structure/string.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/structure/string.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-string.Tpo $(DEPDIR)/rsctool-string.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/structure/string.cc' object='rsctool-string.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-string.obj `if test -f '../SPKit/structure/string.cc'; then $(CYGPATH_W) '../SPKit/structure/string.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/structure/string.cc'; fi`
-
-rsctool-converter.o: ../SPKit/misc/converter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-converter.o -MD -MP -MF $(DEPDIR)/rsctool-converter.Tpo -c -o rsctool-converter.o `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-converter.Tpo $(DEPDIR)/rsctool-converter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/misc/converter.cc' object='rsctool-converter.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-converter.o `test -f '../SPKit/misc/converter.cc' || echo '$(srcdir)/'`../SPKit/misc/converter.cc
-
-rsctool-converter.obj: ../SPKit/misc/converter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-converter.obj -MD -MP -MF $(DEPDIR)/rsctool-converter.Tpo -c -o rsctool-converter.obj `if test -f '../SPKit/misc/converter.cc'; then $(CYGPATH_W) '../SPKit/misc/converter.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/misc/converter.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-converter.Tpo $(DEPDIR)/rsctool-converter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/misc/converter.cc' object='rsctool-converter.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-converter.obj `if test -f '../SPKit/misc/converter.cc'; then $(CYGPATH_W) '../SPKit/misc/converter.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/misc/converter.cc'; fi`
-
-rsctool-fileStream.o: ../SPKit/io/fileStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-fileStream.o -MD -MP -MF $(DEPDIR)/rsctool-fileStream.Tpo -c -o rsctool-fileStream.o `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-fileStream.Tpo $(DEPDIR)/rsctool-fileStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/fileStream.cc' object='rsctool-fileStream.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-fileStream.o `test -f '../SPKit/io/fileStream.cc' || echo '$(srcdir)/'`../SPKit/io/fileStream.cc
-
-rsctool-fileStream.obj: ../SPKit/io/fileStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-fileStream.obj -MD -MP -MF $(DEPDIR)/rsctool-fileStream.Tpo -c -o rsctool-fileStream.obj `if test -f '../SPKit/io/fileStream.cc'; then $(CYGPATH_W) '../SPKit/io/fileStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/fileStream.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-fileStream.Tpo $(DEPDIR)/rsctool-fileStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/fileStream.cc' object='rsctool-fileStream.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-fileStream.obj `if test -f '../SPKit/io/fileStream.cc'; then $(CYGPATH_W) '../SPKit/io/fileStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/fileStream.cc'; fi`
-
-rsctool-memoryStream.o: ../SPKit/io/memoryStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-memoryStream.o -MD -MP -MF $(DEPDIR)/rsctool-memoryStream.Tpo -c -o rsctool-memoryStream.o `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-memoryStream.Tpo $(DEPDIR)/rsctool-memoryStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/memoryStream.cc' object='rsctool-memoryStream.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-memoryStream.o `test -f '../SPKit/io/memoryStream.cc' || echo '$(srcdir)/'`../SPKit/io/memoryStream.cc
-
-rsctool-memoryStream.obj: ../SPKit/io/memoryStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-memoryStream.obj -MD -MP -MF $(DEPDIR)/rsctool-memoryStream.Tpo -c -o rsctool-memoryStream.obj `if test -f '../SPKit/io/memoryStream.cc'; then $(CYGPATH_W) '../SPKit/io/memoryStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/memoryStream.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-memoryStream.Tpo $(DEPDIR)/rsctool-memoryStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/memoryStream.cc' object='rsctool-memoryStream.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-memoryStream.obj `if test -f '../SPKit/io/memoryStream.cc'; then $(CYGPATH_W) '../SPKit/io/memoryStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/memoryStream.cc'; fi`
-
-rsctool-stringStream.o: ../SPKit/io/stringStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-stringStream.o -MD -MP -MF $(DEPDIR)/rsctool-stringStream.Tpo -c -o rsctool-stringStream.o `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-stringStream.Tpo $(DEPDIR)/rsctool-stringStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/stringStream.cc' object='rsctool-stringStream.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-stringStream.o `test -f '../SPKit/io/stringStream.cc' || echo '$(srcdir)/'`../SPKit/io/stringStream.cc
-
-rsctool-stringStream.obj: ../SPKit/io/stringStream.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-stringStream.obj -MD -MP -MF $(DEPDIR)/rsctool-stringStream.Tpo -c -o rsctool-stringStream.obj `if test -f '../SPKit/io/stringStream.cc'; then $(CYGPATH_W) '../SPKit/io/stringStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/stringStream.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-stringStream.Tpo $(DEPDIR)/rsctool-stringStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/stringStream.cc' object='rsctool-stringStream.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-stringStream.obj `if test -f '../SPKit/io/stringStream.cc'; then $(CYGPATH_W) '../SPKit/io/stringStream.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/stringStream.cc'; fi`
-
-rsctool-terminal.o: ../SPKit/io/terminal.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-terminal.o -MD -MP -MF $(DEPDIR)/rsctool-terminal.Tpo -c -o rsctool-terminal.o `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-terminal.Tpo $(DEPDIR)/rsctool-terminal.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/terminal.cc' object='rsctool-terminal.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-terminal.o `test -f '../SPKit/io/terminal.cc' || echo '$(srcdir)/'`../SPKit/io/terminal.cc
-
-rsctool-terminal.obj: ../SPKit/io/terminal.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-terminal.obj -MD -MP -MF $(DEPDIR)/rsctool-terminal.Tpo -c -o rsctool-terminal.obj `if test -f '../SPKit/io/terminal.cc'; then $(CYGPATH_W) '../SPKit/io/terminal.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/terminal.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-terminal.Tpo $(DEPDIR)/rsctool-terminal.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../SPKit/io/terminal.cc' object='rsctool-terminal.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-terminal.obj `if test -f '../SPKit/io/terminal.cc'; then $(CYGPATH_W) '../SPKit/io/terminal.cc'; else $(CYGPATH_W) '$(srcdir)/../SPKit/io/terminal.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

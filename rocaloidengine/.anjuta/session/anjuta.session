@@ -2,15 +2,15 @@
 Maximized=1
 Geometry=1024x691+0+24
 
+[Project Manager]
+Shortcut=rocaloidengine//src
+Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//rsctool
+
 [File Loader]
-Files=../../LibCyberBase/RDLIO.cc#135%%%../../LibCyberBase/RDLIO.h#61%%%../../src/CVSReader.cc#546%%%../../SPKit/misc/converter.h#1%%%../../src/main.cc#23%%%../../SPKit/io/terminal.cc#1%%%../../SPKit/io/terminal.h#1%%%../../src/CVSCommon.h#99
+Files=../../LibCyberBase/RDLIO.cc#27%%%../../LibCyberBase/RDLIO.h#47%%%../../src/CVSReader.cc#195%%%../../SPKit/misc/converter.h#1%%%../../src/main.cc#42%%%../../SPKit/io/terminal.cc#1%%%../../SPKit/io/terminal.h#1%%%../../src/CVSCommon.h#9%%%../../LibCyberBase/Overall.h#57
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
-
-[Project Manager]
-Shortcut=rocaloidengine//src
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCyberBase/%%%rocaloidengine//src//../LibCyberBase///libCyberBase.la%%%rocaloidengine//src//rsctool
 
 [Execution]
 Program uri=../../Debug/src/rsctool

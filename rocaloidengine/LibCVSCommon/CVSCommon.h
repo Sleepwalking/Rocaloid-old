@@ -22,6 +22,7 @@
  namespace CVSCommon
 {
 	//Here, Q represents "Quantity".
+	using namespace std;
 	struct TStart
 	{
 		bool Type; //True : New, False : Preserved
@@ -58,6 +59,7 @@
 		double Time;
 		double Amplitude;
 	};
+	
 	struct BreathStruct
 	{
 		double Magnitude;
@@ -80,20 +82,20 @@
 	{
 		double Shrink;
 		double ForwardCut;
-		std::vector<EnvelopeSet> EnvelopeList;
+		vector <EnvelopeSet> EnvelopeList;
 		int EnvelopeListQ;
 		bool ElistEnabled;
 		bool PElopeEnabled;
 		int PresetedEnvelope;
 		ADSREnvelope ADSR;
-		std::vector<double> OpennessList;
+		vector<double> OpennessList;
 		VibrationStruct Vibration;
 		BreathStruct Breath;
 	};
 	 struct Segment
 	{
-		std::vector<TPhone>  TPhoneList;
-		std::vector<FreqSet>  FreqList;
+		vector<TPhone>  TPhoneList;
+		vector<FreqSet>  FreqList;
 		int TPhoneListQ;
 		int FreqListQ;
 		EffectCollection Effects;
@@ -101,7 +103,7 @@
 	};
 	struct CVS
 	{
-		std::vector<Segment>  SegmentList;
+		vector<Segment>  SegmentList;
 		int SegmentListQ;
 	};
 
