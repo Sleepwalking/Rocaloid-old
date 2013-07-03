@@ -2,7 +2,6 @@
 #define STRINGSTREAM_H
 #include "memoryStream.h"
 #include "../structure/string.h"
-
 class memoryStream;
 class string;
 class stringStream: public memoryStream

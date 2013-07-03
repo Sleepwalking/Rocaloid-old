@@ -1,20 +1,21 @@
 [Anjuta]
 Maximized=1
-Geometry=1024x691+0+24
+Geometry=1280x995+1366+0
 
 [Project Manager]
-Shortcut=rocaloidengine//src%%%rocaloidengine//src
-Expand=rocaloidengine%%%rocaloidengine//src%%%rocaloidengine//src//../LibCVSCommon/%%%rocaloidengine//src//../LibCyberBase/
+Shortcut=
+Expand=rsctool%%%RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//rsctool
 
 [File Loader]
-Files=../../LibCVSCommon/CVSReader.cc#349%%%../../LibCVSCommon/CVSCommon.cc#27%%%../../LibCVSCommon/RDLIO.cc#108%%%../../src/main.cc#27
+Files=../../src/main.cc#38%%%../../LibCyberBase/Overall.h#62%%%../../LibCyberBase/Overall.cc#19%%%../../LibCVSCommon/CVSWriter.cc#303%%%../../LibCVSCommon/CVSWriter.h#35%%%../../LibCVSCommon/CVSReader.h#30%%%../../LibCyberBase/RDLIO.h#36%%%../../LibCVSCommon/CVSCommon.cc#25%%%../../LibCVSCommon/CVSReader.cc#39%%%../../LibCyberBase/RDLIO.cc#134%%%../../SPKit/structure/string.cc#41%%%../../LibCVSCommon/CVSCommon.h#78%%%../../SPKit/structure/array.h#49%%%../../SPKit/io/fileStream.cc#81%%%../../SPKit/misc/memopr.h#17
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Execution]
+Program uri=../../Debug/src/rsctool
 Run in terminal=2
-Working directories=../../../rocaloidengine
+Working directories=../../../../Rocaloid%%%../../../rocaloidengine
 
 [Build]
 Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
@@ -25,4 +26,5 @@ BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' '
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
+Breakpoint=1:../../SPKit/io/fileStream.cc:196:0:
 Stop at beginning=2

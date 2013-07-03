@@ -132,7 +132,7 @@ namespace converter
 	uint CUInt(string& source)
 	{
 		char* chars = source.toChars();
-		int ret = (uint)atol(chars);
+		uint ret = (uint)atol(chars);
 		mem_free(chars);
 		return ret;
 	}
@@ -140,7 +140,7 @@ namespace converter
 	long CLng(string& source)
 	{
 		char* chars = source.toChars();
-		int ret = atol(chars);
+		long ret = atol(chars);
 		mem_free(chars);
 		return ret;
 	}
@@ -148,7 +148,7 @@ namespace converter
 	float CSng(string& source)
 	{
 		char* chars = source.toChars();
-		int ret = (float)atof(chars);
+		float ret = (float)atof(chars);
 		mem_free(chars);
 		return ret;
 	}
@@ -156,7 +156,7 @@ namespace converter
 	double CDbl(string& source)
 	{
 		char* chars = source.toChars();
-		int ret = atof(chars);
+		double ret = atof(chars);
 		mem_free(chars);
 		return ret;
 	}

@@ -17,22 +17,23 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#include "defs.h"
-#include "structure/string.h"
-#include "misc/converter.h"
-#include "structure/array.h"
-#include "io/fileStream.h"
-#include "Overall.h"
+#include "../SPKit/defs.h"
+#include "../SPKit/structure/string.h"
+#include "../SPKit/misc/converter.h"
+#include "../SPKit/structure/array.h"
+#include "../SPKit/io/fileStream.h"
+
+#include "../LibCyberBase/Overall.h"
 #include "CVSCommon.h"
 
 using namespace converter;
 namespace CVSCommon
 {
-	double GetSegmentTime(Segment &_Segment)
+	double GetSegmentTime(Segment& _Segment)
 	{
 		int i ;
 		double acc =0;
-		for( i = 0 ;i<=_Segment.TPhoneListQ;i++)
+		for(i = 0;i <= _Segment.TPhoneListQ;i ++)
 		{
 			acc += _Segment.TPhoneList[i].Transition.Time;
 		}
@@ -42,9 +43,9 @@ namespace CVSCommon
 	{
 		if (Symbol.getLength() == 1)
 			return false;
-		if (Symbol==CStr("e-")) return false;
-		if (Symbol==CStr("NN")) return false;
-		if (Symbol==CStr("NN")) return false;
-		return true;						
+		if (Symbol == "e-") return false;
+		if (Symbol == "NN") return false;
+		if (Symbol == "NN") return false;
+		return true;				
 	}
 }

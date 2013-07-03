@@ -17,13 +17,18 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
- #ifndef CVSWriter_H
- #define CVSWriter_H
-
- namespace CVSWriter
+#ifndef CVSWriter_H
+#define CVSWriter_H
+#include "CVSCommon.h"
+#include "../LibCyberBase/RDLIO.h"
+class string;
+namespace CVSWriter
 {
 	using namespace CVSCommon;
-	void Writer_Save(string File);
+	
+	RDLWriter Writer;
+	
+	/*void Writer_Save(string File);
 	void Writer_Close();
 	void TPhone_Write(TPhone _TPhone);
 	void Freq_Write(FreqSet _Freq);
@@ -32,7 +37,7 @@
 	void BreathStruct_Write(BreathStruct _Breath);
 	void Effects_Write(EffectCollection _Effects);
 	void Segment_Write (Segment _Segment);
-	void CVS_Write(CVS _CVS);
+	void CVS_Write(CVS _CVS);*/
 };
  #endif /*retirWSVC _H */
  

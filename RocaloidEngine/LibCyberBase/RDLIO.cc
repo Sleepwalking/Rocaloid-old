@@ -21,46 +21,48 @@
 #include "../SPKit/io/terminal.h"
 #include "../SPKit/structure/string.h"
 #include "../SPKit/misc/converter.h"
+#include "../SPKit/misc/memopr.h"
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
+#include "../SPKit/io/stringStream.h"
 
-#include "Overall.h"
-#include "CVSCommon.h"
 #include "RDLIO.h"
+#include "Overall.h"
 
 using namespace Overall;
+using namespace converter;
 namespace RDLIO
 {	
 	void TestIfIsNumber(string _String)
 	{
-		char *str = _String.unsafeHandle ();
-		int i,len = _String.getLength();
-		_String = Trim(_String);
-		for(i = 0;i <= len;i ++)
+		char *str = _String.unsafeHandle();
+		int len = _String.getLength();
+		int i;
+		for(i = 0;i < len;i ++)
 		{
-			if((str[i] < '0' || str[i] > '9') && str[i]!='.')
+			if((str[i] < '0' || str[i] > '9') && str[i] != '.')
 			{
-				Exception( _String + "  is n't a number!");
+				Exception(_String + "  isn't a number!");
 			}
 		}
 	}
 	int TestIfIsDouble(string _String)
 	{
 		TestIfIsNumber(_String);
-		return converter::CDbl(_String);
+		return CDbl(_String);
 	}
 	int TestIfIsInt(string _String)
 	{
 		TestIfIsNumber(_String);
-		return converter::CInt(_String);
+		return CInt(_String);
 	}
 	double TestIfIsDoubleAndPositive(string _String)
 	{
 		double x;
 		TestIfIsNumber (_String);
-		x = converter::CDbl(_String);
+		x = CDbl(_String);
 		if(x <= 0)
-			Exception ( _String + "  is n't positive!");
+			Exception(_String + "  isn't positive!");
 		return x;
 	}		
 	
@@ -68,18 +70,18 @@ namespace RDLIO
 	{
 		int x;
 		TestIfIsNumber (_String);
-		x = converter::CInt(_String);
+		x = CInt(_String);
 		if(x <= 0)
-			Exception ( _String + "  is n't positive!");
+			Exception(_String + "  isn't positive!");
 		return x;
 	}		
 	double TestIfIsDoubleNotNegative(string _String)
 	{
 		double x;
 		TestIfIsNumber (_String);
-		x = converter::CDbl(_String);
+		x = CDbl(_String);
 		if(x < 0)
-			Exception ( _String + "  is n't positive or 0!");
+			Exception(_String + "  isn't positive or 0!");
 		return x;
 	}		
 	
@@ -87,49 +89,62 @@ namespace RDLIO
 	{
 		int x;
 		TestIfIsNumber (_String);
-		x = converter::CInt(_String);
+		x = CInt(_String);
 		if(x < 0)
-			Exception ( _String + "  is n't positive or 0!");
+			Exception(_String + "  isn't positive or 0!");
 		return x;
 	}		
 	bool TestIfIsBoolean(string _String)
 	{
 		string t;
 		t = lowerCase(_String);
-		if (t == converter::CStr("true"))
+		if (t == "true")
 		{
 			return true;
 		}
-		else if( t == converter::CStr("false"))
+		else if(t == "false")
 		{
 			return false;
 		}
-		Exception ( _String + "  is not a boolean. Only true or false are allowed.");
+		Exception(_String + "  is not a boolean. Only true or false are allowed.");
 	}
 	int TestIfIsPresetedEnvelope(string _String)
 	{
-		if( _String == converter::CStr("ADSR"))
+		if(_String == "ADSR")
 			return 0;
 		Exception(_String + " is not a valid PresetedEnvelope!");
 	}
 }
 
-using namespace converter;
-//class RDLReader
+RDLReader::RDLReader()
+{
+	buffer = 0;
+}
+RDLReader::~RDLReader()
+{
+	if(buffer != 0)
+		Close();
+}
 void RDLReader::Open(string FileName)
 {
-	LineBufferQ = 0;
-	LineBufferPointer = 0;
 	if(Reader.open(FileName, READONLY) == false)
-		Exception(CStr("This file: ") + FileName + " is not found!");
-}
-string RDLReader::Read()
-{
-	return Reader.readWord();
+		Exception(CStr("Cannot open ") + FileName + "!");
+	buffer = mem_malloc(Reader.getLength());
+	Reader.readBuffer(buffer, Reader.getLength());
+	SReader = new stringStream(buffer);
+	SReader -> setPosition(0);
 }
 void RDLReader::Close()
 {
-		Reader.close();
+	Reader.close();
+	delete SReader;
+	mem_free(buffer);
+	buffer = 0;
+}
+
+string RDLReader::Read()
+{
+	return SReader -> readWord();
 }
 
 //class RDLWriter
@@ -140,14 +155,11 @@ void RDLWriter::Open(string FileName)
 		Exception(CStr("I CANNOT Create File: ") + FileName);
 	Indent = "";
 	LastWrite = 0;
-}
-RDLWriter::~RDLWriter()
-{
-	Writer.close();
+	NewLineValid = true;
 }
 void RDLWriter::WriteWord(string _String)
 {
-	switch( LastWrite)
+	switch(LastWrite)
 	{
 		case 0:
 			Writer.write(_String);
@@ -178,11 +190,11 @@ void RDLWriter::WriteWord(bool Boolean)
 	WriteWord (CStr(Boolean));
 }
 
-void RDLWriter::WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes)
+void RDLWriter::WritePresetedEnvelope(int  _Envelopes)
 {
 	switch(_Envelopes)
 	{
-		case CVSCommon::ADSR:
+		case 0:
 			WriteWord("ADSR");
 		break;
 	}

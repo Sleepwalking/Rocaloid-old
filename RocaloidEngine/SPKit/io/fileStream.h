@@ -28,6 +28,7 @@ class binaryStream
 		
 		byte readByte();
 		char readChar();
+		short int readShort();
 		uint readUInt();
 		int readInt();
 		bool readBool();
@@ -42,6 +43,7 @@ class binaryStream
 
 		void write(byte data);
 		void write(char data);
+		void write(short int data);
 		void write(uint data);
 		void write(int data);
 		void write(bool data);

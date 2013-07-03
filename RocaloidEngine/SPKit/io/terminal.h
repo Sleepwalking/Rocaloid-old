@@ -14,6 +14,4 @@ class terminal
 		static void writeLine(string str);
 		template <class T> static void writeLine(T source);
 };
-
-
 #endif

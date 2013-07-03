@@ -33,38 +33,42 @@
 	int TestIfIsPresetedEnvelope(string _String);
 }
 
+class stringStream;
 class RDLReader
 {
 	public:
-		string Read();	
+		RDLReader();
+		~RDLReader();
+		
 		void Open(string FileName);
 		void Close();
+		
+		string Read();
 	private:
-		//Private Reader As StreamReader
-		array<string> LineBuffer ;
-		int LineBufferQ ;
-		int LineBufferPointer; 
-		string StrStore;
+		void* buffer;
 		textStream Reader;
+		stringStream* SReader;
 };
 
 class RDLWriter
 {
 	public:
-		RDLWriter();
+		
 		void Open(string FileName);
-		bool NewLineValid;
+		void Close();
+		
 		void WriteWord(string _String);
 		void WriteWord(int Integer);
 		void WriteWord(double Double);
 		void WriteWord(bool Boolean);
 		void WriteWord(const char * _String);
-		~RDLWriter();
-		void WritePresetedEnvelope(CVSCommon::Envelopes  _Envelopes);
+		void WritePresetedEnvelope(int  _Envelopes);
+		
 		void NewLine();
 		void IndentPush();
 		void IndentPop();
-		void Close();
+		
+		bool NewLineValid;
 	private:
 		string Indent;
 		int LastWrite;

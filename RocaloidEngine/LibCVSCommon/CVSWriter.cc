@@ -27,16 +27,14 @@
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
 
-#include "Overall.h"
+#include "../LibCyberBase/Overall.h"
 #include "CVSCommon.h"
-#include "RDLIO.h"
 #include "CVSWriter.h"
 
 namespace CVSWriter
 {
 	using namespace CVSCommon;
-	RDLWriter Writer;
-	
+	/*
 	void Writer_Save(string File)
 	{
 		Writer.Open(File);
@@ -302,7 +300,7 @@ namespace CVSWriter
 		Writer.NewLine();
 		Writer.WriteWord("End");
 		Writer.NewLine();
-	}
+	}*/
 };
 //Template
 //

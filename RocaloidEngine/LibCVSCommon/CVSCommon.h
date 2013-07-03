@@ -17,9 +17,9 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
- #ifndef CVSCOMMON_H
- #define CVSCOMMON_H
- namespace CVSCommon
+#ifndef CVSCOMMON_H
+#define CVSCOMMON_H
+namespace CVSCommon
 {
 	//Here, Q represents "Quantity".
 	struct TStart
@@ -44,14 +44,13 @@
 	{
 		TStart Start;
 		TDest Dest; //Avoided using keyword End.
-		 TTransition Transition;
+		TTransition Transition;
 	};
 	struct FreqSet
 	{
 		double Time;
 		double Freq;
 	};
-
 
 	struct EnvelopeSet
 	{
@@ -76,7 +75,6 @@
 		double Release;
 	};
 
-
 	struct EffectCollection
 	{
 		double Shrink;
@@ -91,7 +89,7 @@
 		VibrationStruct Vibration;
 		BreathStruct Breath;
 	};
-	 struct Segment
+	struct Segment
 	{
 		array<TPhone>  TPhoneList;
 		array<FreqSet>  FreqList;

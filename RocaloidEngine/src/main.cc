@@ -17,43 +17,26 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include "defs.h"
-#include "structure/string.h"
-#include "structure/array.h"
-#include "io/fileStream.h"
-#include "io/terminal.h"
-#include "Overall.h"
-#include "CVSCommon.h"
-#include "RDLIO.h"
+#include "../SPKit/defs.h"
+#include "../SPKit/structure/string.h"
+#include "../SPKit/structure/array.h"
+#include "../SPKit/io/fileStream.h"
+#include "../SPKit/io/terminal.h"
 
+#include "../LibCyberBase/Overall.h"
 
+#include "../LibCVSCommon/CVSCommon.h"
+#include "../LibCVSCommon/CVSReader.h"
 
 using namespace Overall;
-
 int main()
 {
-	int i=10,j=100;
-	array<double> x;
-	array<string> z;
-
-	
-/*	x.push(10);
-	x.push(10);
-	PtrSwap(i, j);
-	ObjSwap(i,j);
-	wLine(CInt(i));
-	wLine(CInt(j));
-	//for(i=0;i<12*2;i++)
-	//wLine(Overall::PitchList[i]+Overall::PitchList[i+24]);
-	wLine(GetPitchByFreq(440.0));
-	wLine(GetFreqByPitch("C3"));
-	wLine(GetDoubleSum(x));
-	wLine(y);
-	wLine(RDLIO::TestIfIsInt("123.4"));
-	wLine(RDLIO::TestIfIsPresetedEnvelope("ADSR"));*/
-	
-	//Exception("Joke");
+	CVSCommon::CVS* cvs1 = new CVSCommon::CVS;
+	CVSReader::Reader_Open("/home/sleepwalking/x.cvs");
+	CVSReader::CVS_Read(*cvs1);
+	CVSReader::Reader_Close();
+	delete cvs1;
+	terminal::readLine();
 	return 0; 
 }
 
