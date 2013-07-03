@@ -3,8 +3,8 @@ Maximized=1
 Geometry=1280x995+1366+0
 
 [Project Manager]
-Shortcut=
-Expand=rsctool%%%RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//rsctool
+Shortcut=%%%
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//rsctool
 
 [File Loader]
 Files=../../src/main.cc#38%%%../../LibCyberBase/Overall.h#62%%%../../LibCyberBase/Overall.cc#19%%%../../LibCVSCommon/CVSWriter.cc#303%%%../../LibCVSCommon/CVSWriter.h#35%%%../../LibCVSCommon/CVSReader.h#30%%%../../LibCyberBase/RDLIO.h#36%%%../../LibCVSCommon/CVSCommon.cc#25%%%../../LibCVSCommon/CVSReader.cc#39%%%../../LibCyberBase/RDLIO.cc#134%%%../../SPKit/structure/string.cc#41%%%../../LibCVSCommon/CVSCommon.h#78%%%../../SPKit/structure/array.h#49%%%../../SPKit/io/fileStream.cc#81%%%../../SPKit/misc/memopr.h#17
