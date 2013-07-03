@@ -1,3 +1,3 @@
-Rocaloid, a vocal synthesis engine which aims to let Hatsune Miku
-to sing in Chinese (and maybe other languages).
-The Program use pitchshift mode like PSOLA.Sleepwalking called it "TDPSM".
+Rocaloid is a vocal synthesis engine which aims to enable Hatsune Miku to sing in Chinese (and maybe other languages).
+The synthesis engine, CVE, currently uses time-domain algorism like PSOLA. Sleepwalking called it "TDPSM" (Time Domain Pitch Synchronize and Mix).
+For more information about our project, please visit http://bbs.ivocaloid.com/forum-138-1.html.
