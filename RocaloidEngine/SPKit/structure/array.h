@@ -1,15 +1,23 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 #include "../defs.h"
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "../misc/memopr.h"
-
+//#include "../misc/memopr.h"
+//#include <stdlib.h>
+//#include <stdio.h>
+enum arraySpace
+{
+	onDemand = 5,
+	tiny = 20,
+	small = 80,
+	medium = 320,
+	large = 1280,
+	huge = 5120,
+};
 template <class T> class array
 {
 	public:
 		array();
+		array(int _preservedSpace);
 		~array();
 		inline int getUbound();
 		bool setUbound(int newUbound);
@@ -30,6 +38,7 @@ template <class T> class array
 
 		array<T>& operator =(array<T>& source);
 		int pointer;
+		int preservedSpace;
 	private:
 		T* baseptr;
 		int size;
@@ -43,6 +52,17 @@ template <class T> array<T>::array()
 	sizePerT = sizeof(T);
 	baseptr = 0;
 	pointer = -1;
+	preservedSpace = small;
+	setUbound(1);
+}
+template <class T> array<T>::array(int _preservedSpace)
+{
+	size = 0;
+	ubound = 0;
+	sizePerT = sizeof(T);
+	baseptr = 0;
+	pointer = -1;
+	preservedSpace = _preservedSpace;
 	setUbound(1);
 }
 template <class T> array<T>::~array()
@@ -57,14 +77,14 @@ template <class T> bool array<T>::setUbound(int newUbound)
 	int allocSize = newUbound - size;
 	if(allocSize > 0)
 	{
-		T* newptr = new T[newUbound + 99];
+		T* newptr = new T[newUbound + preservedSpace];
 		if(newptr == 0)
 			return false;
 
 		if(baseptr == 0)
 		{
 			baseptr = newptr;
-			size = newUbound + 99;
+			size = newUbound + preservedSpace;
 			ubound = newUbound;
 			return true;
 		}
@@ -77,7 +97,7 @@ template <class T> bool array<T>::setUbound(int newUbound)
 		delete []baseptr;
 
 		baseptr = newptr;
-		size = newUbound + 99;
+		size = newUbound + preservedSpace;
 		
 		ubound = newUbound;
 		return true;
@@ -126,6 +146,7 @@ template <class T> array<T>& array<T>::operator =(array<T>& source)
 	int i;
 	size = source.size;
 	pointer = source.pointer;
+	preservedSpace = source.preservedSpace;
 	setUbound(source.ubound);
 	for(i = 0;i <= ubound;i ++)
 		baseptr[i] = source[i];

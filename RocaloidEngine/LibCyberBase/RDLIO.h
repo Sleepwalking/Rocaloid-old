@@ -53,6 +53,7 @@ class RDLReader
 class RDLWriter
 {
 	public:
+		~RDLWriter();
 		
 		void Open(string FileName);
 		void Close();
@@ -61,8 +62,8 @@ class RDLWriter
 		void WriteWord(int Integer);
 		void WriteWord(double Double);
 		void WriteWord(bool Boolean);
-		void WriteWord(const char * _String);
-		void WritePresetedEnvelope(int  _Envelopes);
+		void WriteWord(const char* _String);
+		void WritePresetedEnvelope(int _Envelopes);
 		
 		void NewLine();
 		void IndentPush();

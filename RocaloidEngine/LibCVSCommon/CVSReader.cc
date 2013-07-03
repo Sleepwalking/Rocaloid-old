@@ -15,7 +15,7 @@
   * GNU General Public License for more details.
   *
   * You should have received a copy of the GNU General Public License
-  * along with this program. if (not, see <http://www.gnu.org/licenses/>.
+  * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
 #include "../SPKit/defs.h"
 #include "../SPKit/io/terminal.h"
@@ -24,17 +24,15 @@
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
 
-//#include "../LibCyberBase/RDLIO.cc"
 #include "../LibCyberBase/Overall.h"
 #include "CVSCommon.h"
 #include "CVSReader.h"
-
-//class RDLReader;
 
 using namespace RDLIO;
 using namespace converter;
 namespace CVSReader
 {
+	RDLReader Reader;
 	void Reader_Open(string FileName)
 	{
 		Reader.Open(FileName);

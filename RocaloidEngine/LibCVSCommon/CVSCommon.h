@@ -19,6 +19,7 @@
   */
 #ifndef CVSCOMMON_H
 #define CVSCOMMON_H
+template <class T> class array;
 namespace CVSCommon
 {
 	//Here, Q represents "Quantity".
@@ -77,6 +78,7 @@ namespace CVSCommon
 
 	struct EffectCollection
 	{
+		EffectCollection();
 		double Shrink;
 		double ForwardCut;
 		array<EnvelopeSet> EnvelopeList;
@@ -91,6 +93,7 @@ namespace CVSCommon
 	};
 	struct Segment
 	{
+		Segment();
 		array<TPhone>  TPhoneList;
 		array<FreqSet>  FreqList;
 		int TPhoneListQ;
@@ -100,6 +103,7 @@ namespace CVSCommon
 	};
 	struct CVS
 	{
+		CVS();
 		array<Segment>  SegmentList;
 		int SegmentListQ;
 	};

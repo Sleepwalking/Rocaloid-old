@@ -148,15 +148,24 @@ string RDLReader::Read()
 }
 
 //class RDLWriter
+RDLWriter::~RDLWriter()
+{
+	Writer.close();
+}
 
 void RDLWriter::Open(string FileName)
 {
 	if(Writer.open(FileName, CREATE) == false)
-		Exception(CStr("I CANNOT Create File: ") + FileName);
+		Exception(CStr("Cannot create ") + FileName);
 	Indent = "";
 	LastWrite = 0;
 	NewLineValid = true;
 }
+void RDLWriter::Close()
+{
+	Writer.close();
+}
+
 void RDLWriter::WriteWord(string _String)
 {
 	switch(LastWrite)
@@ -177,9 +186,9 @@ void RDLWriter::WriteWord(int Integer)
 {
 	WriteWord (CStr(Integer));
 }
-void RDLWriter::WriteWord(const char * _String)
+void RDLWriter::WriteWord(const char* _String)
 {
-	WriteWord (CStr(_String));
+	WriteWord(CStr(_String));
 }
 void RDLWriter::WriteWord(double Double)
 {
@@ -211,7 +220,7 @@ void RDLWriter::IndentPush()
 {
 	if(NewLineValid)
 	{
-		Indent = Indent + " ";
+		Indent = Indent + CStr("\t");
 	}
 }
 void RDLWriter::IndentPop()
@@ -220,8 +229,4 @@ void RDLWriter::IndentPop()
 	{
 		Indent = left(Indent, Indent.getLength() - 1);
 	}
-}
-void RDLWriter::Close()
-{
-	Writer.close();
 }
