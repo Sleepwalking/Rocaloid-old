@@ -25,9 +25,8 @@ class string;
 namespace CVSReader
 {
 	using namespace CVSCommon;
+	extern RDLReader Reader;
 	#define Exception(x) Overall::Exception(x);
-
-	RDLReader Reader;
 	
 	void Reader_Open(string FileName);
 	void Reader_Close();
@@ -45,5 +44,5 @@ namespace CVSReader
 	void BreathStruct_Read(BreathStruct& _Breath);
 };
 
- #endif /*REDAERSVC _H */
+ #endif
  

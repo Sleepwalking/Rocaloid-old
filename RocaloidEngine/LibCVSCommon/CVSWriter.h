@@ -17,27 +17,27 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#ifndef CVSWriter_H
-#define CVSWriter_H
+#ifndef CVSWRITER_H
+#define CVSWRITER_H
 #include "CVSCommon.h"
 #include "../LibCyberBase/RDLIO.h"
 class string;
 namespace CVSWriter
 {
+	extern RDLWriter Writer;
 	using namespace CVSCommon;
 	
-	RDLWriter Writer;
-	
-	/*void Writer_Save(string File);
+	void Writer_Save(string FileName);
 	void Writer_Close();
-	void TPhone_Write(TPhone _TPhone);
-	void Freq_Write(FreqSet _Freq);
-	void ADSREnvelope_Write( ADSREnvelope _ADSR);
-	void EnvelopeSet_Write(EnvelopeSet _EnvelopeSet);
-	void BreathStruct_Write(BreathStruct _Breath);
-	void Effects_Write(EffectCollection _Effects);
-	void Segment_Write (Segment _Segment);
-	void CVS_Write(CVS _CVS);*/
+
+	void CVS_Write(CVS& _CVS);
+	void Segment_Write(Segment& _Segment);
+	void TPhone_Write(TPhone& _TPhone);
+	void Freq_Write(FreqSet& _Freq);
+	void Effects_Write(EffectCollection& _Effects);
+	void ADSREnvelope_Write(ADSREnvelope& _ADSR);
+	void EnvelopeSet_Write(EnvelopeSet& _EnvelopeSet);
+	void BreathStruct_Write(BreathStruct& _Breath);
 };
- #endif /*retirWSVC _H */
+ #endif
  

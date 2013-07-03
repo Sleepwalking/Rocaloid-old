@@ -29,6 +29,20 @@
 using namespace converter;
 namespace CVSCommon
 {
+	EffectCollection::EffectCollection()
+	{
+		EnvelopeList.preservedSpace = 40;
+		OpennessList.preservedSpace = 40;
+	}
+	Segment::Segment()
+	{
+		TPhoneList.preservedSpace = 40;
+		FreqList.preservedSpace = 40;
+	}
+	CVS::CVS()
+	{
+		SegmentList.preservedSpace = 40;
+	}
 	double GetSegmentTime(Segment& _Segment)
 	{
 		int i ;

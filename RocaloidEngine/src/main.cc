@@ -22,21 +22,36 @@
 #include "../SPKit/structure/array.h"
 #include "../SPKit/io/fileStream.h"
 #include "../SPKit/io/terminal.h"
+#include "../SPKit/misc/converter.h"
 
 #include "../LibCyberBase/Overall.h"
+#include "../LibCyberBase/RDLIO.h"
 
 #include "../LibCVSCommon/CVSCommon.h"
 #include "../LibCVSCommon/CVSReader.h"
+#include "../LibCVSCommon/CVSWriter.h"
 
 using namespace Overall;
+using namespace converter;
 int main()
 {
 	CVSCommon::CVS* cvs1 = new CVSCommon::CVS;
-	CVSReader::Reader_Open("/home/sleepwalking/x.cvs");
+	CVSReader::Reader_Open("/tmp/o.cvs");
 	CVSReader::CVS_Read(*cvs1);
 	CVSReader::Reader_Close();
+
+	/*RDLWriter writer;
+	writer.Open("/tmp/o2.cvs");
+	writer.WriteWord("#CVS");
+	writer.WriteWord("1.6");
+	writer.NewLine();
+	writer.Close();*/
+
+	CVSWriter::Writer_Save(CStr("/tmp/o2.cvs"));
+	//CVSWriter::Writer.NewLineValid = false;
+	CVSWriter::CVS_Write(*cvs1);
+	CVSWriter::Writer_Close();
 	delete cvs1;
-	terminal::readLine();
 	return 0; 
 }
 

@@ -3,11 +3,11 @@ Maximized=1
 Geometry=1280x995+1366+0
 
 [Project Manager]
-Shortcut=%%%
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//rsctool
+Shortcut=RocaloidEngine//src
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCVSCommon/%%%RocaloidEngine//src//../LibCVSCommon///libCVSCommon.la%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//rsctool
 
 [File Loader]
-Files=../../src/main.cc#38%%%../../LibCyberBase/Overall.h#62%%%../../LibCyberBase/Overall.cc#19%%%../../LibCVSCommon/CVSWriter.cc#303%%%../../LibCVSCommon/CVSWriter.h#35%%%../../LibCVSCommon/CVSReader.h#30%%%../../LibCyberBase/RDLIO.h#36%%%../../LibCVSCommon/CVSCommon.cc#25%%%../../LibCVSCommon/CVSReader.cc#39%%%../../LibCyberBase/RDLIO.cc#134%%%../../SPKit/structure/string.cc#41%%%../../LibCVSCommon/CVSCommon.h#78%%%../../SPKit/structure/array.h#49%%%../../SPKit/io/fileStream.cc#81%%%../../SPKit/misc/memopr.h#17
+Files=../../src/main.cc#48%%%../../LibCyberBase/Overall.h#62%%%../../LibCyberBase/Overall.cc#19%%%../../LibCVSCommon/CVSWriter.cc#41%%%../../LibCVSCommon/CVSWriter.h#31%%%../../LibCVSCommon/CVSReader.h#27%%%../../LibCyberBase/RDLIO.h#55%%%../../LibCVSCommon/CVSReader.cc#30%%%../../LibCyberBase/RDLIO.cc#153%%%../../SPKit/structure/string.cc#8%%%../../LibCVSCommon/CVSCommon.h#98%%%../../SPKit/structure/array.h#15%%%../../SPKit/io/fileStream.cc#196%%%../../SPKit/misc/memopr.h#2%%%../../LibCVSCommon/CVSCommon.cc#36%%%../../SPKit/misc/converter.cc#49
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
@@ -26,5 +26,5 @@ BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' '
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
-Breakpoint=1:../../SPKit/io/fileStream.cc:196:0:
+Breakpoint=1:../../src/main.cc:40:0:%%%1:../../src/main.cc:35:0:
 Stop at beginning=2

@@ -15,7 +15,8 @@ static int dcount = 0;
 string::string()
 {
 	#ifdef MEMCHECK
-		printf("String Ctor %d\n", ++ ccount);
+	++ ccount;
+		//printf("String Ctor %d\n", ++ ccount);
 	#endif
 	length = 0;
 	baseptr = 0;
@@ -23,7 +24,8 @@ string::string()
 string::string(const string& source)
 {
 	#ifdef MEMCHECK
-		printf("String Ctor %d\n", ++ ccount);
+	++ ccount;
+		//printf("String Ctor %d\n", ++ ccount);
 	#endif
 	baseptr = (char*)mem_malloc(source.length);
 	for(length = 0;length < source.length;length ++)
@@ -32,7 +34,8 @@ string::string(const string& source)
 string::string(const char* source)
 {
 	#ifdef MEMCHECK
-		printf("String Ctor %d\n", ++ ccount);
+	++ ccount;
+		//printf("String Ctor %d\n", ++ ccount);
 	#endif
 	int len = strlen(source);
 	baseptr = (char*)mem_malloc(len);
