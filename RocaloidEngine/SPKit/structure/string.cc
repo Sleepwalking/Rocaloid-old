@@ -308,7 +308,7 @@ int instrRev(string& whole, string part)
 string trim(string& source)
 {
 	string ret;
-	int start, end, i, sourcelen, retlen;
+	int start=0, end=0, i, sourcelen, retlen;
 	sourcelen = source.getLength();
 	for(i = 0;i < sourcelen;i ++)
 		if(source[i] != ' ' && source[i] != '\t')
@@ -331,7 +331,7 @@ string trim(string& source)
 string ltrim(string& source)
 {
 	string ret;
-	int start, end, i, sourcelen, retlen;
+	int start=0, end=0, i, sourcelen, retlen;
 	sourcelen = source.getLength();
 	start = 0;
 	for(i = sourcelen - 1;i >= 0;i --)
@@ -349,7 +349,7 @@ string ltrim(string& source)
 string rtrim(string& source)
 {
 	string ret;
-	int start, end, i, sourcelen, retlen;
+	int start=0, end, i, sourcelen, retlen;
 	sourcelen = source.getLength();
 	end = sourcelen - 1;
 	for(i = 0;i < sourcelen;i ++)

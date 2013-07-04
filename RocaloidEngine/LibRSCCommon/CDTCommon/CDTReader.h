@@ -33,7 +33,7 @@ namespace CDTCommon
 			void Open(string FileName);
 			void Close();
 			
-			void CDT_Read(CDT& _CDT);
+			void Read(CDT& _CDT);
 			
 			void DEFList_Read(CDT& _CDT);
 			void DEF_Read(DEF& _DEF);

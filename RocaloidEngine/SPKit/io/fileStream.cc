@@ -257,14 +257,14 @@ void binaryStream::write(ulong data)
 	filePtr += sizeof(ulong);
 	fseek(fStream, filePtr, SEEK_SET);
 }
-void binaryStream::writeChars(char* data)
+void binaryStream::writeChars(const char* data)
 {
 	int len = strlen(data);
 	fwrite(&data[0], 1, len, fStream);
 	filePtr += len;
 	fseek(fStream, filePtr, SEEK_SET);
 }
-void binaryStream::writeBuffer(void* data, long count)
+void binaryStream::writeBuffer(const void* data, long count)
 {
 	fwrite(data, 1, count, fStream);
 	filePtr += count;
@@ -289,7 +289,7 @@ string textStream::readWord()
 	char tmpchar;
 	
 	fread(&tmpchar, 1, 1, fStream);
-	while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n')
+	while(tmpchar == ' ' || tmpchar == '\t' || tmpchar == '\n' || tmpchar == '\r')
 	{
 		filePtr ++;
 		fseek(fStream, filePtr, SEEK_SET);
@@ -304,7 +304,7 @@ string textStream::readWord()
 		filePtr ++;
 		fseek(fStream, filePtr, SEEK_SET);
 	}
-	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != 0 && filePtr < length);
+	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0 && filePtr < length);
 
 	tmp[tmp.pointer] = 0;
 	ret = &tmp[0];	
@@ -323,7 +323,7 @@ string textStream::readLine()
 		filePtr ++;
 		fseek(fStream, filePtr, SEEK_SET);
 	}
-	while(tmpchar != '\n' && tmpchar != 0 && filePtr < length);
+	while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0 && filePtr < length);
 
 	tmp[tmp.pointer] = 0;
 	ret = &tmp[0];	
@@ -355,6 +355,7 @@ void textStream::nextLine()
 {
 	readLine();
 }
+/* Not compatible with windows/mac format
 void textStream::prevLine()
 {
 	char tmpchar;	
@@ -378,3 +379,4 @@ void textStream::prevLine()
 		filePtr +=2;
 	fseek(fStream, filePtr, SEEK_SET);
 }
+*/

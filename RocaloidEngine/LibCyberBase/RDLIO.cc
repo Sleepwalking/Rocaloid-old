@@ -41,7 +41,7 @@ namespace RDLIO
 		int i;
 		for(i = 0;i < len;i ++)
 		{
-			if((str[i] < '0' || str[i] > '9') && str[i] != '.')
+			if((str[i] < '0' || str[i] > '9') && str[i] != '.' && str[i] !='-')
 			{
 				Exception(_String + "  isn't a number!");
 			}
@@ -108,12 +108,14 @@ namespace RDLIO
 			return false;
 		}
 		Exception(_String + "  is not a boolean. Only true or false are allowed.");
+		return -1;
 	}
 	int TestIfIsPresetedEnvelope(string _String)
 	{
 		if(_String == "ADSR")
 			return 0;
 		Exception(_String + " is not a valid PresetedEnvelope!");
+		return -1;
 	}
 }
 

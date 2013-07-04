@@ -33,6 +33,7 @@
 
 namespace CDTCommon
 {
+	using namespace converter;
 	using namespace Overall;
 	using namespace RDLIO;
 	CaseParameter TestIfIsCaseParameter(string _String)
@@ -40,7 +41,7 @@ namespace CDTCommon
 		if (_String == "Time")
 			return Time;
 		else
-			Exception(_String + " is not a valid else if ( _String ==Parameter!");
+			Exception(_String + " is not a valid Parameter!");
 		return None;
 	}
 	CaseComparison TestIfIsCaseComparison(string _String)
@@ -56,7 +57,7 @@ namespace CDTCommon
 		else if ( _String == "<=")
 			return LessOrEqual;
 		else
-			Exception(_String + " is not a valid else if ( _String ==Comparison!");
+			Exception(_String + " is not a valid else Comparison!");
 		return Non;
 	}
 	DEFType TestIfIsDEFType(string _String) 
@@ -76,7 +77,7 @@ namespace CDTCommon
 			else if ( _String =="CAVV")
 				return CAVV;
 			else
-				Exception(_String + " is not a valid else if ( _String ==Comparison!");
+				Exception(_String + " is not a valid Comparison!");
 		return V;
 	}
 	
@@ -86,13 +87,13 @@ namespace CDTCommon
 			Reader.Open(FileName);
 			if (Reader.Read() != "#CDT")
 				Exception("This File is not a Rocaloid Dict!");
-			CDTVersion=Reader.Read();
-			CDTVersion=trim(CDTVersion);
-			if (CDTVersion !="2.41")
+				CDTVersion=Reader.Read();
+			if ( CDTVersion !=CDT_VERSION )
 			{//2.33版本已经摘除
-				wLine(CDTVersion);
+				wLine( CStr("CDT Version : ") + CDTVersion);
 				Exception("Wrong CDT Version");
 			}
+			Reader.Read();
 		}
 
 		void CDTReader::Close()
@@ -101,15 +102,17 @@ namespace CDTCommon
 		}
 
 		
-		void CDTReader::CDT_Read(CDT& _CDT)
+		void CDTReader::Read(CDT& _CDT)
 		{
 			string StrBuff;
-			_CDT.CDTVersion=CDTVersion;
-			do{
+			_CDT.CDTVersion=CDTVersion;//版本
+			do
+			{
 				StrBuff = Reader.Read();
 				if (StrBuff == "Version")
 				{
 					StrBuff=Reader.Read();
+					//wLine ( StrBuff );
 					_CDT.Version=StrBuff;
 				}
 				else if(StrBuff == "Language")
@@ -118,12 +121,28 @@ namespace CDTCommon
 					_CDT.Language=StrBuff;
 				}
 				else if(StrBuff == "DEFList")
+				{
+					//wLine("DEFList");
 					DEFList_Read(_CDT);
+					//wLine("EndDEFList");
+				}
 				else if(StrBuff == "PhoneticInfo")
+				{
+					//wLine("PhoneticInfo");
+					PhoneticInfo_Read(_CDT.Phonetic);
+					//wLine("End PhoneticInfo");
+				}
+				else if ( StrBuff == "DBInfo")
+				{
+					//wLine("DBInfo");
 					DBInfo_Read(_CDT.DB);
+					//wLine("End DBInfo");
+				}
+				else if ( StrBuff == "End")
+					break;
 				else
 				{
-					//Throw New Exception("Invalid identifier as " & StrBuff & ".")
+					Exception( CStr("Invalid identifier as ") + StrBuff + ".");
 				}
 			}while(StrBuff != "End");
 		}
@@ -140,7 +159,6 @@ namespace CDTCommon
 					{
 						DEF_Read(_CDT.DEFList[Count]);
 						Count++;
-						_CDT.Version=StrBuff;
 					}
 					else
 					{
@@ -310,14 +328,18 @@ namespace CDTCommon
 					StrBuff = Reader.Read();
 					_DBInfo.DBListQ = TestIfIsIntNotNegative(StrBuff) - 1;
 					_DBInfo.DBList.setUbound (_DBInfo.DBListQ + 1);
+					//wLine( CStr ("DBListQ:") + CStr (_DBInfo.DBListQ ));
 				}
 				else if ( StrBuff ==  "DBList")
 				{
+					//wLine( CStr ("DBListQ:") + CStr (_DBInfo.DBListQ ));
 					for ( i=0 ; i<= _DBInfo.DBListQ ; i++)
 						DBSet_Read(_DBInfo.DBList[i]);
-					if (Reader.Read() != "End") 
+					StrBuff = Reader.Read();
+					if ( StrBuff != "End") 
 						Exception("List without an End.");
 				}
+				
 			}
 		}
 

@@ -10,7 +10,7 @@ string stringStream::readWord()
 	char tmpchar;
 
 	tmpchar = *((char*)((byte*)baseptr + offset));
-	while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n')
+	while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n' || tmpchar == '\r')
 	{
 		offset ++;
 		tmpchar = *((char*)((byte*)baseptr + offset));
@@ -22,7 +22,7 @@ string stringStream::readWord()
 		tmp.push(tmpchar);
 		offset ++;
 	}
-	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != 0);
+	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
 	tmp[tmp.pointer] = 0;
 	ret = &tmp[0];	
@@ -33,7 +33,7 @@ void stringStream::skipWord()
 	char tmpchar;
 
 	tmpchar = *((char*)((byte*)baseptr + offset));
-	while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n')
+	while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n' || tmpchar == '\r')
 	{
 		offset ++;
 		tmpchar = *((char*)((byte*)baseptr + offset));
@@ -44,7 +44,7 @@ void stringStream::skipWord()
 		tmpchar = *((char*)((byte*)baseptr + offset));
 		offset ++;
 	}
-	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != 0);
+	while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 }
 string stringStream::readLine()
 {
@@ -58,7 +58,7 @@ string stringStream::readLine()
 		tmp.push(tmpchar);
 		offset ++;
 	}
-	while(tmpchar != '\n' && tmpchar != 0);
+	while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
 	tmp[tmp.pointer] = 0;
 	ret = &tmp[0];	
@@ -73,7 +73,7 @@ void stringStream::skipLine()
 		tmpchar = *((char*)((byte*)baseptr + offset));
 		offset ++;
 	}
-	while(tmpchar != '\n' && tmpchar != 0);
+	while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 }
 string stringStream::readAll()
 {
@@ -81,7 +81,8 @@ string stringStream::readAll()
 	return ret;
 }
 
-void stringStream::prevLine()
+/* Not compatible with windows/mac format.
+ void stringStream::prevLine()
 {
 	char tmpchar;	
 	do
@@ -100,7 +101,8 @@ void stringStream::prevLine()
 
 	if(offset != 0)
 		offset +=2;
-}
+}*/
+
 void split(string& source, array<string>& dest)
 {
 	int sourcelen = source.getLength();

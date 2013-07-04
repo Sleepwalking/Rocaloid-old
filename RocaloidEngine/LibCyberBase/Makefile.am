@@ -1,3 +1,6 @@
+
+libCyberBase_la_CXXFLAGS = -O2 \
+	-Wall 
 ## Process this file with automake to produce Makefile.in
 
 
@@ -25,7 +28,3 @@ libCyberBase_la_SOURCES =  \
 	../SPKit/io/terminal.cc \
 	RDLIO.cc \
 	RDLIO.h
-
-libCyberBase_la_CFLAGS = -O2 \
-	-Wall \
-	-g 

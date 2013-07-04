@@ -51,8 +51,8 @@ class binaryStream
 		void write(float data);
 		void write(long data);
 		void write(ulong data);
-		void writeChars(char* buffer);
-		void writeBuffer(void* buffer, long byteCount);
+		void writeChars(const char* buffer);
+		void writeBuffer(const void* buffer, long byteCount);
 	protected:
 		void refreshLength();
 		openMode fileMode;

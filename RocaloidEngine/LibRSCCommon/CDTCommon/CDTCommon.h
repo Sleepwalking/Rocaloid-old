@@ -154,6 +154,7 @@ namespace CDTCommon
 		};
 	extern PhoneType TestIfIsPhoneType(string _String);
 	extern PEnvelopeType TestIfIsPType(string _String);
+#define CDT_VERSION "2.41" //2.41版本CDT
 };
 
 #endif 
