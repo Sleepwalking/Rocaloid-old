@@ -75,7 +75,8 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libRSCCommon_la_LIBADD =
 am_libRSCCommon_la_OBJECTS = libRSCCommon_la-CDTCommon.lo \
-	libRSCCommon_la-RSCCommon.lo libRSCCommon_la-CDTReader.lo
+	libRSCCommon_la-RSCCommon.lo libRSCCommon_la-CDTReader.lo \
+	libRSCCommon_la-RSCReader.lo
 libRSCCommon_la_OBJECTS = $(am_libRSCCommon_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -288,7 +289,9 @@ libRSCCommon_la_SOURCES = \
 	RSCCommon.cc \
 	RSCCommon.h \
 	CDTCommon/CDTReader.h \
-	CDTCommon/CDTReader.cc
+	CDTCommon/CDTReader.cc \
+	RSCReader.cc \
+	RSCReader.h
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/\
 	-I@top_srcdir@/LibCVSCommon/ \
@@ -377,6 +380,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTCommon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCCommon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCReader.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -419,6 +423,13 @@ libRSCCommon_la-CDTReader.lo: CDTCommon/CDTReader.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CDTCommon/CDTReader.cc' object='libRSCCommon_la-CDTReader.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-CDTReader.lo `test -f 'CDTCommon/CDTReader.cc' || echo '$(srcdir)/'`CDTCommon/CDTReader.cc
+
+libRSCCommon_la-RSCReader.lo: RSCReader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-RSCReader.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-RSCReader.Tpo -c -o libRSCCommon_la-RSCReader.lo `test -f 'RSCReader.cc' || echo '$(srcdir)/'`RSCReader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-RSCReader.Tpo $(DEPDIR)/libRSCCommon_la-RSCReader.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RSCReader.cc' object='libRSCCommon_la-RSCReader.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-RSCReader.lo `test -f 'RSCReader.cc' || echo '$(srcdir)/'`RSCReader.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

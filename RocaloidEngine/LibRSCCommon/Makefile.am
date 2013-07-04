@@ -9,7 +9,9 @@ libRSCCommon_la_SOURCES =  \
 	RSCCommon.cc \
 	RSCCommon.h \
 	CDTCommon/CDTReader.h \
-	CDTCommon/CDTReader.cc
+	CDTCommon/CDTReader.cc \
+	RSCReader.cc \
+	RSCReader.h
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/\
 	-I@top_srcdir@/LibCVSCommon/ \

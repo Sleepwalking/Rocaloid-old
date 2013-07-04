@@ -40,8 +40,8 @@ namespace RSC
 	 struct PositionChunk
 	{
 		PositionChunkType Type;
-		double Position ;
-		int Index ;
+		double Position;
+		int Index;
 	};
 
 	struct SegmentEffects
@@ -75,8 +75,8 @@ namespace RSC
 
 	struct EnvelopeSet
 	{
-		double Position ;
-		double Amplitude ;
+		double Position;
+		double Amplitude;
 	};
 
 	struct UserInteraction
@@ -109,4 +109,23 @@ namespace RSC
 			Segment();
 			bool IsConnectedTo ( Segment& _Segment);
 	};
+	class RSC
+	{
+		public:
+			string Version;
+			string Author;
+			string Information;
+			int SegmentListQ;
+			array<Segment> SegmentList;
+			int FreqListQ;
+			array<FreqSet> FreqList;
+			EffectsStruct Effects;
+			int TempoListQ;
+			array<TempoSet> TempoList;
+			int BeatListQ;
+			array<BeatSet> BeatList;
+			UserInteraction InteractionSave;
+			
+	};
+#define RSC_VERSION "2.0"
 };

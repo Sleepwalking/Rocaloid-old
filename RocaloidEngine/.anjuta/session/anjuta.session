@@ -7,7 +7,7 @@ Shortcut=RocaloidEngine//src
 Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCVSCommon/%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//../LibRSCCommon/%%%RocaloidEngine//src//../LibRSCCommon///libRSCCommon.la%%%RocaloidEngine//src//rsctool
 
 [File Loader]
-Files=../../src/main.cc#64%%%../../LibRSCCommon/CDTCommon/CDTCommon.h#150%%%../../LibRSCCommon/CDTCommon/CDTCommon.cc#139%%%../../LibRSCCommon/RSCCommon.h#110%%%../../LibRSCCommon/CDTCommon/CDTReader.cc#120%%%../../SPKit/structure/string.cc#8%%%../../SPKit/structure/string.h#1
+Files=../../src/main.cc#93%%%../../LibCyberBase/RDLIO.cc#39%%%../../LibRSCCommon/CDTCommon/CDTReader.cc#190%%%../../LibCyberBase/RDLIO.h#29%%%../../SPKit/io/terminal.cc#45%%%../../SPKit/io/terminal.h#11
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
