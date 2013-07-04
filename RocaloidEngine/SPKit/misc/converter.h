@@ -1,7 +1,9 @@
 #ifndef CONVERTER_H
 #define CONVERTER_H
-class string;
 #include "../defs.h"
+#include "../structure/string.h"
+#include <stdlib.h>
+class string;
 namespace converter
 {
 	string CStr(const char* source);
@@ -42,6 +44,15 @@ namespace converter
 	inline byte CByte(float source);
 	inline byte CByte(double source);
 	inline byte CByte(long source);
+	
+	short int CShort(string& source);
+	inline short int CShort(char* source);
+	inline short int CShort(char source);
+	inline short int CShort(byte source);
+	inline short int CShort(int source);
+	inline short int CShort(float source);
+	inline short int CShort(double source);
+	inline short int CShort(long source);
 	
 	int CInt(string& source);
 	inline int CInt(char* source);
@@ -94,6 +105,45 @@ namespace converter
 	inline double CDbl(double source);
 	inline double CDbl(long source);
 	
+	inline string CStr(char source)
+	{
+		string ret;
+		ret.allocLength(1);
+		ret[0] = source;
+		return ret;
+	}
+	inline string CStr(string& source)
+	{
+		return source;
+	}
+	inline char CChar(string& source)
+	{
+		return source[0];
+	}
+	inline byte CByte(char* source)
+	{
+		return (byte)atoi(source);
+	}
+	inline int CInt(char* source)
+	{
+		return atoi(source);
+	}
+	inline uint CUInt(char* source)
+	{
+		return (uint)atol(source);
+	}
+	inline long CLng(char* source)
+	{
+		return atol(source);
+	}
+	inline float CSng(char* source)
+	{
+		return (float)atof(source);
+	}
+	inline double CDbl(char* source)
+	{
+		return atof(source);
+	}
 	
 	inline bool CBool(bool source)
 	{
@@ -178,6 +228,31 @@ namespace converter
 		return (byte)source;
 	}
 	
+	inline short int CShort(char source)
+	{
+		return (short int)source;
+	}
+	inline short int CShort(int source)
+	{
+		return (short int)source;
+	}
+	inline short int CShort(byte source)
+	{
+		return (short int)source;
+	}
+	inline short int CShort(float source)
+	{
+		return (short int)source;
+	}
+	inline short int CShort(double source)
+	{
+		return (short int)source;
+	}
+	inline short int CShort(long source)
+	{
+		return (short int)source;
+	}
+	
 	inline int CInt(char source)
 	{
 		return (int)source;
@@ -188,7 +263,7 @@ namespace converter
 	}
 	inline int CInt(byte source)
 	{
-		return source;
+		return (int)source;
 	}
 	inline int CInt(float source)
 	{

@@ -16393,7 +16393,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile po/Makefile.in LibCyberBase/Makefile LibCVSCommon/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile po/Makefile.in LibCyberBase/Makefile LibCVSCommon/Makefile LibRSCCommon/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -17517,6 +17517,7 @@ do
     "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
     "LibCyberBase/Makefile") CONFIG_FILES="$CONFIG_FILES LibCyberBase/Makefile" ;;
     "LibCVSCommon/Makefile") CONFIG_FILES="$CONFIG_FILES LibCVSCommon/Makefile" ;;
+    "LibRSCCommon/Makefile") CONFIG_FILES="$CONFIG_FILES LibRSCCommon/Makefile" ;;
     "po/stamp-it") CONFIG_COMMANDS="$CONFIG_COMMANDS po/stamp-it" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

@@ -1,5 +1,5 @@
  /*
-  * CVSWriter.h
+  * CDTRead.h
   *
   * Copyright (C) 2013 - Rocaloid Development Group (RDG)
   *
@@ -17,29 +17,36 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#ifndef CVSWRITER_H
-#define CVSWRITER_H
-#include "CVSCommon.h"
-#include "../LibCyberBase/RDLIO.h"
-class string;
-using namespace CVSCommon;
-class CVSWriter
+ #ifndef CDTREADER_H
+ #define CDTREADER_H
+ 
+namespace CDTCommon
 {
-	public:
-		void Save(string FileName);
-		void Close();
+	using namespace Overall;
+	extern CaseParameter TestIfIsCaseParameter(string _String);
+	extern CaseComparison TestIfIsCaseComparison(string _String);
+	extern DEFType TestIfIsDEFType(string _String);
 
-		void Write(CVS& _CVS);
-		
-		void Segment_Write(Segment& _Segment);
-		void TPhone_Write(TPhone& _TPhone);
-		void Freq_Write(FreqSet& _Freq);
-		void Effects_Write(EffectCollection& _Effects);
-		void ADSREnvelope_Write(ADSREnvelope& _ADSR);
-		void EnvelopeSet_Write(EnvelopeSet& _EnvelopeSet);
-		void BreathStruct_Write(BreathStruct& _Breath);
-	private:
-		RDLWriter Writer;
+	class CDTReader
+	{
+		public:
+			void Open(string FileName);
+			void Close();
+			
+			void Read(CDT& _CDT);
+			
+			void DEFList_Read(CDT& _CDT);
+			void DEF_Read(DEF& _DEF);
+			void PhoneticInfo_Read(PhoneticInfo& _PhoneticInfo);
+			void PhoneSet_Read(PhoneSet& _PhoneSet);
+			void DBInfo_Read(DBInfo& _DBInfo);
+			void DBSet_Read(DBSet& _DBSet);
+		private:
+			RDLReader Reader;
+			string CDTVersion;
+	};
+			
 };
- #endif
+ 
+ #endif /*DAERTDC _H */
  

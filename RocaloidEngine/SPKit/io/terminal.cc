@@ -15,7 +15,7 @@ string terminal::readLine()
 
 void directPrint(const char* str)
 {
-	printf(str, 0);
+	puts(str);
 }
 void terminal::write(const char* str)
 {
@@ -34,19 +34,16 @@ template <class T> void terminal::write(T source)
 void terminal::writeLine(const char* str)
 {
 	directPrint(str);
-	directPrint("\n");
 }
 void terminal::writeLine(string str)
 {
 	char* chars = str.toChars();
 	directPrint(chars);
-	directPrint("\n");
 	mem_free(chars);
 }
 template <class T> void terminal::writeLine(T source)
 {
 	char* chars = CStr(source).toChars();
 	directPrint(chars);
-	directPrint("\n");
 	mem_free(chars);
 }

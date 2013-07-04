@@ -1,3 +1,8 @@
+===trunk-20130704===
+fileStream & stringStream add Mac style & Windows Style support.
+===trunk-20130703===
+CVSCommon Completed
+RSCCommon Started
 ===trunk-20130701===
 Move CyberEngine to Rocaloid Engine
 Add RDLIO

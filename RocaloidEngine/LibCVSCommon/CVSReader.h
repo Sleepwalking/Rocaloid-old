@@ -22,26 +22,28 @@
 #include "CVSCommon.h"
 #include "../LibCyberBase/RDLIO.h"
 class string;
-namespace CVSReader
+using namespace CVSCommon;
+class CVSReader
 {
-	using namespace CVSCommon;
-	extern RDLReader Reader;
 	#define Exception(x) Overall::Exception(x);
-	
-	void Reader_Open(string FileName);
-	void Reader_Close();
-
-	void CVS_Read(CVS& _CVS);
-	void Segment_Read(Segment& _Segment);
-	void TPhone_Read(TPhone& _TPhone);
-	void TStart_Read(TStart& _TStart);
-	void TDest_Read(TDest& _TDest);
-	void TTransition_Read(TTransition& _TTransition);
-	void FreqSet_Read(FreqSet& _FreqSet);
-	void Effects_Read(EffectCollection& _Effects);
-	void EnvelopeSet_Read(EnvelopeSet& _EnvelopeSet);
-	void ADSREnvelope_Read(ADSREnvelope& _ADSREnvelope);
-	void BreathStruct_Read(BreathStruct& _Breath);
+	public:
+		void Open(string FileName);
+		void Close();
+		
+		void Read(CVS& _CVS);
+		
+		void Segment_Read(Segment& _Segment);
+		void TPhone_Read(TPhone& _TPhone);
+		void TStart_Read(TStart& _TStart);
+		void TDest_Read(TDest& _TDest);
+		void TTransition_Read(TTransition& _TTransition);
+		void FreqSet_Read(FreqSet& _FreqSet);
+		void Effects_Read(EffectCollection& _Effects);
+		void EnvelopeSet_Read(EnvelopeSet& _EnvelopeSet);
+		void ADSREnvelope_Read(ADSREnvelope& _ADSREnvelope);
+		void BreathStruct_Read(BreathStruct& _Breath);
+	private:
+		RDLReader Reader;
 };
 
  #endif

@@ -20,6 +20,7 @@
 #include "../SPKit/defs.h"
 #include "../SPKit/io/terminal.h"
 #include "../SPKit/structure/string.h"
+#include <stdlib.h>
 #include "../SPKit/misc/converter.h"
 #include "../SPKit/misc/memopr.h"
 #include "../SPKit/structure/array.h"
@@ -33,86 +34,102 @@ using namespace Overall;
 using namespace converter;
 namespace RDLIO
 {	
-	void TestIfIsNumber(string _String)
+	bool TestIfIsNumber(string _String)
 	{
-		char *str = _String.unsafeHandle();
-		int len = _String.getLength();
-		int i;
-		for(i = 0;i < len;i ++)
+		char *str=_String.toChars ();
+		int i,len=_String.getLength();
+		bool res = true;
+		for(i=0;i<len;i++)
 		{
-			if((str[i] < '0' || str[i] > '9') && str[i] != '.')
+			if((str[i] < '0' || str[i] > '9') && str[i]!='.' && str[i]!='-')
 			{
-				Exception(_String + "  isn't a number!");
+				//Exception( _String + "  is n't a number!");
+				res = false;
 			}
 		}
+		mem_free(str);
+		return res;
 	}
-	int TestIfIsDouble(string _String)
+	double TestIfIsDouble(string _String)
 	{
-		TestIfIsNumber(_String);
-		return CDbl(_String);
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		return converter::CDbl(_String);
 	}
 	int TestIfIsInt(string _String)
 	{
-		TestIfIsNumber(_String);
-		return CInt(_String);
+		_String=Trim(_String);
+		if ( ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		return converter::CInt(_String);
 	}
 	double TestIfIsDoubleAndPositive(string _String)
 	{
 		double x;
-		TestIfIsNumber (_String);
-		x = CDbl(_String);
-		if(x <= 0)
-			Exception(_String + "  isn't positive!");
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CDbl(_String);
+		//printf("x=%f\n",x);
+		if(x<=0)
+			Exception ( _String + "  is n't positive!");
 		return x;
 	}		
 	
 	int TestIfIsIntAndPositive(string _String) 
 	{
 		int x;
-		TestIfIsNumber (_String);
-		x = CInt(_String);
-		if(x <= 0)
-			Exception(_String + "  isn't positive!");
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CInt(_String);
+		
+		if(x<=0)
+			Exception ( _String + "  is n't positive!");
 		return x;
 	}		
 	double TestIfIsDoubleNotNegative(string _String)
 	{
 		double x;
-		TestIfIsNumber (_String);
-		x = CDbl(_String);
-		if(x < 0)
-			Exception(_String + "  isn't positive or 0!");
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CDbl(_String);
+		if(x<0)
+			Exception ( _String + "  is n't positive or 0!");
 		return x;
 	}		
 	
 	int TestIfIsIntNotNegative(string _String) 
 	{
 		int x;
-		TestIfIsNumber (_String);
-		x = CInt(_String);
-		if(x < 0)
-			Exception(_String + "  isn't positive or 0!");
+		_String=Trim(_String);
+		if (  ! (TestIfIsNumber(_String) ) ) Exception( _String + "  is n't a number!");
+		x= converter::CInt(_String);
+		if(x<0)
+			Exception ( _String + "  is n't positive or 0!");
 		return x;
 	}		
 	bool TestIfIsBoolean(string _String)
 	{
 		string t;
-		t = lowerCase(_String);
-		if (t == "true")
+		_String=Trim(_String);
+		t=lowerCase(_String);
+		if ( t == converter::CStr("true"))
 		{
 			return true;
 		}
-		else if(t == "false")
+		else if( t == converter::CStr("false"))
 		{
 			return false;
 		}
-		Exception(_String + "  is not a boolean. Only true or false are allowed.");
+		Exception ( _String + "  is not a boolean. Only true or false are allowed.");
+		return false;
 	}
 	int TestIfIsPresetedEnvelope(string _String)
 	{
-		if(_String == "ADSR")
+		_String=Trim(_String);
+		if( _String == converter::CStr("ADSR"))
 			return 0;
-		Exception(_String + " is not a valid PresetedEnvelope!");
+		else
+			Exception(_String + " is not a valid PresetedEnvelope!");
+		return -1;
 	}
 }
 

@@ -30,10 +30,8 @@
 
 using namespace RDLIO;
 using namespace converter;
-namespace CVSReader
-{
-	RDLReader Reader;
-	void Reader_Open(string FileName)
+
+	void CVSReader::Open(string FileName)
 	{
 		Reader.Open(FileName);
 		if(Reader.Read() != "#CVS")
@@ -41,12 +39,12 @@ namespace CVSReader
 		if(Reader.Read() != "1.6")
 			Exception("Wrong CVS version.");
 	}
-	void Reader_Close()
+	void CVSReader::Close()
 	{
 		Reader.Close();
 	}
 
-	void CVS_Read(CVS& _CVS)
+	void CVSReader::Read(CVS& _CVS)
 	{
 		string StrBuff;
 		do
@@ -71,7 +69,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void Segment_Read(Segment& _Segment)
+	void CVSReader::Segment_Read(Segment& _Segment)
 	{
 		string StrBuff;
 		do
@@ -120,7 +118,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void TPhone_Read(TPhone& _TPhone)
+	void CVSReader::TPhone_Read(TPhone& _TPhone)
 	{
 		string StrBuff;
 		do
@@ -141,7 +139,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void TStart_Read(TStart& _TStart)
+	void CVSReader::TStart_Read(TStart& _TStart)
 	{
 		string StrBuff;
 		do
@@ -171,7 +169,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void TDest_Read(TDest& _TDest)
+	void CVSReader::TDest_Read(TDest& _TDest)
 	{
 		string StrBuff;
 		do
@@ -201,7 +199,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void TTransition_Read(TTransition& _TTransition)
+	void CVSReader::TTransition_Read(TTransition& _TTransition)
 	{
 		string StrBuff;
 		do
@@ -222,7 +220,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void FreqSet_Read(FreqSet& _FreqSet)
+	void CVSReader::FreqSet_Read(FreqSet& _FreqSet)
 	{
 		string StrBuff;
 		do
@@ -240,7 +238,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void Effects_Read(EffectCollection& _Effects)
+	void CVSReader::Effects_Read(EffectCollection& _Effects)
 	{
 		string StrBuff;
 		do
@@ -295,7 +293,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void EnvelopeSet_Read(EnvelopeSet& _EnvelopeSet)
+	void CVSReader::EnvelopeSet_Read(EnvelopeSet& _EnvelopeSet)
 	{
 		string StrBuff;
 		do
@@ -313,7 +311,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void ADSREnvelope_Read(ADSREnvelope& _ADSREnvelope)
+	void CVSReader::ADSREnvelope_Read(ADSREnvelope& _ADSREnvelope)
 	{
 		string StrBuff;
 		do
@@ -337,7 +335,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-	void BreathStruct_Read(BreathStruct& _Breath)
+	void CVSReader::BreathStruct_Read(BreathStruct& _Breath)
 	{
 		string StrBuff;
 		do
@@ -352,7 +350,7 @@ namespace CVSReader
 			}
 		}while(StrBuff != "End");
 	}
-};
+
 /* template
 	{
 		string StrBuff;

@@ -29,23 +29,20 @@
 #include "CVSWriter.h"
 
 using namespace converter;
-namespace CVSWriter
-{
-	RDLWriter Writer;
-	
-	void Writer_Save(string FileName)
+
+	void CVSWriter:: Save(string FileName)
 	{
 		Writer.Open(FileName);
 		Writer.WriteWord("#CVS");
 		Writer.WriteWord(CVS_VERSION);
 		Writer.NewLine();
 	}
-	void Writer_Close()
+	void CVSWriter:: Close()
 	{
 		Writer.Close();
 	}
 	
-	void CVS_Write(CVS& _CVS)
+	void CVSWriter:: Write(CVS& _CVS)
 	{
 		int i;
 		Writer.WriteWord("CVS");
@@ -71,7 +68,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void Segment_Write(Segment& _Segment)
+	void CVSWriter:: Segment_Write(Segment& _Segment)
 	{
 		int i;
 		Writer.WriteWord("Segment");
@@ -114,7 +111,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void TPhone_Write(TPhone& _TPhone)
+	void CVSWriter:: TPhone_Write(TPhone& _TPhone)
 	{
 		Writer.WriteWord("TPhone");
 		Writer.IndentPush();
@@ -168,7 +165,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void Freq_Write(FreqSet& _Freq)
+	void CVSWriter:: Freq_Write(FreqSet& _Freq)
 	{
 		Writer.WriteWord("FreqSet");
 		
@@ -180,7 +177,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}
-	void Effects_Write(EffectCollection& _Effects)
+	void CVSWriter:: Effects_Write(EffectCollection& _Effects)
 	{
 		int i;
 		Writer.WriteWord("Effects");
@@ -251,7 +248,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}	
-	void ADSREnvelope_Write(ADSREnvelope& _ADSR)
+	void CVSWriter:: ADSREnvelope_Write(ADSREnvelope& _ADSR)
 	{
 		Writer.WriteWord("ADSR");
 		
@@ -267,7 +264,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}	
-	void EnvelopeSet_Write(EnvelopeSet& _EnvelopeSet)
+	void CVSWriter:: EnvelopeSet_Write(EnvelopeSet& _EnvelopeSet)
 	{
 		Writer.WriteWord("EnvelopeSet");
 		
@@ -279,7 +276,7 @@ namespace CVSWriter
 		Writer.WriteWord("End");
 		Writer.NewLine();
 	}	
-	void BreathStruct_Write(BreathStruct& _Breath)
+	void CVSWriter:: BreathStruct_Write(BreathStruct& _Breath)
 	{
 		Writer.WriteWord("Breath");
 		Writer.IndentPush();
@@ -294,7 +291,6 @@ namespace CVSWriter
 		Writer.NewLine();
 	}
 
-};
 /*Template
 	{
 		Writer.WriteWord("Breath");

@@ -1,30 +1,28 @@
 [Anjuta]
 Maximized=1
-Geometry=1280x995+1366+0
+Geometry=1024x691+0+24
 
 [Project Manager]
 Shortcut=RocaloidEngine//src
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCVSCommon/%%%RocaloidEngine//src//../LibCVSCommon///libCVSCommon.la%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//rsctool
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCVSCommon/%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//../LibRSCCommon/%%%RocaloidEngine//src//../LibRSCCommon///libRSCCommon.la%%%RocaloidEngine//src//rsctool
 
 [File Loader]
-Files=../../src/main.cc#48%%%../../LibCyberBase/Overall.h#62%%%../../LibCyberBase/Overall.cc#19%%%../../LibCVSCommon/CVSWriter.cc#41%%%../../LibCVSCommon/CVSWriter.h#31%%%../../LibCVSCommon/CVSReader.h#27%%%../../LibCyberBase/RDLIO.h#55%%%../../LibCVSCommon/CVSReader.cc#30%%%../../LibCyberBase/RDLIO.cc#153%%%../../SPKit/structure/string.cc#8%%%../../LibCVSCommon/CVSCommon.h#98%%%../../SPKit/structure/array.h#15%%%../../SPKit/io/fileStream.cc#196%%%../../SPKit/misc/memopr.h#2%%%../../LibCVSCommon/CVSCommon.cc#36%%%../../SPKit/misc/converter.cc#49
+Files=../../src/main.cc#64%%%../../LibRSCCommon/CDTCommon/CDTCommon.h#150%%%../../LibRSCCommon/CDTCommon/CDTCommon.cc#139%%%../../LibRSCCommon/RSCCommon.h#110%%%../../LibRSCCommon/CDTCommon/CDTReader.cc#120%%%../../SPKit/structure/string.cc#8%%%../../SPKit/structure/string.h#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Execution]
-Program uri=../../Debug/src/rsctool
 Run in terminal=2
-Working directories=../../../../Rocaloid%%%../../../rocaloidengine
+Working directories=../../../RocaloidEngine
 
 [Build]
-Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
-Selected Configuration=Debug
+Configuration list=1:Default:Debug%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
+Selected Configuration=Default
 BuildArgs/Default=--enable-maintainer-mode
 BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
 BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
-Breakpoint=1:../../src/main.cc:40:0:%%%1:../../src/main.cc:35:0:
 Stop at beginning=2
