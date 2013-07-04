@@ -31,27 +31,30 @@
 #include "../LibCVSCommon/CVSReader.h"
 #include "../LibCVSCommon/CVSWriter.h"
 
+#include "RSCCommon.h"
+#include "CDTCommon/CDTCommon.h"
+#include "CDTCommon/CDTReader.h"
 using namespace Overall;
 using namespace converter;
 int main()
 {
-	CVSCommon::CVS* cvs1 = new CVSCommon::CVS;
-	CVSReader::Reader_Open("/tmp/o.cvs");
-	CVSReader::CVS_Read(*cvs1);
-	CVSReader::Reader_Close();
+	/*CVSCommon::CVS* cvs1 = new CVSCommon::CVS;
+	//CVSReader::Reader_Open("/home/rgwan/ramdisk/1.cvs");
+	CVSReader Reader;
+	CVSWriter Writer;
+	Reader.Open("/home/rgwan/ramdisk/1.cvs");
+	Reader.Read(*cvs1);
+	Reader.Close();
 
-	/*RDLWriter writer;
-	writer.Open("/tmp/o2.cvs");
-	writer.WriteWord("#CVS");
-	writer.WriteWord("1.6");
-	writer.NewLine();
-	writer.Close();*/
-
-	CVSWriter::Writer_Save(CStr("/tmp/o2.cvs"));
+	Writer.Save(CStr("/home/rgwan/ramdisk/test2.cvs"));
 	//CVSWriter::Writer.NewLineValid = false;
-	CVSWriter::CVS_Write(*cvs1);
-	CVSWriter::Writer_Close();
-	delete cvs1;
+	Writer.Write(*cvs1);
+	Writer.Close();
+	delete cvs1;*/
+	CDTCommon::CDTReader cdt;
+	cdt.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
+	cdt.Close();
+	wLine("completed");
 	return 0; 
 }
 

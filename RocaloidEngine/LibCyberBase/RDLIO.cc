@@ -20,6 +20,7 @@
 #include "../SPKit/defs.h"
 #include "../SPKit/io/terminal.h"
 #include "../SPKit/structure/string.h"
+#include <stdlib.h>
 #include "../SPKit/misc/converter.h"
 #include "../SPKit/misc/memopr.h"
 #include "../SPKit/structure/array.h"

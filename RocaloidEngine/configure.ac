@@ -39,4 +39,5 @@ src/Makefile
 po/Makefile.in
 LibCyberBase/Makefile
 LibCVSCommon/Makefile
+LibRSCCommon/Makefile
 ])
