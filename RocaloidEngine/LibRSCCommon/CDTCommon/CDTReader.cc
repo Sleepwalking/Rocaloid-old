@@ -260,8 +260,12 @@ namespace CDTCommon
 		{
 			string StrBuff;
 			int i,j;
-			double Offset[]= {0, 0, 0, 0};
-			double Multiple[]=  {0, 1, 1, 1};
+			double Multiple[3]; 
+			double Offset[3]; 
+			for (i=0;i<=2;i++) {
+				Multiple[i]=1;
+				Offset[i]=0;
+			}
 			while(StrBuff!="End")
 			{
 				StrBuff = Reader.Read();
@@ -283,20 +287,20 @@ namespace CDTCommon
 				else if (StrBuff =="#DataOffset")
 				{
 						StrBuff = Reader.Read();
+						Offset[0] = TestIfIsDouble(StrBuff);
+						StrBuff = Reader.Read();
 						Offset[1] = TestIfIsDouble(StrBuff);
 						StrBuff = Reader.Read();
 						Offset[2] = TestIfIsDouble(StrBuff);
-						StrBuff = Reader.Read();
-						Offset[3] = TestIfIsDouble(StrBuff);
 				}
 				else if (StrBuff =="#DataMultiple")
 				{
 						StrBuff = Reader.Read();
+						Multiple[0] = TestIfIsDouble(StrBuff);
+						StrBuff = Reader.Read();
 						Multiple[1] = TestIfIsDouble(StrBuff);
 						StrBuff = Reader.Read();
 						Multiple[2] = TestIfIsDouble(StrBuff);
-						StrBuff = Reader.Read();
-						Multiple[3] = TestIfIsDouble(StrBuff);
 				}
 				else if (StrBuff =="DataPointQ")
 				{
@@ -308,9 +312,13 @@ namespace CDTCommon
 				{
 					for ( i=0 ; i<= _PhoneSet.DataPointQ ; i++)
 					{// 1 * i
-						_PhoneSet.DataPoint[i] = (_PhoneSet.DataPointQ + 1 - i) * 0.025;
-						for (j = 2;j <= 4;j++) // [2,3,4] * i
-							_PhoneSet.DataPoint[i* j] = TestIfIsDouble(Reader.Read()) * Multiple[j] + Offset[j];
+						/*_PhoneSet.DataPoint[i] = (_PhoneSet.DataPointQ + 1 - i) * 0.025;*/
+						_PhoneSet.DataPoint[DP(i,0)] = (_PhoneSet.DataPointQ + 1 - i) * 0.025;
+						for (j = 1;j <= 3;j++) 
+						{
+							StrBuff = Reader.Read();
+							_PhoneSet.DataPoint[DP(i,j)] = TestIfIsDouble(StrBuff) * Multiple[j-1] + Offset[j-1]; 
+						}
 					}
 				}
 			}

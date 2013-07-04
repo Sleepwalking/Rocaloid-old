@@ -84,17 +84,27 @@ int main()
 			wLine ( CStr("			") +CStr ( cdt.Phonetic.PhoneList[i].DataPoint[i * 4 +3] ) );
 		}
 	}*/
-	i=1;
+	for(i=0;i<=cdt.Phonetic.PhoneListQ;i++)
+	{
 		wLine ( CStr("	  Tone : ") + cdt.Phonetic.PhoneList[i].Phone );
 		wLine ( CStr("			Type : ") + CStr(cdt.Phonetic.PhoneList[i].Type) );
+
+	
 		wLine ( CStr("			DataPoint num :" ) + CStr(cdt.Phonetic.PhoneList[i].DataPointQ+1 ));
 		for(j=0;j<=cdt.Phonetic.PhoneList[i].DataPointQ;j++)
 		{
-			wLine (CStr("			") + CStr ( cdt.Phonetic.PhoneList[i].DataPoint[j * 4] ) + CStr ( cdt.Phonetic.PhoneList[i].DataPoint[j * 4 +1] ) + CStr( cdt.Phonetic.PhoneList[i].DataPoint[j * 4 +2] ) );
+			wLine (CStr("			") + CStr ( cdt.Phonetic.PhoneList[i].DataPoint[j * 4] ) + " " +CStr ( cdt.Phonetic.PhoneList[i].DataPoint[j * 4 +1] ) + " " + CStr( cdt.Phonetic.PhoneList[i].DataPoint[j * 4 +2] ) + " " +CStr( cdt.Phonetic.PhoneList[i].DataPoint[j * 4 +3] ));
 		}
-	//wLine (CStr("DEFLists :") + CStr(cdt.));
+	}
 	wLine (CStr("DBInfo:"));
 	wLine( CStr("   DBListes : " ) + CStr(cdt.DB.DBListQ));
+	for(i=0;i<=cdt.DB.DBListQ;i++)
+	{
+		wLine ( CStr("	  Tone : ") + cdt.DB.DBList[i].Phone );
+		wLine ( CStr("			Pitch : ") + CStr(cdt.DB.DBList[i].Pitch) );
+		wLine ( CStr("			Attack:") + CStr(cdt.DB.DBList[i].VOT));
+		wLine ( CStr("			PSnk:") + CStr(cdt.DB.DBList[i].PreShrink));
+	}
 	wLine("completed");
 	return 0; 
 }

@@ -80,6 +80,8 @@ namespace CDTCommon
 		PhoneType Type;
 		PEnvelopeType PType;
 		int DataPointQ;
+		//double Offset[4];
+		//double Multiple[4];
 		array<double> DataPoint;
 		//setUbound注意X*Y
 	};
@@ -155,6 +157,7 @@ namespace CDTCommon
 	extern PhoneType TestIfIsPhoneType(string _String);
 	extern PEnvelopeType TestIfIsPType(string _String);
 #define CDT_VERSION "2.41" //2.41版本CDT
+#define DP(x,y) x * 4 + y //模拟二位数组
 };
 
 #endif 
