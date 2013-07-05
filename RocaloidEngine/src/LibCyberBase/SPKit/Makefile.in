@@ -34,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = rsctool$(EXEEXT)
+bin_PROGRAMS = spkit$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -47,15 +47,18 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_rsctool_OBJECTS = rsctool-main.$(OBJEXT)
-rsctool_OBJECTS = $(am_rsctool_OBJECTS)
-rsctool_LDADD = $(LDADD)
+am_spkit_OBJECTS = main.$(OBJEXT) fileStream.$(OBJEXT) \
+	string.$(OBJEXT) converter.$(OBJEXT) array.$(OBJEXT) \
+	stringStream.$(OBJEXT) memoryStream.$(OBJEXT) \
+	terminal.$(OBJEXT)
+spkit_OBJECTS = $(am_spkit_OBJECTS)
+spkit_DEPENDENCIES =
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-rsctool_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(rsctool_CXXFLAGS) \
-	$(CXXFLAGS) $(rsctool_LDFLAGS) $(LDFLAGS) -o $@
+spkit_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(spkit_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -79,11 +82,27 @@ CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD " $@;
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC    " $@;
+CCLD = $(CC)
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(rsctool_SOURCES)
-DIST_SOURCES = $(rsctool_SOURCES)
+SOURCES = $(spkit_SOURCES)
+DIST_SOURCES = $(spkit_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -273,16 +292,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon
-rsctool_CXXFLAGS = -O2 \
-	-Wall \
-	-g  \
-	-I@top_srcdir@/src/LibCVSCommon/ \
-	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/src/LibRSCCommon/ \
-	 -I@top_srcdir@/SPKit/
-
-.AM_CPPFLAGS = \
+AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\"
@@ -291,15 +301,32 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-rsctool_SOURCES = \
-	main.cc
+spkit_SOURCES = \
+	main.cc \
+	structure/array.h \
+	defs.h \
+	misc/listopr.h \
+	io/fileStream.h \
+	io/fileStream.cc \
+	structure/string.cc \
+	structure/string.h \
+	misc/converter.cc \
+	misc/converter.h \
+	misc/memopr.h \
+	io/memoryStream.h \
+	io/stringStream.h \
+	io/terminal.h \
+	structure/array.cc \
+	io/stringStream.cc \
+	io/memoryStream.cc \
+	io/terminal.cc
 
-rsctool_LDFLAGS = -lCyberBase \
-	-LLibCyberBase/.libs/ \
-	-LLibCVSCommon/.libs/ \
-	-lCVSCommon \
-	-LLibRSCCommon/.libs/ \
-	-lRSCCommon 
+spkit_LDFLAGS = 
+spkit_LDADD = 
+SUBDIRS = \
+	structure \
+	misc \
+	io
 
 all: all-recursive
 
@@ -378,9 +405,9 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-rsctool$(EXEEXT): $(rsctool_OBJECTS) $(rsctool_DEPENDENCIES) $(EXTRA_rsctool_DEPENDENCIES) 
-	@rm -f rsctool$(EXEEXT)
-	$(AM_V_CXXLD)$(rsctool_LINK) $(rsctool_OBJECTS) $(rsctool_LDADD) $(LIBS)
+spkit$(EXEEXT): $(spkit_OBJECTS) $(spkit_DEPENDENCIES) $(EXTRA_spkit_DEPENDENCIES) 
+	@rm -f spkit$(EXEEXT)
+	$(AM_V_CXXLD)$(spkit_LINK) $(spkit_OBJECTS) $(spkit_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -388,7 +415,14 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rsctool-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/array.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/converter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileStream.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memoryStream.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/string.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stringStream.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/terminal.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -411,19 +445,103 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-rsctool-main.o: main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-main.o -MD -MP -MF $(DEPDIR)/rsctool-main.Tpo -c -o rsctool-main.o `test -f 'main.cc' || echo '$(srcdir)/'`main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-main.Tpo $(DEPDIR)/rsctool-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cc' object='rsctool-main.o' libtool=no @AMDEPBACKSLASH@
+fileStream.o: io/fileStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT fileStream.o -MD -MP -MF $(DEPDIR)/fileStream.Tpo -c -o fileStream.o `test -f 'io/fileStream.cc' || echo '$(srcdir)/'`io/fileStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fileStream.Tpo $(DEPDIR)/fileStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/fileStream.cc' object='fileStream.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-main.o `test -f 'main.cc' || echo '$(srcdir)/'`main.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o fileStream.o `test -f 'io/fileStream.cc' || echo '$(srcdir)/'`io/fileStream.cc
 
-rsctool-main.obj: main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -MT rsctool-main.obj -MD -MP -MF $(DEPDIR)/rsctool-main.Tpo -c -o rsctool-main.obj `if test -f 'main.cc'; then $(CYGPATH_W) 'main.cc'; else $(CYGPATH_W) '$(srcdir)/main.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rsctool-main.Tpo $(DEPDIR)/rsctool-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='main.cc' object='rsctool-main.obj' libtool=no @AMDEPBACKSLASH@
+fileStream.obj: io/fileStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT fileStream.obj -MD -MP -MF $(DEPDIR)/fileStream.Tpo -c -o fileStream.obj `if test -f 'io/fileStream.cc'; then $(CYGPATH_W) 'io/fileStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/fileStream.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fileStream.Tpo $(DEPDIR)/fileStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/fileStream.cc' object='fileStream.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rsctool_CXXFLAGS) $(CXXFLAGS) -c -o rsctool-main.obj `if test -f 'main.cc'; then $(CYGPATH_W) 'main.cc'; else $(CYGPATH_W) '$(srcdir)/main.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o fileStream.obj `if test -f 'io/fileStream.cc'; then $(CYGPATH_W) 'io/fileStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/fileStream.cc'; fi`
+
+string.o: structure/string.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT string.o -MD -MP -MF $(DEPDIR)/string.Tpo -c -o string.o `test -f 'structure/string.cc' || echo '$(srcdir)/'`structure/string.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/string.Tpo $(DEPDIR)/string.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='structure/string.cc' object='string.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o string.o `test -f 'structure/string.cc' || echo '$(srcdir)/'`structure/string.cc
+
+string.obj: structure/string.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT string.obj -MD -MP -MF $(DEPDIR)/string.Tpo -c -o string.obj `if test -f 'structure/string.cc'; then $(CYGPATH_W) 'structure/string.cc'; else $(CYGPATH_W) '$(srcdir)/structure/string.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/string.Tpo $(DEPDIR)/string.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='structure/string.cc' object='string.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o string.obj `if test -f 'structure/string.cc'; then $(CYGPATH_W) 'structure/string.cc'; else $(CYGPATH_W) '$(srcdir)/structure/string.cc'; fi`
+
+converter.o: misc/converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT converter.o -MD -MP -MF $(DEPDIR)/converter.Tpo -c -o converter.o `test -f 'misc/converter.cc' || echo '$(srcdir)/'`misc/converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/converter.Tpo $(DEPDIR)/converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='misc/converter.cc' object='converter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o converter.o `test -f 'misc/converter.cc' || echo '$(srcdir)/'`misc/converter.cc
+
+converter.obj: misc/converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT converter.obj -MD -MP -MF $(DEPDIR)/converter.Tpo -c -o converter.obj `if test -f 'misc/converter.cc'; then $(CYGPATH_W) 'misc/converter.cc'; else $(CYGPATH_W) '$(srcdir)/misc/converter.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/converter.Tpo $(DEPDIR)/converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='misc/converter.cc' object='converter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o converter.obj `if test -f 'misc/converter.cc'; then $(CYGPATH_W) 'misc/converter.cc'; else $(CYGPATH_W) '$(srcdir)/misc/converter.cc'; fi`
+
+array.o: structure/array.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT array.o -MD -MP -MF $(DEPDIR)/array.Tpo -c -o array.o `test -f 'structure/array.cc' || echo '$(srcdir)/'`structure/array.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/array.Tpo $(DEPDIR)/array.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='structure/array.cc' object='array.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o array.o `test -f 'structure/array.cc' || echo '$(srcdir)/'`structure/array.cc
+
+array.obj: structure/array.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT array.obj -MD -MP -MF $(DEPDIR)/array.Tpo -c -o array.obj `if test -f 'structure/array.cc'; then $(CYGPATH_W) 'structure/array.cc'; else $(CYGPATH_W) '$(srcdir)/structure/array.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/array.Tpo $(DEPDIR)/array.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='structure/array.cc' object='array.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o array.obj `if test -f 'structure/array.cc'; then $(CYGPATH_W) 'structure/array.cc'; else $(CYGPATH_W) '$(srcdir)/structure/array.cc'; fi`
+
+stringStream.o: io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT stringStream.o -MD -MP -MF $(DEPDIR)/stringStream.Tpo -c -o stringStream.o `test -f 'io/stringStream.cc' || echo '$(srcdir)/'`io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/stringStream.Tpo $(DEPDIR)/stringStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/stringStream.cc' object='stringStream.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o stringStream.o `test -f 'io/stringStream.cc' || echo '$(srcdir)/'`io/stringStream.cc
+
+stringStream.obj: io/stringStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT stringStream.obj -MD -MP -MF $(DEPDIR)/stringStream.Tpo -c -o stringStream.obj `if test -f 'io/stringStream.cc'; then $(CYGPATH_W) 'io/stringStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/stringStream.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/stringStream.Tpo $(DEPDIR)/stringStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/stringStream.cc' object='stringStream.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o stringStream.obj `if test -f 'io/stringStream.cc'; then $(CYGPATH_W) 'io/stringStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/stringStream.cc'; fi`
+
+memoryStream.o: io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT memoryStream.o -MD -MP -MF $(DEPDIR)/memoryStream.Tpo -c -o memoryStream.o `test -f 'io/memoryStream.cc' || echo '$(srcdir)/'`io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/memoryStream.Tpo $(DEPDIR)/memoryStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/memoryStream.cc' object='memoryStream.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o memoryStream.o `test -f 'io/memoryStream.cc' || echo '$(srcdir)/'`io/memoryStream.cc
+
+memoryStream.obj: io/memoryStream.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT memoryStream.obj -MD -MP -MF $(DEPDIR)/memoryStream.Tpo -c -o memoryStream.obj `if test -f 'io/memoryStream.cc'; then $(CYGPATH_W) 'io/memoryStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/memoryStream.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/memoryStream.Tpo $(DEPDIR)/memoryStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/memoryStream.cc' object='memoryStream.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o memoryStream.obj `if test -f 'io/memoryStream.cc'; then $(CYGPATH_W) 'io/memoryStream.cc'; else $(CYGPATH_W) '$(srcdir)/io/memoryStream.cc'; fi`
+
+terminal.o: io/terminal.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT terminal.o -MD -MP -MF $(DEPDIR)/terminal.Tpo -c -o terminal.o `test -f 'io/terminal.cc' || echo '$(srcdir)/'`io/terminal.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/terminal.Tpo $(DEPDIR)/terminal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/terminal.cc' object='terminal.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o terminal.o `test -f 'io/terminal.cc' || echo '$(srcdir)/'`io/terminal.cc
+
+terminal.obj: io/terminal.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT terminal.obj -MD -MP -MF $(DEPDIR)/terminal.Tpo -c -o terminal.obj `if test -f 'io/terminal.cc'; then $(CYGPATH_W) 'io/terminal.cc'; else $(CYGPATH_W) '$(srcdir)/io/terminal.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/terminal.Tpo $(DEPDIR)/terminal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='io/terminal.cc' object='terminal.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o terminal.obj `if test -f 'io/terminal.cc'; then $(CYGPATH_W) 'io/terminal.cc'; else $(CYGPATH_W) '$(srcdir)/io/terminal.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

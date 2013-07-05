@@ -1,11 +1,12 @@
 
+SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon
 
 rsctool_CXXFLAGS = -O2 \
 	-Wall \
 	-g  \
-	-I@top_srcdir@/LibCVSCommon/ \
+	-I@top_srcdir@/src/LibCVSCommon/ \
 	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/LibRSCCommon/ \
+	 -I@top_srcdir@/src/LibRSCCommon/ \
 	 -I@top_srcdir@/SPKit/
 ## Process this file with automake to produce Makefile.in
 
@@ -26,13 +27,9 @@ rsctool_SOURCES =  \
 	main.cc
 
 rsctool_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ \
-	-L../LibCVSCommon/.libs/ \
+	-LLibCyberBase/.libs/ \
+	-LLibCVSCommon/.libs/ \
 	-lCVSCommon \
-	-L../LibRSCCommon/.libs/ \
+	-LLibRSCCommon/.libs/ \
 	-lRSCCommon 
 
-SUBDIRS = \
-	../LibCyberBase/ \
-	../LibCVSCommon/ \
-	../LibRSCCommon/
