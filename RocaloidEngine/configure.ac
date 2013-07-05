@@ -29,7 +29,6 @@ LT_INIT
 AC_OUTPUT([
 Makefile
 src/Makefile
-po/Makefile.in
 src/LibCyberBase/Makefile
 src/LibCVSCommon/Makefile
 src/LibRSCCommon/Makefile

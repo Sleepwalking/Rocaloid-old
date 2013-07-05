@@ -14960,7 +14960,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile po/Makefile.in src/LibCyberBase/Makefile src/LibCVSCommon/Makefile src/LibRSCCommon/Makefile src/LibCVE/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile src/LibCyberBase/Makefile src/LibCVSCommon/Makefile src/LibRSCCommon/Makefile src/LibCVE/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -16075,7 +16075,6 @@ do
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-    "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
     "src/LibCyberBase/Makefile") CONFIG_FILES="$CONFIG_FILES src/LibCyberBase/Makefile" ;;
     "src/LibCVSCommon/Makefile") CONFIG_FILES="$CONFIG_FILES src/LibCVSCommon/Makefile" ;;
     "src/LibRSCCommon/Makefile") CONFIG_FILES="$CONFIG_FILES src/LibRSCCommon/Makefile" ;;
