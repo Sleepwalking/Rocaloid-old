@@ -13,7 +13,7 @@ class FrameBuffer
 
 		void Resize(int _Size);
 		inline int GetSize();
-	private:
+	protected:
 		int Size;
 };
 inline int FrameBuffer::GetSize()
