@@ -1,5 +1,5 @@
 
-SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon
+SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon LibCVE
 
 rsctool_CXXFLAGS = -O2 \
 	-Wall \

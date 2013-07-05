@@ -34,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = src/LibRSCCommon
+subdir = src/LibCVE
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -73,17 +73,12 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libRSCCommon_la_LIBADD =
-am_libRSCCommon_la_OBJECTS = libRSCCommon_la-CDTCommon.lo \
-	libRSCCommon_la-RSCCommon.lo libRSCCommon_la-CDTReader.lo
-libRSCCommon_la_OBJECTS = $(am_libRSCCommon_la_OBJECTS)
+libCVE_la_LIBADD =
+am_libCVE_la_OBJECTS = PitchCalc.lo Scheduler.lo
+libCVE_la_OBJECTS = $(am_libCVE_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-libRSCCommon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) \
-	$(libRSCCommon_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -126,8 +121,8 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libRSCCommon_la_SOURCES)
-DIST_SOURCES = $(libRSCCommon_la_SOURCES)
+SOURCES = $(libCVE_la_SOURCES)
+DIST_SOURCES = $(libCVE_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -268,24 +263,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = \
-	libRSCCommon.la
+	libCVE.la
 
-libRSCCommon_la_SOURCES = \
-	CDTCommon/CDTCommon.cc \
-	CDTCommon/CDTCommon.h \
-	RSCCommon.cc \
-	RSCCommon.h \
-	CDTCommon/CDTReader.h \
-	CDTCommon/CDTReader.cc
-
-libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/LibCyberBase/ \
-	-O2 \
-	-Wall \
-	-g \
-	-I@top_srcdir@/src/ 
-
-libRSCCommon_la_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 
+libCVE_la_SOURCES = \
+	PitchCalc.cc \
+	PitchCalc.h \
+	Scheduler.cc \
+	Scheduler.h
 
 all: all-am
 
@@ -300,9 +284,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/LibRSCCommon/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/LibCVE/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/LibRSCCommon/Makefile
+	  $(AUTOMAKE) --gnu src/LibCVE/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -352,8 +336,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libRSCCommon.la: $(libRSCCommon_la_OBJECTS) $(libRSCCommon_la_DEPENDENCIES) $(EXTRA_libRSCCommon_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(libRSCCommon_la_LINK) -rpath $(libdir) $(libRSCCommon_la_OBJECTS) $(libRSCCommon_la_LIBADD) $(LIBS)
+libCVE.la: $(libCVE_la_OBJECTS) $(libCVE_la_DEPENDENCIES) $(EXTRA_libCVE_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libCVE_la_OBJECTS) $(libCVE_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -361,9 +345,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTCommon.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTReader.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCCommon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PitchCalc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scheduler.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -385,27 +368,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-libRSCCommon_la-CDTCommon.lo: CDTCommon/CDTCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-CDTCommon.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-CDTCommon.Tpo -c -o libRSCCommon_la-CDTCommon.lo `test -f 'CDTCommon/CDTCommon.cc' || echo '$(srcdir)/'`CDTCommon/CDTCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-CDTCommon.Tpo $(DEPDIR)/libRSCCommon_la-CDTCommon.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CDTCommon/CDTCommon.cc' object='libRSCCommon_la-CDTCommon.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-CDTCommon.lo `test -f 'CDTCommon/CDTCommon.cc' || echo '$(srcdir)/'`CDTCommon/CDTCommon.cc
-
-libRSCCommon_la-RSCCommon.lo: RSCCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-RSCCommon.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-RSCCommon.Tpo -c -o libRSCCommon_la-RSCCommon.lo `test -f 'RSCCommon.cc' || echo '$(srcdir)/'`RSCCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-RSCCommon.Tpo $(DEPDIR)/libRSCCommon_la-RSCCommon.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RSCCommon.cc' object='libRSCCommon_la-RSCCommon.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-RSCCommon.lo `test -f 'RSCCommon.cc' || echo '$(srcdir)/'`RSCCommon.cc
-
-libRSCCommon_la-CDTReader.lo: CDTCommon/CDTReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-CDTReader.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-CDTReader.Tpo -c -o libRSCCommon_la-CDTReader.lo `test -f 'CDTCommon/CDTReader.cc' || echo '$(srcdir)/'`CDTCommon/CDTReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-CDTReader.Tpo $(DEPDIR)/libRSCCommon_la-CDTReader.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CDTCommon/CDTReader.cc' object='libRSCCommon_la-CDTReader.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-CDTReader.lo `test -f 'CDTCommon/CDTReader.cc' || echo '$(srcdir)/'`CDTCommon/CDTReader.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

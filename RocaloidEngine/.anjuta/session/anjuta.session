@@ -1,15 +1,16 @@
 [Anjuta]
 Maximized=1
-Geometry=1024x691+0+24
+Geometry=1280x971+1366+0
 
 [File Loader]
-Files=../../src/main.cc#15%%%../../src/LibCyberBase/Overall.cc#19%%%../../src/LibCyberBase/RDLIO.cc#17%%%../../src/LibCyberBase/SlWave/wave.h#32%%%../../src/LibCyberBase/SlWave/wave.cc#34%%%../../src/LibCyberBase/CVDB/CBVIO.cc#5%%%../../src/LibCyberBase/CVDB/CVDB.cc#1%%%../../src/LibCVSCommon/CVSCommon.cc#22%%%../../src/LibCVSCommon/CVSReader.cc#25%%%../../src/LibCVSCommon/CVSWriter.cc#18%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.cc#24%%%../../src/LibRSCCommon/RSCCommon.cc#29%%%../../src/LibRSCCommon/CDTCommon/CDTReader.cc#29
+Files=../../src/main.cc#31%%%../../src/LibCVE/Scheduler.h#3%%%../../src/LibCVE/PitchCalc.h#3%%%../../src/LibCVE/PitchCalc.cc#1%%%../../src/LibCVE/Scheduler.cc#1%%%../../src/LibCyberBase/WaveBuffer.h#3%%%../../src/LibCyberBase/WaveBuffer.cc#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
-Expand=RocaloidEngine-n%%%RocaloidEngine-n//src%%%RocaloidEngine-n//src//LibCVSCommon%%%RocaloidEngine-n//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine-n//src//LibRSCCommon%%%RocaloidEngine-n//src//rsctool%%%RocaloidEngine-n//rsccommondoc
+Shortcut=RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la
 
 [Execution]
 Program uri=../../Debug/src/rsctool
