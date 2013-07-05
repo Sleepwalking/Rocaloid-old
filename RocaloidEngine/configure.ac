@@ -17,6 +17,14 @@ AC_PROG_CXX
 dnl ***************************************************************************
 dnl Internationalization
 dnl ***************************************************************************
+<<<<<<< HEAD
+=======
+
+GETTEXT_PACKAGE=rocaloidengine
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
+AM_GLIB_GNU_GETTEXT
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 
 
 

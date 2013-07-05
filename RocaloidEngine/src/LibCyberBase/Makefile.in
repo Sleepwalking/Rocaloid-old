@@ -77,12 +77,21 @@ libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = libCyberBase_la-Overall.lo \
 	libCyberBase_la-RDLIO.lo libCyberBase_la-wave.lo \
 	libCyberBase_la-CBVIO.lo libCyberBase_la-CVDB.lo \
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
 	libCyberBase_la-FrameBuffer.lo \
 	libCyberBase_la-MultiFrameBuffer.lo \
 	libCyberBase_la-fileStream.lo libCyberBase_la-memoryStream.lo \
 	libCyberBase_la-stringStream.lo libCyberBase_la-terminal.lo \
 	libCyberBase_la-converter.lo libCyberBase_la-array.lo \
 	libCyberBase_la-string.lo
+=======
+	libCyberBase_la-fileStream.lo libCyberBase_la-memoryStream.lo \
+	libCyberBase_la-stringStream.lo libCyberBase_la-terminal.lo \
+	libCyberBase_la-converter.lo libCyberBase_la-array.lo \
+	libCyberBase_la-string.lo libCyberBase_la-FrameBuffer.lo \
+	libCyberBase_la-MultiFrameBuffer.lo \
+	libCyberBase_la-WaveBuffer.lo
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -173,6 +182,11 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
+=======
+INSTOBJEXT = @INSTOBJEXT@
+INTLLIBS = @INTLLIBS@
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -184,6 +198,12 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
+=======
+MKINSTALLDIRS = @MKINSTALLDIRS@
+MSGFMT = @MSGFMT@
+MSGFMT_OPTS = @MSGFMT_OPTS@
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -275,10 +295,13 @@ libCyberBase_la_SOURCES = \
 	CVDB/CBVIO.h \
 	CVDB/CVDB.cc \
 	CVDB/CVDB.h \
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
 	CVDB/FrameBuffer.cc \
 	CVDB/FrameBuffer.h \
 	CVDB/MultiFrameBuffer.cc \
 	CVDB/MultiFrameBuffer.h \
+=======
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 	SPKit/defs.h \
 	SPKit/io/fileStream.cc \
 	SPKit/io/fileStream.h \
@@ -295,7 +318,17 @@ libCyberBase_la_SOURCES = \
 	SPKit/structure/array.cc \
 	SPKit/structure/array.h \
 	SPKit/structure/string.cc \
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
 	SPKit/structure/string.h
+=======
+	SPKit/structure/string.h \
+	FrameBuffer.cc \
+	FrameBuffer.h \
+	MultiFrameBuffer.cc \
+	MultiFrameBuffer.h \
+	WaveBuffer.cc \
+	WaveBuffer.h
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 
 all: all-am
 
@@ -377,6 +410,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-Overall.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-RDLIO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-WaveBuffer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-converter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-fileStream.Plo@am__quote@
@@ -442,6 +476,7 @@ libCyberBase_la-CVDB.lo: CVDB/CVDB.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-CVDB.lo `test -f 'CVDB/CVDB.cc' || echo '$(srcdir)/'`CVDB/CVDB.cc
 
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
 libCyberBase_la-FrameBuffer.lo: CVDB/FrameBuffer.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-FrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo -c -o libCyberBase_la-FrameBuffer.lo `test -f 'CVDB/FrameBuffer.cc' || echo '$(srcdir)/'`CVDB/FrameBuffer.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-FrameBuffer.Plo
@@ -456,6 +491,8 @@ libCyberBase_la-MultiFrameBuffer.lo: CVDB/MultiFrameBuffer.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'CVDB/MultiFrameBuffer.cc' || echo '$(srcdir)/'`CVDB/MultiFrameBuffer.cc
 
+=======
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 libCyberBase_la-fileStream.lo: SPKit/io/fileStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-fileStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-fileStream.Tpo -c -o libCyberBase_la-fileStream.lo `test -f 'SPKit/io/fileStream.cc' || echo '$(srcdir)/'`SPKit/io/fileStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-fileStream.Tpo $(DEPDIR)/libCyberBase_la-fileStream.Plo
@@ -504,6 +541,30 @@ libCyberBase_la-string.lo: SPKit/structure/string.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SPKit/structure/string.cc' object='libCyberBase_la-string.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-string.lo `test -f 'SPKit/structure/string.cc' || echo '$(srcdir)/'`SPKit/structure/string.cc
+<<<<<<< HEAD:RocaloidEngine/src/LibCyberBase/Makefile.in
+=======
+
+libCyberBase_la-FrameBuffer.lo: FrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-FrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo -c -o libCyberBase_la-FrameBuffer.lo `test -f 'FrameBuffer.cc' || echo '$(srcdir)/'`FrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-FrameBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FrameBuffer.cc' object='libCyberBase_la-FrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-FrameBuffer.lo `test -f 'FrameBuffer.cc' || echo '$(srcdir)/'`FrameBuffer.cc
+
+libCyberBase_la-MultiFrameBuffer.lo: MultiFrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-MultiFrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'MultiFrameBuffer.cc' || echo '$(srcdir)/'`MultiFrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MultiFrameBuffer.cc' object='libCyberBase_la-MultiFrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'MultiFrameBuffer.cc' || echo '$(srcdir)/'`MultiFrameBuffer.cc
+
+libCyberBase_la-WaveBuffer.lo: WaveBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-WaveBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-WaveBuffer.Tpo -c -o libCyberBase_la-WaveBuffer.lo `test -f 'WaveBuffer.cc' || echo '$(srcdir)/'`WaveBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-WaveBuffer.Tpo $(DEPDIR)/libCyberBase_la-WaveBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WaveBuffer.cc' object='libCyberBase_la-WaveBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-WaveBuffer.lo `test -f 'WaveBuffer.cc' || echo '$(srcdir)/'`WaveBuffer.cc
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e:RocaloidEngine/src/LibCyberBase/Makefile.in
 
 mostlyclean-libtool:
 	-rm -f *.lo

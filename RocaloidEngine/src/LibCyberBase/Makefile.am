@@ -19,10 +19,13 @@ libCyberBase_la_SOURCES =  \
 	CVDB/CBVIO.h \
 	CVDB/CVDB.cc \
 	CVDB/CVDB.h \
+<<<<<<< HEAD
 	CVDB/FrameBuffer.cc \
 	CVDB/FrameBuffer.h \
 	CVDB/MultiFrameBuffer.cc \
 	CVDB/MultiFrameBuffer.h \
+=======
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 	SPKit/defs.h \
 	SPKit/io/fileStream.cc \
 	SPKit/io/fileStream.h \
@@ -39,4 +42,14 @@ libCyberBase_la_SOURCES =  \
 	SPKit/structure/array.cc \
 	SPKit/structure/array.h \
 	SPKit/structure/string.cc \
+<<<<<<< HEAD
 	SPKit/structure/string.h
+=======
+	SPKit/structure/string.h \
+	FrameBuffer.cc \
+	FrameBuffer.h \
+	MultiFrameBuffer.cc \
+	MultiFrameBuffer.h \
+	WaveBuffer.cc \
+	WaveBuffer.h
+>>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
