@@ -5,15 +5,8 @@ rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
 	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \
 	 -O2 \
 	-Wall \
-<<<<<<< HEAD
 	-g
-=======
-	-g  \
-	-I@top_srcdir@/src/LibCVSCommon/ \
-	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/src/LibRSCCommon/ \
-	 -I@top_srcdir@/SPKit/
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
+
 ## Process this file with automake to produce Makefile.in
 
 .AM_CPPFLAGS = \

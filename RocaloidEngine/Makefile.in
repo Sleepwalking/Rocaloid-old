@@ -177,11 +177,6 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-<<<<<<< HEAD
-=======
-INSTOBJEXT = @INSTOBJEXT@
-INTLLIBS = @INTLLIBS@
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -193,12 +188,6 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
-<<<<<<< HEAD
-=======
-MKINSTALLDIRS = @MKINSTALLDIRS@
-MSGFMT = @MSGFMT@
-MSGFMT_OPTS = @MSGFMT_OPTS@
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -273,13 +262,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = src
-<<<<<<< HEAD
 rocaloidenginedocdir = ${prefix}/doc/rocaloidengine
 rocaloidenginedoc_DATA = \
-=======
-rsccommondocdir = ${prefix}/doc/rsccommon
-rsccommondoc_DATA = \
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 	README\
 	COPYING\
 	AUTHORS\
@@ -287,10 +271,7 @@ rsccommondoc_DATA = \
 	INSTALL\
 	NEWS
 
-<<<<<<< HEAD
 EXTRA_DIST = $(rocaloidenginedoc_DATA) 
-=======
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -825,7 +806,6 @@ uninstall-am: uninstall-local uninstall-rocaloidenginedocDATA
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-recursive \
 	uninstall uninstall-am uninstall-local \
 	uninstall-rocaloidenginedocDATA
-
 
 #INTLTOOL_FILES = intltool-extract.in \
 #	intltool-merge.in \

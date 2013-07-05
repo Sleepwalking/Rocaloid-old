@@ -1,31 +1,18 @@
 [Anjuta]
 Maximized=1
-<<<<<<< HEAD
 Geometry=1024x691+0+24
 
 [File Loader]
-Files=../../src/main.cc#88
-=======
-Geometry=1280x971+1366+0
-
-[File Loader]
-Files=../../src/main.cc#31%%%../../src/LibCVE/Scheduler.h#3%%%../../src/LibCVE/PitchCalc.h#3%%%../../src/LibCVE/PitchCalc.cc#1%%%../../src/LibCVE/Scheduler.cc#1%%%../../src/LibCyberBase/WaveBuffer.h#3%%%../../src/LibCyberBase/WaveBuffer.cc#1
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
+Files=../../src/LibRSCCommon/RSCReader.cc#32%%%../../src/LibCyberBase/CVDB/CBVIO.h#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
-<<<<<<< HEAD
-Shortcut=RocaloidEngine//src%%%src//LibCVE//libCVE.la
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//rsctool
-=======
-Shortcut=RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
+Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE
 
 [Execution]
-Program uri=../../Debug/src/rsctool
 Run in terminal=2
 Working directories=../../../RocaloidEngine
 

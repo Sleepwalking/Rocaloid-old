@@ -38,7 +38,6 @@ using namespace Overall;
 using namespace converter;
 int main()
 {
-<<<<<<< HEAD
 
 	int i,j;
 	CDTCommon::CDTReader cdtr;
@@ -83,9 +82,6 @@ int main()
 		wLine ( CStr("			PSnk:") + CStr(cdt.DB.DBList[i].PreShrink));
 	}
 	wLine("completed");
-=======
-	int i,j;
->>>>>>> 3480c544d2030e3528e5b80dd3777bbc9e7fc38e
 	return 0; 
 }
 
