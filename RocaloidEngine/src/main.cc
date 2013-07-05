@@ -32,15 +32,17 @@
 #include "LibCVSCommon/CVSWriter.h"
 
 #include "LibRSCCommon/RSCCommon.h"
-#include "LibRSCCommon/CDTCommon/CDTCommon.h"
-#include "LibRSCCommon/CDTCommon/CDTReader.h"
+//#include "LibRSCCommon/CDTCommon/CDTCommon.h"
+//#include "LibRSCCommon/CDTCommon/CDTReader.h"
+#include "LibRSCCommon/RSCReader.h"
+#include "LibRSCCommon/RSCWriter.h"
 using namespace Overall;
 using namespace converter;
 int main()
 {
 
 	int i,j;
-	CDTCommon::CDTReader cdtr;
+	/*CDTCommon::CDTReader cdtr;
 	CDTCommon::CDT cdt;
 	cdtr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
 	cdtr.Read(cdt);
@@ -80,7 +82,26 @@ int main()
 		wLine ( CStr("			Pitch : ") + CStr(cdt.DB.DBList[i].Pitch) );
 		wLine ( CStr("			Attack:") + CStr(cdt.DB.DBList[i].VOT));
 		wLine ( CStr("			PSnk:") + CStr(cdt.DB.DBList[i].PreShrink));
+	}*/
+	RSCCommon::RSC rsc;
+	RSCCommon::RSCReader r;
+	RSCCommon::RSCWriter w;
+	r.Open ("/home/rgwan/ramdisk/test.rsc");
+	r.Read (rsc);
+	r.Close();
+	wLine ( rsc.Author);
+	wLine ( rsc.Information);
+	wLine ( CStr ("Beat Listes :") + CStr(rsc.BeatListQ + 1));
+	wLine ( CStr ("TempoListes:") + CStr(rsc.TempoListQ + 1));
+	wLine ( CStr ("SegmentListes:") + CStr(rsc.SegmentListQ + 1));
+	for ( i=0 ; i<= rsc.SegmentListQ ; i++)
+	{
+		wLine ( CStr( "Position : " ) + CStr(rsc.SegmentList[i].Position));
+		wLine ( CStr( "Lyric : " ) + CStr(rsc.SegmentList[i].Lyric));
 	}
+	w.Save("/home/rgwan/ramdisk/tw.rsc");
+	w.Write (rsc);
+	w.Close();
 	wLine("completed");
 	return 0; 
 }

@@ -1,16 +1,15 @@
 [Anjuta]
-Maximized=1
-Geometry=1024x691+0+24
+Geometry=1014x681+0+26
 
 [File Loader]
-Files=../../src/LibRSCCommon/RSCReader.cc#32%%%../../src/LibCyberBase/CVDB/CBVIO.h#1
+Files=../../src/LibRSCCommon/RSCReader.cc#62%%%../../src/LibCyberBase/CVDB/CBVIO.h#1%%%../../src/main.cc#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
 Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//rsctool
 
 [Execution]
 Run in terminal=2

@@ -106,7 +106,7 @@ namespace CDTCommon
 		{
 			string StrBuff;
 			_CDT.CDTVersion=CDTVersion;//版本
-			do
+			while(StrBuff != "End")
 			{
 				StrBuff = Reader.Read();
 				if (StrBuff == "Version")
@@ -144,7 +144,7 @@ namespace CDTCommon
 				{
 					Exception( CStr("Invalid identifier as ") + StrBuff + ".");
 				}
-			}while(StrBuff != "End");
+			}
 		}
 
 		
@@ -354,6 +354,7 @@ namespace CDTCommon
 		void CDTReader::DBSet_Read(DBSet& _DBSet)
 		{
 			string StrBuff;
+			_DBSet.PreShrink = 0;
 			while ( StrBuff !="End")
 			{
 				StrBuff = Reader.Read();

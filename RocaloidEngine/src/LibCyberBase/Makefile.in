@@ -258,8 +258,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 libCyberBase_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
-	-O2 \
-	-Wall 
+	-O2 
 
 lib_LTLIBRARIES = \
 	libCyberBase.la

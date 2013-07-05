@@ -138,5 +138,6 @@ namespace RSCCommon
 				bool NextChunk_Coincidence;
 				PositionChunk NextChunk_Chunk;
 	};
+	extern ViewTypes TestIfIsViewType(string String);
 #define RSC_VERSION "2.0"
 };

@@ -10,6 +10,8 @@ libRSCCommon_la_SOURCES =  \
 	RSCCommon.h \
 	CDTCommon/CDTReader.h \
 	CDTCommon/CDTReader.cc \
+	RSCWriter.cc \
+	RSCWriter.h \
 	RSCReader.cc \
 	RSCReader.h
 

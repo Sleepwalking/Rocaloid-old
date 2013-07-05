@@ -1,7 +1,6 @@
 
 libCyberBase_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
-	-O2 \
-	-Wall 
+	-O2 
 ## Process this file with automake to produce Makefile.in
 
 

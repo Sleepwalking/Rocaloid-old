@@ -1,9 +1,9 @@
  /*
-  * RSCReader.h
+  * RSCWriter.h
   *
-  * Copyright (C) 2013 - Rocaloid Development Group(RDG)
+  * Copyright (C) 2013 - Rocaloid Development Group (RDG)
   *
-  * Created by rgwan
+  * Created by rgwan 
   * This program is free software; you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
   * the Free Software Foundation; either version 2 of the License, or
@@ -17,34 +17,35 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
- #ifndef RSCREADER_H
- #define RSCREADER_H
+ #ifndef RSCWRITER_H
+ #define RSCWRITER_H
  
 namespace RSCCommon
 {
 	using namespace RDLIO;
 	using namespace Overall;
-	class RSCReader
+	class RSCWriter
 	{
 		public:
-			void Open(string FileName);
+			void Save(string FileName);
 			void Close();
-			void Read(RSC& _RSC);
-			void Information_Read(string& _Info);
-			void Segment_Read(Segment& _Segment);
-			void FreqSet_Read(FreqSet& _FreqSet);
-			void Effects_Read(EffectsStruct& _Effects);
-			void TempoSet_Read(TempoSet& _TempoSet);
-			void BeatSet_Read(BeatSet& _BeatSet);
-			void Interaction_Read(UserInteraction& _Interaction);
-			void SegmentEffects_Read(SegmentEffects& _SEffects);
-			void ADSR_Read(CVSCommon::ADSREnvelope& _ADSREnvelope);
-			void EnvelopeSet_Read(EnvelopeSet& _EnvelopeSet);
+			
+			void Write(RSC& _RSC);
+			
+			void Segment_Write(Segment& _Segment);
+			void FreqSet_Write(FreqSet& _FreqSet);
+			void Effects_Write(EffectsStruct& _Effects);
+			void TempoSet_Write(TempoSet& _TempoSet);
+			void BeatSet_Write(BeatSet& _BeatSet);
+			void Interaction_Write(UserInteraction& _Interaction);
+			void SegmentEffects_Write(SegmentEffects& _SEffects);
+			void ADSR_Write(CVSCommon::ADSREnvelope& _ADSR);
+			void EnvelopeSet_Write(EnvelopeSet& _ESet);
+			void WriteViewType(int _View);
 		private:
-			RDLReader Reader;
-			inline void Detect_WrongEnd();
+			RDLWriter Writer;
 	};
 };
  
- #endif /*REDAERTDC _H */
+ #endif /*RETIRWCSR _H */
  
