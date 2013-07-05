@@ -3,13 +3,13 @@ Maximized=1
 Geometry=1024x691+0+24
 
 [File Loader]
-Files=../../src/main.cc#91
+Files=../../src/main.cc#88
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
-Shortcut=RocaloidEngine//src
+Shortcut=RocaloidEngine//src%%%src//LibCVE//libCVE.la
 Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//rsctool
 
 [Execution]

@@ -1,5 +1,5 @@
 
-SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon
+SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon LibCVE
 
 rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
 	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \

@@ -27,7 +27,7 @@
 #include "LibCyberBase/Overall.h"
 #include "LibCVSCommon/CVSCommon.h"
 #include "RSCCommon.h"
-namespace RSC
+namespace RSCCommon
 {
 	using namespace Overall;
 	void Segment::CopyTo( Segment Target )
@@ -67,186 +67,188 @@ namespace RSC
 		return Other;
 	}
 	//class RSC
-/*		Public Sub CopyTo(ByVal Target As RSC)
-		Dim i As Integer
-		With Target
-			.Version = Version
-			.Author = Author
-			.Information = Information
-			.SegmentListQ = SegmentListQ
-			ReDim .SegmentList(SegmentListQ + 1)
-			.InitSegmentList(0, SegmentListQ)
-			.FreqListQ = FreqListQ
-			ReDim .FreqList(FreqListQ + 1)
-			.Effects = Effects
-			.TempoListQ = TempoListQ
-			ReDim .TempoList(TempoListQ)
-			.BeatListQ = BeatListQ
-			ReDim .BeatList(BeatListQ)
-			.InteractionSave = InteractionSave
-		End With
-		For i = 0 To Target.SegmentListQ
-			SegmentList(i).CopyTo(Target.SegmentList(i))
-		Next
-		For i = 0 To Target.FreqListQ
-			Target.FreqList(i) = FreqList(i)
-		Next
-		For i = 0 To Target.TempoListQ
-			Target.TempoList(i) = TempoList(i)
-		Next
-		For i = 0 To BeatListQ
-			Target.BeatList(i) = BeatList(i)
-		Next
-	End Sub
+	void RSC::CopyTo(RSC& Target)
+	{
+		int i;
+			Target.Version = Version;
+			Target.Author = Author;
+			Target.Information = Information;
+			Target.SegmentListQ = SegmentListQ;
+			Target.SegmentList.setUbound (SegmentListQ );
+			//Target.InitSegmentList(0, SegmentListQ);
+			Target.FreqListQ = FreqListQ;
+			Target.FreqList.setUbound (FreqListQ);
+			Target.Effects = Effects;
+			Target.TempoListQ = TempoListQ;
+			Target.TempoList.setUbound (TempoListQ);
+			Target.BeatListQ = BeatListQ;
+			Target.BeatList.setUbound (BeatListQ);
+			Target.InteractionSave = InteractionSave;
+		for (i = 0 ; i<=Target.SegmentListQ ; i++)
+			SegmentList[i].CopyTo(Target.SegmentList[i]);
+		for (i = 0 ; i<=Target.FreqListQ ; i++)
+			Target.FreqList[i] = FreqList[i];
+		for (i = 0 ; i<=Target.TempoListQ ; i++)
+			Target.TempoList[i] = TempoList[i];
+		for (i = 0 ; i<=Target.BeatListQ ; i++)
+			Target.BeatList[i] = BeatList[i];
+	}
 	
-	Public Sub InitSegmentList(ByVal LIndex As Integer, ByVal HIndex As Integer)
-		Dim i As Integer
-		For i = LIndex To HIndex
-			SegmentList(i) = New Segment()
-		Next
-	End Sub
+	void RSC::TimeBake()
+	{
+		double i = -1;
+		PositionChunk NextChunk;
+		PositionChunk LastChunk;
+		double LastTempo_Time = 0;
+		TempoSet LastTempo;
+		int LastSegmentIndex = 0;
+		double EndTime = 0;
+		LastTempo.Position = 0;
+		LastTempo.Tempo = 120;
+		while ( i < (SegmentList[SegmentListQ].Position + SegmentList[SegmentListQ].Duration))
+		{
+			if (LastChunk.Type == SegmentEnd) 
+				NextChunk = GetNextPositionChunk(i - 0.0001, LastChunk.Index + 1);
+			else
+				NextChunk = GetNextPositionChunk(i + 0.0001, 0);
+			i = NextChunk.Position;
+			switch (NextChunk.Type)
+			{
+				case SegmentStart:
+					LastSegmentIndex = NextChunk.Index;
+					SegmentList[LastSegmentIndex].StartTime = PositionToTime(NextChunk.Position - 
+					                                                         LastTempo.Position , LastTempo.Tempo) + LastTempo_Time;
+					break;
+				case SegmentEnd:
+					EndTime = PositionToTime(NextChunk.Position - LastTempo.Position, LastTempo.Tempo) 
+						+ LastTempo_Time;
+					SegmentList[LastSegmentIndex].DurTime = EndTime - SegmentList[LastSegmentIndex].StartTime;
+					break;
+				case TempoStart:
+					LastTempo_Time += PositionToTime(NextChunk.Position - LastTempo.Position, LastTempo.Tempo);
+					LastTempo = TempoList[NextChunk.Index];
+			}
+			if (NextChunk.Type == SegmentEnd && NextChunk.Index == SegmentListQ)
+				break;
+			LastChunk = NextChunk;
+		}
+	}
 	
-	Public Sub TimeBake()
-		Dim i As Double = -1
-		Dim NextChunk As PositionChunk
-		Dim LastChunk As PositionChunk
-		Dim LastTempo_Time As Double = 0
-		Dim LastTempo As TempoSet
-		Dim LastSegmentIndex As Integer = 0
-		Dim EndTime As Double = 0
-		LastTempo.Position = 0
-		LastTempo.Tempo = 120
-		
-		While i < SegmentList(SegmentListQ).Position _
-				+ SegmentList(SegmentListQ).Duration
-			If LastChunk.Type = PositionChunkType.SegmentEnd Then
-				NextChunk = GetNextPositionChunk(i - 0.0001, LastChunk.Index + 1)
-			Else
-				NextChunk = GetNextPositionChunk(i + 0.0001, 0)
-			End If
-			i = NextChunk.Position
-			Select Case NextChunk.Type
-				Case PositionChunkType.SegmentStart
-					LastSegmentIndex = NextChunk.Index
-					SegmentList(LastSegmentIndex).StartTime = PositionToTime(NextChunk.Position _
-															- LastTempo.Position, LastTempo.Tempo) _
-															+ LastTempo_Time
-				Case PositionChunkType.SegmentEnd
-					EndTime = PositionToTime(NextChunk.Position _
-							- LastTempo.Position, LastTempo.Tempo) _
-							+ LastTempo_Time
-					SegmentList(LastSegmentIndex).DurTime = EndTime _
-														  - SegmentList(LastSegmentIndex).StartTime
-				Case PositionChunkType.TempoStart
-					LastTempo_Time += PositionToTime(NextChunk.Position - LastTempo.Position, _
-													 LastTempo.Tempo)
-					LastTempo = TempoList(NextChunk.Index)
-			End Select
-			If NextChunk.Type = PositionChunkType.SegmentEnd _
-				AndAlso NextChunk.Index = SegmentListQ Then
-				Exit While
-			End If
-			LastChunk = NextChunk
-		End While
-	End Sub
+	void RSC::PositionBake()
+	{
+		int i = 0;
+		BeatSet LastBeat;
+		LastBeat.BarPosition = 0;
+		LastBeat.Beat_Denominator = 4;
+		LastBeat.Beat_Factor = 4;
+		LastBeat.Position = 0;
+		for ( i = 0 ; i<= BeatListQ ; i++)
+		{
+			BeatList[i].Position = (BeatList[i].BarPosition 
+									- LastBeat.BarPosition) 
+									* GetBarLength(LastBeat) + LastBeat.Position;
+			LastBeat = BeatList[i];
+		}
+	}
 	
-	Public Sub PositionBake()
-		Dim i As Integer = 0
-		Dim LastBeat As BeatSet
-		LastBeat.BarPosition = 0
-		LastBeat.Beat_Denominator = 4
-		LastBeat.Beat_Factor = 4
-		LastBeat.Position = 0
-		For i = 0 To BeatListQ
-			BeatList(i).Position = (BeatList(i).BarPosition _
-									- LastBeat.BarPosition) _
-									* GetBarLength(LastBeat) + LastBeat.Position
-			LastBeat = BeatList(i)
-		Next
-	End Sub
+	void RSC::VolumeBake()
+	{
+		for ( int i=0 ; i <=SegmentListQ ; i++)
+		{
+			SegmentList[i].StartAmplitude = GetVolumeAt(SegmentList[i].Position );
+			SegmentList[i].EndAmplitude = GetVolumeAt(SegmentList[i].Position + SegmentList[i].Duration);
+		}
+	}
 	
-	Public Sub VolumeBake()
-		Dim i As Integer = 0
-		For i = 0 To SegmentListQ
-			With SegmentList(i)
-				.StartAmplitude = GetVolumeAt(.Position )
-				.EndAmplitude = GetVolumeAt(.Position + .Duration)
-			End With
-		Next
-	End Sub
+	double RSC::GetVolumeAt(double Position)
+	{
+		int i;
+		double pos1,pos2,ratio;
+		bool found = false;
+		double res = 1;
+		for ( i = 0 ; i<= Effects.EnvelopeListQ ; i++)
+		{
+			if (Effects.EnvelopeList[i].Position >= Position)
+			{
+				found = true;
+				if (i == 0)
+				{
+					res = Effects.EnvelopeList[0].Amplitude;
+					break;
+				}
+				pos1 = Effects.EnvelopeList[i - 1].Position;
+				pos2 = Effects.EnvelopeList[i].Position;
+				ratio = (Position - pos1) / (pos2 - pos1);
+				res = Effects.EnvelopeList[i - 1].Amplitude * (1 - ratio) +
+							  Effects.EnvelopeList[i].Amplitude * ratio;
+				break;			
+			}
+		}
+		if (not found)
+			res = Effects.EnvelopeList[Effects.EnvelopeListQ].Amplitude;
+		return res;
+	}
 	
-	Private Function GetVolumeAt(ByVal Position As Double) As Double
-		Dim i As Integer
-		Dim pos1 As Double, pos2 As Double, ratio As Double
-		Dim found As Boolean = False
-		GetVolumeAt = 1
-		For i = 0 To Effects.EnvelopeListQ
-			If Effects.EnvelopeList(i).Position >= Position Then
-				found = True
-				If i = 0 Then
-					GetVolumeAt = Effects.EnvelopeList(0).Amplitude
-					Exit For
-				End If
-				pos1 = Effects.EnvelopeList(i - 1).Position
-				pos2 = Effects.EnvelopeList(i).Position
-				ratio = (Position - pos1) / (pos2 - pos1)
-				GetVolumeAt = Effects.EnvelopeList(i - 1).Amplitude * (1 - ratio) + _
-							  Effects.EnvelopeList(i).Amplitude * ratio
-				Exit For				
-			End If
-		Next
-		If Not found Then
-			GetVolumeAt = Effects.EnvelopeList(Effects.EnvelopeListQ).Amplitude
-		End If
-		return GetVolumeAt
-	End Function
+	double RSC::GetBarLength(BeatSet& _BeatSet)
+	{
+		return _BeatSet.Beat_Factor / _BeatSet.Beat_Denominator * 2;
+	}
 	
-	Private Function GetBarLength(ByRef _BeatSet As BeatSet) As Double
-		return _BeatSet.Beat_Factor / _BeatSet.Beat_Denominator * 2
-	End Function
+	double RSC::PositionToTime(double Position ,double Tempo)
+	{
+		return Position * 2 * 60 / Tempo;
+	}
 	
-	Private Function PositionToTime(ByVal Position As Double, ByVal Tempo As Double) As Double
-		return Position * 2 * 60 / Tempo
-	End Function
-	
-	Private Function GetNextPositionChunk(ByVal Position As Double, ByVal Optional SegmentNum As Integer = 0) As PositionChunk
-		Dim PChunk As PositionChunk, PChunk2 As PositionChunk
-		Dim i As Integer
-		i = 0
-		If NextChunk_Coincidence Then
-			NextChunk_Coincidence = False
-			return NextChunk_Chunk
-		End If
-		For i = SegmentNum To SegmentListQ
-			If SegmentList(i).Position > Position Then
-				PChunk.Type = PositionChunkType.SegmentStart
-				PChunk.Position = SegmentList(i).Position
-				PChunk.Index = i
-				Exit For
-			End If
-			If SegmentList(i).Position + SegmentList(i).Duration > Position Then
-				PChunk.Type = PositionChunkType.SegmentEnd
-				PChunk.Position = SegmentList(i).Position + SegmentList(i).Duration
-				PChunk.Index = i				
-				Exit For
-			End If
-		Next
-		For i = 0 To TempoListQ
-			If TempoList(i).Position > Position Then
-				PChunk2.Type = PositionChunkType.TempoStart
-				PChunk2.Position = TempoList(i).Position
-				PChunk2.Index = i
-				Exit For
-			End If
-		Next
-		If PChunk.Position < PChunk2.Position Then
-			return PChunk
-		Else
-			If PChunk.Position = PChunk2.Position Then
-				NextChunk_Coincidence = True
-				NextChunk_Chunk = PChunk
-			End If
-			return PChunk2
-		End If
-	End Function*/
+	PositionChunk RSC::GetNextPositionChunk(double Position , int SegmentNum)
+	{
+		PositionChunk PChunk, PChunk2;
+		int i =0;
+		if (NextChunk_Coincidence) 
+		{
+			NextChunk_Coincidence = false;
+			return NextChunk_Chunk;
+		}
+		for ( i = SegmentNum ; i<= SegmentListQ ; i++)
+		{
+			if (SegmentList[i].Position > Position )
+			{
+				PChunk.Type = SegmentStart;
+				PChunk.Position = SegmentList[i].Position;
+				PChunk.Index = i;
+				break;
+			}
+			if (SegmentList[i].Position + SegmentList[i].Duration > Position)
+			{
+				PChunk.Type = SegmentEnd;
+				PChunk.Position = SegmentList[i].Position + SegmentList[i].Duration;
+				PChunk.Index = i;
+				break;
+			}
+		}
+		for (i = 0 ; i<= TempoListQ ; i++)
+		{
+			if ( TempoList[i].Position > Position )
+			{
+				PChunk2.Type = TempoStart;
+				PChunk2.Position = TempoList[i].Position;
+				PChunk2.Index = i;
+				break;
+			}
+		}
+		if (PChunk.Position <= PChunk2.Position) 
+			return PChunk;
+		else
+		{
+			if (PChunk.Position == PChunk2.Position)
+			{
+				NextChunk_Coincidence = true;
+				NextChunk_Chunk = PChunk;
+			}
+			return PChunk2;
+		}
+	}
+	PositionChunk RSC::GetNextPositionChunk(double Position)
+	{
+		GetNextPositionChunk(Position , 0);
+	}
 };

@@ -34,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = src/LibCVSCommon
+subdir = src/LibCVE
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -73,17 +73,12 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libCVSCommon_la_LIBADD =
-am_libCVSCommon_la_OBJECTS = libCVSCommon_la-CVSCommon.lo \
-	libCVSCommon_la-CVSReader.lo libCVSCommon_la-CVSWriter.lo
-libCVSCommon_la_OBJECTS = $(am_libCVSCommon_la_OBJECTS)
+libCVE_la_LIBADD =
+am_libCVE_la_OBJECTS = PitchCalc.lo Scheduler.lo
+libCVE_la_OBJECTS = $(am_libCVE_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-libCVSCommon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) \
-	$(libCVSCommon_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -126,8 +121,8 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libCVSCommon_la_SOURCES)
-DIST_SOURCES = $(libCVSCommon_la_SOURCES)
+SOURCES = $(libCVE_la_SOURCES)
+DIST_SOURCES = $(libCVE_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -251,23 +246,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = \
-	libCVSCommon.la
+	libCVE.la
 
-libCVSCommon_la_SOURCES = CVSCommon.cc \
-	CVSCommon.h \
-	CVSReader.cc \
-	CVSReader.h \
-	CVSWriter.cc \
-	CVSWriter.h
-
-libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
-	-I@top_srcdir@/src/LibCyberBase/ \
-	-O2 \
-	-Wall \
-	-g 
-
-libCVSCommon_la_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ 
+libCVE_la_SOURCES = \
+	PitchCalc.cc \
+	PitchCalc.h \
+	Scheduler.cc \
+	Scheduler.h
 
 all: all-am
 
@@ -282,9 +267,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/LibCVSCommon/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/LibCVE/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/LibCVSCommon/Makefile
+	  $(AUTOMAKE) --gnu src/LibCVE/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -334,8 +319,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libCVSCommon.la: $(libCVSCommon_la_OBJECTS) $(libCVSCommon_la_DEPENDENCIES) $(EXTRA_libCVSCommon_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(libCVSCommon_la_LINK) -rpath $(libdir) $(libCVSCommon_la_OBJECTS) $(libCVSCommon_la_LIBADD) $(LIBS)
+libCVE.la: $(libCVE_la_OBJECTS) $(libCVE_la_DEPENDENCIES) $(EXTRA_libCVE_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libCVE_la_OBJECTS) $(libCVE_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -343,9 +328,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVSCommon_la-CVSCommon.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVSCommon_la-CVSReader.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVSCommon_la-CVSWriter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PitchCalc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scheduler.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -367,27 +351,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-libCVSCommon_la-CVSCommon.lo: CVSCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libCVSCommon_la-CVSCommon.lo -MD -MP -MF $(DEPDIR)/libCVSCommon_la-CVSCommon.Tpo -c -o libCVSCommon_la-CVSCommon.lo `test -f 'CVSCommon.cc' || echo '$(srcdir)/'`CVSCommon.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVSCommon_la-CVSCommon.Tpo $(DEPDIR)/libCVSCommon_la-CVSCommon.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSCommon.cc' object='libCVSCommon_la-CVSCommon.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVSCommon_la-CVSCommon.lo `test -f 'CVSCommon.cc' || echo '$(srcdir)/'`CVSCommon.cc
-
-libCVSCommon_la-CVSReader.lo: CVSReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libCVSCommon_la-CVSReader.lo -MD -MP -MF $(DEPDIR)/libCVSCommon_la-CVSReader.Tpo -c -o libCVSCommon_la-CVSReader.lo `test -f 'CVSReader.cc' || echo '$(srcdir)/'`CVSReader.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVSCommon_la-CVSReader.Tpo $(DEPDIR)/libCVSCommon_la-CVSReader.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSReader.cc' object='libCVSCommon_la-CVSReader.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVSCommon_la-CVSReader.lo `test -f 'CVSReader.cc' || echo '$(srcdir)/'`CVSReader.cc
-
-libCVSCommon_la-CVSWriter.lo: CVSWriter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libCVSCommon_la-CVSWriter.lo -MD -MP -MF $(DEPDIR)/libCVSCommon_la-CVSWriter.Tpo -c -o libCVSCommon_la-CVSWriter.lo `test -f 'CVSWriter.cc' || echo '$(srcdir)/'`CVSWriter.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVSCommon_la-CVSWriter.Tpo $(DEPDIR)/libCVSCommon_la-CVSWriter.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSWriter.cc' object='libCVSCommon_la-CVSWriter.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVSCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVSCommon_la-CVSWriter.lo `test -f 'CVSWriter.cc' || echo '$(srcdir)/'`CVSWriter.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

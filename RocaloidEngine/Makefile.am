@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 ## Created by Anjuta
 
-SUBDIRS =  src po
+SUBDIRS =  src
 
-rsccommondocdir = ${prefix}/doc/rsccommon
-rsccommondoc_DATA = \
+rocaloidenginedocdir = ${prefix}/doc/rocaloidengine
+rocaloidenginedoc_DATA = \
 	README\
 	COPYING\
 	AUTHORS\
@@ -13,19 +13,9 @@ rsccommondoc_DATA = \
 	NEWS
 
 
-INTLTOOL_FILES = intltool-extract.in \
-	intltool-merge.in \
-	intltool-update.in
-
-EXTRA_DIST = $(rsccommondoc_DATA) \
-	$(INTLTOOL_FILES)
-
-DISTCLEANFILES = intltool-extract \
-	intltool-merge \
-	intltool-update \
-	po/.intltool-merge-cache
+EXTRA_DIST = $(rocaloidenginedoc_DATA) 
 
 
 # Remove doc directory on uninstall
 uninstall-local:
-	-rm -r $(rsccommondocdir)
+	-rm -r $(rocaloidenginedocdir)

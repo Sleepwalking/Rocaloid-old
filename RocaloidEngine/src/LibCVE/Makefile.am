@@ -2,5 +2,10 @@
 
 
 lib_LTLIBRARIES =  \
-	libCVE.la \
 	libCVE.la
+
+libCVE_la_SOURCES =  \
+	PitchCalc.cc \
+	PitchCalc.h \
+	Scheduler.cc \
+	Scheduler.h

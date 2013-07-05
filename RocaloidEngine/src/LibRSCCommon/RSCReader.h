@@ -20,8 +20,10 @@
  #ifndef CDTREADER_H
  #define CDTREADER_H
  
-namespace RSC
+namespace RSCCommon
 {
+	using namespace RDLIO;
+	using namespace Overall;
 	class RSCReader
 	{
 		public:
@@ -29,6 +31,17 @@ namespace RSC
 			void Close();
 			void Read(RSC& _RSC);
 			void Information_Read(string& _Info);
+			void Segment_Read(Segment& _Segment);
+			void FreqSet_Read(FreqSet& _FreqSet);
+			void Effects_Read(EffectsStruct& _Effects);
+			void TempoSet_Read(TempoSet& _TempoSet);
+			void BeatSet_Read(BeatSet& _BeatSet);
+			void Interaction_Read(UserInteraction& _Interaction);
+			void SegmentEffects_Read(SegmentEffects& _SEffects);
+			void ADSR_Read(CVSCommon::ADSREnvelope& _ADSREnvelope);
+		private:
+			RDLReader Reader;
+			inline void Detect_WrongEnd();
 	};
 };
  

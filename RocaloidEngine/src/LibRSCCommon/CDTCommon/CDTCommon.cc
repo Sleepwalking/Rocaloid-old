@@ -1,5 +1,5 @@
 /*
- * cc
+ * CDTCommon.cc
  *
  * Copyright (C) 2013 - Rocaloid Development Group(RDG)
  *
@@ -36,10 +36,12 @@
 namespace CDTCommon
 {
 	using namespace CDTCommon;
-	using namespace RSC;
+	using namespace RSCCommon;
 	using namespace converter;
 	using namespace Overall;
-		double CDTOperation::GetOpe(CDT& _CDT, string Phone)
+	namespace CDTOperation
+	{
+		double GetOpe(CDT& _CDT, string Phone)
 		{
 			int i;
 			for ( i=0 ; i <= _CDT.Phonetic.OpennessListQ ; i++ )
@@ -51,7 +53,7 @@ namespace CDTCommon
 			}
 			return 1;
 		}
-		DEF CDTOperation::CreateDEFCopy(DEF& _DEF)
+		DEF CreateDEFCopy(DEF& _DEF)
 		{
 			DEF* Ret = new DEF;
 			int i;
@@ -68,7 +70,7 @@ namespace CDTCommon
 			Ret->Name = _DEF.Name;
 			return *Ret;
 		}
-		void CDTOperation::ReplaceDEF(DEF& _DEF, string Name)
+		void ReplaceDEF(DEF& _DEF, string Name)
 		{
 			if ( _DEF.Name[0] != '/' ) return ;
 			int i;
@@ -81,7 +83,7 @@ namespace CDTCommon
 					_DEF.TList[i].TTo	= CStr(SPhone) + mid(_DEF.TList[i].TTo, 2);
 			}
 		}
-		int CDTOperation::FindDEFNum(CDT& _CDT, string Name)
+		int FindDEFNum(CDT& _CDT, string Name)
 		{
 			int i ;
 			for ( i=0 ; i <= _CDT.DEFListQ ; i++)
@@ -97,7 +99,7 @@ namespace CDTCommon
 			}
 			return -1;
 		}
-		int CDTOperation::FindDEFNum(CDT& _CDT, Segment _Segment)
+		int FindDEFNum(CDT& _CDT, RSCCommon::Segment _Segment)
 		{
 			int i ;
 			string SingleNotation  = ToSingleNotation(_Segment.Lyric);
@@ -121,7 +123,7 @@ namespace CDTCommon
 			}
 			return -1;
 		}
-		string CDTOperation::ToSingleNotation(string Str)
+		string ToSingleNotation(string Str)
 		{
 			if ( left(Str, 2) == "zh" ){
 				return CStr("%") + mid(Str, 3);
@@ -134,7 +136,7 @@ namespace CDTCommon
 			}
 			return Str;
 		}
-		DBSet CDTOperation::GetDBSet(CDT& _CDT,string Phone, string Pitch)
+		DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch)
 		{
 			int i;
 			DBSet res;
@@ -149,11 +151,11 @@ namespace CDTCommon
 			res.VOT = 0;
 			return res;
 		}
-		PhoneSet CDTOperation::GetPhoneSet(CDT& _CDT, string Phone)
+		PhoneSet GetPhoneSet(CDT& _CDT, string Phone)
 		{
 			return GetPhoneSet(_CDT, Phone[0]);
 		}
-		PhoneSet CDTOperation::GetPhoneSet(CDT& _CDT, char PhoneChar)
+		PhoneSet GetPhoneSet(CDT& _CDT, char PhoneChar)
 		{
 			PhoneSet PhoneSet_;
 			int i;
@@ -169,6 +171,7 @@ namespace CDTCommon
 			PhoneSet_.Type = Vowel;
 			return PhoneSet_;
 		}
+	};
 	PhoneType TestIfIsPhoneType(string _String) 
 	{
 		if (_String ==  "Consonant")
