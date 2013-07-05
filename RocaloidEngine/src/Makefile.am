@@ -1,13 +1,12 @@
 
 SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon LibCVE
 
-rsctool_CXXFLAGS = -O2 \
+rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
+	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \
+	 -O2 \
 	-Wall \
-	-g  \
-	-I@top_srcdir@/src/LibCVSCommon/ \
-	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/src/LibRSCCommon/ \
-	 -I@top_srcdir@/SPKit/
+	-g
+
 ## Process this file with automake to produce Makefile.in
 
 .AM_CPPFLAGS = \

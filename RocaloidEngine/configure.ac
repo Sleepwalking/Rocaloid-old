@@ -18,12 +18,6 @@ dnl ***************************************************************************
 dnl Internationalization
 dnl ***************************************************************************
 
-GETTEXT_PACKAGE=rocaloidengine
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
-AM_GLIB_GNU_GETTEXT
-
-
 
 LT_INIT
 

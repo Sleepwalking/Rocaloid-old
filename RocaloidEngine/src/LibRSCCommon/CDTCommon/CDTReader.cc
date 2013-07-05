@@ -17,12 +17,12 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#include "SPKit/defs.h"
-#include "SPKit/io/terminal.h"
-#include "SPKit/structure/string.h"
-#include "SPKit/misc/converter.h"
-#include "SPKit/structure/array.h"
-#include "SPKit/io/fileStream.h"
+#include "defs.h"
+#include "io/terminal.h"
+#include "structure/string.h"
+#include "misc/converter.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
 
 #include "LibCyberBase/Overall.h"
 #include "LibCyberBase/RDLIO.h"
@@ -106,7 +106,7 @@ namespace CDTCommon
 		{
 			string StrBuff;
 			_CDT.CDTVersion=CDTVersion;//版本
-			do
+			while(StrBuff != "End")
 			{
 				StrBuff = Reader.Read();
 				if (StrBuff == "Version")
@@ -144,7 +144,7 @@ namespace CDTCommon
 				{
 					Exception( CStr("Invalid identifier as ") + StrBuff + ".");
 				}
-			}while(StrBuff != "End");
+			}
 		}
 
 		
@@ -354,6 +354,7 @@ namespace CDTCommon
 		void CDTReader::DBSet_Read(DBSet& _DBSet)
 		{
 			string StrBuff;
+			_DBSet.PreShrink = 0;
 			while ( StrBuff !="End")
 			{
 				StrBuff = Reader.Read();

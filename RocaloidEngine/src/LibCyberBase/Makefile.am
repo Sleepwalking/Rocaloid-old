@@ -1,7 +1,6 @@
 
 libCyberBase_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
-	-O2 \
-	-Wall 
+	-O2 
 ## Process this file with automake to produce Makefile.in
 
 
@@ -19,6 +18,10 @@ libCyberBase_la_SOURCES =  \
 	CVDB/CBVIO.h \
 	CVDB/CVDB.cc \
 	CVDB/CVDB.h \
+	CVDB/FrameBuffer.cc \
+	CVDB/FrameBuffer.h \
+	CVDB/MultiFrameBuffer.cc \
+	CVDB/MultiFrameBuffer.h \
 	SPKit/defs.h \
 	SPKit/io/fileStream.cc \
 	SPKit/io/fileStream.h \
@@ -35,7 +38,7 @@ libCyberBase_la_SOURCES =  \
 	SPKit/structure/array.cc \
 	SPKit/structure/array.h \
 	SPKit/structure/string.cc \
-	SPKit/structure/string.h \
+	SPKit/structure/string.h
 	FrameBuffer.cc \
 	FrameBuffer.h \
 	MultiFrameBuffer.cc \

@@ -136,17 +136,18 @@ namespace CDTCommon
 		DBInfo DB;
 	};
 	
-	using namespace RSC;
+	using namespace RSCCommon;
 	
-	class CDTOperation
+	//class CDTOperation
+	namespace CDTOperation
 	{
-		public:
+		//public:
 		double GetOpe(CDT& _CDT, string Phone);
 		DEF CreateDEFCopy(DEF& _DEF);
 		
 		void ReplaceDEF(DEF& _DEF, string Name);
 		int FindDEFNum(CDT& _CDT, string Name);
-		int FindDEFNum(CDT& _CDT, RSC::Segment _Segment);
+		int FindDEFNum(CDT& _CDT, RSCCommon::Segment _Segment);
 		
 		string ToSingleNotation(string Str);
 		DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch);

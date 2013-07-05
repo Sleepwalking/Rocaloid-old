@@ -17,9 +17,8 @@
   * You should have received a copy of the GNU General License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-namespace RSC
+namespace RSCCommon
 {
-	using namespace RSC;
 	struct EnvelopeList;
 	struct EnvelopeSet;
 	enum ViewTypes
@@ -40,8 +39,8 @@ namespace RSC
 	 struct PositionChunk
 	{
 		PositionChunkType Type;
-		double Position ;
-		int Index ;
+		double Position;
+		int Index;
 	};
 
 	struct SegmentEffects
@@ -75,8 +74,8 @@ namespace RSC
 
 	struct EnvelopeSet
 	{
-		double Position ;
-		double Amplitude ;
+		double Position;
+		double Amplitude;
 	};
 
 	struct UserInteraction
@@ -106,7 +105,39 @@ namespace RSC
 			double EndAmplitude;
 			double CutTime;
 			void CopyTo( Segment Target );
-			Segment();
 			bool IsConnectedTo ( Segment& _Segment);
 	};
+	class RSC
+	{
+		public:
+			string Version;
+			string Author;
+			string Information;
+			int SegmentListQ;
+			array<Segment> SegmentList;
+			int FreqListQ;
+			array<FreqSet> FreqList;
+			EffectsStruct Effects;
+			int TempoListQ;
+			array<TempoSet> TempoList;
+			int BeatListQ;
+			array<BeatSet> BeatList;
+			UserInteraction InteractionSave;
+			void CopyTo(RSC& Target);
+			//void InitSegmentList(int LIndex, int HIndex);
+			void TimeBake();
+			void PositionBake();
+			void VolumeBake();
+	
+			private:
+				double GetVolumeAt(double Position);
+				double GetBarLength(BeatSet& _BeatSet);
+				double PositionToTime(double Position ,double Tempo);
+				PositionChunk GetNextPositionChunk(double Position);
+				PositionChunk GetNextPositionChunk(double Position , int SegmentNum);
+				bool NextChunk_Coincidence;
+				PositionChunk NextChunk_Chunk;
+	};
+	extern ViewTypes TestIfIsViewType(string String);
+#define RSC_VERSION "2.0"
 };

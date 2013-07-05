@@ -9,13 +9,16 @@ libRSCCommon_la_SOURCES =  \
 	RSCCommon.cc \
 	RSCCommon.h \
 	CDTCommon/CDTReader.h \
-	CDTCommon/CDTReader.cc
+	CDTCommon/CDTReader.cc \
+	RSCWriter.cc \
+	RSCWriter.h \
+	RSCReader.cc \
+	RSCReader.h
 
-libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/LibCyberBase/ \
+libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
+	-I@top_srcdir@/src/LibCyberBase/SPKit/ \
 	-O2 \
-	-Wall \
-	-g \
-	-I@top_srcdir@/src/ 
+	-g 
 
 libRSCCommon_la_LDFLAGS = -lCyberBase \
 	-L../LibCyberBase/.libs/ 
