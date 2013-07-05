@@ -17,44 +17,31 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../SPKit/defs.h"
-#include "../SPKit/structure/string.h"
-#include "../SPKit/structure/array.h"
-#include "../SPKit/io/fileStream.h"
-#include "../SPKit/io/terminal.h"
-#include "../SPKit/misc/converter.h"
+#include "LibCyberBase/SPKit/defs.h"
+#include "LibCyberBase/SPKit/structure/string.h"
+#include "LibCyberBase/SPKit/structure/array.h"
+#include "LibCyberBase/SPKit/io/fileStream.h"
+#include "LibCyberBase/SPKit/io/terminal.h"
+#include "LibCyberBase/SPKit/misc/converter.h"
 
-#include "../LibCyberBase/Overall.h"
-#include "../LibCyberBase/RDLIO.h"
+#include "LibCyberBase/Overall.h"
+#include "LibCyberBase/RDLIO.h"
 
-#include "../LibCVSCommon/CVSCommon.h"
-#include "../LibCVSCommon/CVSReader.h"
-#include "../LibCVSCommon/CVSWriter.h"
+#include "LibCVSCommon/CVSCommon.h"
+#include "LibCVSCommon/CVSReader.h"
+#include "LibCVSCommon/CVSWriter.h"
 
-#include "RSCCommon.h"
-#include "CDTCommon/CDTCommon.h"
-#include "CDTCommon/CDTReader.h"
+#include "LibRSCCommon/RSCCommon.h"
+#include "LibRSCCommon/CDTCommon/CDTCommon.h"
+#include "LibRSCCommon/CDTCommon/CDTReader.h"
 using namespace Overall;
 using namespace converter;
 int main()
 {
-	/*CVSCommon::CVS* cvs1 = new CVSCommon::CVS;
-	//CVSReader::Reader_Open("/home/rgwan/ramdisk/1.cvs");
-	CVSReader Reader;
-	CVSWriter Writer;
-	Reader.Open("/home/rgwan/ramdisk/1.cvs");
-	Reader.Read(*cvs1);
-	Reader.Close();
-
-	Writer.Save(CStr("/home/rgwan/ramdisk/test2.cvs"));
-	//CVSWriter::Writer.NewLineValid = false;
-	Writer.Write(*cvs1);
-	Writer.Close();
-	delete cvs1;*/
 	int i,j;
 	CDTCommon::CDTReader cdtr;
 	CDTCommon::CDT cdt;
-	cdtr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
+	cdtr.Open("/tmp/HMCHNDICT.cdt");
 	cdtr.Read(cdt);
 	cdtr.Close();
 	wLine (CStr("CDT Version :") + cdt.Version);
@@ -71,19 +58,7 @@ int main()
 	for (i=0 ; i<=cdt.Phonetic.OpennessListQ;i++)
 		wLine ( CStr("   Tone : ") + cdt.Phonetic.OpennessList[i].Phone + " OPE: " + CStr(cdt.Phonetic.OpennessList[i].Ope));
 	wLine ( "PhoneticInfo:" );
-	/*for (i=0 ; i<=cdt.Phonetic.PhoneListQ;i++)
-	{
-		wLine ( CStr("	  Tone : ") + cdt.Phonetic.PhoneList[i].Phone );
-		wLine ( CStr("			Type : ") + CStr(cdt.Phonetic.PhoneList[i].Type) );
-		wLine ( CStr("			DataPoint:" ));
-		for(i=0;i<=cdt.Phonetic.PhoneList[i].DataPointQ;i++)
-		{
-			wLine (CStr("			") + CStr ( cdt.Phonetic.PhoneList[i].DataPoint[i * 4] ) );
-			wLine ( CStr("			") + CStr ( cdt.Phonetic.PhoneList[i].DataPoint[i * 4 +1] ) );
-			wLine ( CStr("			") + CStr( cdt.Phonetic.PhoneList[i].DataPoint[i * 4 +2] ) );
-			wLine ( CStr("			") +CStr ( cdt.Phonetic.PhoneList[i].DataPoint[i * 4 +3] ) );
-		}
-	}*/
+	
 	for(i=0;i<=cdt.Phonetic.PhoneListQ;i++)
 	{
 		wLine ( CStr("	  Tone : ") + cdt.Phonetic.PhoneList[i].Phone );

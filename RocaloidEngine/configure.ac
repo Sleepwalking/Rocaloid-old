@@ -37,7 +37,7 @@ AC_OUTPUT([
 Makefile
 src/Makefile
 po/Makefile.in
-LibCyberBase/Makefile
-LibCVSCommon/Makefile
-LibRSCCommon/Makefile
+src/LibCyberBase/Makefile
+src/LibCVSCommon/Makefile
+src/LibRSCCommon/Makefile
 ])

@@ -273,12 +273,13 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon
 rsctool_CXXFLAGS = -O2 \
 	-Wall \
 	-g  \
-	-I@top_srcdir@/LibCVSCommon/ \
+	-I@top_srcdir@/src/LibCVSCommon/ \
 	 -I@top_srcdir@/LibCyberBase/ \
-	 -I@top_srcdir@/LibRSCCommon/ \
+	 -I@top_srcdir@/src/LibRSCCommon/ \
 	 -I@top_srcdir@/SPKit/
 
 .AM_CPPFLAGS = \
@@ -294,16 +295,11 @@ rsctool_SOURCES = \
 	main.cc
 
 rsctool_LDFLAGS = -lCyberBase \
-	-L../LibCyberBase/.libs/ \
-	-L../LibCVSCommon/.libs/ \
+	-LLibCyberBase/.libs/ \
+	-LLibCVSCommon/.libs/ \
 	-lCVSCommon \
-	-L../LibRSCCommon/.libs/ \
+	-LLibRSCCommon/.libs/ \
 	-lRSCCommon 
-
-SUBDIRS = \
-	../LibCyberBase/ \
-	../LibCVSCommon/ \
-	../LibRSCCommon/
 
 all: all-recursive
 
