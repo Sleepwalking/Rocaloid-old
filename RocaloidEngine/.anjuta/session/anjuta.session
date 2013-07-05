@@ -2,15 +2,15 @@
 Maximized=1
 Geometry=1024x691+0+24
 
-[Project Manager]
-Shortcut=RocaloidEngine//src
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//../LibCVSCommon/%%%RocaloidEngine//src//../LibCyberBase/%%%RocaloidEngine//src//../LibCyberBase///libCyberBase.la%%%RocaloidEngine//src//../LibRSCCommon/%%%RocaloidEngine//src//../LibRSCCommon///libRSCCommon.la%%%RocaloidEngine//src//rsctool
-
 [File Loader]
-Files=../../src/main.cc#93%%%../../LibCyberBase/RDLIO.cc#39%%%../../LibRSCCommon/CDTCommon/CDTReader.cc#190%%%../../LibCyberBase/RDLIO.h#29%%%../../SPKit/io/terminal.cc#45%%%../../SPKit/io/terminal.h#11
+Files=../../src/main.cc#91
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Project Manager]
+Shortcut=RocaloidEngine//src
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//rsctool
 
 [Execution]
 Run in terminal=2

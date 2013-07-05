@@ -21,12 +21,12 @@
 //   CDT数据结构
 //   Data Structure of CDT files
 //   Copyright (C) 2013 Sleepwalking
-#include "LibCyberBase/SPKit/defs.h"
-#include "LibCyberBase/SPKit/io/terminal.h"
-#include "LibCyberBase/SPKit/structure/string.h"
-#include "LibCyberBase/SPKit/misc/converter.h"
-#include "LibCyberBase/SPKit/structure/array.h"
-#include "LibCyberBase/SPKit/io/fileStream.h"
+#include "defs.h"
+#include "io/terminal.h"
+#include "structure/string.h"
+#include "misc/converter.h"
+#include "structure/array.h"
+#include "io/fileStream.h"
 
 #include "LibCyberBase/Overall.h"
 #include "LibCVSCommon/CVSCommon.h"

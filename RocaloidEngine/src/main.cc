@@ -38,13 +38,11 @@ using namespace Overall;
 using namespace converter;
 int main()
 {
-<<<<<<< HEAD
 
-=======
 	int i,j;
 	CDTCommon::CDTReader cdtr;
 	CDTCommon::CDT cdt;
-	cdtr.Open("/tmp/HMCHNDICT.cdt");
+	cdtr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
 	cdtr.Read(cdt);
 	cdtr.Close();
 	wLine (CStr("CDT Version :") + cdt.Version);
@@ -84,7 +82,6 @@ int main()
 		wLine ( CStr("			PSnk:") + CStr(cdt.DB.DBList[i].PreShrink));
 	}
 	wLine("completed");
->>>>>>> d9996a55073a71e1766226b31f1f4cca6e0ca81e
 	return 0; 
 }
 
