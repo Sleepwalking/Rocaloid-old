@@ -249,7 +249,7 @@ rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
 	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \
 	 -O2 \
 	-Wall \
-	-g
+	 -g
 
 .AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \

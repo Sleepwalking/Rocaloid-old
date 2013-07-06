@@ -13,7 +13,11 @@ libRSCCommon_la_SOURCES =  \
 	RSCWriter.cc \
 	RSCWriter.h \
 	RSCReader.cc \
-	RSCReader.h
+	RSCReader.h \
+	VSQXCommon/VSQ3Reader.cc \
+	VSQXCommon/VSQ3Reader.h \
+	VSQXCommon/VSQXReader.h \
+	VSQXCommon/VSQXReader.cc
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
 	-I@top_srcdir@/src/LibCyberBase/SPKit/ \

@@ -143,7 +143,7 @@ namespace CDTCommon
 	{
 		//public:
 		double GetOpe(CDT& _CDT, string Phone);
-		DEF CreateDEFCopy(DEF& _DEF);
+		//DEF CreateDEFCopy(DEF& _DEF);
 		
 		void ReplaceDEF(DEF& _DEF, string Name);
 		int FindDEFNum(CDT& _CDT, string Name);

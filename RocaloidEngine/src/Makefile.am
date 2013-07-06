@@ -5,7 +5,7 @@ rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
 	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \
 	 -O2 \
 	-Wall \
-	-g
+	 -g
 
 ## Process this file with automake to produce Makefile.in
 

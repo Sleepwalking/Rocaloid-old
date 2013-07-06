@@ -35,7 +35,6 @@
 
 namespace CDTCommon
 {
-	using namespace CDTCommon;
 	using namespace RSCCommon;
 	using namespace converter;
 	using namespace Overall;
@@ -53,7 +52,7 @@ namespace CDTCommon
 			}
 			return 1;
 		}
-		DEF CreateDEFCopy(DEF& _DEF)
+/*		DEF CreateDEFCopy(DEF& _DEF)
 		{
 			DEF* Ret = new DEF;
 			int i;
@@ -69,7 +68,7 @@ namespace CDTCommon
 			Ret->Type = _DEF.Type;
 			Ret->Name = _DEF.Name;
 			return *Ret;
-		}
+		}*/
 		void ReplaceDEF(DEF& _DEF, string Name)
 		{
 			if ( _DEF.Name[0] != '/' ) return ;

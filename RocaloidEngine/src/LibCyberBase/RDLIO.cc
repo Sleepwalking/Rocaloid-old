@@ -150,10 +150,10 @@ void RDLReader::Open(string FileName)
 	Reader.readBuffer(buffer, Reader.getLength());
 	SReader = new stringStream(buffer);
 	SReader -> setPosition(0);
+	Reader.close();
 }
 void RDLReader::Close()
 {
-	Reader.close();
 	delete SReader;
 	mem_free(buffer);
 	buffer = 0;

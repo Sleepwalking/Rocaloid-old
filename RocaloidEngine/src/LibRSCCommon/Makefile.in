@@ -76,7 +76,8 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libRSCCommon_la_LIBADD =
 am_libRSCCommon_la_OBJECTS = libRSCCommon_la-CDTCommon.lo \
 	libRSCCommon_la-RSCCommon.lo libRSCCommon_la-CDTReader.lo \
-	libRSCCommon_la-RSCWriter.lo libRSCCommon_la-RSCReader.lo
+	libRSCCommon_la-RSCWriter.lo libRSCCommon_la-RSCReader.lo \
+	libRSCCommon_la-VSQ3Reader.lo libRSCCommon_la-VSQXReader.lo
 libRSCCommon_la_OBJECTS = $(am_libRSCCommon_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -264,7 +265,11 @@ libRSCCommon_la_SOURCES = \
 	RSCWriter.cc \
 	RSCWriter.h \
 	RSCReader.cc \
-	RSCReader.h
+	RSCReader.h \
+	VSQXCommon/VSQ3Reader.cc \
+	VSQXCommon/VSQ3Reader.h \
+	VSQXCommon/VSQXReader.h \
+	VSQXCommon/VSQXReader.cc
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
 	-I@top_srcdir@/src/LibCyberBase/SPKit/ \
@@ -353,6 +358,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCCommon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCWriter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-VSQ3Reader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-VSQXReader.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -409,6 +416,20 @@ libRSCCommon_la-RSCReader.lo: RSCReader.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RSCReader.cc' object='libRSCCommon_la-RSCReader.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-RSCReader.lo `test -f 'RSCReader.cc' || echo '$(srcdir)/'`RSCReader.cc
+
+libRSCCommon_la-VSQ3Reader.lo: VSQXCommon/VSQ3Reader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-VSQ3Reader.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-VSQ3Reader.Tpo -c -o libRSCCommon_la-VSQ3Reader.lo `test -f 'VSQXCommon/VSQ3Reader.cc' || echo '$(srcdir)/'`VSQXCommon/VSQ3Reader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-VSQ3Reader.Tpo $(DEPDIR)/libRSCCommon_la-VSQ3Reader.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='VSQXCommon/VSQ3Reader.cc' object='libRSCCommon_la-VSQ3Reader.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-VSQ3Reader.lo `test -f 'VSQXCommon/VSQ3Reader.cc' || echo '$(srcdir)/'`VSQXCommon/VSQ3Reader.cc
+
+libRSCCommon_la-VSQXReader.lo: VSQXCommon/VSQXReader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-VSQXReader.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-VSQXReader.Tpo -c -o libRSCCommon_la-VSQXReader.lo `test -f 'VSQXCommon/VSQXReader.cc' || echo '$(srcdir)/'`VSQXCommon/VSQXReader.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-VSQXReader.Tpo $(DEPDIR)/libRSCCommon_la-VSQXReader.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='VSQXCommon/VSQXReader.cc' object='libRSCCommon_la-VSQXReader.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-VSQXReader.lo `test -f 'VSQXCommon/VSQXReader.cc' || echo '$(srcdir)/'`VSQXCommon/VSQXReader.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo
