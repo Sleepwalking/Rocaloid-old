@@ -1,5 +1,6 @@
 #ifndef CVDB_H
 #define CVDB_H
+#include "../SPKit/structure/string.h"
 class string;
 class MultiFrameBuffer;
 

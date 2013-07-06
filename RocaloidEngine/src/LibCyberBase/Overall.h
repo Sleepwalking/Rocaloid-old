@@ -19,16 +19,18 @@
  */
 #ifndef OVERALL_H
 #define OVERALL_H
+#include "SPKit/defs.h"
+#include "SPKit/structure/array.h"
+#include "SPKit/structure/string.h"
 
 namespace Overall
 {
-
-#define SampleRate  96000
-#define INFINITY  99999
-#define PitchListQ  59
-#define Pitch_C5  48
-#define Pitch_C2  12
-#define WaveHeadLength  44
+	#define SampleRate  96000
+	#define INFINITY  99999
+	#define PitchListQ  59
+	#define Pitch_C5  48
+	#define Pitch_C2  12
+	#define WaveHeadLength  44
 
 	extern const byte WaveHeader[];
 	extern const string PitchList[];

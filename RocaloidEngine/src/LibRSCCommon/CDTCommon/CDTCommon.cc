@@ -21,32 +21,31 @@
 //   CDT数据结构
 //   Data Structure of CDT files
 //   Copyright (C) 2013 Sleepwalking
-#include "defs.h"
-#include "io/terminal.h"
-#include "structure/string.h"
-#include "misc/converter.h"
-#include "structure/array.h"
-#include "io/fileStream.h"
+#include "SPKit/defs.h"
+#include "SPKit/io/terminal.h"
+#include "SPKit/structure/string.h"
+#include "SPKit/misc/converter.h"
+#include "SPKit/structure/array.h"
+#include "SPKit/io/fileStream.h"
 
 #include "LibCyberBase/Overall.h"
 #include "LibCVSCommon/CVSCommon.h"
 #include "../RSCCommon.h"
 #include "CDTCommon.h"
 
+using namespace RSCCommon;
+using namespace converter;
+using namespace Overall;
 namespace CDTCommon
 {
-	using namespace CDTCommon;
-	using namespace RSCCommon;
-	using namespace converter;
-	using namespace Overall;
 	namespace CDTOperation
 	{
 		double GetOpe(CDT& _CDT, string Phone)
 		{
 			int i;
-			for ( i=0 ; i <= _CDT.Phonetic.OpennessListQ ; i++ )
+			for(i = 0;i <= _CDT.Phonetic.OpennessListQ;i ++)
 			{
-				if ( _CDT.Phonetic.OpennessList[i].Phone == Phone )
+				if(_CDT.Phonetic.OpennessList[i].Phone == Phone )
 				{
 					return _CDT.Phonetic.OpennessList[i].Ope;
 				}

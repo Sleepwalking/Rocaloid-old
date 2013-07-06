@@ -34,6 +34,17 @@
 #include "SPKit/misc/converter.h"
 #include "SPKit/io/memoryStream.h"
 using namespace converter;
+PCMWaveFile::PCMWaveFile()
+{
+	mBuffer = mem_malloc(mStreamSize);
+	mStream = new memoryStream(mBuffer);
+	mStream -> setPosition(0);
+}
+PCMWaveFile::~PCMWaveFile()
+{
+	delete mStream;
+	mem_free(mBuffer);
+}
 bool PCMWaveFile::open(string fileName)
 {
 	bool openState = fStream.open(fileName, READONLY);
@@ -117,10 +128,17 @@ bool PCMWaveFile::save(string fileName)
 
 	writeDataPosition = fStream.getPosition();
 	writeCounter = 0;
+	mStream -> setPosition(0);
 	return true;
 }
 void PCMWaveFile::finishWrite()
 {
+	if(mStream -> getPosition() > 0)
+	{
+		fStream.writeBuffer(mBuffer, mStream -> getPosition());
+		mStream -> setPosition(0);
+	}
+	
 	int fileSize = fStream.getPosition();
 	
 	fStream.setPosition(4); //Size
@@ -249,10 +267,15 @@ void PCMWaveFile::writeAll(array<double>& lbuffer, array<double>& rbuffer, int l
 void PCMWaveFile::write(double data)
 {
 	if(header.bitPerSample == 8)
-		fStream.write(CByte(data * 127 + 127));
+		mStream -> write(CByte(data * 127 + 127));
 	if(header.bitPerSample == 16)
-		fStream.write(CShort(data * 32767));
+		mStream -> write(CShort(data * 32767));
 	writeCounter ++;
+	if(mStream -> getPosition() == mStreamSize)
+	{
+		fStream.writeBuffer(mBuffer, mStreamSize);
+		mStream -> setPosition(0);
+	}
 }
 void PCMWaveFile::write(double ldata, double rdata)
 {

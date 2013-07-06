@@ -77,12 +77,12 @@ libCyberBase_la_LIBADD =
 am_libCyberBase_la_OBJECTS = libCyberBase_la-Overall.lo \
 	libCyberBase_la-RDLIO.lo libCyberBase_la-wave.lo \
 	libCyberBase_la-CBVIO.lo libCyberBase_la-CVDB.lo \
-	libCyberBase_la-FrameBuffer.lo \
-	libCyberBase_la-MultiFrameBuffer.lo \
 	libCyberBase_la-fileStream.lo libCyberBase_la-memoryStream.lo \
 	libCyberBase_la-stringStream.lo libCyberBase_la-terminal.lo \
 	libCyberBase_la-converter.lo libCyberBase_la-array.lo \
-	libCyberBase_la-string.lo
+	libCyberBase_la-string.lo libCyberBase_la-WaveBuffer.lo \
+	libCyberBase_la-FrameBuffer.lo \
+	libCyberBase_la-MultiFrameBuffer.lo
 libCyberBase_la_OBJECTS = $(am_libCyberBase_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -257,9 +257,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-libCyberBase_la_CXXFLAGS = -I@top_srcdir@/LibCyberBase/ \
-	-O2 
-
+libCyberBase_la_CXXFLAGS = -I@top_srcdir@/src/LibCyberBase/ 
 lib_LTLIBRARIES = \
 	libCyberBase.la
 
@@ -274,10 +272,6 @@ libCyberBase_la_SOURCES = \
 	CVDB/CBVIO.h \
 	CVDB/CVDB.cc \
 	CVDB/CVDB.h \
-	CVDB/FrameBuffer.cc \
-	CVDB/FrameBuffer.h \
-	CVDB/MultiFrameBuffer.cc \
-	CVDB/MultiFrameBuffer.h \
 	SPKit/defs.h \
 	SPKit/io/fileStream.cc \
 	SPKit/io/fileStream.h \
@@ -294,7 +288,13 @@ libCyberBase_la_SOURCES = \
 	SPKit/structure/array.cc \
 	SPKit/structure/array.h \
 	SPKit/structure/string.cc \
-	SPKit/structure/string.h
+	SPKit/structure/string.h \
+	WaveBuffer.cc \
+	WaveBuffer.h \
+	FrameBuffer.cc \
+	FrameBuffer.h \
+	MultiFrameBuffer.cc \
+	MultiFrameBuffer.h
 
 all: all-am
 
@@ -376,6 +376,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-Overall.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-RDLIO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-WaveBuffer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-converter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCyberBase_la-fileStream.Plo@am__quote@
@@ -441,20 +442,6 @@ libCyberBase_la-CVDB.lo: CVDB/CVDB.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-CVDB.lo `test -f 'CVDB/CVDB.cc' || echo '$(srcdir)/'`CVDB/CVDB.cc
 
-libCyberBase_la-FrameBuffer.lo: CVDB/FrameBuffer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-FrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo -c -o libCyberBase_la-FrameBuffer.lo `test -f 'CVDB/FrameBuffer.cc' || echo '$(srcdir)/'`CVDB/FrameBuffer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-FrameBuffer.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVDB/FrameBuffer.cc' object='libCyberBase_la-FrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-FrameBuffer.lo `test -f 'CVDB/FrameBuffer.cc' || echo '$(srcdir)/'`CVDB/FrameBuffer.cc
-
-libCyberBase_la-MultiFrameBuffer.lo: CVDB/MultiFrameBuffer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-MultiFrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'CVDB/MultiFrameBuffer.cc' || echo '$(srcdir)/'`CVDB/MultiFrameBuffer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVDB/MultiFrameBuffer.cc' object='libCyberBase_la-MultiFrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'CVDB/MultiFrameBuffer.cc' || echo '$(srcdir)/'`CVDB/MultiFrameBuffer.cc
-
 libCyberBase_la-fileStream.lo: SPKit/io/fileStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-fileStream.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-fileStream.Tpo -c -o libCyberBase_la-fileStream.lo `test -f 'SPKit/io/fileStream.cc' || echo '$(srcdir)/'`SPKit/io/fileStream.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-fileStream.Tpo $(DEPDIR)/libCyberBase_la-fileStream.Plo
@@ -503,6 +490,27 @@ libCyberBase_la-string.lo: SPKit/structure/string.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SPKit/structure/string.cc' object='libCyberBase_la-string.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-string.lo `test -f 'SPKit/structure/string.cc' || echo '$(srcdir)/'`SPKit/structure/string.cc
+
+libCyberBase_la-WaveBuffer.lo: WaveBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-WaveBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-WaveBuffer.Tpo -c -o libCyberBase_la-WaveBuffer.lo `test -f 'WaveBuffer.cc' || echo '$(srcdir)/'`WaveBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-WaveBuffer.Tpo $(DEPDIR)/libCyberBase_la-WaveBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WaveBuffer.cc' object='libCyberBase_la-WaveBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-WaveBuffer.lo `test -f 'WaveBuffer.cc' || echo '$(srcdir)/'`WaveBuffer.cc
+
+libCyberBase_la-FrameBuffer.lo: FrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-FrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo -c -o libCyberBase_la-FrameBuffer.lo `test -f 'FrameBuffer.cc' || echo '$(srcdir)/'`FrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-FrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-FrameBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FrameBuffer.cc' object='libCyberBase_la-FrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-FrameBuffer.lo `test -f 'FrameBuffer.cc' || echo '$(srcdir)/'`FrameBuffer.cc
+
+libCyberBase_la-MultiFrameBuffer.lo: MultiFrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -MT libCyberBase_la-MultiFrameBuffer.lo -MD -MP -MF $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'MultiFrameBuffer.cc' || echo '$(srcdir)/'`MultiFrameBuffer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Tpo $(DEPDIR)/libCyberBase_la-MultiFrameBuffer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MultiFrameBuffer.cc' object='libCyberBase_la-MultiFrameBuffer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCyberBase_la_CXXFLAGS) $(CXXFLAGS) -c -o libCyberBase_la-MultiFrameBuffer.lo `test -f 'MultiFrameBuffer.cc' || echo '$(srcdir)/'`MultiFrameBuffer.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -716,12 +724,6 @@ uninstall-am: uninstall-libLTLIBRARIES
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES
 
-	FrameBuffer.cc \
-	FrameBuffer.h \
-	MultiFrameBuffer.cc \
-	MultiFrameBuffer.h \
-	WaveBuffer.cc \
-	WaveBuffer.h
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

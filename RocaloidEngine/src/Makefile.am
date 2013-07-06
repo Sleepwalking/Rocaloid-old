@@ -30,5 +30,7 @@ rsctool_LDFLAGS = -lCyberBase \
 	-LLibCVSCommon/.libs/ \
 	-lCVSCommon \
 	-LLibRSCCommon/.libs/ \
-	-lRSCCommon 
+	-lRSCCommon \
+	-LLibCVE/.libs/ \
+	-lCVE 
 

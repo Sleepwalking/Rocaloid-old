@@ -28,8 +28,9 @@
  */
 #ifndef WAVE_H
 #define WAVE_H
-#include "SPKit/defs.h"
-#include "SPKit/io/fileStream.h"
+#include "../SPKit/defs.h"
+#include "../SPKit/io/fileStream.h"
+#include "../SPKit/io/memoryStream.h"
 
 template <class T> class array;
 class string;
@@ -51,7 +52,11 @@ struct PCMWaveHeader
 };
 class PCMWaveFile
 {
+	#define mStreamSize 65536
 	public:
+		PCMWaveFile();
+		~PCMWaveFile();
+		
 		PCMWaveHeader header;
 		bool open(string fileName);
 		bool save(string fileName);
@@ -74,5 +79,7 @@ class PCMWaveFile
 		int writeCounter;
 		int writeDataPosition;
 		binaryStream fStream;
+		memoryStream* mStream;
+		void* mBuffer;
 };
 #endif

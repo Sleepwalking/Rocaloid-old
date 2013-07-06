@@ -16,7 +16,7 @@ libRSCCommon_la_SOURCES =  \
 	RSCReader.h
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
-	-I@top_srcdir@/src/LibCyberBase/SPKit/ \
+	-I@top_srcdir@/src/LibCyberBase/ \
 	-O2 \
 	-g 
 

@@ -61,10 +61,10 @@ namespace Overall
 		1479.978, 1567.982, 1661.219, 1760, 1864.655, 1975.533
 	};
 
-	void PtrSwap(int &p1, int &p2)
+	template <class T> void PtrSwap(T*& p1, T*& p2)
 	{
 		//Switch by pointer.
-		int Temp = p1;
+		T* Temp = p1;
 		p1 = p2;
 		p2 = Temp;
 	}

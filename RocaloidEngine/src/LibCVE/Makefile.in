@@ -74,11 +74,18 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libCVE_la_LIBADD =
-am_libCVE_la_OBJECTS = PitchCalc.lo Scheduler.lo
+am_libCVE_la_OBJECTS = libCVE_la-PitchCalc.lo libCVE_la-Scheduler.lo \
+	libCVE_la-WaveEffector.lo libCVE_la-EnvEffector.lo \
+	libCVE_la-Effector.lo libCVE_la-PitchPreSynthesizer.lo \
+	libCVE_la-ConsecutivePreSynthesizer.lo \
+	libCVE_la-SpeechSynthesizer.lo libCVE_la-Synthesizer.lo
 libCVE_la_OBJECTS = $(am_libCVE_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+libCVE_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libCVE_la_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -252,7 +259,25 @@ libCVE_la_SOURCES = \
 	PitchCalc.cc \
 	PitchCalc.h \
 	Scheduler.cc \
-	Scheduler.h
+	Scheduler.h \
+	Effector/WaveEffector.cc \
+	Effector/WaveEffector.h \
+	Effector/EnvEffector.cc \
+	Effector/EnvEffector.h \
+	Effector/Effector.cc \
+	Effector/Effector.h \
+	Synthesizer/PitchPreSynthesizer.cc \
+	Synthesizer/PitchPreSynthesizer.h \
+	Synthesizer/ConsecutivePreSynthesizer.cc \
+	Synthesizer/ConsecutivePreSynthesizer.h \
+	Synthesizer/SpeechSynthesizer.cc \
+	Synthesizer/Synthesizer.cc \
+	Synthesizer/Synthesizer.h \
+	Synthesizer/SpeechSynthesizer.h
+
+libCVE_la_CXXFLAGS = -I@top_srcdir@/src/ \
+	-I@top_srcdir@/src/LibCyberBase/ \
+	-O2 
 
 all: all-am
 
@@ -320,7 +345,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libCVE.la: $(libCVE_la_OBJECTS) $(libCVE_la_DEPENDENCIES) $(EXTRA_libCVE_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libCVE_la_OBJECTS) $(libCVE_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(libCVE_la_LINK) -rpath $(libdir) $(libCVE_la_OBJECTS) $(libCVE_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -328,8 +353,15 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PitchCalc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scheduler.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-ConsecutivePreSynthesizer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-Effector.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-EnvEffector.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-PitchCalc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-PitchPreSynthesizer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-Scheduler.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-SpeechSynthesizer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-Synthesizer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-WaveEffector.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -351,6 +383,69 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
+libCVE_la-PitchCalc.lo: PitchCalc.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-PitchCalc.lo -MD -MP -MF $(DEPDIR)/libCVE_la-PitchCalc.Tpo -c -o libCVE_la-PitchCalc.lo `test -f 'PitchCalc.cc' || echo '$(srcdir)/'`PitchCalc.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-PitchCalc.Tpo $(DEPDIR)/libCVE_la-PitchCalc.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='PitchCalc.cc' object='libCVE_la-PitchCalc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-PitchCalc.lo `test -f 'PitchCalc.cc' || echo '$(srcdir)/'`PitchCalc.cc
+
+libCVE_la-Scheduler.lo: Scheduler.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-Scheduler.lo -MD -MP -MF $(DEPDIR)/libCVE_la-Scheduler.Tpo -c -o libCVE_la-Scheduler.lo `test -f 'Scheduler.cc' || echo '$(srcdir)/'`Scheduler.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-Scheduler.Tpo $(DEPDIR)/libCVE_la-Scheduler.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Scheduler.cc' object='libCVE_la-Scheduler.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-Scheduler.lo `test -f 'Scheduler.cc' || echo '$(srcdir)/'`Scheduler.cc
+
+libCVE_la-WaveEffector.lo: Effector/WaveEffector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-WaveEffector.lo -MD -MP -MF $(DEPDIR)/libCVE_la-WaveEffector.Tpo -c -o libCVE_la-WaveEffector.lo `test -f 'Effector/WaveEffector.cc' || echo '$(srcdir)/'`Effector/WaveEffector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-WaveEffector.Tpo $(DEPDIR)/libCVE_la-WaveEffector.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Effector/WaveEffector.cc' object='libCVE_la-WaveEffector.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-WaveEffector.lo `test -f 'Effector/WaveEffector.cc' || echo '$(srcdir)/'`Effector/WaveEffector.cc
+
+libCVE_la-EnvEffector.lo: Effector/EnvEffector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-EnvEffector.lo -MD -MP -MF $(DEPDIR)/libCVE_la-EnvEffector.Tpo -c -o libCVE_la-EnvEffector.lo `test -f 'Effector/EnvEffector.cc' || echo '$(srcdir)/'`Effector/EnvEffector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-EnvEffector.Tpo $(DEPDIR)/libCVE_la-EnvEffector.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Effector/EnvEffector.cc' object='libCVE_la-EnvEffector.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-EnvEffector.lo `test -f 'Effector/EnvEffector.cc' || echo '$(srcdir)/'`Effector/EnvEffector.cc
+
+libCVE_la-Effector.lo: Effector/Effector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-Effector.lo -MD -MP -MF $(DEPDIR)/libCVE_la-Effector.Tpo -c -o libCVE_la-Effector.lo `test -f 'Effector/Effector.cc' || echo '$(srcdir)/'`Effector/Effector.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-Effector.Tpo $(DEPDIR)/libCVE_la-Effector.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Effector/Effector.cc' object='libCVE_la-Effector.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-Effector.lo `test -f 'Effector/Effector.cc' || echo '$(srcdir)/'`Effector/Effector.cc
+
+libCVE_la-PitchPreSynthesizer.lo: Synthesizer/PitchPreSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-PitchPreSynthesizer.lo -MD -MP -MF $(DEPDIR)/libCVE_la-PitchPreSynthesizer.Tpo -c -o libCVE_la-PitchPreSynthesizer.lo `test -f 'Synthesizer/PitchPreSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/PitchPreSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-PitchPreSynthesizer.Tpo $(DEPDIR)/libCVE_la-PitchPreSynthesizer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Synthesizer/PitchPreSynthesizer.cc' object='libCVE_la-PitchPreSynthesizer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-PitchPreSynthesizer.lo `test -f 'Synthesizer/PitchPreSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/PitchPreSynthesizer.cc
+
+libCVE_la-ConsecutivePreSynthesizer.lo: Synthesizer/ConsecutivePreSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-ConsecutivePreSynthesizer.lo -MD -MP -MF $(DEPDIR)/libCVE_la-ConsecutivePreSynthesizer.Tpo -c -o libCVE_la-ConsecutivePreSynthesizer.lo `test -f 'Synthesizer/ConsecutivePreSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/ConsecutivePreSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-ConsecutivePreSynthesizer.Tpo $(DEPDIR)/libCVE_la-ConsecutivePreSynthesizer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Synthesizer/ConsecutivePreSynthesizer.cc' object='libCVE_la-ConsecutivePreSynthesizer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-ConsecutivePreSynthesizer.lo `test -f 'Synthesizer/ConsecutivePreSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/ConsecutivePreSynthesizer.cc
+
+libCVE_la-SpeechSynthesizer.lo: Synthesizer/SpeechSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-SpeechSynthesizer.lo -MD -MP -MF $(DEPDIR)/libCVE_la-SpeechSynthesizer.Tpo -c -o libCVE_la-SpeechSynthesizer.lo `test -f 'Synthesizer/SpeechSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/SpeechSynthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-SpeechSynthesizer.Tpo $(DEPDIR)/libCVE_la-SpeechSynthesizer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Synthesizer/SpeechSynthesizer.cc' object='libCVE_la-SpeechSynthesizer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-SpeechSynthesizer.lo `test -f 'Synthesizer/SpeechSynthesizer.cc' || echo '$(srcdir)/'`Synthesizer/SpeechSynthesizer.cc
+
+libCVE_la-Synthesizer.lo: Synthesizer/Synthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-Synthesizer.lo -MD -MP -MF $(DEPDIR)/libCVE_la-Synthesizer.Tpo -c -o libCVE_la-Synthesizer.lo `test -f 'Synthesizer/Synthesizer.cc' || echo '$(srcdir)/'`Synthesizer/Synthesizer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-Synthesizer.Tpo $(DEPDIR)/libCVE_la-Synthesizer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Synthesizer/Synthesizer.cc' object='libCVE_la-Synthesizer.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-Synthesizer.lo `test -f 'Synthesizer/Synthesizer.cc' || echo '$(srcdir)/'`Synthesizer/Synthesizer.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

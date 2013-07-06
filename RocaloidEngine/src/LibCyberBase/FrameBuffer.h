@@ -1,5 +1,6 @@
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
+#define FrameBufferInitialSize 1000
 class FrameBuffer
 {
 	public:
@@ -13,6 +14,8 @@ class FrameBuffer
 
 		void Resize(int _Size);
 		inline int GetSize();
+
+		FrameBuffer& operator =(FrameBuffer& Source);
 	protected:
 		int Size;
 };

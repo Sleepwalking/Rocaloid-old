@@ -3,6 +3,7 @@
 #include "SPKit/structure/string.h"
 #include "SPKit/misc/converter.h"
 #include "SPKit/io/fileStream.h"
+#include "SPKit/io/terminal.h"
 
 #include "CVDB.h"
 #include "MultiFrameBuffer.h"
@@ -96,8 +97,14 @@ void CBVFile::OpenCVDB06(CVDBContainer& Dest)
 
 	int i, j;
 	int PeriodSize;
+	int TotalPeriod = 0;
 	for(i = 0;i <= Dest.Info.ChunkNumber;i ++)
+	{
 		Dest.Buffer -> Data[i] -> Ubound = fStream.readShort() - 1;
+		TotalPeriod += Dest.Buffer -> Data[i] -> Ubound + 1;
+	}
+
+	Dest.Info.AveragePeriod = TotalPeriod / Dest.Info.ChunkNumber;
 
 	for(i = 0;i <= Dest.Info.ChunkNumber;i ++)
 	{

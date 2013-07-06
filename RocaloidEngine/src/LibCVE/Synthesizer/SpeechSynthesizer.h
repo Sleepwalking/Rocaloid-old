@@ -1,0 +1,3 @@
+#ifndef SPEECHSYNTHESIZER_H
+#define SPEECHSYNTHESIZER_H
+#endif
