@@ -77,7 +77,9 @@ libRSCCommon_la_LIBADD =
 am_libRSCCommon_la_OBJECTS = libRSCCommon_la-CDTCommon.lo \
 	libRSCCommon_la-RSCCommon.lo libRSCCommon_la-CDTReader.lo \
 	libRSCCommon_la-RSCWriter.lo libRSCCommon_la-RSCReader.lo \
-	libRSCCommon_la-VSQ3Reader.lo libRSCCommon_la-VSQXReader.lo
+	libRSCCommon_la-VSQ3Reader.lo libRSCCommon_la-VSQXReader.lo \
+	libRSCCommon_la-EffectGen.lo libRSCCommon_la-Generator.lo \
+	libRSCCommon_la-Rearrager.lo libRSCCommon_la-TransitionGen.lo
 libRSCCommon_la_OBJECTS = $(am_libRSCCommon_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -269,7 +271,15 @@ libRSCCommon_la_SOURCES = \
 	VSQXCommon/VSQ3Reader.cc \
 	VSQXCommon/VSQ3Reader.h \
 	VSQXCommon/VSQXReader.h \
-	VSQXCommon/VSQXReader.cc
+	VSQXCommon/VSQXReader.cc \
+	CVSGenerator/EffectGen.h \
+	CVSGenerator/EffectGen.cc \
+	CVSGenerator/Generator.cc \
+	CVSGenerator/Generator.h \
+	CVSGenerator/Rearrager.cc \
+	CVSGenerator/Rearrager.h \
+	CVSGenerator/TransitionGen.cc \
+	CVSGenerator/TransitionGen.h
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
 	-I@top_srcdir@/src/LibCyberBase/SPKit/ \
@@ -355,9 +365,13 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTCommon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-CDTReader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-EffectGen.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-Generator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCCommon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-RSCWriter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-Rearrager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-TransitionGen.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-VSQ3Reader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRSCCommon_la-VSQXReader.Plo@am__quote@
 
@@ -430,6 +444,34 @@ libRSCCommon_la-VSQXReader.lo: VSQXCommon/VSQXReader.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='VSQXCommon/VSQXReader.cc' object='libRSCCommon_la-VSQXReader.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-VSQXReader.lo `test -f 'VSQXCommon/VSQXReader.cc' || echo '$(srcdir)/'`VSQXCommon/VSQXReader.cc
+
+libRSCCommon_la-EffectGen.lo: CVSGenerator/EffectGen.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-EffectGen.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-EffectGen.Tpo -c -o libRSCCommon_la-EffectGen.lo `test -f 'CVSGenerator/EffectGen.cc' || echo '$(srcdir)/'`CVSGenerator/EffectGen.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-EffectGen.Tpo $(DEPDIR)/libRSCCommon_la-EffectGen.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSGenerator/EffectGen.cc' object='libRSCCommon_la-EffectGen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-EffectGen.lo `test -f 'CVSGenerator/EffectGen.cc' || echo '$(srcdir)/'`CVSGenerator/EffectGen.cc
+
+libRSCCommon_la-Generator.lo: CVSGenerator/Generator.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-Generator.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-Generator.Tpo -c -o libRSCCommon_la-Generator.lo `test -f 'CVSGenerator/Generator.cc' || echo '$(srcdir)/'`CVSGenerator/Generator.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-Generator.Tpo $(DEPDIR)/libRSCCommon_la-Generator.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSGenerator/Generator.cc' object='libRSCCommon_la-Generator.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-Generator.lo `test -f 'CVSGenerator/Generator.cc' || echo '$(srcdir)/'`CVSGenerator/Generator.cc
+
+libRSCCommon_la-Rearrager.lo: CVSGenerator/Rearrager.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-Rearrager.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-Rearrager.Tpo -c -o libRSCCommon_la-Rearrager.lo `test -f 'CVSGenerator/Rearrager.cc' || echo '$(srcdir)/'`CVSGenerator/Rearrager.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-Rearrager.Tpo $(DEPDIR)/libRSCCommon_la-Rearrager.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSGenerator/Rearrager.cc' object='libRSCCommon_la-Rearrager.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-Rearrager.lo `test -f 'CVSGenerator/Rearrager.cc' || echo '$(srcdir)/'`CVSGenerator/Rearrager.cc
+
+libRSCCommon_la-TransitionGen.lo: CVSGenerator/TransitionGen.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -MT libRSCCommon_la-TransitionGen.lo -MD -MP -MF $(DEPDIR)/libRSCCommon_la-TransitionGen.Tpo -c -o libRSCCommon_la-TransitionGen.lo `test -f 'CVSGenerator/TransitionGen.cc' || echo '$(srcdir)/'`CVSGenerator/TransitionGen.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRSCCommon_la-TransitionGen.Tpo $(DEPDIR)/libRSCCommon_la-TransitionGen.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CVSGenerator/TransitionGen.cc' object='libRSCCommon_la-TransitionGen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRSCCommon_la_CXXFLAGS) $(CXXFLAGS) -c -o libRSCCommon_la-TransitionGen.lo `test -f 'CVSGenerator/TransitionGen.cc' || echo '$(srcdir)/'`CVSGenerator/TransitionGen.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

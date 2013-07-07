@@ -26,9 +26,10 @@
 #include "LibCyberBase/Overall.h"
 #include "CVSCommon.h"
 
-using namespace converter;
+
 namespace CVSCommon
 {
+	using namespace converter;
 	EffectCollection::EffectCollection()
 	{
 		EnvelopeList.preservedSpace = 40;

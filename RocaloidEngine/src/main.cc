@@ -32,19 +32,19 @@
 #include "LibCVSCommon/CVSWriter.h"
 
 #include "LibRSCCommon/RSCCommon.h"
-/*#include "LibRSCCommon/CDTCommon/CDTCommon.h"
+#include "LibRSCCommon/CDTCommon/CDTCommon.h"
 #include "LibRSCCommon/CDTCommon/CDTReader.h"
 #include "LibRSCCommon/RSCReader.h"
- */ 
+
 #include "LibRSCCommon/RSCWriter.h"
-#include "LibRSCCommon/VSQXCommon/VSQ3Reader.h"
-#include "LibRSCCommon/VSQXCommon/VSQXReader.h"
+#include "LibRSCCommon/CVSGenerator/Generator.h"
+
 using namespace Overall;
 using namespace converter;
 int main()
 {
 
-	VSQXCommon::VSQXReader r;
+	/*VSQXCommon::VSQXReader r;
 	RSCCommon::RSC rsc;
 	RSCCommon::RSCWriter w;
 	r.Open("/home/rgwan/ramdisk/test.vsqx");
@@ -52,8 +52,20 @@ int main()
 	r.Close ();
 	w.Save("/home/rgwan/ramdisk/convert.rsc");
 	w.Write(rsc);
-	w.Close();
-
+	w.Close();*/
+	CVSCommon::CVS cvs;
+	RSCCommon::RSC rsc;
+	CVSCommon::CVSWriter w;
+	RSCCommon::RSCReader r;	
+	CDTCommon::CDT cdt;
+	CDTCommon::CDTReader cr;
+	r.Open("/home/rgwan/ramdisk/test.rsc");
+	r.Read(rsc);
+	r.Close();
+	cr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
+	cr.Read(cdt);
+	cr.Close ();
+	RSCCommon::GenerateCVS ( rsc , cdt , cvs);
 	return 0; 
 }
 

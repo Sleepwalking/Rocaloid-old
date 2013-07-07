@@ -1,15 +1,15 @@
 [Anjuta]
-Geometry=1014x681+0+24
+Geometry=1014x681+1+24
 
 [File Loader]
-Files=../../src/LibCyberBase/CVDB/CBVIO.h#1%%%../../src/main.cc#50%%%../../src/LibRSCCommon/VSQXCommon/VSQ3Reader.cc#93%%%../../src/LibRSCCommon/VSQXCommon/VSQ3Reader.h#9%%%../../src/LibRSCCommon/RSCCommon.h#110%%%../../src/LibRSCCommon/VSQXCommon/VSQXReader.cc#113
+Files=../../src/LibRSCCommon/RSCCommon.h#1%%%../../src/LibRSCCommon/RSCCommon.cc#70%%%../../src/LibRSCCommon/CVSGenerator/TransitionGen.cc#31%%%../../src/main.cc#68%%%../../src/LibRSCCommon/CVSGenerator/Generator.cc#57%%%../../src/LibRSCCommon/CVSGenerator/Rearrager.cc#79%%%../../src/LibRSCCommon/CVSGenerator/Rearrager.h#21%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.cc#151%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.h#86
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
 Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCVSCommon%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibRSCCommon%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
 
 [Execution]
 Run in terminal=2

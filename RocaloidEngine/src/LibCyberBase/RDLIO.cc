@@ -36,20 +36,34 @@ namespace RDLIO
 {	
 	bool TestIfIsNumber(string _String)
 	{
-		char *str=_String.toChars ();
-		int i,len=_String.getLength();
+		int len = _String.getLength();
 		bool res = true;
-		for(i=0;i<len;i++)
+		for ( int i = 0 ; i < len ; i++ )
 		{
-			if((str[i] < '0' || str[i] > '9') && str[i]!='.' && str[i]!='-')
+			if( ( _String[i] < '0' || _String[i] > '9') && _String[i] != '.' && _String[i] != '-')
 			{
-				//Exception( _String + "  is n't a number!");
 				res = false;
+				break;
 			}
 		}
-		mem_free(str);
 		return res;
 	}
+	
+	bool TestIfIsASCII(string _String)
+	{//测试是否是ASCII字符序列
+		int len = _String.getLength();
+		bool res = true;
+		for ( int i = 0; i < len ; i++ )
+		{
+			if ( _String[i] & 0x80 )
+			{//高位为1
+				res = false;
+				break;
+			}
+		}
+		return res;
+	}
+	
 	double TestIfIsDouble(string _String)
 	{
 		_String=Trim(_String);

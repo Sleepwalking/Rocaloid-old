@@ -30,19 +30,20 @@
 namespace RSCCommon
 {
 	using namespace Overall;
-	void Segment::CopyTo( Segment Target )
+	
+	Segment& Segment::operator =(Segment& Source)
 	{
-			Target.Position = Position;
-			Target.Lyric = Lyric;
-			Target.Duration = Duration;
-			Target.StartTime = StartTime;
-			Target.DurTime = DurTime;
-			Target.Effects = Effects;
-			Target.StartFreq = StartFreq;
-			Target.EndFreq = EndFreq;
-			Target.StartAmplitude = StartAmplitude;
-			Target.EndAmplitude = EndAmplitude;
-			Target.CutTime = CutTime;
+			Position = Source.Position;
+			Lyric = Source.Lyric;
+			Duration = Source.Duration;
+			StartTime = Source.StartTime;
+			DurTime = Source.DurTime;
+			Effects = Source.Effects;
+			StartFreq = Source.StartFreq;
+			EndFreq = Source.EndFreq;
+			StartAmplitude = Source.StartAmplitude;
+			EndAmplitude = Source.EndAmplitude;
+			CutTime = Source.CutTime;
 	}
 	
 	bool Segment::IsConnectedTo ( Segment& _Segment)
@@ -67,31 +68,31 @@ namespace RSCCommon
 		return Other;
 	}
 	//class RSC
-	void RSC::CopyTo(RSC& Target)
+	RSC& RSC::operator =(RSC& Source)
 	{
 		int i;
-			Target.Version = Version;
-			Target.Author = Author;
-			Target.Information = Information;
-			Target.SegmentListQ = SegmentListQ;
-			Target.SegmentList.setUbound (SegmentListQ );
+			Version = Source.Version;
+			Author = Source.Author;
+			Information = Source.Information;
+			SegmentListQ = Source.SegmentListQ;
+			SegmentList.setUbound ( Source.SegmentListQ );
 			//Target.InitSegmentList(0, SegmentListQ);
-			Target.FreqListQ = FreqListQ;
-			Target.FreqList.setUbound (FreqListQ);
-			Target.Effects = Effects;
-			Target.TempoListQ = TempoListQ;
-			Target.TempoList.setUbound (TempoListQ);
-			Target.BeatListQ = BeatListQ;
-			Target.BeatList.setUbound (BeatListQ);
-			Target.InteractionSave = InteractionSave;
-		for (i = 0 ; i<=Target.SegmentListQ ; i++)
-			SegmentList[i].CopyTo(Target.SegmentList[i]);
-		for (i = 0 ; i<=Target.FreqListQ ; i++)
-			Target.FreqList[i] = FreqList[i];
-		for (i = 0 ; i<=Target.TempoListQ ; i++)
-			Target.TempoList[i] = TempoList[i];
-		for (i = 0 ; i<=Target.BeatListQ ; i++)
-			Target.BeatList[i] = BeatList[i];
+			FreqListQ = Source.FreqListQ;
+			FreqList.setUbound (FreqListQ);
+			Effects = Source.Effects;
+			TempoListQ = Source.TempoListQ;
+			TempoList.setUbound (TempoListQ);
+			BeatListQ = Source.BeatListQ;
+			BeatList.setUbound (BeatListQ);
+			InteractionSave = Source.InteractionSave;
+		for (i = 0 ; i<=SegmentListQ ; i++)
+			SegmentList[i]=Source.SegmentList[i];
+		for (i = 0 ; i<=FreqListQ ; i++)
+			FreqList[i] = Source.FreqList[i];
+		for (i = 0 ; i<=TempoListQ ; i++)
+			TempoList[i] = Source.TempoList[i];
+		for (i = 0 ; i<=BeatListQ ; i++)
+			BeatList[i] = Source.BeatList[i];
 	}
 	
 	void RSC::TimeBake()

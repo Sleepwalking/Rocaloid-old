@@ -17,7 +17,15 @@ libRSCCommon_la_SOURCES =  \
 	VSQXCommon/VSQ3Reader.cc \
 	VSQXCommon/VSQ3Reader.h \
 	VSQXCommon/VSQXReader.h \
-	VSQXCommon/VSQXReader.cc
+	VSQXCommon/VSQXReader.cc \
+	CVSGenerator/EffectGen.h \
+	CVSGenerator/EffectGen.cc \
+	CVSGenerator/Generator.cc \
+	CVSGenerator/Generator.h \
+	CVSGenerator/Rearrager.cc \
+	CVSGenerator/Rearrager.h \
+	CVSGenerator/TransitionGen.cc \
+	CVSGenerator/TransitionGen.h
 
 libRSCCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
 	-I@top_srcdir@/src/LibCyberBase/SPKit/ \

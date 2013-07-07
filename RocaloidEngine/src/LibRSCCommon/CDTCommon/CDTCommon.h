@@ -84,6 +84,7 @@ namespace CDTCommon
 		//double Multiple[4];
 		array<double> DataPoint;
 		//setUbound注意X*Y
+		PhoneSet& operator =(PhoneSet rvalue);
 	};
 	
 	struct DBInfo
@@ -135,28 +136,41 @@ namespace CDTCommon
 		PhoneticInfo Phonetic;
 		DBInfo DB;
 	};
-	
+	struct Transition
+	{
+		int StartNum;
+		int EndNum;
+		int Ratio;
+	};
+	struct PhoneticData
+	{
+		double LastEnd;
+		double ForwardOffset;
+		double VOT;
+	};
+
 	using namespace RSCCommon;
 	
-	//class CDTOperation
-	namespace CDTOperation
-	{
-		//public:
-		double GetOpe(CDT& _CDT, string Phone);
-		//DEF CreateDEFCopy(DEF& _DEF);
-		
-		void ReplaceDEF(DEF& _DEF, string Name);
-		int FindDEFNum(CDT& _CDT, string Name);
-		int FindDEFNum(CDT& _CDT, RSCCommon::Segment _Segment);
-		
-		string ToSingleNotation(string Str);
-		DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch);
-			
-		PhoneSet GetPhoneSet(CDT& _CDT, char PhoneChar);
-		PhoneSet GetPhoneSet(CDT& _CDT, string Phone);
-		};
+
+	double GetOpe(CDT& _CDT, string Phone);
+	//DEF CreateDEFCopy(DEF& _DEF);
+
+	void ReplaceDEF(DEF& _DEF, string Name);
+	int FindDEFNum(CDT& _CDT, string Name);
+	int FindDEFNum(CDT& _CDT, RSCCommon::Segment _Segment);
+
+	string ToSingleNotation(string Str);
+	DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch);
+
+	PhoneSet GetPhoneSet(CDT& _CDT, char PhoneChar);
+	PhoneSet GetPhoneSet(CDT& _CDT, string Phone);
+	
 	extern PhoneType TestIfIsPhoneType(string _String);
 	extern PEnvelopeType TestIfIsPType(string _String);
+
+	extern PhoneticData GetData(Transition& _Transition, PhoneSet& _PhoneSet);
+	extern PhoneticData GetData(double Time, PhoneSet& _PhoneSet );
+	extern Transition GetTransitionRate(double Time,PhoneSet& _PhoneSet);
 #define CDT_VERSION "2.41" //2.41版本CDT
 #define DP(x,y) x * 4 + y //模拟二位数组
 };

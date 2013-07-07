@@ -21,8 +21,9 @@
 #define CVSREADER_H
 #include "CVSCommon.h"
 #include "LibCyberBase/RDLIO.h"
-class string;
-using namespace CVSCommon;
+namespace CVSCommon
+{
+
 class CVSReader
 {
 	#define Exception(x) Overall::Exception(x);
@@ -44,6 +45,7 @@ class CVSReader
 		void BreathStruct_Read(BreathStruct& _Breath);
 	private:
 		RDLReader Reader;
+};
 };
 
  #endif

@@ -30,7 +30,8 @@
 
 using namespace RDLIO;
 using namespace converter;
-
+namespace CVSCommon
+{
 	void CVSReader::Open(string FileName)
 	{
 		Reader.Open(FileName);
@@ -350,6 +351,7 @@ using namespace converter;
 			}
 		}while(StrBuff != "End");
 	}
+};
 
 /* template
 	{

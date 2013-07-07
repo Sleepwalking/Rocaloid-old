@@ -111,7 +111,8 @@ namespace CVSCommon
 	{
 		ADSR = 0
 	};
-
+	extern bool IsConsonant(string Symbol);
+	extern double GetSegmentTime(Segment& _Segment);
 	#define CVS_VERSION "1.6"
 }
 
