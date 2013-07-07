@@ -61,13 +61,6 @@ namespace Overall
 		1479.978, 1567.982, 1661.219, 1760, 1864.655, 1975.533
 	};
 
-	template <class T> void PtrSwap(T*& p1, T*& p2)
-	{
-		//Switch by pointer.
-		T* Temp = p1;
-		p1 = p2;
-		p2 = Temp;
-	}
 
 	double GetDoubleSum(array<double>& Arr)
 	{//取数组和
@@ -87,12 +80,8 @@ namespace Overall
 	{//取音高查表法
 		int i;
 		for(i = 0;i <= PitchListQ;i ++)
-		{
 			if(Pitch == PitchList[i])
-			{
 				return FreqList[i];
-			}
-		}
 		return 0;
 	}
 
@@ -100,12 +89,9 @@ namespace Overall
 	{//从频率取表示
 		int i;
 		for(i = 0;i <= PitchListQ;i ++)
-		{
-			if (((FreqList[i] + FreqList[i + 1]) / 2 <= Freq) && (FreqList[i + 1] + FreqList[i + 2]) / 2 > Freq)
-			{
+			if (((FreqList[i] + FreqList[i + 1]) / 2 <= Freq) &&
+			    (FreqList[i + 1] + FreqList[i + 2]) / 2 > Freq)
 				return PitchList[i + 1];
-			}
-		}
 		if (Freq < (FreqList[0] + FreqList[1]) / 2)
 			return PitchList[0];
 		return PitchList[PitchListQ];

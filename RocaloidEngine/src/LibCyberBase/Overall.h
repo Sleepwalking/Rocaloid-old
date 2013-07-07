@@ -37,12 +37,20 @@ namespace Overall
 	extern const double FreqList[];
 	extern int VOT;//Attack Time
 
-	template <class T> static inline void ObjSwap(T &a, T &b)
+	template <class T> inline void ObjSwap(T &a, T &b)
 	{
 		//Generic ByRef Swap.
 		T tmp = a;
 		a = b;
 		b = tmp;
+	}
+	
+	template <class T> inline void PtrSwap(T*& p1, T*& p2)
+	{
+		//Switch by pointer.
+		T* Temp = p1;
+		p1 = p2;
+		p2 = Temp;
 	}
 
 	struct QuadResult
@@ -52,11 +60,11 @@ namespace Overall
 		double c;
 	};
 
-	void PtrSwap(int &p1, int &p2);
 	extern double GetFreqByPitch(string Pitch);
 	extern double GetDoubleSum(array<double>& Arr);
+	extern int FreqToPeriod(double Freq);
 	extern string GetPitchByFreq(double Freq);
-	QuadResult GenerateQuadEquation
+	extern QuadResult GenerateQuadEquation
 	(
 		 double x1, double y1,
 		 double x2, double y2,
