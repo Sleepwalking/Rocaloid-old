@@ -1,17 +1,19 @@
 [Anjuta]
-Geometry=1014x681+0+26
+Maximized=1
+Geometry=1280x971+1366+0
 
 [File Loader]
-Files=../../src/LibRSCCommon/RSCReader.cc#62%%%../../src/LibCyberBase/CVDB/CBVIO.h#1%%%../../src/main.cc#1
+Files=../../src/LibRSCCommon/RSCReader.cc#62%%%../../src/LibCyberBase/CVDB/CBVIO.h#1%%%../../src/main.cc#52%%%../../src/LibCVE/Synthesizer/PitchPreSynthesizer.h#6%%%../../src/LibCyberBase/SlWave/wave.h#54%%%../../src/LibCyberBase/SlWave/wave.cc#141%%%../../src/LibCVE/PitchCalc.h#33%%%../../src/LibCyberBase/Overall.cc#31%%%../../src/LibCVE/PitchCalc.cc#114%%%../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc#211%%%../../src/LibCVE/Synthesizer/ConsecutivePreSynthesizer.h#1%%%../../src/LibCyberBase/Overall.h#33%%%../../src/LibCyberBase/FrameBuffer.cc#18%%%../../src/LibCVE/Synthesizer/SpeechSynthesizer.h#24%%%../../src/LibCVE/Synthesizer/SpeechSynthesizer.cc#196%%%../../src/LibCVE/Synthesizer/Synthesizer.h#1%%%../../src/LibCVE/Scheduler.h#4%%%../../src/LibCyberBase/WaveBuffer.h#1%%%../../src/LibCVE/Scheduler.cc#62%%%../../src/LibCVSCommon/CVSReader.h#31%%%../../src/LibCyberBase/RDLIO.h#23%%%../../src/LibCVSCommon/CVSCommon.h#117%%%../../src/LibCVSCommon/CVSCommon.cc#56%%%../../src/LibCVSCommon/CVSReader.cc#36%%%../../src/LibCyberBase/SPKit/misc/converter.h#378%%%../../src/LibCVE/Synthesizer/Synthesizer.cc#18%%%../../src/LibCVE/Synthesizer/ConsecutivePreSynthesizer.cc#27%%%../../src/LibCyberBase/SPKit/misc/converter.cc#15%%%../../src/LibCyberBase/SPKit/structure/string.cc#97%%%../../src/LibCyberBase/CVDB/CBVIO.cc#109%%%../../src/LibCyberBase/CVDB/CVDB.h#1%%%../../src/LibCyberBase/CVDB/CVDB.cc#1
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
 Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//rsctool
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//LibCVSCommon%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//rsctool
 
 [Execution]
+Program uri=../../Debug/src/rsctool
 Run in terminal=2
 Working directories=../../../RocaloidEngine
 
@@ -24,4 +26,5 @@ BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' '
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
+Breakpoint=1:../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc:63:0:%%%1:../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc:70:0:%%%1:../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc:78:0:%%%1:../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc:89:0:%%%1:../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc:97:0:
 Stop at beginning=2

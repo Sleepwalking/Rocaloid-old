@@ -43,28 +43,18 @@
 #include "LibRSCCommon/RSCReader.h"
 #include "LibRSCCommon/RSCWriter.h"
 
-#include "LibCVE/Synthesizer/ConsecutivePreSynthesizer.h"
-#include "LibCVE/Synthesizer/Synthesizer.h"
+#include "LibCVE/Scheduler.h"
 
 using namespace Overall;
 using namespace converter;
 int main()
 {
-	CBVFile::DataDir = "/tmp/data/";
-	ConsecutivePreSynthesizer syn;
-	WaveBuffer wb(SampleRate * 100);
-	FrameBuffer a(1000);
-	
-	syn.Load("a_C3");
-
-	int i;
-	for(i = 0;i < 20000;i ++)
-	{
-		syn.Synthesize(a);
-		wb.Write(a);
-	}
-
-	wb.Output("/tmp/RenaIsAlive.wav");
+	CBVFile::DataDir = "/tmp/CData/";
+	Scheduler::Init();
+	Scheduler::OpenCVS("/tmp/x.cvs");
+	Scheduler::SegmentSynthesize(*Scheduler::Synthesizer, Scheduler::CVSData -> SegmentList[3], *Scheduler::Wave1);
+	Scheduler::Wave1 -> Output("/tmp/a.wav");
+	Scheduler::Exit();
 	return 0; 
 }
 

@@ -21,7 +21,7 @@ void FrameBuffer::Resize(int _Size)
 	int i;
 	int NewSize = _Size < Size ? _Size : Size;
 	double* NewData = new double[_Size];
-	Ubound = Ubound >= Size ? Size - 1 : Ubound;
+	Ubound = (Ubound >= Size ? Size - 1 : Ubound);
 	for(i = 0;i <= Ubound;i ++)
 		NewData[i] = Data[i];
 	delete []Data;
@@ -37,4 +37,5 @@ FrameBuffer& FrameBuffer::operator =(FrameBuffer& Source)
 	Ubound = Source.Ubound;
 	for(i = 0;i <= Ubound;i ++)
 		Data[i] = Source.Data[i];
+	return *this;
 }

@@ -219,6 +219,7 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 	SetDestMixRatio(EndRatio);
 	PreSynthesizer1 -> Synthesize(Frame1);
 	PreSynthesizer2 -> Synthesize(Frame2);
+
 	FrameMix(Frame1, Frame2, Dest);
 
 	EndFunc:;

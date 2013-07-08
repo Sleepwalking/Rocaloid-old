@@ -13,7 +13,6 @@ libCVSCommon_la_SOURCES =  CVSCommon.cc \
 
 libCVSCommon_la_CXXFLAGS = -I@top_srcdir@/src/ \
 	-I@top_srcdir@/src/LibCyberBase/ \
-	-O2 \
 	-Wall \
 	-g 
 

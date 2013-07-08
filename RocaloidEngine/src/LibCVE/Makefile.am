@@ -25,5 +25,9 @@ libCVE_la_SOURCES =  \
 	Synthesizer/SpeechSynthesizer.h
 
 libCVE_la_CXXFLAGS = -I@top_srcdir@/src/ \
-	-I@top_srcdir@/src/LibCyberBase/ \
-	-O2 
+	-I@top_srcdir@/src/LibCyberBase/ 
+
+libCVE_la_LDFLAGS = -lCyberBase \
+	-L../LibCyberBase/.libs/ \
+	-lCVSCommon \
+	-L../LibCVSCommon/.libs/ 

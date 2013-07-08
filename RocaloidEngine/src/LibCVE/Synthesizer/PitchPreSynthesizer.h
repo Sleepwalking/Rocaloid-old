@@ -2,7 +2,7 @@
 #define PITCHPRESYNTHESIZER_H
 #include "Synthesizer.h"
 #include "ConsecutivePreSynthesizer.h"
-#include "SPKit/structure/string.h"
+#include "LibCyberBase/SPKit/structure/string.h"
 #include "LibCyberBase/FrameBuffer.h"
 
 class PitchCalculator;

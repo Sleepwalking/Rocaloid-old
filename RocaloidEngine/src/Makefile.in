@@ -247,8 +247,7 @@ top_srcdir = @top_srcdir@
 SUBDIRS = LibCyberBase LibCVSCommon LibRSCCommon LibCVE
 rsctool_CXXFLAGS = -I@top_srcdir@/src/ \
 	 -I@top_srcdir@/src/LibCyberBase/SPKit/ \
-	 -O2 \
-	-Wall \
+	 -Wall \
 	-g
 
 .AM_CPPFLAGS = \

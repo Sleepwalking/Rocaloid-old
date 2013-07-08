@@ -2,7 +2,7 @@
 #include "SPKit/structure/string.h"
 #include "SPKit/misc/converter.h"
 
-#define DebugLevel 1
+#define DebugLevel 0
 
 #if(DebugLevel > 0)
 	#include "SPKit/io/terminal.h"

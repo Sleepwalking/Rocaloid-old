@@ -19,7 +19,8 @@
   */
 #ifndef CVSCOMMON_H
 #define CVSCOMMON_H
-template <class T> class array;
+#include "LibCyberBase/SPKit/structure/string.h"
+#include "LibCyberBase/SPKit/structure/array.h"
 namespace CVSCommon
 {
 	//Here, Q represents "Quantity".
@@ -111,7 +112,9 @@ namespace CVSCommon
 	{
 		ADSR = 0
 	};
-
+	
+	extern double GetSegmentTime(Segment& _Segment);
+	extern bool IsConsonant(string Symbol);
 	#define CVS_VERSION "1.6"
 }
 

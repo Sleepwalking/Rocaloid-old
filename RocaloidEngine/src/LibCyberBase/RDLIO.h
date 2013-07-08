@@ -19,7 +19,9 @@
   */
  #ifndef RDLIO_H
  #define RDLIO_H
- 
+
+#include "SPKit/io/fileStream.h"
+
  namespace RDLIO
 {
 	#define Trim(x) trim(x)

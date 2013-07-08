@@ -23,6 +23,7 @@ bool CBVFile::Open(string FileName, CVDBContainer& Dest)
 	string CVDBStr;
 
 	fStream.readBuffer(CVDBChars, 4);
+	CVDBChars[4] = 0;
 	CVDBStr = CVDBChars;
 
 	if(CVDBStr != "CVDB")
@@ -92,7 +93,7 @@ void CBVFile::OpenCVDB06(CVDBContainer& Dest)
 	Dest.Info.StartPosition = fStream.readInt();
 	Dest.Info.PeriodStartPosition = fStream.readInt();
 	fStream.readByte();
-	Dest.Info.ChunkNumber = fStream.readShort() - 3; //Safe limit for stability
+	Dest.Info.ChunkNumber = fStream.readShort();
 	Dest.Buffer -> Ubound = Dest.Info.ChunkNumber;
 
 	int i, j;
@@ -104,7 +105,7 @@ void CBVFile::OpenCVDB06(CVDBContainer& Dest)
 		TotalPeriod += Dest.Buffer -> Data[i] -> Ubound + 1;
 	}
 
-	Dest.Info.AveragePeriod = TotalPeriod / Dest.Info.ChunkNumber;
+	Dest.Info.AveragePeriod = TotalPeriod / (Dest.Info.ChunkNumber + 1);
 
 	for(i = 0;i <= Dest.Info.ChunkNumber;i ++)
 	{

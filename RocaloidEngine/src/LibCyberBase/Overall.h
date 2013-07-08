@@ -30,12 +30,9 @@ namespace Overall
 	#define PitchListQ  59
 	#define Pitch_C5  48
 	#define Pitch_C2  12
-	#define WaveHeadLength  44
 
-	extern const byte WaveHeader[];
 	extern const string PitchList[];
 	extern const double FreqList[];
-	extern int VOT;//Attack Time
 
 	template <class T> inline void ObjSwap(T &a, T &b)
 	{

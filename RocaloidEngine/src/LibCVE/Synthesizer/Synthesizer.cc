@@ -31,8 +31,8 @@ void Synthesizer::FrameMix(FrameBuffer& Frame1, FrameBuffer& Frame2, FrameBuffer
 	{
 		TransitionRatio = ((double)i) / Dest.Ubound;
 		InstantaneousRatio = MixRatio * (1 - TransitionRatio) + MixRatio2 * TransitionRatio;
-		Dest.Data[i] = Frame1.Data[(int)(TransitionRatio * Len1)] * (1 - InstantaneousRatio)
-					 + Frame2.Data[(int)(TransitionRatio * Len2)] * InstantaneousRatio;
+		Dest.Data[i] = Frame1.Data[(int)(TransitionRatio * Len1 - 0.5)] * (1 - InstantaneousRatio)
+					 + Frame2.Data[(int)(TransitionRatio * Len2 - 0.5)] * InstantaneousRatio;
 	}
 }
 void Synthesizer::FrameStretch(FrameBuffer& Frame, double Ratio, FrameBuffer& Dest)
