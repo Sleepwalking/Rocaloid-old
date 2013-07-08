@@ -59,6 +59,7 @@ namespace Overall
 
 	extern double GetFreqByPitch(string Pitch);
 	extern double GetDoubleSum(array<double>& Arr);
+	extern double GetDoubleSum(double Arr[], int ArrQ);
 	extern int FreqToPeriod(double Freq);
 	extern string GetPitchByFreq(double Freq);
 	extern QuadResult GenerateQuadEquation

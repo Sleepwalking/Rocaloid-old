@@ -2,6 +2,7 @@
 #include "LibCyberBase/WaveBuffer.h"
 #include "LibCVSCommon/CVSReader.h"
 #include "SPKit/misc/converter.h"
+#include "Effector/Effector.h"
 
 #define DebugLevel 1
 
@@ -68,7 +69,7 @@ namespace Scheduler
 			i += Frame.Ubound + 1;
 		}
 		//SSSendBack = GlobalSendBack; Needn't since SSSendBack is in a namespace.
-		//Effector::Render(Wave, _Segment, SSSendBack);
+		Effector::Render(Wave, _Segment, SSSendBack);
 		return Wave.Pointer;
 	}
 }

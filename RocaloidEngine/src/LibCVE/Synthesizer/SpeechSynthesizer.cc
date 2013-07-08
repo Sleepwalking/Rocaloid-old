@@ -1,5 +1,6 @@
 #include "SpeechSynthesizer.h"
 #include "SPKit/misc/converter.h"
+#include "../Scheduler.h"
 
 #define DebugLevel 1
 #define PeriodPrediction
@@ -224,7 +225,7 @@ double SpeechSynthesizer::GetTransitionRatio(int TPhoneNum, double Time)
 	if(PitchSynth1 -> IsConsonant() &&
 	   SynthSegment -> TPhoneList[TPhoneNum].Transition.StartRatio == 0)
 	{
-		//GlobalSendBack.VOT = PitchSynth1 -> GetStartPoint();
+		Scheduler::SSSendBack.VOT = PitchSynth1 -> GetStartPoint();
 		ConsonantLen = CDbl(PitchSynth1 -> GetStartPoint()) / SampleRate;
 	}
 	if(PitchSynth2 -> IsConsonant())

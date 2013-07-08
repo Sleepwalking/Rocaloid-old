@@ -51,23 +51,31 @@ namespace Overall
 		1479.978, 1567.982, 1661.219, 1760, 1864.655, 1975.533
 	};
 
-
 	double GetDoubleSum(array<double>& Arr)
-	{//取数组和
-		double Acc=0;
+	{
+		double Acc = 0;
 		int i;
 		for(i = 0;i <= Arr.pointer;i ++)
 			Acc += Arr[i];
 		return Acc;
 	}
 
+	double GetDoubleSum(double Arr[], int ArrQ)
+	{
+		double Acc = 0;
+		int i;
+		for(i = 0;i <= ArrQ;i ++)
+			Acc += Arr[i];
+		return Acc;
+	}
+
 	int FreqToPeriod(double Freq)
-	{//频率到样本周期
+	{
 		return 1 / (Freq * SampleRate);
 	}
 
 	double GetFreqByPitch(string Pitch)
-	{//取音高查表法
+	{
 		int i;
 		for(i = 0;i <= PitchListQ;i ++)
 			if(Pitch == PitchList[i])
@@ -76,7 +84,7 @@ namespace Overall
 	}
 
 	string GetPitchByFreq(double Freq)
-	{//从频率取表示
+	{
 		int i;
 		for(i = 0;i <= PitchListQ;i ++)
 			if (((FreqList[i] + FreqList[i + 1]) / 2 <= Freq) &&
