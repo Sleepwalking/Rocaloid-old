@@ -78,7 +78,8 @@ am_libCVE_la_OBJECTS = libCVE_la-PitchCalc.lo libCVE_la-Scheduler.lo \
 	libCVE_la-WaveEffector.lo libCVE_la-EnvEffector.lo \
 	libCVE_la-Effector.lo libCVE_la-PitchPreSynthesizer.lo \
 	libCVE_la-ConsecutivePreSynthesizer.lo \
-	libCVE_la-SpeechSynthesizer.lo libCVE_la-Synthesizer.lo
+	libCVE_la-SpeechSynthesizer.lo libCVE_la-Synthesizer.lo \
+	libCVE_la-MixerWriter.lo
 libCVE_la_OBJECTS = $(am_libCVE_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -273,10 +274,13 @@ libCVE_la_SOURCES = \
 	Synthesizer/SpeechSynthesizer.cc \
 	Synthesizer/Synthesizer.cc \
 	Synthesizer/Synthesizer.h \
-	Synthesizer/SpeechSynthesizer.h
+	Synthesizer/SpeechSynthesizer.h \
+	Effector/MixerWriter.cc \
+	Effector/MixerWriter.h
 
 libCVE_la_CXXFLAGS = -I@top_srcdir@/src/ \
-	-I@top_srcdir@/src/LibCyberBase/ 
+	-I@top_srcdir@/src/LibCyberBase/ \
+	-g 
 
 libCVE_la_LDFLAGS = -lCyberBase \
 	-L../LibCyberBase/.libs/ \
@@ -360,6 +364,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-ConsecutivePreSynthesizer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-Effector.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-EnvEffector.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-MixerWriter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-PitchCalc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-PitchPreSynthesizer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libCVE_la-Scheduler.Plo@am__quote@
@@ -450,6 +455,13 @@ libCVE_la-Synthesizer.lo: Synthesizer/Synthesizer.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Synthesizer/Synthesizer.cc' object='libCVE_la-Synthesizer.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-Synthesizer.lo `test -f 'Synthesizer/Synthesizer.cc' || echo '$(srcdir)/'`Synthesizer/Synthesizer.cc
+
+libCVE_la-MixerWriter.lo: Effector/MixerWriter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -MT libCVE_la-MixerWriter.lo -MD -MP -MF $(DEPDIR)/libCVE_la-MixerWriter.Tpo -c -o libCVE_la-MixerWriter.lo `test -f 'Effector/MixerWriter.cc' || echo '$(srcdir)/'`Effector/MixerWriter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libCVE_la-MixerWriter.Tpo $(DEPDIR)/libCVE_la-MixerWriter.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Effector/MixerWriter.cc' object='libCVE_la-MixerWriter.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libCVE_la_CXXFLAGS) $(CXXFLAGS) -c -o libCVE_la-MixerWriter.lo `test -f 'Effector/MixerWriter.cc' || echo '$(srcdir)/'`Effector/MixerWriter.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

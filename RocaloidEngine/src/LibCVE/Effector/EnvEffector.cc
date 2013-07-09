@@ -14,7 +14,7 @@ void EnvelopeEffector::ADSREnvelope(WaveBuffer& _WaveBuffer,
 	for(i = 0;i < Attack;i ++)
 		_WaveBuffer.Data[i] *= Amp * ((double)i / (double)Attack);
 	for(i = 0;i < Decline;i ++)
-		_WaveBuffer.Data[i + T0] *= Amp * (1.0f - 1.0f / Decline) + (double)i / Decline;
+		_WaveBuffer.Data[i + T0] *= Amp * (1.0f - (double)i / Decline) + (double)i / Decline;
 	for(i = 0;i < Release;i ++)
 		_WaveBuffer.Data[i + T1] *= 1.0f - (double)i / Release;
 	//Avoid remaining half frames.

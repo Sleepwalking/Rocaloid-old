@@ -49,12 +49,16 @@ using namespace Overall;
 using namespace converter;
 int main()
 {
+
 	CBVFile::DataDir = "/tmp/CData/";
 	Scheduler::Init();
 	Scheduler::OpenCVS("/tmp/x.cvs");
-	Scheduler::SegmentSynthesize(*Scheduler::Synthesizer, Scheduler::CVSData -> SegmentList[3], *Scheduler::Wave1);
-	Scheduler::Wave1 -> Output("/tmp/a.wav");
+
+	Scheduler::SetFileOutput("/tmp/RenaIsAlive.wav");
+	Scheduler::RunSynthesizer();
+	
 	Scheduler::Exit();
+
 	return 0; 
 }
 

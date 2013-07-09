@@ -257,7 +257,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-libCyberBase_la_CXXFLAGS = -I@top_srcdir@/src/LibCyberBase/ 
+libCyberBase_la_CXXFLAGS = -I@top_srcdir@/src/LibCyberBase/ \
+	-g 
+
 lib_LTLIBRARIES = \
 	libCyberBase.la
 

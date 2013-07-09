@@ -4,8 +4,11 @@
 class CVDBContainer;
 class string;
 class binaryStream;
+class memoryStream;
 namespace CBVFile
 {
+	extern void* buffer;
+	extern memoryStream* mStream;
 	extern binaryStream fStream;
 	extern string DataDir;
 	

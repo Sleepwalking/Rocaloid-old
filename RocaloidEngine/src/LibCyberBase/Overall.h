@@ -34,7 +34,7 @@ namespace Overall
 	extern const string PitchList[];
 	extern const double FreqList[];
 
-	template <class T> inline void ObjSwap(T &a, T &b)
+	template <class T> inline void ObjSwap(T& a, T& b)
 	{
 		//Generic ByRef Swap.
 		T tmp = a;

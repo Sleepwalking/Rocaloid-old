@@ -20,6 +20,12 @@ int memoryStream::readChars(char* buffer)
 	offset += len + 1;
 	return len;
 }
+void memoryStream::readBuffer(void* buffer, long byteCount)
+{
+	char* ptr = (char*)((byte*)baseptr + offset);
+	memcpy(buffer, ptr, byteCount);
+	offset += byteCount;
+}
 void memoryStream::write(string data)
 {
 	char* ptr = (char*)((byte*)baseptr + offset);

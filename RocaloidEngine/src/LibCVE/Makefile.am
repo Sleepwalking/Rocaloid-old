@@ -22,10 +22,13 @@ libCVE_la_SOURCES =  \
 	Synthesizer/SpeechSynthesizer.cc \
 	Synthesizer/Synthesizer.cc \
 	Synthesizer/Synthesizer.h \
-	Synthesizer/SpeechSynthesizer.h
+	Synthesizer/SpeechSynthesizer.h \
+	Effector/MixerWriter.cc \
+	Effector/MixerWriter.h
 
 libCVE_la_CXXFLAGS = -I@top_srcdir@/src/ \
-	-I@top_srcdir@/src/LibCyberBase/ 
+	-I@top_srcdir@/src/LibCyberBase/ \
+	-g 
 
 libCVE_la_LDFLAGS = -lCyberBase \
 	-L../LibCyberBase/.libs/ \
