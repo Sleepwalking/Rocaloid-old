@@ -61,7 +61,7 @@ namespace Scheduler
 		int i;
 
 		T1 = SegmentSynthesize(*Synthesizer, CVSData -> SegmentList[0], *Wave1);
-		S1 = CInt(CVSData -> SegmentList[i].StartTime * SampleRate);
+		S1 = CInt(CVSData -> SegmentList[0].StartTime * SampleRate);
 		Overlap = 0;
 		MixerWriterEffector::WriteBlank(S1);
 		//CVSData -> SegmentListQ

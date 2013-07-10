@@ -3,7 +3,7 @@ Maximized=1
 Geometry=1280x971+1366+0
 
 [File Loader]
-Files=../../src/LibCyberBase/CVDB/CBVIO.h#11%%%../../src/LibCyberBase/CVDB/CVDB.cc#1%%%../../src/LibCyberBase/CVDB/CVDB.h#1%%%../../src/LibCyberBase/SlWave/wave.h#60%%%../../src/LibCVE/Effector/MixerWriter.h#10%%%../../src/LibCVE/Effector/MixerWriter.cc#53%%%../../src/LibCVE/Scheduler.cc#20%%%../../src/LibCyberBase/Overall.h#37%%%../../src/main.cc#61%%%../../src/LibCVE/Effector/Effector.cc#21%%%../../src/LibCyberBase/SlWave/wave.cc#276%%%../../src/LibCyberBase/SPKit/misc/converter.h#249%%%../../src/LibCVE/Effector/EnvEffector.cc#19%%%../../src/LibCyberBase/SPKit/structure/string.cc#72%%%../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc#26%%%../../src/LibCyberBase/CVDB/CBVIO.cc#33%%%../../src/LibCyberBase/SPKit/io/memoryStream.cc#24%%%../../src/LibCyberBase/SPKit/io/memoryStream.h#1%%%../../src/LibCyberBase/SPKit/io/fileStream.cc#194
+Files=../../src/LibCyberBase/CVDB/CBVIO.h#11%%%../../src/LibCyberBase/CVDB/CVDB.cc#1%%%../../src/LibCyberBase/CVDB/CVDB.h#1%%%../../src/LibCyberBase/SlWave/wave.h#60%%%../../src/LibCVE/Effector/MixerWriter.h#10%%%../../src/LibCVE/Effector/MixerWriter.cc#53%%%../../src/LibCVE/Scheduler.cc#20%%%../../src/LibCyberBase/Overall.h#37%%%../../src/main.cc#53%%%../../src/LibCVE/Effector/Effector.cc#21%%%../../src/LibCyberBase/SlWave/wave.cc#276%%%../../src/LibCyberBase/SPKit/misc/converter.h#249%%%../../src/LibCVE/Effector/EnvEffector.cc#19%%%../../src/LibCyberBase/SPKit/structure/string.cc#72%%%../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc#6%%%../../src/LibCVE/Synthesizer/ConsecutivePreSynthesizer.cc#1%%%../../src/LibCVE/Synthesizer/SpeechSynthesizer.cc#21
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
@@ -26,5 +26,4 @@ BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' '
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
-Breakpoint=1:../../src/LibCyberBase/SlWave/wave.cc:276:0:
 Stop at beginning=2

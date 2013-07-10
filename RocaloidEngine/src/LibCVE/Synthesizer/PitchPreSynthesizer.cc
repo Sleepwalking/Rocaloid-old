@@ -162,10 +162,8 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		SetStartMixRatio(TR1);
 		PCalc.PitchCalc(Time + 1.0f / PCalc.GetFreqAt(Time));
 		TR2 = PCalc.GetTransitionRatio();
-		if(TR2 > 1)
+		if(TR2 > 1 || TR2 < TR1)
 			TR2 = 1;
-		if(TR2 < TR1)
-			SetDestMixRatio(1);
 		else
 			SetDestMixRatio(TR2);
 		StartRatio = TR1;
@@ -188,7 +186,7 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		   Time * SampleRate < PreSynthesizer2 -> CVDB.Info.StartPosition + 1000)
 		{
 			if(! ConsonantPitchDeviationGotten)
-				ConsonantPitchDeviateTo1 = (EndRatio > 0.5);
+				ConsonantPitchDeviateTo1 = (EndRatio < 0.5);
 			if(ConsonantPitchDeviateTo1)
 			{
 				PreSynthesizer2 -> Synchronize(*PreSynthesizer1);
