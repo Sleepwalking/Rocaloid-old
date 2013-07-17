@@ -72,7 +72,7 @@ return *Ret;
 	{
 		if ( _DEF.Name[0] != '/' ) return ;
 		int i;
-		char SPhone = _DEF.Name[0];
+		char SPhone = Name[0];
 		for(i=0 ; i<=_DEF.TListQ ; i++)
 		{
 			if (_DEF.TList[i].TFrom[0] == '/' ) 
@@ -90,7 +90,8 @@ return *Ret;
 			{
 				return i;
 			}
-			if (_CDT.DEFList[i].Name[0] == '/' && mid(_CDT.DEFList[i].Name, 1) == mid(Name, 1) ) 
+			if (_CDT.DEFList[i].Name[0] == '/' && 
+			    mid(_CDT.DEFList[i].Name, 1) == mid(Name, 1) ) 
 			{
 				return i;
 			}
@@ -107,8 +108,10 @@ return *Ret;
 		}
 		for ( i=0 ; i<= _CDT.DEFListQ ; i++)
 		{
-			if ( ( ( _CDT.DEFList[i].Name[0] == '/') && mid(_CDT.DEFList[i].Name, 1) 
-			  			== mid(SingleNotation, 1) ) || _CDT.DEFList[i].Name == SingleNotation )
+			if ((( _CDT.DEFList[i].Name[0] == '/') 
+			      && mid(_CDT.DEFList[i].Name, 1) 
+			  		== mid(SingleNotation, 1)) ||
+			    _CDT.DEFList[i].Name == SingleNotation )
 			{
 				if ( _CDT.DEFList[i].Extended == true )
 				{
@@ -140,6 +143,7 @@ return *Ret;
 	{
 		int i;
 		//DBSet res;
+		wLine(Phone);
 		for ( i = 0 ; i<=_CDT.DB.DBListQ ; i++)
 		{
 			res = _CDT.DB.DBList[i];
@@ -163,14 +167,10 @@ return *Ret;
 		for ( i = 0 ; i<=_CDT.Phonetic.PhoneListQ ; i++)
 		{
 			PhoneSet_ = _CDT.Phonetic.PhoneList[i];
-			//str = PhoneSet_.Phone.toChars();
 			if ( PhoneSet_.Phone[0] == PhoneChar )
 			{
-				//return PhoneSet_;
-				//mem_free(str);
 				return;
 			}
-			//mem_free(str);
 		}
 
 		PhoneSet_.Type = Vowel;

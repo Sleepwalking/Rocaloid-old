@@ -50,13 +50,15 @@ namespace RSCCommon
 		string Lyric;
 		
 		wLine ("Start");
-		_RSC.TimeBake();
-		_RSC.VolumeBake();
 		_RSC2 = _RSC;
 		wLine ("RSC2 = RSC");
-
+		_RSC.TimeBake();
+		_RSC.VolumeBake();
 		Rearrange(_RSC, _RSC2, _CDT);
+		_RSC.TimeBake();
+		_RSC.VolumeBake();
 		wLine ( "Rearraged");
+		
 		_CVS.SegmentList.setUbound (_RSC.SegmentListQ);
 		_CVS.SegmentListQ = _RSC.SegmentListQ;
 		for ( i = 0 ; i<= _RSC.SegmentListQ ; i++)
@@ -65,17 +67,20 @@ namespace RSCCommon
 			j = CDTCommon::FindDEFNum(_CDT, _RSC.SegmentList[i]);
 			DEF = _CDT.DEFList[j];
 			Lyric = _RSC.SegmentList[i].Lyric;
-			//wLine(CDTCommon::ToSingleNotation(Lyric));
 			Notation = CDTCommon::ToSingleNotation(Lyric);
+			//wLine(Notation);
+			//wLine(DEF.Name);
 			CDTCommon::ReplaceDEF(DEF, Notation);
-			
+			wLine(DEF.TList[0].TFrom);
 			FirstPhone = DEF.TList[0].TFrom;
 			CDTCommon::GetPhoneSet(_CDT, FirstPhone, PhoneSet);
 			wLine("GetPhoneSet");
 			FirstPitch = GetPitchByFreq(_RSC.SegmentList[i].StartFreq);
 			CDTCommon::GetDBSet(_CDT, FirstPhone, FirstPitch, DBSet);
 			wLine("GetDBSet");
+			wLine(DBSet.Phone);
 			_CVS.SegmentList[i].StartTime = _RSC.SegmentList[i].StartTime;
+			wLine(converter::CStr(_RSC.SegmentList[i].StartTime));
 			_CVS.SegmentList[i].Effects.ElistEnabled = true;
 			
 			if (_RSC.SegmentList[i].Effects.PElopeEnabled) 
@@ -257,11 +262,11 @@ namespace RSCCommon
 		DurTime = _RSC.SegmentList[Num].DurTime;
 
 		FirstSegTime = _CVS.SegmentList[Num].TPhoneList[0].Transition.Time;
-		_CVS.SegmentList[Num].FreqList.setUbound (_RSC.FreqListQ );
+		_CVS.SegmentList[Num].FreqList.setUbound (_RSC.FreqListQ);
 		_CVS.SegmentList[Num].FreqList[0].Time = 0;
 		_CVS.SegmentList[Num].FreqList[0].Freq = _RSC.SegmentList[Num].StartFreq;
 		i = 1;
-		for ( j = 0 ; j <=_RSC.FreqListQ ; j++)
+		for ( j = 1 ; j <=_RSC.FreqListQ ; j++)
 		{
 			// _RSC.FreqList
 			if (_RSC.FreqList[j].Position > StartPos  )
@@ -269,6 +274,7 @@ namespace RSCCommon
 				break;
 
 			SaveTime = (_RSC.FreqList[j].Position - StartPos) / DurPos * DurTime;
+			//wLine(converter::CStr(SaveTime));
 			if ( SaveTime > FirstSegTime && 
 			    _CVS.SegmentList[Num].FreqList[i - 1].Time < FirstSegTime  )
 			{
@@ -288,6 +294,7 @@ namespace RSCCommon
 					_CVS.SegmentList[Num].FreqList[0].Freq = _RSC.FreqList[j].Freq;
 				i --;
 			}
+			
 			i++;
 		}
 		if ( DurTime > FirstSegTime &&  
@@ -300,7 +307,7 @@ namespace RSCCommon
 		_CVS.SegmentList[Num].FreqList[i].Time = DurTime;
 		_CVS.SegmentList[Num].FreqList[i].Freq = _RSC.SegmentList[Num].EndFreq;
 		_CVS.SegmentList[Num].FreqListQ = i;
-		_CVS.SegmentList[Num].FreqList.setUbound ( i + 1);
+		_CVS.SegmentList[Num].FreqList.setUbound (i);
 	}
 
 

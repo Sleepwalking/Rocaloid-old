@@ -39,6 +39,8 @@
 #include "LibRSCCommon/RSCWriter.h"
 #include "LibRSCCommon/CVSGenerator/Generator.h"
 #include "LibRSCCommon/CVSGenerator/Rearrager.h"
+#include "LibRSCCommon/VSQXCommon/VSQ3Reader.h"
+#include "LibRSCCommon/VSQXCommon/VSQXReader.h"
 using namespace Overall;
 using namespace converter;
 int main()
@@ -57,12 +59,12 @@ int main()
 	CVSCommon::CVS cvs;
 	RSCCommon::RSC rsc,rscout;
 	CVSCommon::CVSWriter w;
-	RSCCommon::RSCReader r;	
+	VSQXCommon::VSQXReader r;	
 	RSCCommon::RSCWriter wr;	
 	CDTCommon::CDT cdt;
 	CDTCommon::CDTReader cr;
 	wLine("Hello");
-	r.Open("/home/rgwan/ramdisk/test.rsc");
+	r.Open("/home/rgwan/ramdisk/test.vsqx");
 	r.Read(rsc);
 	r.Close();
 	cr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");

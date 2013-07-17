@@ -42,12 +42,18 @@ namespace RSCCommon
 	                        int Num )
 	{
 		double TotalTime  = _RSC.SegmentList[Num].DurTime;
-		double PreShrink = _DBSet.PreShrink / 96000 / 2;
-		double ConsonantTime  = _DBSet.VOT / 96000 + 0.02 + PreShrink;
+		double PreShrink = _DBSet.PreShrink / 96000.0 / 2.0;
+		double ConsonantTime  = _DBSet.VOT / 96000.0 + 0.02 + PreShrink;
+		// To real
 		double t0, t1, t2, t3, t4;
+		double Shrink = (PreShrink + _RSC.SegmentList[Num].CutTime)/2;
 
-		_CVS.SegmentList[Num].Effects.Shrink = (PreShrink + _RSC.SegmentList[Num].CutTime)/2;
-		_CVS.SegmentList[Num].Effects.ForwardCut = (PreShrink + _RSC.SegmentList[Num].CutTime)/2;
+		if(Shrink > 0)
+		{
+			_CVS.SegmentList[Num].Effects.Shrink = Shrink;
+			//wLine(converter::CStr("Shink:")+ converter::CStr(_CVS.SegmentList[Num].Effects.Shrink));
+			_CVS.SegmentList[Num].Effects.ForwardCut = Shrink;
+		}
 		switch ( DEF.Type)
 		{
 			case V:
@@ -55,22 +61,22 @@ namespace RSCCommon
 				break;
 			case VV:
 				if (DEF.TListQ == 2) 
-			{
-				t0 = 0.13;
-				if (TotalTime < 0.4) 
-					t0 = 0.13 * TotalTime / 0.4;
-				t2 = 0.13;
-				if (TotalTime < 0.4) 
-					t2 = TotalTime * 0.13 / 0.4;
-				t1 = TotalTime - t0 - t2;
-			}
+				{
+					t0 = 0.13;
+					if (TotalTime < 0.4) 
+						t0 = 0.13 * TotalTime / 0.4;
+					t2 = 0.13;
+					if (TotalTime < 0.4) 
+						t2 = TotalTime * 0.13 / 0.4;
+					t1 = TotalTime - t0 - t2;
+				}
 				if (DEF.TListQ == 1 )
-			{
-				t0 = 0.2;
-				if (TotalTime < 0.3) 
-					t0 = TotalTime * 2 / 3;
-				t1 = TotalTime - t0;
-			}
+				{
+					t0 = 0.2;
+					if (TotalTime < 0.3) 
+						t0 = TotalTime * 2 / 3;
+					t1 = TotalTime - t0;
+				}
 				break;
 			case VVV:
 				t0 = 0.15;
@@ -80,10 +86,10 @@ namespace RSCCommon
 					t3 = 0.15 * TotalTime / 0.8;
 
 				if (TotalTime < 0.4)
-			{
-				t0 = 0.15 * TotalTime / 0.4;
-				t1 = 0.1 * TotalTime / 0.4;
-			}
+				{
+					t0 = 0.15 * TotalTime / 0.4;
+					t1 = 0.1 * TotalTime / 0.4;
+				}
 				t2 = TotalTime - t0 - t1 - t3;
 				break;
 			case CV:
@@ -98,93 +104,93 @@ namespace RSCCommon
 			case CVV:
 				TotalTime -= ConsonantTime;
 				if (DEF.TListQ == 2)
-			{
-				t0 = 0.1;
-				t2 = 0.15;
-				if (TotalTime < 0.6) 
-					t2 = 0.15 * TotalTime / 0.6;
-
-				if (TotalTime < 0.3) 
-					t0 = 0.1 * TotalTime / 0.3;
-
-				t0 += ConsonantTime;
-				t1 = TotalTime + ConsonantTime - t0 - t2;
-			}
-				if ( DEF.TListQ == 3 )
-			{
-				t0 = 0.10;
-				t1 = 0.10;
-				t3 = 0.15;
-				if (TotalTime < 0.6)
-					t3 = 0.15 * TotalTime / 0.6;
-
-				if (TotalTime < 0.5) 
 				{
-					t0 = 0.10 * TotalTime / 0.5;
-					t1 = 0.10 * TotalTime / 0.5;
+					t0 = 0.1;
+					t2 = 0.15;
+					if (TotalTime < 0.6) 
+						t2 = 0.15 * TotalTime / 0.6;
+
+					if (TotalTime < 0.3) 
+						t0 = 0.1 * TotalTime / 0.3;
+
+					t0 += ConsonantTime;
+					t1 = TotalTime + ConsonantTime - t0 - t2;
 				}
-				t0 += ConsonantTime;
-				t2 = TotalTime + ConsonantTime - t0 - t1 - t3;
-			}
+				if ( DEF.TListQ == 3 )
+				{
+					t0 = 0.10;
+					t1 = 0.10;
+					t3 = 0.15;
+					if (TotalTime < 0.6)
+						t3 = 0.15 * TotalTime / 0.6;
+
+					if (TotalTime < 0.5) 
+					{
+						t0 = 0.10 * TotalTime / 0.5;
+						t1 = 0.10 * TotalTime / 0.5;
+					}
+					t0 += ConsonantTime;
+					t2 = TotalTime + ConsonantTime - t0 - t1 - t3;
+				}
 				break;
 			case CAV:
 				TotalTime -= ConsonantTime;
 				if (DEF.TListQ == 1) 
-			{
-				t0 = 0.12;
-				if (TotalTime < 0.5)
-					t0 = 0.14 * TotalTime / 0.5;
-
-				t0 += ConsonantTime;
-				t1 = TotalTime + ConsonantTime - t0;
-			}
-				if (DEF.TListQ == 2 )
-			{
-				t0 = 0.12;
-				t1 = 0.11;
-				if (TotalTime < 0.5)
 				{
-					t0 = 0.12 * TotalTime / 0.5;
-					t1 = 0.11 * TotalTime / 0.5;
+					t0 = 0.12;
+					if (TotalTime < 0.5)
+						t0 = 0.14 * TotalTime / 0.5;
+
+					t0 += ConsonantTime;
+					t1 = TotalTime + ConsonantTime - t0;
 				}
-				t0 += ConsonantTime;
-				t2 = TotalTime + ConsonantTime - t0 - t1;
-			}
+				if (DEF.TListQ == 2 )
+				{
+					t0 = 0.12;
+					t1 = 0.11;
+					if (TotalTime < 0.5)
+					{
+						t0 = 0.12 * TotalTime / 0.5;
+						t1 = 0.11 * TotalTime / 0.5;
+					}
+					t0 += ConsonantTime;
+					t2 = TotalTime + ConsonantTime - t0 - t1;
+				}
 				break;
 			case CAVV:
 				TotalTime -= ConsonantTime;
 				if (DEF.TListQ == 3) 
-			{
-				t0 = 0.12;
-				t1 = 0.11;
-				t3 = 0.15;
-				if (TotalTime < 0.6)
-					t3 = 0.15 * TotalTime / 0.6;
-
-				if (TotalTime < 0.5) 
 				{
-					t0 = 0.12 * TotalTime / 0.5;
-					t1 = 0.11 * TotalTime / 0.5;
+					t0 = 0.12;
+					t1 = 0.11;
+					t3 = 0.15;
+					if (TotalTime < 0.6)
+						t3 = 0.15 * TotalTime / 0.6;
+
+					if (TotalTime < 0.5) 
+					{
+						t0 = 0.12 * TotalTime / 0.5;
+						t1 = 0.11 * TotalTime / 0.5;
+					}
+					t0 += ConsonantTime;
+					t2 = TotalTime + ConsonantTime - t0 - t1 - t3;
 				}
-				t0 += ConsonantTime;
-				t2 = TotalTime + ConsonantTime - t0 - t1 - t3;
-			}
 				if (DEF.TListQ == 4) 
-			{
-				t0 = 0.12;
-				t1 = 0.11;
-				t2 = 0.08;
-				t4 = 0.15;
-				if (TotalTime < 0.6) 
-					t4 = 0.15 * TotalTime / 0.6;
-
-				if (TotalTime < 0.5)
 				{
-					t0 = 0.12 * TotalTime / 0.5;
-					t1 = 0.11 * TotalTime / 0.5;
-					t2 = 0.08 * TotalTime / 0.5;
+					t0 = 0.12;
+					t1 = 0.11;
+					t2 = 0.08;
+					t4 = 0.15;
+					if (TotalTime < 0.6) 
+						t4 = 0.15 * TotalTime / 0.6;
+
+					if (TotalTime < 0.5)
+					{
+						t0 = 0.12 * TotalTime / 0.5;
+						t1 = 0.11 * TotalTime / 0.5;
+						t2 = 0.08 * TotalTime / 0.5;
+					}
 				}
-			}
 				t0 += ConsonantTime;
 				t3 = TotalTime + ConsonantTime - t0 - t1 - t2 - t4;
 		}

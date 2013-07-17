@@ -64,14 +64,16 @@ namespace RSCCommon
 			if (i > 0) 
 			{
 				LastStartTime = _RSC.SegmentList[i - 1].StartTime;
-				LastEndTime = _RSC.SegmentList[i - 1].DurTime + LastStartTime - _RSC.SegmentList[i - 1].CutTime;
+				LastEndTime = _RSC.SegmentList[i - 1].DurTime + 
+					LastStartTime - _RSC.SegmentList[i - 1].CutTime;
 			}
 			IntervalTime = ThisStartTime - LastStartTime;
 
 			ThisDEF =_CDT.DEFList[CDTCommon::FindDEFNum(_CDT, RSCOrg.SegmentList[i])];
 			wLine (ThisDEF.Name);
 			wLine ("DEFLIST FOUND");
-			CDTCommon::ReplaceDEF(ThisDEF, CDTCommon::ToSingleNotation(RSCOrg.SegmentList[i].Lyric));
+			CDTCommon::ReplaceDEF(ThisDEF, CDTCommon::
+				                      ToSingleNotation(RSCOrg.SegmentList[i].Lyric));
 			wLine ("REPLACE");
 			ThisFirstPhone = ThisDEF.TList[0].TFrom;
 			ThisPitch = GetPitchByFreq(RSCOrg.SegmentList[i].StartFreq);
@@ -79,8 +81,9 @@ namespace RSCCommon
 			wLine ("DB");
 			CDTCommon::GetPhoneSet(_CDT, ThisFirstPhone[0], ThisPhoneSet);
 			wLine("PhoneSet");
-			DBVOT = CDbl(ThisDB.VOT) / 96000;
+			DBVOT = CDbl(ThisDB.VOT) / 96000.0;//toreal
 			wLine ("DBVOT");
+			wLine(CStr(LastEndTime - LastStartTime));
 			if (ThisPhoneSet.Type == CDTCommon::Vowel)
 			{
 				Phonetic.ForwardOffset = 0.07;
@@ -89,7 +92,9 @@ namespace RSCCommon
 			}
 			else
 			{
+				
 				CDTCommon::GetData(LastEndTime - LastStartTime, ThisPhoneSet, Phonetic);
+				wLine("GetData");
 			}
 			
 			AdjustedPhonetic.ForwardOffset = min(DBVOT, Phonetic.ForwardOffset);
@@ -98,19 +103,22 @@ namespace RSCCommon
 			AdjustedPhonetic.VOT = min(DBVOT, Phonetic.VOT);
 
 			if (ThisPhoneSet.PType = CDTCommon::PLO)
-				AdjustedPhonetic.VOT = DBVOT / 5 * 4;
+				AdjustedPhonetic.VOT = DBVOT / 5.0 * 4.0;
 
 
 			if (i > 0)
 			{
-				LastEndTime = min(LastEndTime, ThisStartTime - AdjustedPhonetic.LastEnd);
-				_RSC.SegmentList[i - 1].DurTime = LastEndTime - _RSC.SegmentList[i - 1].StartTime;
+				LastEndTime = min(LastEndTime, ThisStartTime - 
+				                  AdjustedPhonetic.LastEnd);
+				_RSC.SegmentList[i - 1].DurTime = LastEndTime - 
+					_RSC.SegmentList[i - 1].StartTime;
 			}
 
 
 			_RSC.SegmentList[i].StartTime -= AdjustedPhonetic.ForwardOffset;
 			_RSC.SegmentList[i].CutTime = DBVOT - AdjustedPhonetic.VOT;
-			_RSC.SegmentList[i].DurTime += _RSC.SegmentList[i].CutTime + AdjustedPhonetic.ForwardOffset;
+			_RSC.SegmentList[i].DurTime += _RSC.SegmentList[i].CutTime + 
+				AdjustedPhonetic.ForwardOffset;
 			if (i > 0) 
 			{
 				if (ThisPhoneSet.Type == CDTCommon::Vowel ||
@@ -120,7 +128,8 @@ namespace RSCCommon
 					_RSC.SegmentList[i].StartTime -= 0.02;
 					_RSC.SegmentList[i].DurTime += 0.02;
 				}
-				if (_RSC.SegmentList[i - 1].DurTime < 0.15 && _RSC.SegmentList[i].StartTime > 
+				if (_RSC.SegmentList[i - 1].DurTime < 0.15 && 
+				    _RSC.SegmentList[i].StartTime > 
 				    _RSC.SegmentList[i - 1].DurTime + LastStartTime) 
 				{
 					//_RSC.SegmentList[i - 1].DurTime =
