@@ -38,7 +38,7 @@
 
 #include "LibRSCCommon/RSCWriter.h"
 #include "LibRSCCommon/CVSGenerator/Generator.h"
-
+#include "LibRSCCommon/CVSGenerator/Rearrager.h"
 using namespace Overall;
 using namespace converter;
 int main()
@@ -52,20 +52,27 @@ int main()
 	r.Close ();
 	w.Save("/home/rgwan/ramdisk/convert.rsc");
 	w.Write(rsc);
-	w.Close();*/
+	w.Close();*/	
+	wLine("Hello!");
 	CVSCommon::CVS cvs;
-	RSCCommon::RSC rsc;
+	RSCCommon::RSC rsc,rscout;
 	CVSCommon::CVSWriter w;
 	RSCCommon::RSCReader r;	
+	RSCCommon::RSCWriter wr;	
 	CDTCommon::CDT cdt;
 	CDTCommon::CDTReader cr;
+	wLine("Hello");
 	r.Open("/home/rgwan/ramdisk/test.rsc");
 	r.Read(rsc);
 	r.Close();
 	cr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
 	cr.Read(cdt);
 	cr.Close ();
+	//RSCCommon::Rearrange( rscout, rsc, cdt);
 	RSCCommon::GenerateCVS ( rsc , cdt , cvs);
+	w.Save("/home/rgwan/ramdisk/test.cvs");
+	w.Write(cvs);
+	w.Close ();
 	return 0; 
 }
 

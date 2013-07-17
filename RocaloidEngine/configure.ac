@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(rocaloidengine, 0.1-trunk)
+AC_INIT(rocaloidengine, 0.1-trunk, http://www.github.com/Sleepwalking/Rocaloid)
 
 AC_CONFIG_HEADERS([config.h])
 

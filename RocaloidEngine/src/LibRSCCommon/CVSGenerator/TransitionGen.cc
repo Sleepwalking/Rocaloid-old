@@ -37,8 +37,8 @@ namespace RSCCommon
 	void GenerateTransition(CVSCommon::CVS& _CVS ,
 	                        RSC& _RSC ,
 	                        CDTCommon::PhoneSet& _PhoneSet ,
-	                        CDTCommon::DBSet _DBSet ,
-	                        CDTCommon::DEF DEF  ,
+	                        CDTCommon::DBSet& _DBSet ,
+	                        CDTCommon::DEF& DEF  ,
 	                        int Num )
 	{
 		double TotalTime  = _RSC.SegmentList[Num].DurTime;

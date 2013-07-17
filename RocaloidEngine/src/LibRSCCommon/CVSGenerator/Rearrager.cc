@@ -58,6 +58,7 @@ namespace RSCCommon
 		for ( i = 0 ;  i <= RSCOrg.SegmentListQ ; i++)
 		{
 			wLine ("Loop Start");
+			wLine(CStr("Lyric: ")+RSCOrg.SegmentList[i].Lyric);
 			ThisStartTime = RSCOrg.SegmentList[i].StartTime;
 			ThisDurTime = RSCOrg.SegmentList[i].DurTime;
 			if (i > 0) 
@@ -68,14 +69,15 @@ namespace RSCCommon
 			IntervalTime = ThisStartTime - LastStartTime;
 
 			ThisDEF =_CDT.DEFList[CDTCommon::FindDEFNum(_CDT, RSCOrg.SegmentList[i])];
+			wLine (ThisDEF.Name);
 			wLine ("DEFLIST FOUND");
 			CDTCommon::ReplaceDEF(ThisDEF, CDTCommon::ToSingleNotation(RSCOrg.SegmentList[i].Lyric));
 			wLine ("REPLACE");
 			ThisFirstPhone = ThisDEF.TList[0].TFrom;
 			ThisPitch = GetPitchByFreq(RSCOrg.SegmentList[i].StartFreq);
-			ThisDB = CDTCommon::GetDBSet(_CDT, ThisFirstPhone, ThisPitch);
+			CDTCommon::GetDBSet(_CDT, ThisFirstPhone, ThisPitch, ThisDB);
 			wLine ("DB");
-			ThisPhoneSet = CDTCommon::GetPhoneSet(_CDT, ThisFirstPhone[0]);
+			CDTCommon::GetPhoneSet(_CDT, ThisFirstPhone[0], ThisPhoneSet);
 			wLine("PhoneSet");
 			DBVOT = CDbl(ThisDB.VOT) / 96000;
 			wLine ("DBVOT");
@@ -87,7 +89,7 @@ namespace RSCCommon
 			}
 			else
 			{
-				Phonetic = CDTCommon::GetData(LastEndTime - LastStartTime, ThisPhoneSet);
+				CDTCommon::GetData(LastEndTime - LastStartTime, ThisPhoneSet, Phonetic);
 			}
 			
 			AdjustedPhonetic.ForwardOffset = min(DBVOT, Phonetic.ForwardOffset);

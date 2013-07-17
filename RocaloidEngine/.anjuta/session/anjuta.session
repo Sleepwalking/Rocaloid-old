@@ -1,27 +1,30 @@
 [Anjuta]
-Geometry=1014x681+1+24
+Maximized=1
+Geometry=1024x691+0+24
+
+[Project Manager]
+Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
+Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//rsctool
 
 [File Loader]
-Files=../../src/LibRSCCommon/RSCCommon.h#1%%%../../src/LibRSCCommon/RSCCommon.cc#70%%%../../src/LibRSCCommon/CVSGenerator/TransitionGen.cc#31%%%../../src/main.cc#68%%%../../src/LibRSCCommon/CVSGenerator/Generator.cc#57%%%../../src/LibRSCCommon/CVSGenerator/Rearrager.cc#79%%%../../src/LibRSCCommon/CVSGenerator/Rearrager.h#21%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.cc#151%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.h#86
+Files=../../src/main.cc#70%%%../../src/LibCVSCommon/CVSCommon.cc#46%%%../../src/LibRSCCommon/CVSGenerator/Rearrager.cc#78%%%../../src/LibCyberBase/SPKit/misc/memopr.h#17%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.cc#257%%%../../src/LibCyberBase/SPKit/structure/string.h#38%%%../../src/LibCyberBase/SPKit/io/terminal.cc#38%%%../../src/LibRSCCommon/CVSGenerator/Generator.cc#57%%%../../src/LibCyberBase/SPKit/structure/string.cc#33%%%../../src/LibRSCCommon/CDTCommon/CDTCommon.h#77%%%../../src/LibRSCCommon/RSCCommon.h#110%%%../../src/LibCyberBase/SPKit/structure/array.h#113
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
-[Project Manager]
-Shortcut=RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool%%%RocaloidEngine//src//LibCVE//libCVE.la
-Expand=RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCVSCommon%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibRSCCommon%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
-
 [Execution]
+Program uri=../../Debug/src/rsctool
 Run in terminal=2
 Working directories=../../../RocaloidEngine
 
 [Build]
 Configuration list=1:Default:Debug%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
-Selected Configuration=Default
+Selected Configuration=Debug
 BuildArgs/Default=--enable-maintainer-mode
 BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
 BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
 BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
 
 [Debugger]
+Breakpoint=0:../../src/main.cc:46:0:%%%0:../../src/main.cc:70:0:%%%1:../../src/LibRSCCommon/CVSGenerator/Rearrager.cc:78:0:%%%1:../../src/LibRSCCommon/CDTCommon/CDTCommon.cc:249:0:
 Stop at beginning=2

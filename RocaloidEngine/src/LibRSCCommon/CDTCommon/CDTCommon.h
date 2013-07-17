@@ -84,7 +84,7 @@ namespace CDTCommon
 		//double Multiple[4];
 		array<double> DataPoint;
 		//setUbound注意X*Y
-		PhoneSet& operator =(PhoneSet rvalue);
+		PhoneSet& operator =(PhoneSet& rhs);
 	};
 	
 	struct DBInfo
@@ -160,16 +160,16 @@ namespace CDTCommon
 	int FindDEFNum(CDT& _CDT, RSCCommon::Segment _Segment);
 
 	string ToSingleNotation(string Str);
-	DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch);
+	void GetDBSet(CDT& _CDT,string Phone, string Pitch, DBSet& res);
 
-	PhoneSet GetPhoneSet(CDT& _CDT, char PhoneChar);
-	PhoneSet GetPhoneSet(CDT& _CDT, string Phone);
+	void GetPhoneSet(CDT& _CDT, char PhoneChar,PhoneSet& _PhoneSet);
+	void GetPhoneSet(CDT& _CDT, string Phone,PhoneSet& PhoneSet_);
 	
 	extern PhoneType TestIfIsPhoneType(string _String);
 	extern PEnvelopeType TestIfIsPType(string _String);
 
-	extern PhoneticData GetData(Transition& _Transition, PhoneSet& _PhoneSet);
-	extern PhoneticData GetData(double Time, PhoneSet& _PhoneSet );
+	extern void GetData(Transition& _Transition, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData);
+	extern void GetData(double Time, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData);
 	extern Transition GetTransitionRate(double Time,PhoneSet& _PhoneSet);
 #define CDT_VERSION "2.41" //2.41版本CDT
 #define DP(x,y) x * 4 + y //模拟二位数组

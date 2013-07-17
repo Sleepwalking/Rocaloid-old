@@ -41,17 +41,18 @@ namespace RSCCommon
 	void GenerateCVS(RSC& _RSC, CDTCommon::CDT& _CDT , CVSCommon::CVS& _CVS)
 	{
 		RSC _RSC2;
-		int i;
+		int i, j;
 		CDTCommon::DEF DEF;
 
 		CDTCommon::PhoneSet PhoneSet;
 		CDTCommon::DBSet DBSet;
-		string FirstPhone;
-
+		string FirstPhone, FirstPitch, Notation;
+		string Lyric;
+		
 		wLine ("Start");
 		_RSC.TimeBake();
 		_RSC.VolumeBake();
-		_RSC2=_RSC;
+		_RSC2 = _RSC;
 		wLine ("RSC2 = RSC");
 
 		Rearrange(_RSC, _RSC2, _CDT);
@@ -60,17 +61,23 @@ namespace RSCCommon
 		_CVS.SegmentListQ = _RSC.SegmentListQ;
 		for ( i = 0 ; i<= _RSC.SegmentListQ ; i++)
 		{
-			wLine("LoopS");
-			DEF = _CDT.DEFList[CDTCommon::FindDEFNum
-			                   (_CDT, _RSC.SegmentList[i])];
-			CDTCommon::ReplaceDEF(DEF, CDTCommon::ToSingleNotation(_RSC.SegmentList[i].Lyric));
-
+			wLine("Start");
+			j = CDTCommon::FindDEFNum(_CDT, _RSC.SegmentList[i]);
+			DEF = _CDT.DEFList[j];
+			Lyric = _RSC.SegmentList[i].Lyric;
+			//wLine(CDTCommon::ToSingleNotation(Lyric));
+			Notation = CDTCommon::ToSingleNotation(Lyric);
+			CDTCommon::ReplaceDEF(DEF, Notation);
+			
 			FirstPhone = DEF.TList[0].TFrom;
-			PhoneSet = CDTCommon::GetPhoneSet(_CDT, FirstPhone);
-			DBSet = CDTCommon::GetDBSet(_CDT, FirstPhone, GetPitchByFreq(_RSC.SegmentList[i].StartFreq));
-
+			CDTCommon::GetPhoneSet(_CDT, FirstPhone, PhoneSet);
+			wLine("GetPhoneSet");
+			FirstPitch = GetPitchByFreq(_RSC.SegmentList[i].StartFreq);
+			CDTCommon::GetDBSet(_CDT, FirstPhone, FirstPitch, DBSet);
+			wLine("GetDBSet");
 			_CVS.SegmentList[i].StartTime = _RSC.SegmentList[i].StartTime;
 			_CVS.SegmentList[i].Effects.ElistEnabled = true;
+			
 			if (_RSC.SegmentList[i].Effects.PElopeEnabled) 
 			{
 				_CVS.SegmentList[i].Effects.PElopeEnabled = true;
@@ -79,15 +86,18 @@ namespace RSCCommon
 
 				GeneratePElope(_RSC, _CVS, PhoneSet, i);
 				//.Effects.ADSR = _RSC.SegmentList[i].Effects.ADSR
-			}
+			}		
 			_CVS.SegmentList[i].Effects.Breath = _RSC.SegmentList[i].Effects.Breath;
-			//.Effects.Vibration = _RSC.SegmentList[i].Effects.Virbration
-
+			wLine("GenTPhone");
 			GenerateTPhone(_CVS, _RSC, DEF, i);
+			wLine("GenTrans");
 			GenerateTransition(_CVS, _RSC, PhoneSet, DBSet, DEF, i);
+			wLine("GenOpe");
 			GenerateOpeList(_CVS, _RSC, _CDT, i);
+			wLine("GenENV");
 			GenerateEnvelope(_CVS, _RSC, i);
-			GenerateFreq(_CVS, _RSC, i);
+			wLine("GenFre");
+			GenerateFreq(_CVS, _RSC, i);		
 			wLine("Loop");
 		}
 	}

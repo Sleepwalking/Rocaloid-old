@@ -29,7 +29,7 @@
 #include "LibCyberBase/Overall.h"
 #include "LibCyberBase/RDLIO.h"
 #include "LibCVSCommon/CVSCommon.h"
-#include "RSCCommon.h"
+#include "../RSCCommon.h"
 #include "VSQ3Reader.h"
 #include "VSQXReader.h"
 namespace VSQXCommon

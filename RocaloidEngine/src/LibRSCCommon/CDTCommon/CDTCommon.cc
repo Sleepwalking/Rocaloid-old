@@ -26,6 +26,7 @@
 #include "structure/string.h"
 #include "misc/converter.h"
 #include "structure/array.h"
+#include "misc/memopr.h"
 #include "io/fileStream.h"
 
 #include "LibCyberBase/Overall.h"
@@ -75,9 +76,9 @@ return *Ret;
 		for(i=0 ; i<=_DEF.TListQ ; i++)
 		{
 			if (_DEF.TList[i].TFrom[0] == '/' ) 
-				_DEF.TList[i].TFrom	= CStr(SPhone) + mid(_DEF.TList[i].TFrom, 2);
+				_DEF.TList[i].TFrom	= CStr(SPhone) + mid(_DEF.TList[i].TFrom, 1);
 			if (_DEF.TList[i].TTo[0] == '/' ) 
-				_DEF.TList[i].TTo	= CStr(SPhone) + mid(_DEF.TList[i].TTo, 2);
+				_DEF.TList[i].TTo	= CStr(SPhone) + mid(_DEF.TList[i].TTo, 1);
 		}
 	}
 	int FindDEFNum(CDT& _CDT, string Name)
@@ -89,7 +90,7 @@ return *Ret;
 			{
 				return i;
 			}
-			if (_CDT.DEFList[i].Name[0] == '/' && mid(_CDT.DEFList[i].Name, 2) == mid(Name, 2) ) 
+			if (_CDT.DEFList[i].Name[0] == '/' && mid(_CDT.DEFList[i].Name, 1) == mid(Name, 1) ) 
 			{
 				return i;
 			}
@@ -106,7 +107,8 @@ return *Ret;
 		}
 		for ( i=0 ; i<= _CDT.DEFListQ ; i++)
 		{
-			if ( ( ( _CDT.DEFList[i].Name[0] == '/') && mid(_CDT.DEFList[i].Name, 2) == mid(SingleNotation, 2) ) || _CDT.DEFList[i].Name == SingleNotation )
+			if ( ( ( _CDT.DEFList[i].Name[0] == '/') && mid(_CDT.DEFList[i].Name, 1) 
+			  			== mid(SingleNotation, 1) ) || _CDT.DEFList[i].Name == SingleNotation )
 			{
 				if ( _CDT.DEFList[i].Extended == true )
 				{
@@ -122,51 +124,57 @@ return *Ret;
 	}
 	string ToSingleNotation(string Str)
 	{
-		if ( left(Str, 2) == "zh" ){
-			return CStr("%") + mid(Str, 3);
+		string str = Str;		
+		if ( left(str, 2) == "zh" ){
+			str = CStr("%") + mid(str, 2);
 		}
-		if ( left(Str, 2) == "ch" ){
-			return CStr("^") + mid(Str, 3);
+		if ( left(str, 2) == "ch" ){
+			str = CStr("^") + mid(str, 2);
 		}
-		if ( left(Str, 2) == "sh" ){
-			return CStr("&") + mid(Str, 3);
+		if ( left(str, 2) == "sh" ){
+			str = CStr("&") + mid(str, 2);
 		}
-		return Str;
+		return str;
 	}
-	DBSet GetDBSet(CDT& _CDT,string Phone, string Pitch)
+	void GetDBSet(CDT& _CDT,string Phone, string Pitch, DBSet& res)
 	{
 		int i;
-		DBSet res;
+		//DBSet res;
 		for ( i = 0 ; i<=_CDT.DB.DBListQ ; i++)
 		{
-			res=_CDT.DB.DBList[i];
+			res = _CDT.DB.DBList[i];
 			if ( res.Phone == Phone && res.Pitch == Pitch )
 			{
-				return res;
+				return;
 			}
 		}
 		res.VOT = 0;
-		return res;
+		//return res;
 	}
-	PhoneSet GetPhoneSet(CDT& _CDT, string Phone)
+	void GetPhoneSet(CDT& _CDT, string Phone,PhoneSet& _PhoneSet)
 	{
-		return GetPhoneSet(_CDT, Phone[0]);
+		GetPhoneSet(_CDT, Phone[0],_PhoneSet);
 	}
-	PhoneSet GetPhoneSet(CDT& _CDT, char PhoneChar)
+	void GetPhoneSet(CDT& _CDT, char PhoneChar, PhoneSet& PhoneSet_)
 	{
-		PhoneSet PhoneSet_;
+		//char *str;
+		//PhoneSet PhoneSet_;
 		int i;
 		for ( i = 0 ; i<=_CDT.Phonetic.PhoneListQ ; i++)
 		{
 			PhoneSet_ = _CDT.Phonetic.PhoneList[i];
+			//str = PhoneSet_.Phone.toChars();
 			if ( PhoneSet_.Phone[0] == PhoneChar )
 			{
-				return PhoneSet_;
+				//return PhoneSet_;
+				//mem_free(str);
+				return;
 			}
+			//mem_free(str);
 		}
 
 		PhoneSet_.Type = Vowel;
-		return PhoneSet_;
+		//return PhoneSet_;
 	}
 
 	PhoneType TestIfIsPhoneType(string _String) 
@@ -226,33 +234,35 @@ return *Ret;
 		}
 		return ret;
 	}
-	PhoneticData GetData(Transition& _Transition, PhoneSet& _PhoneSet) 
+	void GetData(Transition& _Transition, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData) 
 	{
-		PhoneticData ret;
-		ret.LastEnd = _PhoneSet.DataPoint[DP(_Transition.StartNum, 1)] *
+		//PhoneticData ret;
+		_PhoneticData.LastEnd = _PhoneSet.DataPoint[DP(_Transition.StartNum, 1)] *
 			(1 - _Transition.Ratio) + _PhoneSet.DataPoint[DP(_Transition.EndNum, 1)] * _Transition.Ratio;
-		ret.ForwardOffset = _PhoneSet.DataPoint[DP(_Transition.StartNum, 2)] * 
+		_PhoneticData.ForwardOffset = _PhoneSet.DataPoint[DP(_Transition.StartNum, 2)] * 
 			(1 - _Transition.Ratio) + _PhoneSet.DataPoint[DP(_Transition.EndNum, 2)] * _Transition.Ratio;
-		ret.VOT = _PhoneSet.DataPoint[DP(_Transition.StartNum, 3)] * (1 - _Transition.Ratio) +
+		_PhoneticData.VOT = _PhoneSet.DataPoint[DP(_Transition.StartNum, 3)] * (1 - _Transition.Ratio) +
 			_PhoneSet.DataPoint[DP(_Transition.EndNum, 3)] * _Transition.Ratio;
-		return ret;
+		//return ret;
 	}
-	PhoneticData GetData(double Time, PhoneSet& _PhoneSet ) 
+	void GetData(double Time, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData) 
 	{
 		Transition Trans;
 		Trans = GetTransitionRate(Time, _PhoneSet);
-		return GetData(Trans, _PhoneSet);
+		GetData(Trans, _PhoneSet,_PhoneticData);
 	}
-	PhoneSet& PhoneSet::operator =(PhoneSet rhs)
+	PhoneSet& PhoneSet::operator =(PhoneSet& rhs)
 	{
+		int size = 4 * (rhs.DataPointQ - 1);
 		Phone = rhs.Phone;
 		Type = rhs.Type;
 		PType = rhs.PType;
 		DataPointQ = rhs.DataPointQ;
-		DataPoint.setUbound ( 4*DataPointQ );
-		for (int i = 0;i <= 4 * DataPointQ ; i ++)
+		DataPoint.setUbound (size);
+		for (int i = 0;i <= size ; i ++)
 		{
 			DataPoint[i] = rhs.DataPoint[i];
 		}
+		return *this;
 	}
 };

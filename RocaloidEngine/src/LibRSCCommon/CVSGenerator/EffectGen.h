@@ -22,8 +22,8 @@
 
 namespace RSCCommon
 {
-	void GeneratePElope(RSC& _RSC, CVSCommon::CVS &_CVS, 
-		CDTCommon::PhoneSet PhoneSet, int Num);
+	void GeneratePElope(RSC& _RSC, CVSCommon::CVS& _CVS, 
+		CDTCommon::PhoneSet& PhoneSet, int Num);
 	void GenerateOpeList(CVSCommon::CVS& _CVS, RSC& _RSC, 
 		CDTCommon::CDT& _CDT, int Num);
 };

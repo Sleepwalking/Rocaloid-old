@@ -21,12 +21,12 @@
  #define TRANSGEN_H
 namespace RSCCommon
 {
- 	void GenerateTransition(CVSCommon::CVS& _CVS ,
-								  RSC& _RSC ,
-								  CDTCommon::PhoneSet& _PhoneSet ,
-								  CDTCommon::DBSet _DBSet ,
-								  CDTCommon::DEF DEF  ,
-								  int Num );
+	void GenerateTransition(CVSCommon::CVS& _CVS ,
+	                        RSC& _RSC ,
+	                        CDTCommon::PhoneSet& _PhoneSet ,
+	                        CDTCommon::DBSet& _DBSet ,
+	                        CDTCommon::DEF& DEF  ,
+	                        int Num );
 
 };
  #endif /*NEGSNART _H */
