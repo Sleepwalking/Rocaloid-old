@@ -69,8 +69,9 @@ namespace VSQXCommon
 		//wLine(CStr(Reader.Pointer));
 		while (Reader.Pointer < EndPos)
 		{
-			TempoSet_.Position = TestIfIsInt (Reader.ReadNextValue("posTick")) / Resolution;
-			TempoSet_.Tempo = TestIfIsInt (Reader.ReadNextValue("bpm")) / 100;
+			TempoSet_.Position = (double)TestIfIsInt (Reader.ReadNextValue("posTick")) / (double)Resolution;
+			TempoSet_.Tempo = (double)TestIfIsInt (Reader.ReadNextValue("bpm")) / 100.0;
+			
 			//wLine(CStr(TempoSet_.Tempo));
 			_RSC.TempoList.push(TempoSet_);
 			_RSC.TempoListQ++;
@@ -79,7 +80,7 @@ namespace VSQXCommon
 		TempoSet_.Position = 99999;
 		TempoSet_.Tempo = 120;
 		_RSC.TempoList.push ( TempoSet_);
-		_RSC.TempoListQ++;
+		//_RSC.TempoListQ++;
 
 	}
 
@@ -101,9 +102,11 @@ namespace VSQXCommon
 		EachADSR.Release = 0.1;
 		while (Reader.Pointer < EndPos)
 		{
-			Segment_.Position = TestIfIsInt(Reader.ReadNextValue("posTick")) / Resolution 
-				+ MusicalPartStartPos;
-			Segment_.Duration = TestIfIsInt(Reader.ReadNextValue("durTick")) / Resolution;
+			Segment_.Position = (double)TestIfIsInt(Reader.ReadNextValue("posTick")) / 
+				(double)Resolution + (double)MusicalPartStartPos;
+			//wLine(CStr(MusicalPartStartPos));
+			Segment_.Duration = (double)TestIfIsInt(Reader.ReadNextValue("durTick")) / 
+				(double)Resolution;
 			Pitch = TestIfIsInt(Reader.ReadNextValue("noteNum")) - 36;
 			Segment_.StartFreq = FreqList[Pitch];
 			Segment_.EndFreq = FreqList[Pitch];
@@ -128,6 +131,7 @@ namespace VSQXCommon
 			Reader.ReadUntil("</note>");
 
 		}
+		_RSC.SegmentListQ --;
 		//wLine(Segment_.Lyric);
 		//wLine(CStr(Pitch));
 		_RSC.Effects.EnvelopeList.setUbound (0);

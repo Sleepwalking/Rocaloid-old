@@ -143,7 +143,7 @@ return *Ret;
 	{
 		int i;
 		//DBSet res;
-		wLine(Phone);
+		//wLine(Phone);
 		for ( i = 0 ; i<=_CDT.DB.DBListQ ; i++)
 		{
 			res = _CDT.DB.DBList[i];
@@ -204,16 +204,19 @@ return *Ret;
 		return FRC;
 	}
 
-	Transition GetTransitionRate(double Time,PhoneSet& _PhoneSet)
+	Transition GetTransitionRate(double Time, PhoneSet& _PhoneSet)
 	{
 		int i;
 		Transition ret;
-		for ( i =  _PhoneSet.DataPointQ ; i !=0 ; i--)
+		for ( i =  _PhoneSet.DataPointQ ; i >= 0; i--)
 		{
-			if ( Time >= _PhoneSet.DataPoint[DP(i, 0)] && Time < _PhoneSet.DataPoint[DP(i + 1, 0)])
+			if ( Time >= _PhoneSet.DataPoint[DP(i, 0)]  
+			    && (Time < _PhoneSet.DataPoint[DP(i + 1, 0)]
+				|| (i == _PhoneSet.DataPointQ)))
 			{
-				ret.Ratio =  ( Time - _PhoneSet.DataPoint[DP(i, 0)] ) / (_PhoneSet.DataPoint[DP(i + 1, 0)] 
-				                                                         - _PhoneSet.DataPoint[DP(i, 0)] );
+				ret.Ratio =  ( Time - _PhoneSet.DataPoint[DP(i, 0)] ) 
+					/ (_PhoneSet.DataPoint[DP(i + 1, 0)] 
+				    - _PhoneSet.DataPoint[DP(i, 0)] );
 				ret.StartNum = i;
 				ret.EndNum = i + 1;
 				return ret;
@@ -237,19 +240,27 @@ return *Ret;
 	void GetData(Transition& _Transition, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData) 
 	{
 		//PhoneticData ret;
+		//wLine (_PhoneSet.Phone);
 		_PhoneticData.LastEnd = _PhoneSet.DataPoint[DP(_Transition.StartNum, 1)] *
 			(1 - _Transition.Ratio) + _PhoneSet.DataPoint[DP(_Transition.EndNum, 1)] * _Transition.Ratio;
+		//wLine (_PhoneSet.Phone);
 		_PhoneticData.ForwardOffset = _PhoneSet.DataPoint[DP(_Transition.StartNum, 2)] * 
 			(1 - _Transition.Ratio) + _PhoneSet.DataPoint[DP(_Transition.EndNum, 2)] * _Transition.Ratio;
+		//wLine (_PhoneSet.Phone);
 		_PhoneticData.VOT = _PhoneSet.DataPoint[DP(_Transition.StartNum, 3)] * (1 - _Transition.Ratio) +
 			_PhoneSet.DataPoint[DP(_Transition.EndNum, 3)] * _Transition.Ratio;
+		//wLine (_PhoneSet.Phone);
 		//return ret;
 	}
 	void GetData(double Time, PhoneSet& _PhoneSet,PhoneticData& _PhoneticData) 
 	{
 		Transition Trans;
+		
 		Trans = GetTransitionRate(Time, _PhoneSet);
+		wLine (converter::CStr(Trans.Ratio));
+		wLine (_PhoneSet.Phone);
 		GetData(Trans, _PhoneSet,_PhoneticData);
+		
 	}
 	PhoneSet& PhoneSet::operator =(PhoneSet& rhs)
 	{

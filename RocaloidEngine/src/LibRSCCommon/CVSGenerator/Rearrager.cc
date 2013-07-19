@@ -46,7 +46,7 @@ namespace RSCCommon
 		CDTCommon::PhoneticData Phonetic;
 		CDTCommon::PhoneticData AdjustedPhonetic;
 		double ThisStartTime, LastStartTime, ThisDurTime;
-		double LastEndTime, IntervalTime;
+		double LastEndTime, IntervalTime, LastDurTime;
 		string ThisFirstPhone, ThisPitch;
 		CDTCommon::DEF ThisDEF;
 		CDTCommon::DBSet ThisDB;
@@ -57,10 +57,12 @@ namespace RSCCommon
 		
 		for ( i = 0 ;  i <= RSCOrg.SegmentListQ ; i++)
 		{
-			wLine ("Loop Start");
-			wLine(CStr("Lyric: ")+RSCOrg.SegmentList[i].Lyric);
+			//wLine ("Loop Start");
+			//wLine(CStr("Lyric: ")+RSCOrg.SegmentList[i].Lyric);
 			ThisStartTime = RSCOrg.SegmentList[i].StartTime;
 			ThisDurTime = RSCOrg.SegmentList[i].DurTime;
+			//wLine(CStr(ThisStartTime));
+			//wLine(CStr(ThisDurTime));
 			if (i > 0) 
 			{
 				LastStartTime = _RSC.SegmentList[i - 1].StartTime;
@@ -70,20 +72,21 @@ namespace RSCCommon
 			IntervalTime = ThisStartTime - LastStartTime;
 
 			ThisDEF =_CDT.DEFList[CDTCommon::FindDEFNum(_CDT, RSCOrg.SegmentList[i])];
-			wLine (ThisDEF.Name);
-			wLine ("DEFLIST FOUND");
+			//wLine (ThisDEF.Name);
+			//wLine ("DEFLIST FOUND");
 			CDTCommon::ReplaceDEF(ThisDEF, CDTCommon::
 				                      ToSingleNotation(RSCOrg.SegmentList[i].Lyric));
-			wLine ("REPLACE");
+			//wLine ("REPLACE");
 			ThisFirstPhone = ThisDEF.TList[0].TFrom;
 			ThisPitch = GetPitchByFreq(RSCOrg.SegmentList[i].StartFreq);
 			CDTCommon::GetDBSet(_CDT, ThisFirstPhone, ThisPitch, ThisDB);
-			wLine ("DB");
+			//wLine ("DB");
 			CDTCommon::GetPhoneSet(_CDT, ThisFirstPhone[0], ThisPhoneSet);
-			wLine("PhoneSet");
+			//wLine("PhoneSet");
 			DBVOT = CDbl(ThisDB.VOT) / 96000.0;//toreal
-			wLine ("DBVOT");
-			wLine(CStr(LastEndTime - LastStartTime));
+			//wLine ("DBVOT");
+			//wLine(CStr(LastEndTime - LastStartTime));
+			LastDurTime = LastEndTime - LastStartTime;
 			if (ThisPhoneSet.Type == CDTCommon::Vowel)
 			{
 				Phonetic.ForwardOffset = 0.07;
@@ -92,9 +95,9 @@ namespace RSCCommon
 			}
 			else
 			{
-				
-				CDTCommon::GetData(LastEndTime - LastStartTime, ThisPhoneSet, Phonetic);
-				wLine("GetData");
+				//wLine(ThisDEF.Name);
+				CDTCommon::GetData(LastDurTime, ThisPhoneSet, Phonetic);
+				//wLine("GetData");
 			}
 			
 			AdjustedPhonetic.ForwardOffset = min(DBVOT, Phonetic.ForwardOffset);

@@ -37,6 +37,7 @@
 namespace RSCCommon
 {
 	using namespace Overall;
+	using namespace converter;
 
 	void GenerateCVS(RSC& _RSC, CDTCommon::CDT& _CDT , CVSCommon::CVS& _CVS)
 	{
@@ -49,21 +50,22 @@ namespace RSCCommon
 		string FirstPhone, FirstPitch, Notation;
 		string Lyric;
 		
-		wLine ("Start");
+		//wLine ("Start");
 		_RSC2 = _RSC;
-		wLine ("RSC2 = RSC");
+		//wLine ("RSC2 = RSC");
 		_RSC.TimeBake();
 		_RSC.VolumeBake();
-		Rearrange(_RSC, _RSC2, _CDT);
-		_RSC.TimeBake();
-		_RSC.VolumeBake();
-		wLine ( "Rearraged");
+		//Rearrange(_RSC, _RSC2, _CDT);
+		//Exception("test");
+		//_RSC.TimeBake();
+		//_RSC.VolumeBake();
+		//wLine ( "Rearraged");
 		
 		_CVS.SegmentList.setUbound (_RSC.SegmentListQ);
 		_CVS.SegmentListQ = _RSC.SegmentListQ;
 		for ( i = 0 ; i<= _RSC.SegmentListQ ; i++)
 		{
-			wLine("Start");
+		//	wLine("Start");
 			j = CDTCommon::FindDEFNum(_CDT, _RSC.SegmentList[i]);
 			DEF = _CDT.DEFList[j];
 			Lyric = _RSC.SegmentList[i].Lyric;
@@ -71,16 +73,16 @@ namespace RSCCommon
 			//wLine(Notation);
 			//wLine(DEF.Name);
 			CDTCommon::ReplaceDEF(DEF, Notation);
-			wLine(DEF.TList[0].TFrom);
+		//	wLine(DEF.TList[0].TFrom);
 			FirstPhone = DEF.TList[0].TFrom;
 			CDTCommon::GetPhoneSet(_CDT, FirstPhone, PhoneSet);
-			wLine("GetPhoneSet");
+		//	wLine("GetPhoneSet");
 			FirstPitch = GetPitchByFreq(_RSC.SegmentList[i].StartFreq);
 			CDTCommon::GetDBSet(_CDT, FirstPhone, FirstPitch, DBSet);
-			wLine("GetDBSet");
-			wLine(DBSet.Phone);
+		//	wLine("GetDBSet");
+			//wLine(DBSet.Phone);
+		//	
 			_CVS.SegmentList[i].StartTime = _RSC.SegmentList[i].StartTime;
-			wLine(converter::CStr(_RSC.SegmentList[i].StartTime));
 			_CVS.SegmentList[i].Effects.ElistEnabled = true;
 			
 			if (_RSC.SegmentList[i].Effects.PElopeEnabled) 
@@ -93,17 +95,19 @@ namespace RSCCommon
 				//.Effects.ADSR = _RSC.SegmentList[i].Effects.ADSR
 			}		
 			_CVS.SegmentList[i].Effects.Breath = _RSC.SegmentList[i].Effects.Breath;
-			wLine("GenTPhone");
+		//	wLine("GenTPhone");
 			GenerateTPhone(_CVS, _RSC, DEF, i);
-			wLine("GenTrans");
+		//	wLine("GenTrans");
 			GenerateTransition(_CVS, _RSC, PhoneSet, DBSet, DEF, i);
-			wLine("GenOpe");
+		//	wLine("GenOpe");
 			GenerateOpeList(_CVS, _RSC, _CDT, i);
-			wLine("GenENV");
+		//	wLine("GenENV");
 			GenerateEnvelope(_CVS, _RSC, i);
-			wLine("GenFre");
+		//	wLine("GenFre");
 			GenerateFreq(_CVS, _RSC, i);		
-			wLine("Loop");
+		//	wLine("Loop");
+			//wLine(CStr(_RSC.SegmentList[i].StartTime));
+			//wLine(CStr(_RSC.SegmentList[i].DurTime));
 		}
 	}
 

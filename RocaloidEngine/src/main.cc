@@ -55,21 +55,31 @@ int main()
 	w.Save("/home/rgwan/ramdisk/convert.rsc");
 	w.Write(rsc);
 	w.Close();*/	
-	wLine("Hello!");
+	//wLine("Hello!");
 	CVSCommon::CVS cvs;
 	RSCCommon::RSC rsc,rscout;
 	CVSCommon::CVSWriter w;
-	VSQXCommon::VSQXReader r;	
+	VSQXCommon::VSQXReader r;
+	RSCCommon::RSCReader r1;
 	RSCCommon::RSCWriter wr;	
 	CDTCommon::CDT cdt;
 	CDTCommon::CDTReader cr;
-	wLine("Hello");
-	r.Open("/home/rgwan/ramdisk/test.vsqx");
+	/*r.Open("/home/rgwan/ramdisk/test.vsqx");
 	r.Read(rsc);
 	r.Close();
+	wLine("Read");
+	/*wr.Save("/home/rgwan/ramdisk/test.rsc");
+	wr.Write(rsc);
+	wr.Close();
+	wLine("Write");*/
+	r1.Open("/home/rgwan/ramdisk/test.rsc");
+	r1.Read(rsc);
+	r1.Close();
+	
 	cr.Open("/home/rgwan/ramdisk/HMCHNDICT.cdt");
 	cr.Read(cdt);
 	cr.Close ();
+	rscout = rsc;
 	//RSCCommon::Rearrange( rscout, rsc, cdt);
 	RSCCommon::GenerateCVS ( rsc , cdt , cvs);
 	w.Save("/home/rgwan/ramdisk/test.cvs");
