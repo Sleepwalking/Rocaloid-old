@@ -33,6 +33,7 @@
 	int TestIfIsIntNotNegative(string _String) ;
 	bool TestIfIsBoolean(string _String);
 	int TestIfIsPresetedEnvelope(string _String);
+	bool TestIfIsASCII(string _String);
 }
 
 class stringStream;

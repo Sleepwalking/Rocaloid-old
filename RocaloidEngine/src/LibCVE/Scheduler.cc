@@ -5,11 +5,7 @@
 #include "Effector/Effector.h"
 #include "Effector/MixerWriter.h"
 
-#define DebugLevel 1
-
-#if(DebugLevel > 0)
-	#include "SPKit/io/terminal.h"
-#endif
+#include "SPKit/io/terminal.h"
 
 using namespace converter;
 namespace Scheduler
@@ -19,6 +15,7 @@ namespace Scheduler
 	WaveBuffer* Wave1;
 	WaveBuffer* Wave2;
 	SpeechSynthesizerSendBack SSSendBack;
+	bool Verbose = false;
 
 	void Init()
 	{
@@ -44,10 +41,9 @@ namespace Scheduler
 		TempReader.Open(FileName);
 		TempReader.Read(*CVSData);
 		TempReader.Close();
-		#if(DebugLevel > 1)
+		if(Verbose)
 			wLine(CStr("Scheduler:  ") + FileName + CStr(" loaded. ") + 
 		 	      CStr(CVSData -> SegmentListQ + 1) + CStr(" segments in all."));
-		#endif
 	}
 	void SetFileOutput(string FileName)
 	{
@@ -67,9 +63,8 @@ namespace Scheduler
 		//CVSData -> SegmentListQ
 		for(i = 0;i < CVSData -> SegmentListQ;i ++)
 		{
-			#if(DebugLevel > 0)
+			if(Verbose)
 				wLine(CStr("Scheduler: Synthesizing segment ") + CStr(i));
-			#endif
 			S2 = CInt(CVSData -> SegmentList[i + 1].StartTime * SampleRate);
 
 			//Write to S2
@@ -88,9 +83,8 @@ namespace Scheduler
 		}
 		MixerWriterEffector::Write(*Wave1, Overlap, T1 - Overlap);
 		MixerWriterEffector::Finish();
-		#if(DebugLevel > 0)
+		if(Verbose)
 			wLine(CStr("Scheduler: Synthesis finished."));
-		#endif
 	}
 	int SegmentSynthesize(SpeechSynthesizer& Synth,
 	                      CVSCommon::Segment& _Segment,

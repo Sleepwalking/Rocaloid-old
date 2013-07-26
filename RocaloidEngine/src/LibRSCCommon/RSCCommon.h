@@ -104,8 +104,8 @@ namespace RSCCommon
 			double StartAmplitude;
 			double EndAmplitude;
 			double CutTime;
-			void CopyTo( Segment Target );
 			bool IsConnectedTo ( Segment& _Segment);
+			Segment& operator =(Segment& Source);
 	};
 	class RSC
 	{
@@ -123,11 +123,11 @@ namespace RSCCommon
 			int BeatListQ;
 			array<BeatSet> BeatList;
 			UserInteraction InteractionSave;
-			void CopyTo(RSC& Target);
 			//void InitSegmentList(int LIndex, int HIndex);
 			void TimeBake();
 			void PositionBake();
 			void VolumeBake();
+			RSC& operator =(RSC& Source);
 	
 			private:
 				double GetVolumeAt(double Position);

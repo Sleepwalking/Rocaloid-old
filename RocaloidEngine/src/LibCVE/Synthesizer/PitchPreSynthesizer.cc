@@ -1,14 +1,13 @@
 #include "PitchPreSynthesizer.h"
 #include "../PitchCalc.h"
+#include "../Scheduler.h"
 #include "SPKit/misc/converter.h"
 #include "LibCyberBase/Overall.h"
 
 #define DebugLevel 1
 #define PeriodPredictionEnabled
 
-#if(DebugLevel > 0)
-	#include "SPKit/io/terminal.h"
-#endif
+#include "SPKit/io/terminal.h"
 
 using namespace Overall;
 using namespace converter;
@@ -56,7 +55,6 @@ void PitchPreSynthesizer::HLPitchSynth(PitchCalculator& PCalc, FrameBuffer& Dest
 }
 void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameBuffer& Dest)
 {
-	bool SwapOccured = false;
 	bool PCalcDirectionUnchanged;
 	double StartRatio, EndRatio;
 
@@ -69,17 +67,15 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		{
 			PreSynthesizer1 -> Load(Symbol + CStr("_") + PCalc.GetLowPitch());
 			ConsonantPitchDeviationGotten = false;
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Load Symbol ") + Symbol + CStr("_") + PCalc.GetLowPitch());
-			#endif
 		}
 		if(PreSynthesizer2 -> GetSymbol() != Symbol)
 		{
 			PreSynthesizer2 -> Load(Symbol + CStr("_") + PCalc.GetHighPitch());
 			ConsonantPitchDeviationGotten = false;
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Load Symbol ") + Symbol + CStr("_") + PCalc.GetHighPitch());
-			#endif
 		}
 	}else
 	{
@@ -88,17 +84,15 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		{
 			PreSynthesizer1 -> Load(Symbol + CStr("_") + PCalc.GetHighPitch());
 			ConsonantPitchDeviationGotten = false;
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Load Symbol ") + Symbol + CStr("_") + PCalc.GetHighPitch());
-			#endif
 		}
 		if(PreSynthesizer2 -> GetSymbol() != Symbol)
 		{
 			PreSynthesizer2 -> Load(Symbol + CStr("_") + PCalc.GetLowPitch());
 			ConsonantPitchDeviationGotten = false;
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Load Symbol ") + Symbol + CStr("_") + PCalc.GetLowPitch());
-			#endif
 		}
 	}
 	//When a new transition starts, rearrange the synthesizers.
@@ -117,10 +111,9 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 			PreSynthesizer2 -> Load(Symbol + CStr("_") + PCalc.GetHighPitch());
 			if(PreSynthesizer1 -> CVDB.Info.Consonant)
 				PreSynthesizer2 -> SkipConsonant();
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Transition ") + Symbol + CStr("_") + PCalc.GetLowPitch() +
 				      CStr(" -> ") + Symbol + CStr("_") + PCalc.GetHighPitch());
-			#endif
 		}
 	}else
 	{
@@ -136,10 +129,9 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 			PreSynthesizer2 -> Load(Symbol + CStr("_") + PCalc.GetLowPitch());
 			if(PreSynthesizer1 -> CVDB.Info.Consonant)
 				PreSynthesizer2 -> SkipConsonant();
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("PitchPreSynthesizer: Transition ") + Symbol + CStr("_") + PCalc.GetHighPitch() +
 				      CStr(" -> ") + Symbol + CStr("_") + PCalc.GetLowPitch());
-			#endif
 		}
 	}
 	PCalcLastDirection = PCalc.DirectionIsUp(); //[1]
@@ -162,19 +154,23 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		SetStartMixRatio(TR1);
 		PCalc.PitchCalc(Time + 1.0f / PCalc.GetFreqAt(Time));
 		TR2 = PCalc.GetTransitionRatio();
-		if(TR2 > 1 || TR2 < TR1)
+		if(TR2 > 1)
 			TR2 = 1;
-		else
-			SetDestMixRatio(TR2);
+		if(TR2 < TR1)
+			TR2 = 1;
 		StartRatio = TR1;
 		EndRatio = TR2;
 		#if(DebugLevel > 1)
-			wLine(CStr("PitchPreSynthesizer: Ratio from ") + CStr(TR1) + CStr(" to ") + CStr(TR2));
+			if(Scheduler::Verbose)
+				wLine(CStr("PitchPreSynthesizer: Ratio from ") + CStr(TR1) + CStr(" to ") + CStr(TR2));
 		#endif
 	}
 	#else
 	{
-		SetMixRatio(PCalc.GetTransitionRatio());
+		StartRatio = PCalc.GetTransitionRatio();
+		EndRatio = PCalc.GetTransitionRatio();
+		//	if(Scheduler::Verbose)
+		//		wLine(CStr("PitchPreSynthesizer: Ratio = ") + CStr(PCalc.GetTransitionRatio()));
 	}
 	#endif
 	//Always change from Frame1 -> Frame2
@@ -186,7 +182,10 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		   Time * SampleRate < PreSynthesizer2 -> CVDB.Info.StartPosition + 1000)
 		{
 			if(! ConsonantPitchDeviationGotten)
+			{
 				ConsonantPitchDeviateTo1 = (EndRatio < 0.5);
+				ConsonantPitchDeviationGotten = true;
+			}
 			if(ConsonantPitchDeviateTo1)
 			{
 				PreSynthesizer2 -> Synchronize(*PreSynthesizer1);
@@ -208,7 +207,6 @@ void PitchPreSynthesizer::Synthesize(PitchCalculator& PCalc, double Time, FrameB
 		{
 			if(ConsonantSkip)
 			{
-				StartRatio = 0;
 				ConsonantSkip = false;
 			}
 		}

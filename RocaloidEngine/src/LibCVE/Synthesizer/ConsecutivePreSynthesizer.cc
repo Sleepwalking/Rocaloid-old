@@ -4,12 +4,11 @@
 #include "LibCyberBase/CVDB/CBVIO.h"
 #include "LibCyberBase/MultiFrameBuffer.h"
 #include "LibCyberBase/Overall.h"
+#include "../Scheduler.h"
 
-#define ConsecutivePreSynthesizer_DebugLevel 0
+#define DebugLevel 0
 
-#if(ConsecutivePreSynthesizer_DebugLevel > 0)
-	#include "LibCyberBase/SPKit/io/terminal.h"
-#endif
+#include "LibCyberBase/SPKit/io/terminal.h"
 
 using namespace converter;
 ConsecutivePreSynthesizer::ConsecutivePreSynthesizer()
@@ -28,7 +27,8 @@ void ConsecutivePreSynthesizer::Load(string Name)
 		CBVFile::Open(Name + CStr(".cbv"), CVDB);
 		Pointer = 0;
 		SamplesPassed = 0;
-		#if(ConsecutivePreSynthesize_DebugLevel > 0)
+		#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 			wLine(CStr("ConsecutivePreSynthesizer") + Name);
 		#endif
 	}
@@ -37,7 +37,7 @@ void ConsecutivePreSynthesizer::Synchronize(int _SamplesPassed)
 {
 	while(SamplesPassed < _SamplesPassed)
 	{
-		SamplesPassed += CVDB.Buffer -> Data[Pointer] -> Ubound;
+		SamplesPassed += CVDB.Buffer -> Data[Pointer] -> Ubound + 1;
 		Pointer ++;
 	}
 }
@@ -47,12 +47,13 @@ void ConsecutivePreSynthesizer::Synchronize(ConsecutivePreSynthesizer& Source)
 }
 void ConsecutivePreSynthesizer::SkipConsonant()
 {
-	Pointer = CVDB.GetBaseFrame() + CInt(0.1 * SampleRate / CDbl(CVDB.Info.AveragePeriod));
+	Pointer = CVDB.GetBaseFrame() + CInt(0.1f * SampleRate / CDbl(CVDB.Info.AveragePeriod));
 }
 void ConsecutivePreSynthesizer::Synthesize(FrameBuffer& Dest)
 {
-	#if(ConsecutivePreSynthesizer_DebugLevel > 2)
-		wLine(CStr("ConsecutivePreSynthesizer: ") + CVDB.GetName() + CStr(" Pointer:") + CStr(Pointer));
+	#if(DebugLevel > 2)
+		if(Scheduler::Verbose)
+			wLine(CStr("ConsecutivePreSynthesizer: ") + CVDB.GetName() + CStr(" Pointer:") + CStr(Pointer));
 	#endif
 	int Pointer2;
 	double Ratio;
@@ -75,8 +76,9 @@ void ConsecutivePreSynthesizer::Synthesize(FrameBuffer& Dest)
 	{
 		Pointer2 = Pointer - CVDB.Buffer -> Ubound + CirculationQuantity;
 		Ratio = CDbl(Pointer2) / CirculationQuantity;
-		#if(ConsecutivePreSynthesizer_DebugLevel > 1)
-			wLine(CStr("ConsecutivePreSynthesizer:  ") + CVDB.GetName() + CStr(" Ratio:") + CStr(Ratio));
+		#if(DebugLevel > 1)
+			if(Scheduler::Verbose)
+				wLine(CStr("ConsecutivePreSynthesizer:  ") + CVDB.GetName() + CStr(" Ratio:") + CStr(Ratio));
 		#endif
 		SetStartMixRatio(Ratio);
 		SetDestMixRatio(Ratio + 1.0f / CirculationQuantity);
@@ -85,8 +87,9 @@ void ConsecutivePreSynthesizer::Synthesize(FrameBuffer& Dest)
 		if(Pointer2 >= CirculationQuantity)
 		{
 			Pointer = CirculationBase + 1;
-			#if(ConsecutivePreSynthesizer_DebugLevel > 1)
-				wLine(CStr("ConsecutivePreSynthesizer:  Circulate at pointer:") + CStr(Pointer));
+			#if(DebugLevel > 1)
+				if(Scheduler::Verbose)
+					wLine(CStr("ConsecutivePreSynthesizer:  Circulate at pointer:") + CStr(Pointer));
 			#endif
 		}
 		SamplesPassed += Dest.Ubound + 1;

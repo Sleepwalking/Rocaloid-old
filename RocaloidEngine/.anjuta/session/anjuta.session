@@ -2,24 +2,20 @@
 Maximized=1
 Geometry=1280x971+1366+0
 
-[File Loader]
-Files=../../src/LibCyberBase/CVDB/CBVIO.h#11%%%../../src/LibCyberBase/CVDB/CVDB.cc#1%%%../../src/LibCyberBase/CVDB/CVDB.h#1%%%../../src/LibCyberBase/SlWave/wave.h#60%%%../../src/LibCVE/Effector/MixerWriter.h#10%%%../../src/LibCVE/Effector/MixerWriter.cc#53%%%../../src/LibCVE/Scheduler.cc#20%%%../../src/LibCyberBase/Overall.h#37%%%../../src/main.cc#53%%%../../src/LibCVE/Effector/Effector.cc#21%%%../../src/LibCyberBase/SlWave/wave.cc#276%%%../../src/LibCyberBase/SPKit/misc/converter.h#249%%%../../src/LibCVE/Effector/EnvEffector.cc#19%%%../../src/LibCyberBase/SPKit/structure/string.cc#72%%%../../src/LibCVE/Synthesizer/PitchPreSynthesizer.cc#6%%%../../src/LibCVE/Synthesizer/ConsecutivePreSynthesizer.cc#1%%%../../src/LibCVE/Synthesizer/SpeechSynthesizer.cc#21
-
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
 [Project Manager]
-Shortcut=RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibRSCCommon//libRSCCommon.la%%%RocaloidEngine//src//rsctool
-Expand=rsctool%%%RocaloidEngine%%%RocaloidEngine//src%%%RocaloidEngine//src//LibCVE%%%RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//LibCVSCommon%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCyberBase%%%RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//rsctool
+Shortcut=RocaloidEngine//src//LibCyberBase//libCyberBase.la%%%RocaloidEngine//src//LibCVSCommon//libCVSCommon.la%%%RocaloidEngine//src//LibCVE//libCVE.la%%%RocaloidEngine//src//rsctool
+Expand=RocaloidEngine%%%RocaloidEngine//rocaloidenginedoc
 
 [Execution]
-Program uri=../../Debug/src/rsctool
 Run in terminal=2
 Working directories=../../../RocaloidEngine
 
 [Build]
-Configuration list=1:Default:Debug%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
-Selected Configuration=Optimized
+Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
+Selected Configuration=Default
 BuildArgs/Default=--enable-maintainer-mode
 BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
 BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'

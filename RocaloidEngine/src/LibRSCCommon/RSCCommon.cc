@@ -30,19 +30,21 @@
 namespace RSCCommon
 {
 	using namespace Overall;
-	void Segment::CopyTo( Segment Target )
+	
+	Segment& Segment::operator =(Segment& Source)
 	{
-			Target.Position = Position;
-			Target.Lyric = Lyric;
-			Target.Duration = Duration;
-			Target.StartTime = StartTime;
-			Target.DurTime = DurTime;
-			Target.Effects = Effects;
-			Target.StartFreq = StartFreq;
-			Target.EndFreq = EndFreq;
-			Target.StartAmplitude = StartAmplitude;
-			Target.EndAmplitude = EndAmplitude;
-			Target.CutTime = CutTime;
+			Position = Source.Position;
+			Lyric = Source.Lyric;
+			Duration = Source.Duration;
+			StartTime = Source.StartTime;
+			DurTime = Source.DurTime;
+			Effects = Source.Effects;
+			StartFreq = Source.StartFreq;
+			EndFreq = Source.EndFreq;
+			StartAmplitude = Source.StartAmplitude;
+			EndAmplitude = Source.EndAmplitude;
+			CutTime = Source.CutTime;
+		return *this;
 	}
 	
 	bool Segment::IsConnectedTo ( Segment& _Segment)
@@ -67,31 +69,32 @@ namespace RSCCommon
 		return Other;
 	}
 	//class RSC
-	void RSC::CopyTo(RSC& Target)
+	RSC& RSC::operator =(RSC& Source)
 	{
 		int i;
-			Target.Version = Version;
-			Target.Author = Author;
-			Target.Information = Information;
-			Target.SegmentListQ = SegmentListQ;
-			Target.SegmentList.setUbound (SegmentListQ );
+			Version = Source.Version;
+			Author = Source.Author;
+			Information = Source.Information;
+			SegmentListQ = Source.SegmentListQ;
+			SegmentList.setUbound ( Source.SegmentListQ );
 			//Target.InitSegmentList(0, SegmentListQ);
-			Target.FreqListQ = FreqListQ;
-			Target.FreqList.setUbound (FreqListQ);
-			Target.Effects = Effects;
-			Target.TempoListQ = TempoListQ;
-			Target.TempoList.setUbound (TempoListQ);
-			Target.BeatListQ = BeatListQ;
-			Target.BeatList.setUbound (BeatListQ);
-			Target.InteractionSave = InteractionSave;
-		for (i = 0 ; i<=Target.SegmentListQ ; i++)
-			SegmentList[i].CopyTo(Target.SegmentList[i]);
-		for (i = 0 ; i<=Target.FreqListQ ; i++)
-			Target.FreqList[i] = FreqList[i];
-		for (i = 0 ; i<=Target.TempoListQ ; i++)
-			Target.TempoList[i] = TempoList[i];
-		for (i = 0 ; i<=Target.BeatListQ ; i++)
-			Target.BeatList[i] = BeatList[i];
+			FreqListQ = Source.FreqListQ;
+			FreqList.setUbound (FreqListQ);
+			Effects = Source.Effects;
+			TempoListQ = Source.TempoListQ;
+			TempoList.setUbound (TempoListQ);
+			BeatListQ = Source.BeatListQ;
+			BeatList.setUbound (BeatListQ);
+			InteractionSave = Source.InteractionSave;
+		for (i = 0 ; i<=SegmentListQ ; i++)
+			SegmentList[i]=Source.SegmentList[i];
+		for (i = 0 ; i<=FreqListQ ; i++)
+			FreqList[i] = Source.FreqList[i];
+		for (i = 0 ; i<=TempoListQ ; i++)
+			TempoList[i] = Source.TempoList[i];
+		for (i = 0 ; i<=BeatListQ ; i++)
+			BeatList[i] = Source.BeatList[i];
+		return *this;
 	}
 	
 	void RSC::TimeBake()
@@ -110,14 +113,22 @@ namespace RSCCommon
 			if (LastChunk.Type == SegmentEnd) 
 				NextChunk = GetNextPositionChunk(i - 0.0001, LastChunk.Index + 1);
 			else
-				NextChunk = GetNextPositionChunk(i + 0.0001, 0);
+			{
+				if ( i < 0)
+					NextChunk = GetNextPositionChunk(0, 0);
+				else
+					NextChunk = GetNextPositionChunk(i + 0.0001, 0);
+			}
 			i = NextChunk.Position;
+			//wLine(converter::CStr(i));
+			
 			switch (NextChunk.Type)
 			{
 				case SegmentStart:
 					LastSegmentIndex = NextChunk.Index;
 					SegmentList[LastSegmentIndex].StartTime = PositionToTime(NextChunk.Position - 
 					                                                         LastTempo.Position , LastTempo.Tempo) + LastTempo_Time;
+					//wLine(converter::CStr(SegmentList[LastSegmentIndex].StartTime));
 					break;
 				case SegmentEnd:
 					EndTime = PositionToTime(NextChunk.Position - LastTempo.Position, LastTempo.Tempo) 
@@ -127,6 +138,8 @@ namespace RSCCommon
 				case TempoStart:
 					LastTempo_Time += PositionToTime(NextChunk.Position - LastTempo.Position, LastTempo.Tempo);
 					LastTempo = TempoList[NextChunk.Index];
+					//wLine("Tempo");
+					//wLine(converter::CStr(LastTempo.Tempo));
 			}
 			if (NextChunk.Type == SegmentEnd && NextChunk.Index == SegmentListQ)
 				break;
@@ -196,7 +209,8 @@ namespace RSCCommon
 	
 	double RSC::PositionToTime(double Position ,double Tempo)
 	{
-		return Position * 2 * 60 / Tempo;
+		//wLine(converter::CStr(Tempo));
+		return Position * 2.0 * 60.0 / Tempo;
 	}
 	
 	PositionChunk RSC::GetNextPositionChunk(double Position , int SegmentNum)
@@ -225,16 +239,21 @@ namespace RSCCommon
 				break;
 			}
 		}
+		//wLine(converter::CStr(Position));
 		for (i = 0 ; i<= TempoListQ ; i++)
 		{
-			if ( TempoList[i].Position > Position )
+			if ( TempoList[i].Position >= Position )
 			{
+				//wLine("Tempo");
 				PChunk2.Type = TempoStart;
 				PChunk2.Position = TempoList[i].Position;
 				PChunk2.Index = i;
+				//wLine(converter::CStr(TempoList[i].Tempo));
 				break;
 			}
 		}
+		//wLine(converter::CStr(Position));
+		//wLine(converter::CStr(TempoList[i].Tempo));
 		if (PChunk.Position <= PChunk2.Position) 
 			return PChunk;
 		else
@@ -249,6 +268,8 @@ namespace RSCCommon
 	}
 	PositionChunk RSC::GetNextPositionChunk(double Position)
 	{
-		GetNextPositionChunk(Position , 0);
+		PositionChunk res;
+		res = GetNextPositionChunk(Position , 0);
+		return res;
 	}
 };

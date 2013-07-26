@@ -18,6 +18,7 @@ namespace Scheduler
 	extern WaveBuffer* Wave1;
 	extern WaveBuffer* Wave2;
 	extern SpeechSynthesizerSendBack SSSendBack;
+	extern bool Verbose;
 
 	extern void Init();
 	extern void Exit();

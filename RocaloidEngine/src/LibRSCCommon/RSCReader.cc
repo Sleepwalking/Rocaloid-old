@@ -150,6 +150,7 @@ namespace RSCCommon
 		do
 		{
 			StrBuff = Reader.Read();
+			//wLine(StrBuff);
 			if ( StrBuff == "Position" ) 
 			{
 				StrBuff = Reader.Read();
@@ -158,6 +159,7 @@ namespace RSCCommon
 			else if ( StrBuff == "Lyric")
 			{
 				StrBuff = Reader.Read();
+				//wLine(StrBuff);
 				_Segment.Lyric = StrBuff;
 			}
 			else if ( StrBuff == "Duration")

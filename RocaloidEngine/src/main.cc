@@ -38,13 +38,18 @@
 #include "LibCVSCommon/CVSWriter.h"
 
 #include "LibRSCCommon/RSCCommon.h"
-//#include "LibRSCCommon/CDTCommon/CDTCommon.h"
-//#include "LibRSCCommon/CDTCommon/CDTReader.h"
+#include "LibRSCCommon/CDTCommon/CDTCommon.h"
+#include "LibRSCCommon/CDTCommon/CDTReader.h"
 #include "LibRSCCommon/RSCReader.h"
+
 #include "LibRSCCommon/RSCWriter.h"
 
 #include "LibCVE/Scheduler.h"
 
+#include "LibRSCCommon/CVSGenerator/Generator.h"
+#include "LibRSCCommon/CVSGenerator/Rearrager.h"
+#include "LibRSCCommon/VSQXCommon/VSQ3Reader.h"
+#include "LibRSCCommon/VSQXCommon/VSQXReader.h"
 using namespace Overall;
 using namespace converter;
 int main()
@@ -52,14 +57,35 @@ int main()
 
 	CBVFile::DataDir = "/tmp/CData/";
 	Scheduler::Init();
-	Scheduler::OpenCVS("/tmp/x.cvs");
+	Scheduler::OpenCVS("/tmp/test.cvs");
 
 	Scheduler::SetFileOutput("/tmp/RenaIsAlive.wav");
 	Scheduler::RunSynthesizer();
 	
 	Scheduler::Exit();
 
-
+	/*
+	CVSCommon::CVS cvs;
+	RSCCommon::RSC rsc,rscout;
+	CVSCommon::CVSWriter w;
+	VSQXCommon::VSQXReader r;
+	RSCCommon::RSCReader r1;
+	RSCCommon::RSCWriter wr;	
+	CDTCommon::CDT cdt;
+	CDTCommon::CDTReader cr;
+	
+	r1.Open("/tmp/test.rsc");
+	r1.Read(rsc);
+	r1.Close();
+	
+	cr.Open("/tmp/HMCHNDICT.cdt");
+	cr.Read(cdt);
+	cr.Close ();
+	rscout = rsc;
+	RSCCommon::GenerateCVS(rsc, cdt, cvs);
+	w.Save("/tmp/test.cvs");
+	w.Write(cvs);
+	w.Close ();*/
 	return 0; 
 }
 

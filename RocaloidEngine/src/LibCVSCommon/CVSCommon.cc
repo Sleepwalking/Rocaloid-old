@@ -17,18 +17,19 @@
   * You should have received a copy of the GNU General Public License
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   */
-#include "SPKit/defs.h"
-#include "SPKit/structure/string.h"
-#include "SPKit/misc/converter.h"
-#include "SPKit/structure/array.h"
-#include "SPKit/io/fileStream.h"
+#include "LibCyberBase/SPKit/defs.h"
+#include "LibCyberBase/SPKit/structure/string.h"
+#include "LibCyberBase/SPKit/misc/converter.h"
+#include "LibCyberBase/SPKit/structure/array.h"
+#include "LibCyberBase/SPKit/io/fileStream.h"
 
 #include "LibCyberBase/Overall.h"
 #include "CVSCommon.h"
 
-using namespace converter;
+
 namespace CVSCommon
 {
+	using namespace converter;
 	EffectCollection::EffectCollection()
 	{
 		EnvelopeList.preservedSpace = 40;

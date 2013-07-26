@@ -2,12 +2,9 @@
 #include "SPKit/misc/converter.h"
 #include "../Scheduler.h"
 
-#define DebugLevel 1
 #define PeriodPrediction
 
-#if(DebugLevel > 0)
-	#include "SPKit/io/terminal.h"
-#endif
+#include "SPKit/io/terminal.h"
 
 using namespace converter;
 SpeechSynthesizer::SpeechSynthesizer()
@@ -58,9 +55,8 @@ void SpeechSynthesizer::RegulatePitch(double Time)
 				NextFreqSet -> Freq, NextFreqSet -> Time,
 				NextFreqSet -> Freq, INFINITY
 			);
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("Speech Synthesizer: PCalc exceeds target."));
-			#endif
 		}else
 		{
 			LastFreqSet = &(SynthSegment -> FreqList[Last_NextFreqSetNum]);
@@ -68,13 +64,12 @@ void SpeechSynthesizer::RegulatePitch(double Time)
 				LastFreqSet -> Freq, LastFreqSet -> Time,
 				NextFreqSet -> Freq, NextFreqSet -> Time
 			);
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("Speech Synthesizer: PCalc set target: ") +
 				      CStr(LastFreqSet -> Freq) + CStr("Hz, at ") +
 				      CStr(LastFreqSet -> Time) + CStr("sec, ") +
 				      CStr(NextFreqSet -> Freq) + CStr("Hz, at ") +
 				      CStr(NextFreqSet -> Time) + CStr("sec."));
-			#endif
 		}
 	}else
 	{
@@ -119,9 +114,8 @@ void SpeechSynthesizer::Synthesize(double Time, FrameBuffer& Dest)
 			{
 				//Preserves the End of LastTPhone.
 				PtrSwap(PitchSynth1, PitchSynth2);
-				#if(DebugLevel > 0)
+				if(Scheduler::Verbose)
 					wLine(CStr("Speech Synthesizer: PitchSynth Swaps."));
-				#endif
 			}else
 			{
 				Exception(CStr("Invalid Preserve Target as ") + CStr(CurrentTPhone.Start.Preserved));
@@ -136,9 +130,8 @@ void SpeechSynthesizer::Synthesize(double Time, FrameBuffer& Dest)
 			{
 				//Preserves the start of LastTPhone, though no real use.
 				PtrSwap(PitchSynth1, PitchSynth2);
-				#if(DebugLevel > 0)
+				if(Scheduler::Verbose)
 					wLine(CStr("Speech Synthesizer: PitchSynth Swaps."));
-				#endif
 			}else
 			{
 				Exception(CStr("Invalid Preserve Target as ") + CStr(CurrentTPhone.Dest.Preserved));
@@ -152,16 +145,14 @@ void SpeechSynthesizer::Synthesize(double Time, FrameBuffer& Dest)
 		if(CurrentTPhone.Start.Type)
 		{
 			PitchSynth1 -> SetSymbol(CurrentTPhone.Start.Symbol);
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("Speech Synthesizer: ") + CStr(CurrentTPhone.Start.Symbol) + CStr(" -> ") + CStr("PitchSynth1"));
-			#endif
 		}
 		if(CurrentTPhone.Dest.Type)
 		{
 			PitchSynth2 -> SetSymbol(CurrentTPhone.Dest.Symbol);
-			#if(DebugLevel > 0)
+			if(Scheduler::Verbose)
 				wLine(CStr("Speech Synthesizer: ") + CStr(CurrentTPhone.Start.Symbol) + CStr(" -> ") + CStr("PitchSynth2"));
-			#endif
 		}
 	}else
 	{
@@ -184,9 +175,8 @@ void SpeechSynthesizer::Synthesize(double Time, FrameBuffer& Dest)
 		if(TR2 > 1)
 			TR2 = 1;
 		SetDestMixRatio(TR2);
-		#if(DebugLevel > 1)
+		if(Scheduler::Verbose)
 			wLine(CStr("SpeechSynthesizer: Ratio from ") + CStr(TR1) + CStr(" to ") + CStr(TR2));
-		#endif
 	}
 	#else
 	{
