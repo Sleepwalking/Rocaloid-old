@@ -1,0 +1,23 @@
+CVDB 1.0
+
+0-3	Dword	CVDB Header			'CVDB'
+4-5	UInt16	CVDB Version			0x0003
+6-9	Float	Fundamental Frequency (F0)
+10-17	Qword	Pronunciation Symbol		ASCII Chars, ends with \0
+18	Byte	Blank				0x00
+19	Char	Phone Type			C-V Diphone:'D' Vowel:'V'
+
+20-23	UInt32	Pulse Num
+24-27	UInt32	Voice Onset Index
+28-31	UInt32	Wave Size
+
+32-35	Float	F1
+36-39	Float	F2
+40-43	Float	F3
+44-47	Float	S1
+48-51	Float	S2
+52-55	Float	S3
+
+56-?	UInt32	Pulse Offsets
+
+?-?	Int16	Wave				44100Hz, signed, 16 bit, mono

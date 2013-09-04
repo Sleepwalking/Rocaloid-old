@@ -1,0 +1,34 @@
+#CDT 3.0
+CDT
+SymbolMapping
+Symbol a_C3 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+Symbol a_F#3 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+Symbol a_C4 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+Symbol o_C3 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+Symbol o_F#3 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+Symbol o_C4 Len 32342 F0 xxx F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx Type V
+End
+FreqMapping
+FPhone _a Freq 262 Symbol a_C3
+FPhone _a Freq 375 Symbol a_F#3
+FPhone _a Freq 526 Symbol a_C4
+FPhone _o Freq 262 Symbol o_C3
+FPhone _o Freq 375 Symbol o_F#3
+FPhone _o Freq 526 Symbol o_C4
+End
+FormantMapping
+Phone a Freq 262 Map _a F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx
+Phone o Freq 262 Map _o F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx
+Phone i Freq 262 Map _a F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx
+Phone u Freq 262 Map _o F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx
+Phone e Freq 262 Map _a F1 xxx F2 xxx F3 xxx S1 xxx S2 xxx S3 xxx
+End
+TransitionMapping
+Phone1 a Phone2 a Ratio 0.5
+Phone1 a Phone2 o Ratio 0.3
+Phone1 a Phone2 i Ratio 0.6
+Phone1 a Phone2 u Ratio 0.6
+Phone1 a Phone2 e Ratio 0.3
+End
+End
+
