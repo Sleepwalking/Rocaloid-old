@@ -19,5 +19,11 @@ We are planning to use [qtau] [1] as editor.
 * Multi sound db will be supported in the next version.
 * Rocaloid Renaissance is going to be fininshed in Spring, 2014.
 
+2013.9.4
+
+---
+
+* The design of Rocaloid 3 is almost finished.
+* Writing libs for file IO and data structures now.
 
  [1]: https://github.com/digited/qtau/ "qtau"
