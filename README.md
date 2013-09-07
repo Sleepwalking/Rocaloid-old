@@ -1,29 +1,26 @@
 Rocaloid is a vocal synthesis engine which originally aimed to enable Hatsune Miku to sing in Chinese (and maybe other languages).
 
-The synthesis engine, CVE, currently uses time-domain algorism like PSOLA.
+Currently we've just started the development of Rocaloid 3, here's the general structure:
 
-Sleepwalking called it "TDPSM" (Time Domain Pitch Synchronize and Mix).
-
-For more information about Rocaloid, please visit http://bbs.ivocaloid.com/forum-138-1.html.
+![rocaloid3](https://f.cloud.github.com/assets/4531595/1055721/2b3f15a0-1144-11e3-8395-dd49d691c911.png)
 
 We are planning to use [qtau] [1] as editor.
 
-2013.8.24
-
+Directorys
 ---
 
-* Currently we are designing the new synthesis algorithm FECSOLA, which works on both Time and Freq Domain.
-* The new Rocaloid will be written in C instead of C++.
-* The whole project is going to be rewritten again...
-* CVS, CDT, and RSC are also going to be redesigned.
-* Multi sound db will be supported in the next version.
-* Rocaloid Renaissance is going to be fininshed in Spring, 2014.
+* RDesign: Charts & Graphs & Specifications & Plans
+* RUtil: A tiny C library for dynamic structures and file access.
+* RocaloidEngine: Contains `CVE 3`, `CGTOR 3`, `RFILE 3`.
+	* `CVE 3`: The synthesis engine (CyberVoice Engine)
+		* `CVEDSP`: The signal processing lib for `CVE`.
+	* `CGTOR 3`: CVS Generator, generates `CVS` from `RVS` with `CDT`.
+	* `RFILE 3`: Provides I/O for `CVS`, `RVS`, `CDT` and `CVDB`.
+* RocaloidDevTools: tools for building Rocaloid sound dbs.
+	* CVDBStudio: tool for converting `.wav` to `.cvdb`.
 
-2013.9.4
+For more information about Rocaloid, please visit http://bbs.ivocaloid.com/forum-138-1.html.
 
----
 
-* The design of Rocaloid 3 is almost finished.
-* Writing libs for file IO and data structures now.
 
  [1]: https://github.com/digited/qtau/ "qtau"
