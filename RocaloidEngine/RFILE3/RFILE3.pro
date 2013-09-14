@@ -28,5 +28,6 @@ HEADERS += \
     CVDB3/CVDB3IO.h \
     CDT3/Demapper.h \
     CDT3/CDT3Reader.h \
-    CDT3/CDT3.h
+    CDT3/CDT3.h \
+    RDL.h
 

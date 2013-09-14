@@ -1,5 +1,26 @@
 #include "CDT3.h"
 
+SyllableType CSyllableTypeStr(String* Dest)
+{
+    if(String_EqualChars(Dest, "V"))
+        return V;
+    if(String_EqualChars(Dest, "VV"))
+        return VV;
+    if(String_EqualChars(Dest, "VVV"))
+        return VVV;
+    if(String_EqualChars(Dest, "CV"))
+        return CV;
+    if(String_EqualChars(Dest, "CVV"))
+        return CVV;
+    if(String_EqualChars(Dest, "CAV"))
+        return CAV;
+    if(String_EqualChars(Dest, "CAVV"))
+        return CAVV;
+
+    //Default
+    return V;
+}
+
 void SGtorSyllable_Ctor(SGtorSyllable* Dest)
 {
     String_Ctor(& Dest -> Syllable);

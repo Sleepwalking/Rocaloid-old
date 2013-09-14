@@ -86,6 +86,20 @@ int CBoolChars(char* Src)
     return 0;
 }
 
+int CVBBoolStr(String* Src)
+{
+    if(String_EqualChars(Src, "True"))
+        return 1;
+    return 0;
+}
+
+int CVBBoolChars(char* Src)
+{
+    if(! strcmp(Src, "True"))
+        return 1;
+    return 0;
+}
+
 char CCharStr(String* Src)
 {
     return Src -> Data[0];

@@ -15,12 +15,14 @@ typedef enum
     CAVV    = 6
 } SyllableType;
 
+extern SyllableType CSyllableTypeStr(String* Dest);
+
 typedef struct
 {
     String Syllable;
     SyllableType Type;
     float EndingRatio;
-    int Extened;
+    int Extended;
 
     String* PhoneList;
     int PhoneList_Index;
@@ -114,6 +116,7 @@ extern void CDTMap_Dtor(CDTMap* Dest);
 
 typedef struct
 {
+    float Version;
     SGtorSyllable* SGtorList;
     int SGtorList_Index;
     int SGtorList_Size;

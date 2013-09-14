@@ -15,7 +15,9 @@ void CStrFloatF(String* Dest, float Src, const char* Format);
 void CStrDoubleF(String* Dest, double Src, const char* Format);
 
 int CBoolStr(String* Src);
+int CVBBoolStr(String* Src);
 int CBoolChars(char* Src);
+int CVBBoolChars(char* Src);
 
 char CCharStr(String* Src);
 char CCharChars(const char* Src);
