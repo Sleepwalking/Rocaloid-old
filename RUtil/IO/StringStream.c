@@ -9,8 +9,8 @@ void StringStream_Init(StringStream* Dest, char* Ptr)
 
 void StringStream_ReadWord(String* Dest, StringStream* Src)
 {
-    ArrayType_Ctor(char, tmp);
     char tmpchar;
+    Dest -> Data_Index = - 1;
 
     tmpchar = *(Src -> BasePtr + Src -> Offset);
     while(tmpchar == ' ' || tmpchar == '\t'|| tmpchar == '\n' || tmpchar == '\r')
@@ -22,32 +22,28 @@ void StringStream_ReadWord(String* Dest, StringStream* Src)
     do
     {
         tmpchar = *(Src -> BasePtr + Src -> Offset);
-        ArrayType_Push(char, tmp, tmpchar);
+        ArrayType_Push(char, Dest -> Data, tmpchar);
         Src -> Offset ++;
     }
     while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
-    tmp[tmp_Index] = 0;
-    String_SetChars(Dest, tmp);
-    ArrayType_Dtor(char, tmp);
+    Dest -> Data[Dest -> Data_Index] = 0;
 }
 
 void StringStream_ReadLine(String* Dest, StringStream* Src)
 {
-    ArrayType_Ctor(char, tmp);
     char tmpchar;
+    Dest -> Data_Index = - 1;
 
     do
     {
         tmpchar = *(Src -> BasePtr + Src -> Offset);
-        ArrayType_Push(char, tmp, tmpchar);
+        ArrayType_Push(char, Dest -> Data, tmpchar);
         Src -> Offset ++;
     }
     while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
-    tmp[tmp_Index] = 0;
-    String_SetChars(Dest, tmp);
-    ArrayType_Dtor(char, tmp);
+    Dest -> Data[Dest -> Data_Index] = 0;
 }
 
 void StringStream_ReadAll(String* Dest, StringStream* Src)

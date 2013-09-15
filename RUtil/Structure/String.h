@@ -12,6 +12,7 @@ extern void String_Ctor(String* Dest);
 extern void String_Dtor(String* Dest);
 
 extern void String_SetChars(String* Dest, const char* Chars);
+extern void String_SetCharsN(String* Dest, const char* Chars, int Length);
 extern const char* String_GetChars(String* Dest);
 
 extern void String_Copy(String* Dest, String* Src);

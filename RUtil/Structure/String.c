@@ -36,6 +36,13 @@ void String_SetChars(String* Dest, const char* Chars)
     Dest -> Data_Index = Len - 1;
 }
 
+void String_SetCharsN(String* Dest, const char* Chars, int Length)
+{
+    ArrayType_Resize(char, Dest -> Data, Length);
+    memcpy(Dest -> Data, Chars, Length);
+    Dest -> Data_Index = Length - 1;
+}
+
 const char* String_GetChars(String* Dest)
 {
     ArrayType_Push(char, Dest -> Data, 0);

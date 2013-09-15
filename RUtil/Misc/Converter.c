@@ -3,6 +3,52 @@
 #include <string.h>
 #include <stdlib.h>
 
+inline float Math_FloatPower10(int Power)
+{
+    int i;
+    float TmpFloat = 1;
+    if(Power >= 0)
+        for(i = 0; i < Power; i ++)
+            TmpFloat *= 10;
+    else
+        for(i = 0; i < - Power; i ++)
+            TmpFloat *= 0.1;
+    return TmpFloat;
+}
+
+float Math_CFloatChars(char* Src, int Length)
+{
+    int i, DeciPos, Sign;
+    float Accumulator = 0;
+    float Power;
+
+    //Get Sign
+    if(*Src == '-')
+        Sign = 1;
+    else
+        Sign = 0;
+    DeciPos = Length - Sign;
+
+    //Find Float Point
+    for(i = Sign; i < Length; i ++)
+        if(Src[i] == '.')
+            DeciPos = i - Sign;
+
+    //Accumulate
+    Power = Math_FloatPower10(DeciPos - Sign - 1 + Sign);
+    for(i = Sign; i < Length; i ++)
+    {
+        if(Src[i] == '.')
+        {
+            DeciPos ++;
+            continue;
+        }
+        Accumulator += Power * (Src[i] - '0');
+        Power *= 0.1;
+    }
+    return Accumulator;
+}
+
 void CStrChars(String* Dest, const char* Src)
 {
     String_SetChars(Dest, Src);
@@ -168,8 +214,7 @@ long CLongChars(const char* Src)
 
 float CFloatStr(String* Src)
 {
-    const char* chars = String_GetChars(Src);
-    return atof(chars);
+    return Math_CFloatChars(Src -> Data, Src -> Data_Index);
 }
 float CFloatChars(const char* Src)
 {
