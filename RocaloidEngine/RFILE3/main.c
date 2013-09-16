@@ -2,6 +2,7 @@
 #include "CVDB3/CVDB3IO.h"
 #include "CDT3/CDT3.h"
 #include "CDT3/CDT3Reader.h"
+#include "CDT3/Demapper.h"
 #include <string.h>
 #include <malloc.h>
 
@@ -10,6 +11,10 @@ int main(void)
     //CVDB3 test;
     //CVDB3_Ctor(&test);
     String_FromChars(Path, "/tmp/CDT3Example.cdt");
+
+    CDTMappingQuerySpace test;
+    FormantLayerPartialEntry test2;
+    FormantLayerPartialEntry_Ctor(& test2);
 
     CDT3 a;
     CDT3_Ctor(&a);

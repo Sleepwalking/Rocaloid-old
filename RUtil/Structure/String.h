@@ -31,9 +31,10 @@ extern int String_EqualChars(String* Str1, const char* Str2);
 
 #define String_FromChars(name, chars)\
     String name;\
-    do {\
-    String_Ctor(&name);\
-    String_SetChars(&name, chars);\
+    do\
+    {\
+        String_Ctor(&name);\
+        String_SetChars(&name, chars);\
     } while(0)
 
 //------------------------------------------------------------------

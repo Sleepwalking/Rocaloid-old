@@ -1,15 +1,14 @@
 #ifndef CDT3_H
 #define CDT3_H
 
-#include "../RUtil/Structure/Array.h"
-#include "../RUtil/Structure/String.h"
+#include "RUtil/RUtil.h"
 
 typedef enum
 {
     V       = 0,
     VV      = 1,
     VVV     = 2,
-    CV  	= 3,
+    CV      = 3,
     CVV     = 4,
     CAV     = 5,
     CAVV    = 6
@@ -17,31 +16,23 @@ typedef enum
 
 extern SyllableType CSyllableTypeStr(String* Dest);
 
-typedef struct
+AutoClass
 {
     String Syllable;
     SyllableType Type;
     float EndingRatio;
     int Extended;
 
-    String* PhoneList;
-    int PhoneList_Index;
-    int PhoneList_Size;
-} SGtorSyllable;
+    ArrayType_Define(String, PhoneList);
+} EndClass(SGtorSyllable);
 
-extern void SGtorSyllable_Ctor(SGtorSyllable* Dest);
-extern void SGtorSyllable_Dtor(SGtorSyllable* Dest);
-
-typedef struct
+AutoClass
 {
     String Name;
     String FileAddr;
-} DBLayerEntry;
+} EndClass(DBLayerEntry);
 
-extern void DBLayerEntry_Ctor(DBLayerEntry* Dest);
-extern void DBLayerEntry_Dtor(DBLayerEntry* Dest);
-
-typedef struct
+AutoClass
 {
     String Name;
     char Type;
@@ -55,22 +46,16 @@ typedef struct
     float S1;
     float S2;
     float S3;
-} SymbolLayerEntry;
+} EndClass(SymbolLayerEntry);
 
-extern void SymbolLayerEntry_Ctor(SymbolLayerEntry* Dest);
-extern void SymbolLayerEntry_Dtor(SymbolLayerEntry* Dest);
-
-typedef struct
+AutoClass
 {
     String FPhone;
     float F0;
     String Name;
-} FreqLayerEntry;
+} EndClass(FreqLayerEntry);
 
-extern void FreqLayerEntry_Ctor(FreqLayerEntry* Dest);
-extern void FreqLayerEntry_Dtor(FreqLayerEntry* Dest);
-
-typedef struct
+AutoClass
 {
     String Phone;
     float F0;
@@ -82,48 +67,34 @@ typedef struct
     float S1;
     float S2;
     float S3;
-} FormantLayerEntry;
+} EndClass(FormantLayerEntry);
 
-extern void FormantLayerEntry_Ctor(FormantLayerEntry* Dest);
-extern void FormantLayerEntry_Dtor(FormantLayerEntry* Dest);
-
-typedef struct
+AutoClass
 {
     String Phone1;
     String Phone2;
     float Ratio;
-} TransitionLayerEntry;
-
-extern void TransitionLayerEntry_Ctor(TransitionLayerEntry* Dest);
-extern void TransitionLayerEntry_Dtor(TransitionLayerEntry* Dest);
+} EndClass(TransitionLayerEntry);
 
 #define MappingArrayDEF(Layer)\
     Layer##Entry* Layer##Map;\
     int Layer##Map_Index;\
     int Layer##Map_Size
 
-typedef struct
+AutoClass
 {
     MappingArrayDEF(DBLayer);
     MappingArrayDEF(SymbolLayer);
     MappingArrayDEF(FreqLayer);
     MappingArrayDEF(FormantLayer);
     MappingArrayDEF(TransitionLayer);
-} CDTMap;
+} EndClass(CDTMap);
 
-extern void CDTMap_Ctor(CDTMap* Dest);
-extern void CDTMap_Dtor(CDTMap* Dest);
-
-typedef struct
+AutoClass
 {
     float Version;
-    SGtorSyllable* SGtorList;
-    int SGtorList_Index;
-    int SGtorList_Size;
+    ArrayType_Define(SGtorSyllable, SGtorList);
     CDTMap CDTMapping;
-} CDT3;
-
-extern void CDT3_Ctor(CDT3* Dest);
-extern void CDT3_Dtor(CDT3* Dest);
+} EndClass(CDT3);
 
 #endif

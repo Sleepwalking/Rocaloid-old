@@ -29,5 +29,6 @@ HEADERS += \
     CDT3/Demapper.h \
     CDT3/CDT3Reader.h \
     CDT3/CDT3.h \
-    RDL.h
+    RDL.h \
+    RUtil/RUtil.h
 

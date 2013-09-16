@@ -21,78 +21,78 @@ SyllableType CSyllableTypeStr(String* Dest)
     return V;
 }
 
-void SGtorSyllable_Ctor(SGtorSyllable* Dest)
+_Constructor_ (SGtorSyllable)
 {
     String_Ctor(& Dest -> Syllable);
     ArrayType_Init(String, Dest -> PhoneList);
 }
 
-void SGtorSyllable_Dtor(SGtorSyllable* Dest)
+_Destructor_ (SGtorSyllable)
 {
     String_Dtor(& Dest -> Syllable);
     ArrayType_ObjDtor(String, Dest -> PhoneList);
     ArrayType_Dtor(String, Dest -> PhoneList);
 }
 
-void DBLayerEntry_Ctor(DBLayerEntry* Dest)
+_Constructor_ (DBLayerEntry)
 {
     String_Ctor(& Dest -> Name);
     String_Ctor(& Dest -> FileAddr);
 }
 
-void DBLayerEntry_Dtor(DBLayerEntry* Dest)
+_Destructor_ (DBLayerEntry)
 {
     String_Dtor(& Dest -> Name);
     String_Dtor(& Dest -> FileAddr);
 }
 
-void SymbolLayerEntry_Ctor(SymbolLayerEntry* Dest)
+_Constructor_ (SymbolLayerEntry)
 {
     String_Ctor(& Dest -> Name);
 }
 
-void SymbolLayerEntry_Dtor(SymbolLayerEntry* Dest)
+_Destructor_ (SymbolLayerEntry)
 {
     String_Dtor(& Dest -> Name);
 }
 
-void FreqLayerEntry_Ctor(FreqLayerEntry* Dest)
+_Constructor_ (FreqLayerEntry)
 {
     String_Ctor(& Dest -> FPhone);
     String_Ctor(& Dest -> Name);
 }
 
-void FreqLayerEntry_Dtor(FreqLayerEntry* Dest)
+_Destructor_ (FreqLayerEntry)
 {
     String_Dtor(& Dest -> FPhone);
     String_Dtor(& Dest -> Name);
 }
 
-void FormantLayerEntry_Ctor(FormantLayerEntry* Dest)
+_Constructor_ (FormantLayerEntry)
 {
     String_Ctor(& Dest -> Phone);
     String_Ctor(& Dest -> FPhone);
 }
 
-void FormantLayerEntry_Dtor(FormantLayerEntry* Dest)
+_Destructor_ (FormantLayerEntry)
 {
     String_Dtor(& Dest -> Phone);
     String_Dtor(& Dest -> FPhone);
 }
 
-void TransitionLayerEntry_Ctor(TransitionLayerEntry* Dest)
+_Constructor_ (TransitionLayerEntry)
 {
     String_Ctor(& Dest -> Phone1);
     String_Ctor(& Dest -> Phone2);
 }
 
-void TransitionLayerEntry_Dtor(TransitionLayerEntry* Dest)
+_Destructor_ (TransitionLayerEntry)
 {
     String_Dtor(& Dest -> Phone1);
     String_Dtor(& Dest -> Phone2);
 }
 
-void CDTMap_Ctor(CDTMap* Dest)
+_Constructor_ (CDTMap)
 {
     ArrayType_Init(DBLayerEntry, Dest -> DBLayerMap);
     ArrayType_Init(SymbolLayerEntry, Dest -> SymbolLayerMap);
@@ -101,7 +101,7 @@ void CDTMap_Ctor(CDTMap* Dest)
     ArrayType_Init(TransitionLayerEntry, Dest -> TransitionLayerMap);
 }
 
-void CDTMap_Dtor(CDTMap* Dest)
+_Destructor_ (CDTMap)
 {
     ArrayType_ObjDtor(DBLayerEntry, Dest -> DBLayerMap);
     ArrayType_ObjDtor(SymbolLayerEntry, Dest -> SymbolLayerMap);
@@ -116,13 +116,13 @@ void CDTMap_Dtor(CDTMap* Dest)
     ArrayType_Dtor(TransitionLayerEntry, Dest -> TransitionLayerMap);
 }
 
-void CDT3_Ctor(CDT3* Dest)
+_Constructor_ (CDT3)
 {
     ArrayType_Init(SGtorSyllable, Dest -> SGtorList);
     CDTMap_Ctor(& Dest -> CDTMapping);
 }
 
-void CDT3_Dtor(CDT3* Dest)
+_Destructor_ (CDT3)
 {
     ArrayType_ObjDtor(SGtorSyllable, Dest -> SGtorList);
     ArrayType_Dtor(SGtorSyllable, Dest -> SGtorList);

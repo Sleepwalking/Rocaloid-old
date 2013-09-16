@@ -2,13 +2,13 @@
 #include <malloc.h>
 #include <string.h>
 
-void CVDB3_Ctor(CVDB3* Dest)
+_Constructor_ (CVDB3)
 {
     Dest -> PulseOffsets = (uint32_t*)malloc(4);
     Dest -> Wave = (float*)malloc(4);
 }
 
-void CVDB3_Dtor(CVDB3* Dest)
+_Destructor_ (CVDB3)
 {
     free(Dest -> PulseOffsets);
     free(Dest -> Wave);

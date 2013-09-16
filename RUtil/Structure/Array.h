@@ -66,15 +66,20 @@
         (IndexNumber) -= Array_RemoveAmount;\
     }while(0)
 
+#define ArrayType_Define(Type, Name)\
+    Type* Name;\
+    int Name##_Index;\
+    int Name##_Size
+
 #define ArrayType_Ctor(Type, Name)\
     Type* Name = (Type*)malloc(sizeof(Type) * 10);\
-    int Name##_Size = 10;\
-    int Name##_Index = -1
+    int Name##_Index = -1;\
+    int Name##_Size = 10
 
 #define ArrayType_Init(Type, Name)\
     Name = (Type*)malloc(sizeof(Type) * 10);\
-    Name##_Size = 10;\
-    Name##_Index = -1
+    Name##_Index = -1;\
+    Name##_Size = 10
 
 #define ArrayType_Dtor(Type, Name)\
     free(Name)

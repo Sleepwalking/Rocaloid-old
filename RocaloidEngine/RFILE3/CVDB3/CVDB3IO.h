@@ -2,7 +2,7 @@
 #define CVDB3IO_H
 
 #include "../RUtil/IO/FileUtil.h"
-#include "../RUtil/Structure/String.h"
+#include "../RUtil/RUtil.h"
 #include <stdint.h>
 
 typedef struct
@@ -26,15 +26,12 @@ typedef struct
     float S3;
 } CVDB3Header;
 
-typedef struct
+AutoClass
 {
     CVDB3Header Header;
     uint32_t* PulseOffsets;
     float* Wave;
-} CVDB3;
-
-extern void CVDB3_Ctor(CVDB3* Dest);
-extern void CVDB3_Dtor(CVDB3* Dest);
+} EndClass(CVDB3);
 
 extern void CVDB3_Load(CVDB3* Dest, String* Path);
 extern void CVDB3_Write(String* Path, CVDB3* Src);
