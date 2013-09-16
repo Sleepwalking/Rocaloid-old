@@ -27,7 +27,7 @@ void StringStream_ReadWord(String* Dest, StringStream* Src)
     }
     while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
-    Dest -> Data[Dest -> Data_Index] = 0;
+    Dest -> Data[Dest -> Data_Index --] = 0;
 }
 
 void StringStream_ReadLine(String* Dest, StringStream* Src)
@@ -43,7 +43,7 @@ void StringStream_ReadLine(String* Dest, StringStream* Src)
     }
     while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0);
 
-    Dest -> Data[Dest -> Data_Index] = 0;
+    Dest -> Data[Dest -> Data_Index --] = 0;
 }
 
 void StringStream_ReadAll(String* Dest, StringStream* Src)

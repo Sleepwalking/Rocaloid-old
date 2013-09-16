@@ -21,7 +21,7 @@ void String_Dtor(String* Dest)
     free(Dest -> Data);
 }
 
-void String_Copy(String* Dest, String* Src)
+void String_Copy(String* Dest, const String* Src)
 {
     ArrayType_Resize(char, Dest -> Data, Src -> Data_Index + 1);
     memcpy(Dest -> Data, Src -> Data, Src -> Data_Index + 1);
@@ -70,7 +70,7 @@ void String_SetChar(String* Dest, int Index, char Data)
     Dest -> Data[Index] = Data;
 }
 
-void String_Join(String* Dest, String* Src)
+void String_Join(String* Dest, const String* Src)
 {
     ArrayType_Resize(char, Dest -> Data, Dest -> Data_Index + Src -> Data_Index + 2 + Dest -> Data_Index / 10);
     memcpy(Dest -> Data + Dest -> Data_Index + 1, Src -> Data, Src -> Data_Index + 1);
@@ -85,19 +85,22 @@ void String_JoinChars(String* Dest, const char* Src)
     Dest -> Data_Index += Len;
 }
 
-int String_Equal(String* Str1, String* Str2)
+int String_Equal(const String* Str1, const String* Str2)
 {
-    return ! strcmp(String_GetChars(Str1), String_GetChars(Str2));
+    return (Str1 -> Data_Index == Str2 -> Data_Index) &&
+           (! strncmp(Str1 -> Data, Str2 -> Data, Str1 -> Data_Index + 1));
 }
 
-int String_EqualChars(String* Str1, const char* Str2)
+int String_EqualChars(const String* Str1, const char* Str2)
 {
-    return ! strcmp(String_GetChars(Str1), Str2);
+    if(strlen(Str2) == (size_t)Str1 -> Data_Index + 1)
+        return ! strncmp(Str1 -> Data, Str2, Str1 -> Data_Index + 1);
+    return 0;
 }
 
 //------------------------------------------------------------
 
-void Mid(String* Dest, String* Src, int From, int Count)
+void Mid(String* Dest, const String* Src, int From, int Count)
 {
     int i;
     if(Count + From > Src -> Data_Index)
@@ -109,7 +112,7 @@ void Mid(String* Dest, String* Src, int From, int Count)
         Dest -> Data[i] = Src -> Data[From + i];
 }
 
-void MidFrom(String* Dest, String* Src, int From)
+void MidFrom(String* Dest, const String* Src, int From)
 {
     int i;
     int Count = Src -> Data_Index - From + 1;
@@ -120,7 +123,7 @@ void MidFrom(String* Dest, String* Src, int From)
         Dest -> Data[i] = Src -> Data[From + i];
 }
 
-void Right(String* Dest, String* Src, int Count)
+void Right(String* Dest, const String* Src, int Count)
 {
     int i;
     if(Src -> Data_Index - Count < - 1)
@@ -133,7 +136,7 @@ void Right(String* Dest, String* Src, int Count)
         Dest -> Data[i] = Src -> Data[From + i];
 }
 
-void Left(String* Dest, String* Src, int Count)
+void Left(String* Dest, const String* Src, int Count)
 {
     int i;
     if(Count > Dest -> Data_Index + 1)
@@ -145,7 +148,7 @@ void Left(String* Dest, String* Src, int Count)
         Dest -> Data[i] = Src -> Data[i];
 }
 
-void UpperCase(String* Dest, String* Src)
+void UpperCase(String* Dest, const String* Src)
 {
     int i;
     int Len = Src -> Data_Index + 1;
@@ -157,7 +160,7 @@ void UpperCase(String* Dest, String* Src)
             Dest -> Data[i] = Src -> Data[i];
 }
 
-void LowerCase(String* Dest, String* Src)
+void LowerCase(String* Dest, const String* Src)
 {
     int i;
     int Len = Src -> Data_Index + 1;
@@ -224,7 +227,7 @@ int InStrRev(String* Whole, String* Part)
     return InStrRevFrom(Whole, Part, Whole -> Data_Index + 1);
 }
 
-void Trim(String* Dest, String* Src)
+void Trim(String* Dest, const String* Src)
 {
     int Start, End, i, SrcLen, RetLen;
     SrcLen = Src -> Data_Index + 1;
@@ -248,7 +251,7 @@ void Trim(String* Dest, String* Src)
         Dest -> Data[i] = Src -> Data[i + Start];
 }
 
-void LTrim(String* Dest, String* Src)
+void LTrim(String* Dest, const String* Src)
 {
     int Start, End, i, SrcLen, RetLen;
     SrcLen = Src -> Data_Index + 1;
@@ -266,7 +269,7 @@ void LTrim(String* Dest, String* Src)
         Dest -> Data[i] = Src -> Data[i + Start];
 }
 
-void RTrim(String* Dest, String* Src)
+void RTrim(String* Dest, const String* Src)
 {
     int Start, End, i, SrcLen, RetLen;
     SrcLen = Src -> Data_Index + 1;

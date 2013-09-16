@@ -214,7 +214,7 @@ long CLongChars(const char* Src)
 
 float CFloatStr(String* Src)
 {
-    return Math_CFloatChars(Src -> Data, Src -> Data_Index);
+    return Math_CFloatChars(Src -> Data, Src -> Data_Index + 1);
 }
 float CFloatChars(const char* Src)
 {

@@ -13,14 +13,17 @@ int main(void)
     String_FromChars(Path, "/tmp/CDT3Example.cdt");
 
     CDTMappingQuerySpace test;
-    FormantLayerPartialEntry test2;
-    FormantLayerPartialEntry_Ctor(& test2);
+    CDTMappingQuerySpace_Ctor(& test);
 
     CDT3 a;
     CDT3_Ctor(&a);
     CDTReader_Open(&Path);
     int ret = CDT3_Read(&a);
-    printf("%d\n%f\n", ret, a.Version);
+    printf("Ret: %d\nVer: %f\n", ret, a.Version);
+
+    Demapper_ConstructQuerySpace(&test, & a.CDTMapping);
+    CDTMappingQuerySpace_Dtor(& test);
+
     CDTReader_Close();
     CDT3_Dtor(&a);
 

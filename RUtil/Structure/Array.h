@@ -49,6 +49,19 @@
         (IndexNumber) ++;\
     }while(0)
 
+#define Array_InsertNull(Type, Array, IndexNumber, Size, Index)\
+    do{\
+        int Array_i;\
+        if((IndexNumber) > (Size) - 2)\
+        {\
+            (Array) = (Type*)realloc((Array), sizeof(Type) * ((Array_Addition) + (Size)));\
+            (Size) += Array_Addition;\
+        }\
+        for(Array_i = (IndexNumber) + 1; Array_i > (Index); Array_i --)\
+            (Array)[Array_i] = (Array)[Array_i - 1];\
+        (IndexNumber) ++;\
+    }while(0)
+
 #define Array_Remove(Type, Array, IndexNumber, Size, Index)\
     do{\
         int Array_i;\
@@ -100,17 +113,49 @@
 #define ArrayType_PushNull(Type, Array)\
     Array_PushNull(Type, Array, Array##_Index, Array##_Size)
 
+#define ArrayType_PushObj(Type, Array, ObjRef)\
+    Array_PushNull(Type, Array, Array##_Index, Array##_Size);\
+    Type##_Ctor(& Array[Array##_Index]);\
+    Type##_Copy(& Array[Array##_Index], ObjRef)
+
 #define ArrayType_Pop(Type, Array)\
     Array_Pop(Type, Array, Array##_Index, Array##_Size)
 
 #define ArrayType_Insert(Type, Array, Index, Data)\
     Array_Insert(Type, Array, Array##_Index, Array##_Size, Index, Data)
 
+#define ArrayType_InsertNull(Type, Array, Index)\
+    Array_InsertNull(Type, Array, Array##_Index, Array##_Size, Index)
+
 #define ArrayType_Remove(Type, Array, Index)\
     Array_Remove(Type, Array, Array##_Index, Array##_Size, Index)
 
 #define ArrayType_RemoveRange(Type, Array, LIndex, HIndex)\
     Array_RemoveRange(Type, Array, Array##_Index, Array##_Size, LIndex, HIndex)
+
+//---------------------Advanced Macros--------------------
+#define ArrayType_IncreaseSortFind(Dest, Type, Array, Data)\
+    do\
+    {\
+        int Array_i;\
+        for(Array_i = 0; Array_i <= Array##_Index; Array_i ++)\
+            if((Array)[Array_i] > (Data))\
+                break;\
+        Dest = Array_i;\
+    } while(0)
+
+#define ArrayType_DecreaseSortFind(Dest, Type, Array, Data)\
+    do\
+    {\
+        int Array_i;\
+        for(Array_i = 0; Array_i <= Array##_Index; Array_i ++)\
+            if(Array[Array_i] < (Data))\
+                break;\
+        Dest = Array_i;\
+    } while(0)
+//---------------------Auxillaries------------------------
+
+#define TopOf(Array) Array[Array##_Index]
 
 #define Arg_ArrayType(Type, Array) Type* Array, int Array##_Index, int Array##_Size
 #define FArg_ArrayType(Type, Array) Array, Array##_Index, Array##_Size

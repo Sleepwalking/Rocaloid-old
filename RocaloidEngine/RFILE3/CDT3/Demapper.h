@@ -2,11 +2,12 @@
 #define DEMAPPER_H
 
 #include "RUtil/RUtil.h"
+#include "CDT3.h"
 
 AutoClass
 {
     float F0;
-    String FPhone;
+    String Name;
 
     float F1;
     float F2;
@@ -36,7 +37,8 @@ AutoClass
     ArrayType_Define(String, FormantLayerPhone);
 
     ArrayType_Define(FormantLayerFusedQuerySpace, FormantLayerFusedList);
-    ArrayType_Define(String, FormantLayerFusedPhone);
 } EndClass(CDTMappingQuerySpace);
+
+extern void Demapper_ConstructQuerySpace(CDTMappingQuerySpace* Dest, CDTMap* Src);
 
 #endif

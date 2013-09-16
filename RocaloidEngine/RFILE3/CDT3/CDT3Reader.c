@@ -174,6 +174,10 @@ int TemplateReadFunc(CDT3)
     IfBufferIsNot("3.0")
         return 0;
 
+    RNext();
+    IfBufferIsNot("CDT")
+        return 0;
+
     TemplateReadFuncLoop
 
     IfBufferIs("Version")
