@@ -61,10 +61,14 @@ typedef struct
     int Index;
     int SubIndex;
     float Ratio;
-} TransitionQueryResult;
-extern TransitionQueryResult Demapper_QueryFusedFormantLayer(String* Phone, float F0);
+} Transition;
+extern Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0);
 
-//Return: Index of TransitionLayer
-extern int Demapper_QueryTransitionLayer(String* Phone1, String* Phone2);
+typedef struct
+{
+    int Index;
+    int MatchRev;
+} TransitionLayerQueryResult;
+TransitionLayerQueryResult Demapper_QueryTransitionLayer(String* Phone1, String* Phone2);
 
 #endif

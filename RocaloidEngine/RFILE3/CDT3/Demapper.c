@@ -291,9 +291,9 @@ int Demapper_QueryFreqLayer(String* FPhone, float F0)
     return GetFreqLayerIndex(QuerySpace, Match, Index - 1);
 }
 
-TransitionQueryResult Demapper_QueryFusedFormantLayer(String* Phone, float F0)
+Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0)
 {
-    TransitionQueryResult Ret;
+    Transition Ret;
     int Match, i;
     Match = Demapper_FindFormantLayerFreqQuerySpace(QuerySpace, Phone);
     Ret.Index = Match;
@@ -312,9 +312,45 @@ TransitionQueryResult Demapper_QueryFusedFormantLayer(String* Phone, float F0)
         Ret.Ratio = 0;
     }else
     {
-        Ret.Ratio = (F0 - GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex).F0) /
-                (GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 1).F0 -
-                 GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 0).F0);
+        if(Ret.SubIndex == QuerySpace -> FormantLayerFusedList[Match].EntryList_Index)
+        {
+            //Reach Max
+            Ret.Ratio = 0;
+        }else
+            Ret.Ratio = (F0 - GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex).F0) /
+                        (GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 1).F0 -
+                         GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 0).F0);
+    }
+    return Ret;
+}
+
+//Return: Index of TransitionLayer
+TransitionLayerQueryResult Demapper_QueryTransitionLayer(String* Phone1, String* Phone2)
+{
+    int i;
+    TransitionLayerQueryResult Ret;
+    Ret.Index = - 1;
+    Ret.MatchRev = - 1;
+    for(i = 0; i <= QueryMap -> TransitionLayerMap_Index; i ++)
+    {
+        if(! String_Equal(& QueryMap -> TransitionLayerMap[i].Phone1, Phone1))
+        {
+            if(! String_Equal(& QueryMap -> TransitionLayerMap[i].Phone1, Phone2))
+                continue;
+            else if(String_Equal(& QueryMap -> TransitionLayerMap[i].Phone2, Phone1))
+            {
+                Ret.MatchRev = 1;
+                goto Matched;
+            }else
+                continue;
+        }
+        if(! String_Equal(& QueryMap -> TransitionLayerMap[i].Phone2, Phone2))
+            continue;
+        else
+            Ret.MatchRev = 0;
+        Matched:
+        Ret.Index = i;
+        break;
     }
     return Ret;
 }

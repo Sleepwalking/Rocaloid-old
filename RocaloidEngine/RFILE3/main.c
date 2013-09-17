@@ -24,11 +24,15 @@ int main(void)
     Demapper_ConstructQuerySpace(&test, & a.CDTMapping);
     Demapper_SetCDTMap(& a.CDTMapping);
     Demapper_SetQuerySpace(& test);
-    String_FromChars(QS, "i");
-    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 300).Index);
-    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 300).SubIndex);
-    DebugPrintf(f, Demapper_QueryFusedFormantLayer(& QS, 300).Ratio);
+    String_FromChars(QS, "a");
+    String_FromChars(QS2, "a");
+    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 500).Index);
+    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 500).SubIndex);
+    DebugPrintf(f, Demapper_QueryFusedFormantLayer(& QS, 500).Ratio);
+    DebugPrintf(d, Demapper_QueryTransitionLayer(& QS, & QS2).Index);
+    DebugPrintf(d, Demapper_QueryTransitionLayer(& QS, & QS2).MatchRev);
     String_Dtor(& QS);
+    String_Dtor(& QS2);
     CDTMappingQuerySpace_Dtor(& test);
 
     CDTReader_Close();
