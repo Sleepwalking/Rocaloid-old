@@ -21,4 +21,6 @@
 #define _Constructor_(Type) void Type##_Ctor(Type* Dest)
 #define _Destructor_(Type) void Type##_Dtor(Type* Dest)
 
+#define DebugPrintf(Type, Statement) printf(#Statement ": %" #Type "\n", Statement);
+
 #endif

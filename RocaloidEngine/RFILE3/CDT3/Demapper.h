@@ -39,6 +39,32 @@ AutoClass
     ArrayType_Define(FormantLayerFusedQuerySpace, FormantLayerFusedList);
 } EndClass(CDTMappingQuerySpace);
 
+#define GetFreqLayerIndex(Src, FPhoneIndex, EntryIndex) Src -> FreqLayerEntryList[FPhoneIndex].Index[EntryIndex]
+#define GetFormantLayerIndex(Src, PhoneIndex, EntryIndex) Src -> FormantLayerEntryList[PhoneIndex].Index[EntryIndex]
+#define GetFusedFormantLayerEntry(Src, PhoneIndex, EntryIndex) Src -> FormantLayerFusedList[PhoneIndex].EntryList[EntryIndex]
+
+//Shortcuts SymbolLayer & FormantLayer
 extern void Demapper_ConstructQuerySpace(CDTMappingQuerySpace* Dest, CDTMap* Src);
+
+extern void Demapper_SetQuerySpace(CDTMappingQuerySpace* Src);
+extern void Demapper_SetCDTMap(CDTMap* Src);
+
+//Return: Index of DBLayer
+extern int Demapper_QueryDBLayer(String* Name);
+//Return: Index of SymbolLayer
+extern int Demapper_QuerySymbolLayer(String* Name);
+//Return: Index of FreqLayer
+extern int Demapper_QueryFreqLayer(String* FPhone, float F0);
+
+typedef struct
+{
+    int Index;
+    int SubIndex;
+    float Ratio;
+} TransitionQueryResult;
+extern TransitionQueryResult Demapper_QueryFusedFormantLayer(String* Phone, float F0);
+
+//Return: Index of TransitionLayer
+extern int Demapper_QueryTransitionLayer(String* Phone1, String* Phone2);
 
 #endif

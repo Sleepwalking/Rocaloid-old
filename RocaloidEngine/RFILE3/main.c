@@ -22,6 +22,13 @@ int main(void)
     printf("Ret: %d\nVer: %f\n", ret, a.Version);
 
     Demapper_ConstructQuerySpace(&test, & a.CDTMapping);
+    Demapper_SetCDTMap(& a.CDTMapping);
+    Demapper_SetQuerySpace(& test);
+    String_FromChars(QS, "i");
+    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 300).Index);
+    DebugPrintf(d, Demapper_QueryFusedFormantLayer(& QS, 300).SubIndex);
+    DebugPrintf(f, Demapper_QueryFusedFormantLayer(& QS, 300).Ratio);
+    String_Dtor(& QS);
     CDTMappingQuerySpace_Dtor(& test);
 
     CDTReader_Close();

@@ -3,6 +3,10 @@
 
 #define FreqErrorAllowed 3
 #define Mix(a, b, Ratio) (a) * (1.0f - (Ratio)) + (b) * (Ratio)
+#define VERBOSE
+
+CDTMappingQuerySpace* QuerySpace;
+CDTMap* QueryMap;
 
 _Constructor_ (FormantLayerPartialEntry)
 {
@@ -128,6 +132,26 @@ void Demapper_ConstructFormantQueryList(CDTMappingQuerySpace* Dest, CDTMap* Src)
     }
 }
 
+void Demapper_FormantFusedListVerbose(CDTMappingQuerySpace* Src, int Index)
+{
+    int i;
+    for(i = 0; i <= Src -> FormantLayerFusedList[Index].EntryList_Index; i ++)
+    {
+        #define PDest GetFusedFormantLayerEntry(Src, Index, i)
+        printf("Phone: %s\tF0: %f\tName: %s\tF1: %f\tF2: %f\tF3: %f\tS1: %f\tS2: %f\tS3: %f\n",
+               String_GetChars(& Src -> FormantLayerPhone[Index]),
+               PDest.F0,
+               String_GetChars(& PDest.Name),
+               PDest.F1,
+               PDest.F2,
+               PDest.F3,
+               PDest.S1,
+               PDest.S2,
+               PDest.S3);
+        #undef PDest
+    }
+}
+
 void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
 {
     int i, j, k, c;
@@ -136,19 +160,20 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
     {
         ArrayType_PushNull(FormantLayerFusedQuerySpace, Dest -> FormantLayerFusedList);
         FormantLayerFusedQuerySpace_Ctor(& TopOf(Dest -> FormantLayerFusedList));
+
         //For each QuerySpace
         //1. Fill original map
         for(j = 0; j <= Dest -> FormantLayerEntryList[i].Index_Index; j ++)
         {
             int Index, Match;
             SymbolIndex = Demapper_FindFreqLayerFreqQuerySpace(Dest,
-                                                               & Src -> FormantLayerMap[Dest -> FormantLayerEntryList[i].Index[j]].FPhone);
+                                                               & Src -> FormantLayerMap[GetFormantLayerIndex(Dest, i, j)].FPhone);
             ArrayType_PushNull(FormantLayerPartialEntry, Dest -> FormantLayerFusedList[i].EntryList);
             FormantLayerPartialEntry_Ctor(& TopOf(Dest -> FormantLayerFusedList[i].EntryList));
-            Index = Dest -> FormantLayerEntryList[i].Index[j];
+            Index = GetFormantLayerIndex(Dest, i, j);
 
-#define CopyDest Dest -> FormantLayerFusedList[i].EntryList[j]
-#define CopySrc Src -> FormantLayerMap[Index]
+            #define CopyDest GetFusedFormantLayerEntry(Dest, i, j)
+            #define CopySrc Src -> FormantLayerMap[Index]
             CopyDest.F0 = CopySrc.F0;
             CopyDest.F1 = CopySrc.F1;
             CopyDest.F2 = CopySrc.F2;
@@ -161,9 +186,9 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
                                        Dest -> FreqLayerEntryList[SymbolIndex].F0,
                                        Dest -> FormantLayerEntryList[i].F0[j] + FreqErrorAllowed);
             if(Match > 0) Match --;
-            String_Copy(& CopyDest.Name, & Src -> FreqLayerMap[Dest -> FreqLayerEntryList[SymbolIndex].Index[Match]].Name);
-#undef CopyDest
-#undef CopySrc
+            String_Copy(& CopyDest.Name, & Src -> FreqLayerMap[GetFreqLayerIndex(Dest, SymbolIndex, Match)].Name);
+            #undef CopyDest
+            #undef CopySrc
         }
 
         //2. Insert FreqEntries into intervals
@@ -175,12 +200,13 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
             FormantLayerPartialEntry* UpperEntry;
             float Ratio;
 
-            SymbolIndex = Demapper_FindFreqLayerFreqQuerySpace(Dest,
-                                                               & Src -> FormantLayerMap[Dest -> FormantLayerEntryList[i].Index[c]].FPhone);
+            SymbolIndex = Demapper_FindFreqLayerFreqQuerySpace(
+                          Dest,
+                          & Src -> FormantLayerMap[GetFormantLayerIndex(Dest, i, c)].FPhone);
             c ++;
 
-            LowerEntry = & Dest -> FormantLayerFusedList[i].EntryList[j];
-            UpperEntry = & Dest -> FormantLayerFusedList[i].EntryList[j + 1];
+            LowerEntry = & GetFusedFormantLayerEntry(Dest, i, j);
+            UpperEntry = & GetFusedFormantLayerEntry(Dest, i, j + 1);
             ArrayType_IncreaseSortFind(LowerIndex, float,
                                        Dest -> FreqLayerEntryList[SymbolIndex].F0,
                                        LowerEntry -> F0 + FreqErrorAllowed);
@@ -194,37 +220,26 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
                 //For each FreqEntry to be inserted
                 j ++;
                 ArrayType_InsertNull(FormantLayerPartialEntry, Dest -> FormantLayerFusedList[i].EntryList, j);
-                FormantLayerPartialEntry_Ctor(& Dest -> FormantLayerFusedList[i].EntryList[j]);
+                FormantLayerPartialEntry_Ctor(& GetFusedFormantLayerEntry(Dest, i, j));
 
-#define CopyDest Dest -> FormantLayerFusedList[i].EntryList[j]
-                String_Copy(& CopyDest.Name, & Src -> FreqLayerMap[Dest -> FreqLayerEntryList[SymbolIndex].Index[k]].Name);
+                #define CopyDest GetFusedFormantLayerEntry(Dest, i, j)
+                String_Copy(& CopyDest.Name, & Src -> FreqLayerMap[GetFreqLayerIndex(Dest, SymbolIndex, k)].Name);
+
                 CopyDest.F0 = Dest -> FreqLayerEntryList[SymbolIndex].F0[k];
                 Ratio = (CopyDest.F0 - LowerEntry -> F0) / (UpperEntry -> F0 - LowerEntry -> F0);
+
                 CopyDest.F1 = Mix(LowerEntry -> F1, UpperEntry -> F1, Ratio);
                 CopyDest.F2 = Mix(LowerEntry -> F2, UpperEntry -> F2, Ratio);
                 CopyDest.F3 = Mix(LowerEntry -> F3, UpperEntry -> F3, Ratio);
                 CopyDest.S1 = Mix(LowerEntry -> S1, UpperEntry -> S1, Ratio);
                 CopyDest.S2 = Mix(LowerEntry -> S2, UpperEntry -> S2, Ratio);
                 CopyDest.S3 = Mix(LowerEntry -> S3, UpperEntry -> S3, Ratio);
-#undef CopyDest
+                #undef CopyDest
             }
         }
-
-        for(j = 0; j <= Dest -> FormantLayerFusedList[i].EntryList_Index; j ++)
-        {
-#define PDest Dest -> FormantLayerFusedList[i].EntryList[j]
-            printf("Phone: %s\tF0: %f\tName: %s\tF1: %f\tF2: %f\tF3: %f\tS1: %f\tS2: %f\tS3: %f\n",
-                   String_GetChars(& Dest -> FormantLayerPhone[i]),
-                   PDest.F0,
-                   String_GetChars(& PDest.Name),
-                   PDest.F1,
-                   PDest.F2,
-                   PDest.F3,
-                   PDest.S1,
-                   PDest.S2,
-                   PDest.S3);
-#undef PDest
-        }
+        #ifdef VERBOSE
+        Demapper_FormantFusedListVerbose(Dest, i);
+        #endif
     }
 }
 
@@ -233,4 +248,73 @@ void Demapper_ConstructQuerySpace(CDTMappingQuerySpace* Dest, CDTMap* Src)
     Demapper_ConstructFreqQueryList(Dest, Src);
     Demapper_ConstructFormantQueryList(Dest, Src);
     Demapper_ConstructFormantFusedList(Dest, Src);
+}
+
+void Demapper_SetQuerySpace(CDTMappingQuerySpace* Src)
+{
+    QuerySpace = Src;
+}
+
+void Demapper_SetCDTMap(CDTMap* Src)
+{
+    QueryMap = Src;
+}
+
+//Return: Index of DBLayer
+int Demapper_QueryDBLayer(String* Name)
+{
+    int i;
+    for(i = 0; i < QueryMap -> DBLayerMap_Index; i ++)
+        if(String_Equal(& QueryMap -> DBLayerMap[i].Name, Name))
+            return i;
+    return - 1;
+}
+
+//Return: Index of SymbolLayer
+int Demapper_QuerySymbolLayer(String* Name)
+{
+    int i;
+    for(i = 0; i < QueryMap -> SymbolLayerMap_Index; i ++)
+        if(String_Equal(& QueryMap -> SymbolLayerMap[i].Name, Name))
+            return i;
+    return - 1;
+}
+
+//Return: Index of FreqLayer
+int Demapper_QueryFreqLayer(String* FPhone, float F0)
+{
+    int Index, Match;
+    Match = Demapper_FindFreqLayerFreqQuerySpace(QuerySpace, FPhone);
+    if(Match == - 1)
+        return - 1;
+    ArrayType_IncreaseSortFind(Index, float, QuerySpace -> FreqLayerEntryList[Match].F0, F0);
+    return GetFreqLayerIndex(QuerySpace, Match, Index - 1);
+}
+
+TransitionQueryResult Demapper_QueryFusedFormantLayer(String* Phone, float F0)
+{
+    TransitionQueryResult Ret;
+    int Match, i;
+    Match = Demapper_FindFormantLayerFreqQuerySpace(QuerySpace, Phone);
+    Ret.Index = Match;
+    if(Match == - 1)
+    {
+        Ret.SubIndex = - 1;
+        return Ret;
+    }
+    for(i = 0; i <= QuerySpace -> FormantLayerFusedList[Match].EntryList_Index; i ++)
+        if(GetFusedFormantLayerEntry(QuerySpace, Match, i).F0 > F0)
+            break;
+    Ret.SubIndex = i - 1;
+    if(Ret.SubIndex < 0)
+    {
+        Ret.SubIndex = 0;
+        Ret.Ratio = 0;
+    }else
+    {
+        Ret.Ratio = (F0 - GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex).F0) /
+                (GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 1).F0 -
+                 GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 0).F0);
+    }
+    return Ret;
 }
