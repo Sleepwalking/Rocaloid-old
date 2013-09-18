@@ -16,7 +16,7 @@ int main(void)
     //CVDB3 test;
     //CVDB3_Ctor(&test);
 
-    String_FromChars(Path, "/tmp/CVS3example.cvs");
+    String_FromChars(Path, "/tmp/CVSOutput.cvs.txt");
 
     CVS3 test;
     CVS3_Ctor(& test);
@@ -26,7 +26,7 @@ int main(void)
 
     CVSRDLWriter_Save();
     CVS3_Write(& test);
-    String_SetChars(& Path, "/tmp/CVSOutput.cvs.txt");
+    String_SetChars(& Path, "/tmp/CVSOutput2.cvs.txt");
     CVSRDLWriter_Write(& Path);
 
     CVS3_Dtor(& test);
