@@ -1,0 +1,237 @@
+#CVS 3.0
+CVS
+	SyllableList
+		Syllable
+			TransQ 3
+			TransPhoneList	chu	a	ng
+			TransTickList	0.1	0.2	0.7
+			TransRatioList
+				>	0.25	0.3
+				>	0.62	0.8
+			End
+			TransEndRatio 1.0
+			ConsonantRatio 0.5
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	262
+				>	0.3	270
+				>	0.5	262
+			End
+			Effects
+				EnvelopeList
+					>	0	0.5
+					>	0.1	1.2
+					>	0.2	1.0
+					>	0.6	0.6
+					>	0.7	0
+				End
+			End
+			StartTime 0.0
+		End
+		Syllable
+			TransQ 3
+			TransPhoneList	qi	a	n
+			TransTickList	0.1	0.2	0.7
+			TransRatioList
+				>	0.25	0.3
+				>	0.62	0.4
+			End
+			TransEndRatio 1.0
+			ConsonantRatio 0.5
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	262
+				>	0.3	270
+				>	0.5	262
+			End
+			Effects
+				EnvelopeList
+					>	0	0.5
+					>	0.1	1.2
+					>	0.2	1.0
+					>	0.6	0.6
+					>	0.7	0
+				End
+			End
+			StartTime 0.0
+		End
+		Syllable
+			TransQ 3
+			TransPhoneList	mi	i	ng
+			TransTickList	0.1	0.2	0.7
+			TransRatioList
+				>	0.25	0.3
+				>	0.62	0.8
+			End
+			TransEndRatio 1.0
+			ConsonantRatio 0.5
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	262
+				>	0.3	270
+				>	0.5	262
+			End
+			Effects
+				EnvelopeList
+					>	0	0.5
+					>	0.1	1.2
+					>	0.2	1.0
+					>	0.6	0.6
+					>	0.7	0
+				End
+			End
+			StartTime 0.0
+		End
+		Syllable
+			TransQ 2
+			TransPhoneList	yu	e
+			TransTickList	0.1	0.5
+			TransRatioList
+				>	0.25	0.3
+				>	0.62	0.8
+			End
+			TransEndRatio 1.0
+			ConsonantRatio 0.5
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	262
+				>	0.3	270
+				>	0.5	262
+			End
+			Effects
+				EnvelopeList
+					>	0	0.5
+					>	0.1	1.2
+					>	0.2	1.0
+					>	0.6	0.6
+					>	0.7	0
+				End
+			End
+			StartTime 0.0
+		End
+		Syllable
+			TransQ 3
+			TransPhoneList	gu	a	ng
+			TransTickList	0.1	0.2	0.7
+			TransRatioList
+				>	0.25	0.3
+				>	0.62	0.8
+			End
+			TransEndRatio 1.0
+			ConsonantRatio 0.5
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	262
+				>	0.3	270
+				>	0.5	262
+			End
+			Effects
+				EnvelopeList
+					>	0	0.5
+					>	0.1	1.2
+					>	0.2	1.0
+					>	0.6	0.6
+					>	0.7	0
+				End
+			End
+			StartTime 0.0
+		End
+	End
+End
+
+

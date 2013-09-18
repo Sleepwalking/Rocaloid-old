@@ -1,8 +1,5 @@
 #include "CDT3Reader.h"
-#include "RUtil/Structure/Array.h"
 #include "RUtil/IO/FileUtil.h"
-#include "RUtil/IO/StringStream.h"
-#include "RUtil/Misc/Converter.h"
 #include "RDL.h"
 #include <malloc.h>
 
@@ -33,7 +30,7 @@ int TemplateReadFunc(SGtorSyllable)
 {
     TemplateReadFuncHead
 
-    ReadIgnoreRDLComment(& Dest -> Syllable, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Syllable, CReader);
 
     RNext();
     Dest -> Type = CSyllableTypeStr(& Buffer);
@@ -44,15 +41,15 @@ int TemplateReadFunc(SGtorSyllable)
     RNext();
     Dest -> Extended = CVBBoolStr(& Buffer);
 
-    TemplateReadFuncEmbededDynamicList(String, PhoneList);
+    TemplateReadFuncEmbededDynamicList(String, Dest -> PhoneList);
 
     TemplateReadFuncNonLoopEnd
 }
 
 int TemplateReadFunc(DBLayerEntry)
 {
-    ReadIgnoreRDLComment(& Dest -> Name, CReader);
-    ReadIgnoreRDLComment(& Dest -> FileAddr, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
+    RDL_ReadIgnoreComment(& Dest -> FileAddr, CReader);
     return 1;
 }
 
@@ -60,7 +57,7 @@ int TemplateReadFunc(SymbolLayerEntry)
 {
     TemplateReadFuncHead
 
-    ReadIgnoreRDLComment(& Dest -> Name, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
 
     RNext();
     Dest -> Type = CCharStr(& Buffer);
@@ -87,12 +84,12 @@ int TemplateReadFunc(FreqLayerEntry)
 {
     TemplateReadFuncHead
 
-    ReadIgnoreRDLComment(& Dest -> FPhone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> FPhone, CReader);
 
     RNext();
     Dest -> F0 = CFloatStr(& Buffer);
 
-    ReadIgnoreRDLComment(& Dest -> Name, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
 
     TemplateReadFuncNonLoopEnd
 }
@@ -101,11 +98,11 @@ int TemplateReadFunc(FormantLayerEntry)
 {
     TemplateReadFuncHead
 
-    ReadIgnoreRDLComment(& Dest -> Phone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Phone, CReader);
 
     RNext();    Dest -> F0 = CFloatStr(& Buffer);
 
-    ReadIgnoreRDLComment(& Dest -> FPhone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> FPhone, CReader);
 
     RNext();    Dest -> F1 = CFloatStr(& Buffer);
     RNext();    Dest -> F2 = CFloatStr(& Buffer);
@@ -121,8 +118,8 @@ int TemplateReadFunc(TransitionLayerEntry)
 {
     TemplateReadFuncHead
 
-    ReadIgnoreRDLComment(& Dest -> Phone1, CReader);
-    ReadIgnoreRDLComment(& Dest -> Phone2, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Phone1, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Phone2, CReader);
 
     RNext();
     Dest -> Ratio = CFloatStr(& Buffer);
@@ -137,27 +134,27 @@ int TemplateReadFunc(CDTMap)
 
     IfBufferIs("DBLayerMap")
     {
-        TemplateReadFuncDynamicList(DBLayerEntry, DBLayerMap);
+        TemplateReadFuncDynamicList(DBLayerEntry, Dest -> DBLayerMap);
     }
 
     IfBufferIs("SymbolLayerMap")
     {
-        TemplateReadFuncDynamicList(SymbolLayerEntry, SymbolLayerMap);
+        TemplateReadFuncDynamicList(SymbolLayerEntry, Dest -> SymbolLayerMap);
     }
 
     IfBufferIs("FreqLayerMap")
     {
-        TemplateReadFuncDynamicList(FreqLayerEntry, FreqLayerMap);
+        TemplateReadFuncDynamicList(FreqLayerEntry, Dest -> FreqLayerMap);
     }
 
     IfBufferIs("FormantLayerMap")
     {
-        TemplateReadFuncDynamicList(FormantLayerEntry, FormantLayerMap);
+        TemplateReadFuncDynamicList(FormantLayerEntry, Dest -> FormantLayerMap);
     }
 
     IfBufferIs("TransitionLayerMap")
     {
-        TemplateReadFuncDynamicList(TransitionLayerEntry, TransitionLayerMap);
+        TemplateReadFuncDynamicList(TransitionLayerEntry, Dest -> TransitionLayerMap);
     }
 
     TemplateReadFuncEnd
@@ -188,7 +185,7 @@ int TemplateReadFunc(CDT3)
 
     IfBufferIs("SGtorList")
     {
-        TemplateReadFuncDynamicList(SGtorSyllable, SGtorList);
+        TemplateReadFuncDynamicList(SGtorSyllable, Dest -> SGtorList);
     }
 
     IfBufferIs("CDTMapping")

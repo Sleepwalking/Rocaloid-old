@@ -14,7 +14,11 @@ SOURCES += main.c \
     CVDB3/CVDB3IO.c \
     CDT3/Demapper.c \
     CDT3/CDT3Reader.c \
-    CDT3/CDT3.c
+    CDT3/CDT3.c \
+    CVS3/CVSRDLWriter.c \
+    CVS3/CVSRDLReader.c \
+    CVS3/CVS3.c \
+    RDL.c
 
 HEADERS += \
     RUtil/Memory.h \
@@ -30,5 +34,8 @@ HEADERS += \
     CDT3/CDT3Reader.h \
     CDT3/CDT3.h \
     RDL.h \
-    RUtil/RUtil.h
+    RUtil/RUtil.h \
+    CVS3/CVSRDLWriter.h \
+    CVS3/CVSRDLReader.h \
+    CVS3/CVS3.h
 

@@ -3,15 +3,36 @@
 #include "CDT3/CDT3.h"
 #include "CDT3/CDT3Reader.h"
 #include "CDT3/Demapper.h"
+#include "CVS3/CVS3.h"
+#include "CVS3/CVSRDLReader.h"
+#include "CVS3/CVSRDLWriter.h"
+#include "RDL.h"
 #include <string.h>
 #include <malloc.h>
+
 
 int main(void)
 {
     //CVDB3 test;
     //CVDB3_Ctor(&test);
-    String_FromChars(Path, "/tmp/CDT3Example.cdt");
 
+    String_FromChars(Path, "/tmp/CVS3example.cvs");
+
+    CVS3 test;
+    CVS3_Ctor(& test);
+    CVSRDLReader_Open(& Path);
+    CVS3_Read(& test);
+    CVSRDLReader_Close();
+
+    CVSRDLWriter_Save();
+    CVS3_Write(& test);
+    String_SetChars(& Path, "/tmp/CVSOutput.cvs.txt");
+    CVSRDLWriter_Write(& Path);
+
+    CVS3_Dtor(& test);
+    String_Dtor(&Path);
+
+    /*
     CDTMappingQuerySpace test;
     CDTMappingQuerySpace_Ctor(& test);
 
@@ -38,7 +59,7 @@ int main(void)
     CDTReader_Close();
     CDT3_Dtor(&a);
 
-    String_Dtor(&Path);
+*/
     /*
     CVDB3_Load(&test, &Path);
     memcpy(&test.Header.Identifier, "CVDB", 4);

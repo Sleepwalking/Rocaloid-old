@@ -1,5 +1,5 @@
-#ifndef RUTIL
-#define RUTIL
+#ifndef RUTIL_H
+#define RUTIL_H
 
 #include "Structure/Array.h"
 #include "Structure/String.h"
