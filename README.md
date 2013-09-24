@@ -19,12 +19,13 @@ Directorys
 * RUtil: A tiny C library for dynamic structures and file access.
 * RocaloidEngine: Contains `CVE 3`, `CGTOR 3`, `RFILE 3`.
 	* `CVE 3`: The synthesis engine (CyberVoice Engine)
-		* `CVEDSP`: The signal processing lib for `CVE`.
+		* `CVEDSP`: Signal processing lib for `CVE`.
 	* `CGTOR 3`: CVS Generator, generates `CVS` from `RVS` with `CDT`.
 	* `RFILE 3`: Provides I/O for `CVS`, `RVS`, `CDT` and `CVDB`.
 * RocaloidDevTools: tools for building Rocaloid sound dbs.
 	* CVDBStudio: tool for converting `.wav` to `.cvdb`.
 	* GeneticOptimizer: an implemention of Genetic Algorithm for optimizing parameters (for certain algorithms used in Rocaloid).
+	* FormantTester: visualize spectrums for testing algorithms & evaluating the quality of FECSOLA.
 
 For more information about Rocaloid, please visit http://bbs.ivocaloid.com/forum-138-1.html (Chinese).
 
