@@ -1,6 +1,12 @@
-Rocaloid is a vocal synthesis engine which originally aimed to enable Hatsune Miku to sing in Chinese (and maybe other languages).
+Rocaloid is a vocal synthesis engine which aims at synthesizing songs with outstanding quality, flexibility and speed.
 
-Currently we've just started the development of Rocaloid 3, here's the general structure:
+* License: GPLv3
+* Platform: x86(SSE)
+
+
+---
+
+General Structure of Rocaloid3, which is currently under construction:
 
 ![rocaloid3](https://f.cloud.github.com/assets/4531595/1055721/2b3f15a0-1144-11e3-8395-dd49d691c911.png)
 
@@ -18,9 +24,9 @@ Directorys
 	* `RFILE 3`: Provides I/O for `CVS`, `RVS`, `CDT` and `CVDB`.
 * RocaloidDevTools: tools for building Rocaloid sound dbs.
 	* CVDBStudio: tool for converting `.wav` to `.cvdb`.
+	* GeneticOptimizer: an implemention of Genetic Algorithm for optimizing parameters (for certain algorithms used in Rocaloid).
 
-For more information about Rocaloid, please visit http://bbs.ivocaloid.com/forum-138-1.html.
+For more information about Rocaloid, please visit http://bbs.ivocaloid.com/forum-138-1.html (Chinese).
 
 
-
- [1]: https://github.com/digited/qtau/ "qtau"
+ [1]: https://github.com/qtau-devgroup/editor "qtau"

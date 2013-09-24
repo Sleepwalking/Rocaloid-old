@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>b_play.png</file>
+        <file>b_play_prev.png</file>
+        <file>speaker.png</file>
+    </qresource>
+</RCC>
