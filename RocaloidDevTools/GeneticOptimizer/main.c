@@ -4,13 +4,15 @@
 #include "RUtil/IO/FileUtil.h"
 #include "GFormant/GFormant.h"
 #include "GPitch/GPitch.h"
+#include "GDetect/GDetect.h"
 #include "GeneticSimulator.h"
 
-#include "CVEDSP/FreqDomain/Formant.h"
-#include "CVEDSP/FreqDomain/FDAnalysis.h"
+#include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/Algorithm/BaseFreq.h"
 #include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/FreqDomain/Filter.h"
+#include "CVEDSP/DSPBase/Filter.h"
 #include "CVEDSP/IntrinUtil/FloatArray.h"
+#include "CVEDSP/Algorithm/SpeechDetector.h"
 
 #include <string.h>
 
@@ -20,6 +22,23 @@ int main(void)
     GeneticSimulator_Ctor(& GSim);
     String_FromChars(Path, "/tmp/GFormantTestList");
     SetSampleRate(44100);
+/*
+    GeneticSimulator_SetParameter(& GSim, sizeof(SpeechDetectorParameters), 50);
+
+    SPara = SPara;
+    GeneticSimulator_SetInitialParam(& GSim, & SPara);
+
+    GeneticSimulator_SetTask(& GSim, sizeof(GDWave), 1000);
+    GeneticSimulator_SetResult(& GSim, sizeof(float));
+    GeneticSimulator_SetSelectionNum(& GSim, 10);
+
+    GeneticSimulator_SetRunFunc(& GSim, GDetect_Run);
+    GeneticSimulator_SetEvaluateFunc(& GSim, GDetect_Eval);
+    GeneticSimulator_SetSetParamFunc(& GSim, GDetect_SetParam);
+    GeneticSimulator_SetMutateFunc(& GSim, GDetect_Mutate);
+    GeneticSimulator_SetDisplayFunc(& GSim, GDetect_Display);
+    GDetect_LoadFileList(& GSim, & Path);*/
+
 
     GeneticSimulator_SetParameter(& GSim, sizeof(FormantAnalyzerParameters), 100);
     GeneticSimulator_SetInitialParam(& GSim, & APara);
@@ -33,6 +52,7 @@ int main(void)
     GeneticSimulator_SetMutateFunc(& GSim, GFormant_Mutate);
     GeneticSimulator_SetDisplayFunc(& GSim, GFormant_Display);
     GFormant_LoadFileList(& GSim, & Path);
+
 /*
     GeneticSimulator_SetParameter(& GSim, sizeof(BaseFreqAnalyzerParameters), 100);
     GeneticSimulator_SetInitialParam(& GSim, & BPara);
@@ -47,7 +67,8 @@ int main(void)
     GeneticSimulator_SetDisplayFunc(& GSim, GPitch_Display);
     GPitch_LoadFileList(& GSim, & Path);
 */
-    GeneticSimulator_RunSimulation(& GSim, 40);
+    GeneticSimulator_RunSimulation(& GSim, 20);
+
 /*
     int i;
     ArrayType_Ctor(String, PitchList);

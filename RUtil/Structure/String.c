@@ -110,6 +110,7 @@ void Mid(String* Dest, const String* Src, int From, int Count)
     String_AllocLength(Dest, Count);
     for(i = 0;i < Count;i ++)
         Dest -> Data[i] = Src -> Data[From + i];
+    Dest -> Data_Index = Count - 1;
 }
 
 void MidFrom(String* Dest, const String* Src, int From)
@@ -121,6 +122,7 @@ void MidFrom(String* Dest, const String* Src, int From)
     String_AllocLength(Dest, Count);
     for(i = 0;i < Count;i ++)
         Dest -> Data[i] = Src -> Data[From + i];
+    Dest -> Data_Index = Count - 1;
 }
 
 void Right(String* Dest, const String* Src, int Count)
@@ -134,6 +136,7 @@ void Right(String* Dest, const String* Src, int Count)
     String_AllocLength(Dest, Count);
     for(i = 0;i < Count;i ++)
         Dest -> Data[i] = Src -> Data[From + i];
+    Dest -> Data_Index = Count - 1;
 }
 
 void Left(String* Dest, const String* Src, int Count)
@@ -146,6 +149,7 @@ void Left(String* Dest, const String* Src, int Count)
     String_AllocLength(Dest, Count);
     for(i = 0;i < Count;i ++)
         Dest -> Data[i] = Src -> Data[i];
+    Dest -> Data_Index = Count - 1;
 }
 
 void UpperCase(String* Dest, const String* Src)
@@ -158,6 +162,7 @@ void UpperCase(String* Dest, const String* Src)
             Dest -> Data[i] = Src -> Data[i] + ('A' - 'a');
         else
             Dest -> Data[i] = Src -> Data[i];
+    Dest -> Data_Index = Len - 1;
 }
 
 void LowerCase(String* Dest, const String* Src)
@@ -170,6 +175,7 @@ void LowerCase(String* Dest, const String* Src)
             Dest -> Data[i] = Src -> Data[i] + ('a' - 'A');
         else
             Dest -> Data[i] = Src -> Data[i];
+    Dest -> Data_Index = Len - 1;
 }
 
 int InStrFrom(String* Whole, String* Part, int From)
@@ -249,6 +255,7 @@ void Trim(String* Dest, const String* Src)
     String_AllocLength(Dest, RetLen);
     for(i = 0;i < RetLen;i ++)
         Dest -> Data[i] = Src -> Data[i + Start];
+    Dest -> Data_Index = RetLen - 1;
 }
 
 void LTrim(String* Dest, const String* Src)
@@ -267,6 +274,7 @@ void LTrim(String* Dest, const String* Src)
     String_AllocLength(Dest, RetLen);
     for(i = 0;i < RetLen;i ++)
         Dest -> Data[i] = Src -> Data[i + Start];
+    Dest -> Data_Index = RetLen - 1;
 }
 
 void RTrim(String* Dest, const String* Src)
@@ -285,4 +293,5 @@ void RTrim(String* Dest, const String* Src)
     String_AllocLength(Dest, RetLen);
     for(i = 0;i < RetLen;i ++)
         Dest -> Data[i] = Src -> Data[i + Start];
+    Dest -> Data_Index = RetLen - 1;
 }

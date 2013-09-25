@@ -1,20 +1,20 @@
 #include "Interface.h"
 #include "malloc.h"
-#include "tools/CVEDSP/FreqDomain/FDAnalysis.h"
-#include "tools/CVEDSP/FreqDomain/Spectrum.h"
-#include "tools/CVEDSP/FreqDomain/Filter.h"
-#include "tools/CVEDSP/TimeDomain/Window.h"
-#include "tools/CVEDSP/IntrinUtil/FloatArray.h"
-#include "tools/CVEDSP/IntrinUtil/Calculation.h"
-#include "tools/CVEDSP/FreqDomain/Formant.h"
-#include "tools/CVEDSP/FreqDomain/FECSOLA.h"
-#include "tools/CVEDSP/TimeDomain/PSOLA.h"
-#include "tools/CVEDSP/DFT/FFT.h"
-#include "tools/CVEDSP/FreqDomain/LPC.h"
-#include "tools/CVEDSP/Interpolation.h"
+#include "CVEDSP/DSPBase/Spectrum.h"
+#include "CVEDSP/DSPBase/Filter.h"
+#include "CVEDSP/DSPBase/Window.h"
+#include "CVEDSP/DSPBase/LPC.h"
+#include "CVEDSP/IntrinUtil/FloatArray.h"
+#include "CVEDSP/IntrinUtil/Calculation.h"
+#include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/Algorithm/FECSOLA.h"
+#include "CVEDSP/Algorithm/PSOLA.h"
+#include "CVEDSP/Algorithm/BaseFreq.h"
+#include "CVEDSP/DFT/FFT.h"
+#include "CVEDSP/Interpolation.h"
 #include "RUtil/RUtil.h"
 
-#include "editor/Utils.h"
+#include "QTau/qtau/editor/Utils.h"
 float BF;
 int Length;
 int SampleRate;
@@ -140,7 +140,7 @@ void UpdateSpectrum2(float* DestArray, FECSOLAState paramsBefore, FECSOLAState p
     Boost_FloatMulArr(InterArray, InterArray, Window, 512);
 
     for(i = 0;i < 512;i ++)
-        InterArray[i] = Window[i];
+        InterArray[i] = Boost_Ln(Window[i]) + 5;
 
     for(i = 0;i < 512;i ++)
     {

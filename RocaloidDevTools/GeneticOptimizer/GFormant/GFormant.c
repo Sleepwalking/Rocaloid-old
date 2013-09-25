@@ -1,11 +1,12 @@
 #include "GFormant.h"
+#include "Rand.h"
 #include "RUtil/IO/FileUtil.h"
 #include "RUtil/Misc/Converter.h"
 
-#include "CVEDSP/FreqDomain/Formant.h"
-#include "CVEDSP/FreqDomain/FDAnalysis.h"
+#include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/Algorithm/BaseFreq.h"
 #include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/FreqDomain/Filter.h"
+#include "CVEDSP/DSPBase/Filter.h"
 
 #include <malloc.h>
 #include <math.h>
@@ -97,18 +98,6 @@ float GFormant_Eval(void* Desc1, void* Desc2)
     return Score;
 }
 
-float Random()
-{
-    return (float)(rand() % 200000) / 100000.0f - 1.0f;
-}
-
-#define RandRange(Para, Width, LowerLimit, UpperLimit)\
-    P -> Para += Random() * Width;\
-    if(P -> Para < LowerLimit)\
-        P -> Para = LowerLimit + Random() * Width;\
-    if(P -> Para > UpperLimit)\
-        P -> Para = UpperLimit + Random() * Width;
-
 void GFormant_Mutate(void* Param)
 {
     FormantAnalyzerParameters* P = (FormantAnalyzerParameters*)Param;
@@ -125,7 +114,7 @@ void GFormant_Mutate(void* Param)
     RandRange(FPeakThreshold, 0.03, 0.2, 0.5);
     RandRange(FPeakWeightWidth, 4, 150, 300);
 
-    RandRange(F2SearchRatioThreshold, 0.0008, 1.02, 1.15);
+    RandRange(F2SearchRatioThreshold, 0.002, 0, 1);
     RandRange(F2SearchWidth, 10, 100, 700);
     RandRange(F2SearchWeightThreshold, 0.003, 0.01, 0.1);
     RandRange(F2SearchWeightThresholdRatio, 0.004, 0.05, 0.5);

@@ -111,7 +111,7 @@ void PCMWaveFile_FinishWrite(PCMWaveFile* Dest)
 
     FileStream_SetPosition(WStream, 4); //Size
     FileStream_Write(WStream, int, fileSize - 8);
-    int dataSize = Dest -> WriteCounter * Header.channel * Header.bitPerSample * 8;
+    int dataSize = Dest -> WriteCounter * Header.channel * Header.bitPerSample / 8;
 
     FileStream_SetPosition(WStream, Dest -> WriteDataPosition - 4); //dataSize
     FileStream_Write(WStream, int, dataSize);
@@ -263,6 +263,7 @@ void PCMWaveFile_WriteAllFloat(PCMWaveFile* Dest, float* Src, int Size)
         PCMWaveFile_WriteAll(Dest, (char*)tmp, Size * 2);
         free(tmp);
     }
+    //Dest -> WriteCounter += Size;
 }
 
 void PCMWaveFile_WriteAllFloatStereo(PCMWaveFile* Dest, float* SrcL, float* SrcR, int Size)

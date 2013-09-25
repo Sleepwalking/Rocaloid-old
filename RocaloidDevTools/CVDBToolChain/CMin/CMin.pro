@@ -11,11 +11,7 @@ SOURCES += main.c \
     RUtil/IO/FileStream.c \
     RUtil/Misc/Converter.c \
     RUtil/Structure/String.c \
-    GeneticSimulator.c \
-    GFormant/GFormant.c \
-    GPitch/GPitch.c \
-    GDetect/GDetect.c \
-    Rand.c
+    RFILE3/CVDB3/CVDB3IO.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -39,18 +35,6 @@ HEADERS += \
     CVEDSP/DFT/FFTBlock.h \
     CVEDSP/DFT/FFT.h \
     CVEDSP/DFT/DFT.h \
-    RUtil/RUtil.h \
-    RUtil/Memory.h \
-    RUtil/IO/Wave.h \
-    RUtil/IO/StringStream.h \
-    RUtil/IO/FileUtil.h \
-    RUtil/IO/FileStream.h \
-    RUtil/Misc/Converter.h \
-    RUtil/Structure/String.h \
-    RUtil/Structure/Array.h \
-    GeneticSimulator.h \
-    GFormant/GFormant.h \
-    GPitch/GPitch.h \
     CVEDSP/Algorithm/PSOLA.h \
     CVEDSP/Algorithm/Formant.h \
     CVEDSP/Algorithm/FECSOLA.h \
@@ -63,8 +47,16 @@ HEADERS += \
     CVEDSP/DSPBase/LinearWarping.h \
     CVEDSP/DSPBase/Filter.h \
     CVEDSP/DSPBase/ControlPointFilter.h \
-    GDetect/GDetect.h \
-    Rand.h
+    RUtil/RUtil.h \
+    RUtil/Memory.h \
+    RUtil/IO/Wave.h \
+    RUtil/IO/StringStream.h \
+    RUtil/IO/FileUtil.h \
+    RUtil/IO/FileStream.h \
+    RUtil/Misc/Converter.h \
+    RUtil/Structure/String.h \
+    RUtil/Structure/Array.h \
+    RFILE3/CVDB3/CVDB3IO.h
 
 
 unix:!macx: LIBS += -L$$PWD/CVEDSP/ -lCVEDSP

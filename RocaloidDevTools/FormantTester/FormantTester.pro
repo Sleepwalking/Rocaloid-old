@@ -55,22 +55,6 @@ HEADERS = \
     CVEDSP/DFT/FFTCommon.h \
     CVEDSP/DFT/FFT.h \
     CVEDSP/DFT/DFT.h \
-    CVEDSP/FreqDomain/Spectrum.h \
-    CVEDSP/FreqDomain/Formant.h \
-    CVEDSP/FreqDomain/Filter.h \
-    CVEDSP/FreqDomain/FECSOLA.h \
-    CVEDSP/FreqDomain/FDAnalysis.h \
-    CVEDSP/FreqDomain/LinearWarping.h \
-    CVEDSP/FreqDomain/ControlPointFilter.h \
-    CVEDSP/IntrinUtil/Memory.h \
-    CVEDSP/IntrinUtil/LogicArray.h \
-    CVEDSP/IntrinUtil/IntArray.h \
-    CVEDSP/IntrinUtil/FloatArray.h \
-    CVEDSP/IntrinUtil/Calculation.h \
-    CVEDSP/TimeDomain/Window.h \
-    CVEDSP/TimeDomain/TDEffects.h \
-    CVEDSP/TimeDomain/TDAnalysis.h \
-    CVEDSP/TimeDomain/PSOLA.h \
     RUtil/IO/Wave.h \
     RUtil/IO/StringStream.h \
     RUtil/IO/FileUtil.h \
@@ -80,7 +64,19 @@ HEADERS = \
     RUtil/Structure/String.h \
     RUtil/RUtil.h \
     RUtil/Memory.h \
-    CVEDSP/FreqDomain/LPC.h
+    CVEDSP/Algorithm/PSOLA.h \
+    CVEDSP/Algorithm/Formant.h \
+    CVEDSP/Algorithm/FECSOLA.h \
+    CVEDSP/Algorithm/BaseFreq.h \
+    CVEDSP/DSPBase/LPC.h \
+    CVEDSP/DSPBase/Window.h \
+    CVEDSP/DSPBase/TDEffects.h \
+    CVEDSP/DSPBase/TDAnalysis.h \
+    CVEDSP/DSPBase/Spectrum.h \
+    CVEDSP/DSPBase/LPC.h \
+    CVEDSP/DSPBase/LinearWarping.h \
+    CVEDSP/DSPBase/Filter.h \
+    CVEDSP/DSPBase/ControlPointFilter.h
 
 SOURCES = \
     main.cpp \

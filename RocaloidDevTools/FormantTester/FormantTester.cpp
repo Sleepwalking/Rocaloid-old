@@ -1,8 +1,8 @@
 #include "FormantTester.h"
-#include "ui_rocatool_window.h"
-#include "tools/CVEDSP/FreqDomain/Filter.h"
+#include "ui_FormantTester_window.h"
+#include "CVEDSP/DSPBase/Filter.h"
 
-#include "editor/Utils.h"
+#include "QTau/qtau/editor/Utils.h"
 #include "spectrum.h"
 
 #include <QSlider>
@@ -17,9 +17,9 @@
 #include <QMimeData>
 #include <qevent.h>
 
-#include "editor/audio/Player.h"
-#include "editor/audio/Codec.h"
-#include "editor/audio/CodecBase.h"
+#include "QTau/qtau/editor/audio/Player.h"
+#include "QTau/qtau/editor/audio/Codec.h"
+#include "QTau/qtau/editor/audio/CodecBase.h"
 
 const QString playStr = QObject::tr("Play");
 const QString stopStr = QObject::tr("Stop");

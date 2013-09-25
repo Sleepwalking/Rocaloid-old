@@ -1,7 +1,6 @@
 #include <QtWidgets/QApplication>
-#include "rocatool.h"
+#include "FormantTester.h"
 #include "Interface.h"
-
 
 int main(int argc, char *argv[])
 {

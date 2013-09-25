@@ -82,10 +82,10 @@ int WriteWaveAll(String* Dest, float* Src, int Size, int SampleRate)
     wave.Header.bytePerSecond = SampleRate * 2;
     wave.Header.blockAlign = 2;
     wave.Header.bitPerSample = 16;
+    wave.Header.bytePerSample = 2;
 
     if(! PCMWaveFile_Save(Dest, &wave))
         return 0;
-
 
     PCMWaveFile_WriteAllFloat(&wave, Src, Size);
     PCMWaveFile_FinishWrite(&wave);

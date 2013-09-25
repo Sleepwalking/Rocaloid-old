@@ -1,6 +1,6 @@
 #include "spectrum.h"
-#include "editor/audio/Source.h"
-#include "editor/Utils.h"
+#include "QTau/qtau/editor/audio/Source.h"
+#include "QTau/qtau/editor/Utils.h"
 
 #include <QUrl>
 #include <QFileInfo>

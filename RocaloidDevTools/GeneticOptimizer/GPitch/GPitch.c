@@ -1,13 +1,14 @@
 #include "GPitch.h"
+#include "Rand.h"
 #include "RUtil/IO/FileUtil.h"
 #include "RUtil/Misc/Converter.h"
 #include "GFormant/GFormant.h"
 
-#include "CVEDSP/FreqDomain/Formant.h"
-#include "CVEDSP/FreqDomain/FDAnalysis.h"
-#include "CVEDSP/FreqDomain/Spectrum.h"
+#include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/Algorithm/BaseFreq.h"
+#include "CVEDSP/DSPBase/Spectrum.h"
 #include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/FreqDomain/Filter.h"
+#include "CVEDSP/DSPBase/Filter.h"
 
 #include <malloc.h>
 #include <math.h>
@@ -79,11 +80,6 @@ float GPitch_Eval(void* Desc1, void* Desc2)
     if(Score > 0)
         Score = - 9999999;
     return Score;
-}
-
-int IntRandom(int Range)
-{
-    return rand() % Range - Range / 2;
 }
 
 #define RandRange(Para, Width, LowerLimit, UpperLimit)\

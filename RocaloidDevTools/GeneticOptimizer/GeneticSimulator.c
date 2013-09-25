@@ -124,15 +124,16 @@ void GeneticSimulator_RunSimulation(GeneticSimulator* Dest, int Round)
                 float Score;
                 Dest -> HRun(TempResult, (Dest -> TaskList) + (k * Dest -> TaskSize));
                 Score = Dest -> HEval(TempResult, Dest -> ResultList + k * Dest -> ResultSize);
-
+/*
                 if(k < 7)
                 {
                     //Emphasis "a"
                     Score *= 2;
-                }
+                }*/
                 //if(Score < Dest -> EvaluationList[j])
                     Dest -> EvaluationList[j] += Score;
             }
+            //printf("%f\n", Dest -> EvaluationList[j]);
         }
         //Select
         EvalSort_Index = - 1;

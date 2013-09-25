@@ -1,6 +1,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#include "tools/CVEDSP/FreqDomain/FECSOLA.h"
+#include "CVEDSP/Algorithm/FECSOLA.h"
 /*
 typedef struct FECSOLAState
 {
