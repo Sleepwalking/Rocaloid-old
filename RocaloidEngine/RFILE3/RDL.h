@@ -32,7 +32,7 @@ extern void RDL_WritePopIndent();
 #define double_Dtor(Dest)
 #define int_Dtor(Dest)
 
-#define RNext() RDL_ReadIgnoreComment(& Buffer, CReader)
+#define RNext() RDL_ReadIgnoreComment(& Buffer, Reader)
 #define BufferIs(Chars) String_EqualChars(& Buffer, Chars)
 #define IfBufferIs(Chars) if(BufferIs(Chars))
 #define IfBufferIsNot(Chars) if(! BufferIs(Chars))

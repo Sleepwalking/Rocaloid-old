@@ -8,6 +8,7 @@
 #include <CVEDSP/DSPBase/Filter.h>
 #include <CVEDSP/DSPBase/Spectrum.h>
 #include <CVEDSP/DSPBase/ControlPointFilter.h>
+#include <CVEDSP/DSPBase/LPC.h>
 #include <CVEDSP/Algorithm/BaseFreq.h>
 #include <CVEDSP/Algorithm/PSOLA.h>
 #include <CVEDSP/Algorithm/Formant.h>
@@ -157,6 +158,21 @@ int main(int ArgQ, char** ArgList)
     MagnitudeFromWave(Spectrum, Wave + WaveLen / 2, 10);
     SpectralEnvelopeFromMagnitude(Spectrum, Spectrum, BaseFreq, 1024);
     FormantEnvelopeFromWave(Formant, Wave + WaveLen / 2, BaseFreq, 5000, 50, 10);
+
+    float* LPC = (float*)malloc(4 * 100);
+    float* LPCS = (float*)malloc(4 * 1024);
+
+    LPCFromWave(LPC, Wave + WaveLen / 2, 1024, 50);
+    SpectralEnvelopeFromLPC(LPCS, LPC, 50, 10);
+    NormalizeSpectrum(LPCS, 105);
+
+    printf("float Spectrum_%s [] = \n{\n", String_GetChars(& SymbolName));
+    for(i = 0; i < 104; i ++)
+        printf("\t%f,\t", LPCS[i]);
+    printf("\t%f\n", LPCS[104]);
+    printf("};\n");
+
+    free(LPC); free(LPCS);
     FormantFreq = AnalyzeFormantFromEnvelope(Formant, 1024);
     if(Arg_F1Avaliable)
         Output.Header.F1 = Arg_F1;

@@ -5,7 +5,7 @@
 
 char* Temp;
 int CDTLen;
-StringStream* CReader;
+StringStream* Reader;
 
 int CDTReader_Open(String* Src)
 {
@@ -15,22 +15,22 @@ int CDTReader_Open(String* Src)
     Temp = (char*)malloc(CDTLen + 10);
     LoadFileAll(Temp, Src);
 
-    CReader = (StringStream*)malloc(sizeof(StringStream));
-    StringStream_Init(CReader, Temp);
+    Reader = (StringStream*)malloc(sizeof(StringStream));
+    StringStream_Init(Reader, Temp);
     return 1;
 }
 
 void CDTReader_Close()
 {
     free(Temp);
-    free(CReader);
+    free(Reader);
 }
 
 int TemplateReadFunc(SGtorSyllable)
 {
     TemplateReadFuncHead
 
-    RDL_ReadIgnoreComment(& Dest -> Syllable, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Syllable, Reader);
 
     RNext();
     Dest -> Type = CSyllableTypeStr(& Buffer);
@@ -48,8 +48,8 @@ int TemplateReadFunc(SGtorSyllable)
 
 int TemplateReadFunc(DBLayerEntry)
 {
-    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
-    RDL_ReadIgnoreComment(& Dest -> FileAddr, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, Reader);
+    RDL_ReadIgnoreComment(& Dest -> FileAddr, Reader);
     return 1;
 }
 
@@ -57,7 +57,7 @@ int TemplateReadFunc(SymbolLayerEntry)
 {
     TemplateReadFuncHead
 
-    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, Reader);
 
     RNext();
     Dest -> Type = CCharStr(& Buffer);
@@ -84,12 +84,12 @@ int TemplateReadFunc(FreqLayerEntry)
 {
     TemplateReadFuncHead
 
-    RDL_ReadIgnoreComment(& Dest -> FPhone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> FPhone, Reader);
 
     RNext();
     Dest -> F0 = CFloatStr(& Buffer);
 
-    RDL_ReadIgnoreComment(& Dest -> Name, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Name, Reader);
 
     TemplateReadFuncNonLoopEnd
 }
@@ -98,11 +98,11 @@ int TemplateReadFunc(FormantLayerEntry)
 {
     TemplateReadFuncHead
 
-    RDL_ReadIgnoreComment(& Dest -> Phone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Phone, Reader);
 
     RNext();    Dest -> F0 = CFloatStr(& Buffer);
 
-    RDL_ReadIgnoreComment(& Dest -> FPhone, CReader);
+    RDL_ReadIgnoreComment(& Dest -> FPhone, Reader);
 
     RNext();    Dest -> F1 = CFloatStr(& Buffer);
     RNext();    Dest -> F2 = CFloatStr(& Buffer);
@@ -118,8 +118,8 @@ int TemplateReadFunc(TransitionLayerEntry)
 {
     TemplateReadFuncHead
 
-    RDL_ReadIgnoreComment(& Dest -> Phone1, CReader);
-    RDL_ReadIgnoreComment(& Dest -> Phone2, CReader);
+    RDL_ReadIgnoreComment(& Dest -> Phone1, Reader);
+    RDL_ReadIgnoreComment(& Dest -> Phone2, Reader);
 
     RNext();
     Dest -> Ratio = CFloatStr(& Buffer);

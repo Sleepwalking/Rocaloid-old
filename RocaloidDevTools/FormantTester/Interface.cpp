@@ -140,7 +140,7 @@ void UpdateSpectrum2(float* DestArray, FECSOLAState paramsBefore, FECSOLAState p
     Boost_FloatMulArr(InterArray, InterArray, Window, 512);
 
     for(i = 0;i < 512;i ++)
-        InterArray[i] = Boost_Ln(Window[i]) + 5;
+        InterArray[i] = Window[i];//Boost_Ln(Window[i]) + 5;
 
     for(i = 0;i < 512;i ++)
     {

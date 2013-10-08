@@ -16,7 +16,7 @@
 
 char* Temp;
 int CVSLen;
-StringStream* CReader;
+StringStream* Reader;
 
 int CVSRDLReader_Open(String* Src)
 {
@@ -26,15 +26,15 @@ int CVSRDLReader_Open(String* Src)
     Temp = (char*)malloc(CVSLen + 10);
     LoadFileAll(Temp, Src);
 
-    CReader = (StringStream*)malloc(sizeof(StringStream));
-    StringStream_Init(CReader, Temp);
+    Reader = (StringStream*)malloc(sizeof(StringStream));
+    StringStream_Init(Reader, Temp);
     return 1;
 }
 
 void CVSRDLReader_Close()
 {
     free(Temp);
-    free(CReader);
+    free(Reader);
 }
 
 TemplateSimpleStructDef(Time, Ratio);

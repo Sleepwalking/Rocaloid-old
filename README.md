@@ -24,9 +24,9 @@ Directorys
 	* `RFILE 3`: Provides I/O for `CVS`, `RVS`, `CDT` and `CVDB`.
 * RocaloidDevTools: tools for building Rocaloid sound dbs.
 	* CVDBToolChain: a set of tools related with `.cvdb` format.
-		* CVDBStudio: tool for converting `.wav` to `.cvdb`.
-		* CMin: a CLI subset of CVDBStudio.
-		* C2Wav: a tool for inspecting `.cvdb` files.
+		* CMin: tool for generating `.cvdb`.
+		* C2Wav: `.cvdb` inspector.
+		* SpeakerAna: analyze speaker characteristics, generates `.cspr` for CMin.
 	* GeneticOptimizer: an implemention of Genetic Algorithm for optimizing parameters (for certain algorithms used in Rocaloid).
 	* FormantTester: visualize spectrums for testing algorithms & evaluating the quality of FECSOLA.
 

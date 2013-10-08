@@ -1,0 +1,13 @@
+CSPR 1.0
+
+0-3	Dword			CSPR Header			'CSPR'
+4-5	UInt16			Version				0x0001
+6-9	Float			Dividing Frequency
+10-13	Int32			Class Num
+14-?	Formant Descriptor	Formant Classes
+	Int32			FFNetLow Hidden Layer Size	130 by default
+	105 * HLS * Float	FFNetLow Layer 1
+	HLS * Class Num * Float	FFNetLow Layer 2
+	Int32			FFNetHigh Hidden Layer Size	130 by default
+	105 * HLS * Float	FFNetHigh Layer 1
+	HLS * Class Num * Float	FFNetHigh Layer 2

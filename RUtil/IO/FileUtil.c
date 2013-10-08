@@ -9,7 +9,10 @@ int64_t GetFileLength(String* Path)
     FileStream_Ctor(&tmp);
     Ret = FileStream_Open(&tmp, Path, READONLY);
     if(! Ret)
+    {
+        FileStream_Dtor(&tmp);
         return 0;
+    }
     Ret = tmp.Length;
     FileStream_Dtor(&tmp);
     return Ret;

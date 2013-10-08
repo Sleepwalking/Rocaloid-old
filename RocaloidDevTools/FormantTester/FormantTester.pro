@@ -3,8 +3,6 @@ QT += core widgets network multimedia
 TARGET = FormantTester
 TEMPLATE = app
 
-INCLUDEPATH = ../..
-
 HEADERS = \
     FormantTester.h \
     spectrum.h \
@@ -94,7 +92,7 @@ SOURCES = \
     RUtil/IO/FileStream.c \
     RUtil/Misc/Converter.c \
     RUtil/Structure/String.c \
-    RUtil/Memory.c \
+    RUtil/Memory.c
 
 QMAKE_CXXFLAGS += -Wunused-parameter
 
