@@ -19,6 +19,6 @@ AutoClass
 } EndClass(CSPR);
 
 extern int CSPR_Load(CSPR* Dest, String* Path);
-extern int CSPR_Save(CSPR* Dest, String* Path);
+extern int CSPR_Save(String* Dest, CSPR* Src);
 
 #endif

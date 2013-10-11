@@ -3,6 +3,7 @@
 #include "CVEDSP/Algorithm/Formant.h"
 #include "CVEDSP/DSPBase/LPC.h"
 #include "CVEDSP/Algorithm/BaseFreq.h"
+#include "CVEDSP/DSPBase/Spectrum.h"
 
 _Constructor_ (Wave)
 {
@@ -41,6 +42,7 @@ void TData_LoadFromString(TData* Dest, String* Src, int Size)
     Dest -> SpecList_Index = Size - 1;
 
     float* LPC = (float*)malloc(sizeof(float) * 100);
+    float* Spectrum = (float*)malloc(sizeof(float) * 1024);
 
     for(i = 0; i < Size; i ++)
     {
@@ -62,4 +64,5 @@ void TData_LoadFromString(TData* Dest, String* Src, int Size)
         Dest -> SpecList[i].BaseFreq = Dest -> WaveList[i].BaseFreq;
     }
     free(LPC);
+    free(Spectrum);
 }

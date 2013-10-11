@@ -106,7 +106,7 @@ void TrainProcess(FeedForward* Dest, TData* TDataList, int TDataList_Index, floa
                     }
                 }
             }
-            if(E < 0.02)
+            if(E < 0.002)
             {
                 printf("Training Succeeded at cycle %d.\n", j);
                 goto _JMP_TrainingLFFinished;
@@ -137,7 +137,7 @@ int main(void)
 
     TData_Dtor(& FreqTrainData);
 
-    int LayerSize [] = {105, 130, Task.PhoneList_Index + 1};
+    int LayerSize [] = {105, 30, Task.PhoneList_Index + 1};
 
     CSPR Output;
     CSPR_Ctor(& Output);
@@ -145,7 +145,7 @@ int main(void)
     FeedForward_SetLayer(& Output.FFNetLow, LayerSize, 3);
     FeedForward_SetLayer(& Output.FFNetHigh, LayerSize, 3);
 
-    printf("FF Neuron Network constructed: {105, 130, %d}.\n", Task.PhoneList_Index + 1);
+    printf("FF Neuron Network constructed: {105, 30, %d}.\n", Task.PhoneList_Index + 1);
 
     ArrayType_Ctor(TData, TDataList);
 
@@ -175,7 +175,7 @@ int main(void)
     }
 
     String_FromChars(OutputPath, "/tmp/x.cspr");
-    CSPR_Save(& Output, & OutputPath);
+    CSPR_Save(& OutputPath, & Output);
     CSPR_Dtor(& Output);
 
     String_Dtor(& OutputPath);

@@ -1,6 +1,6 @@
 #include "CVSRDLWriter.h"
 #include "RUtil/IO/FileUtil.h"
-#include "RDL.h"
+#include "../RDL.h"
 #include <malloc.h>
 
 #define TemplateSimpleStructWriteDef(A, B)\

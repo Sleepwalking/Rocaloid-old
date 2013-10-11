@@ -3,18 +3,20 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <RUtil/RUtil.h>
-#include <RUtil/IO/FileUtil.h>
-#include <CVEDSP/DSPBase/Filter.h>
-#include <CVEDSP/DSPBase/Spectrum.h>
-#include <CVEDSP/DSPBase/ControlPointFilter.h>
-#include <CVEDSP/DSPBase/LPC.h>
-#include <CVEDSP/Algorithm/BaseFreq.h>
-#include <CVEDSP/Algorithm/PSOLA.h>
-#include <CVEDSP/Algorithm/Formant.h>
-#include <CVEDSP/IntrinUtil/Calculation.h>
+#include "RUtil/RUtil.h"
+#include "RUtil/IO/FileUtil.h"
+#include "CVEDSP/DSPBase/Filter.h"
+#include "CVEDSP/DSPBase/Spectrum.h"
+#include "CVEDSP/DSPBase/ControlPointFilter.h"
+#include "CVEDSP/DSPBase/LPC.h"
+#include "CVEDSP/Algorithm/BaseFreq.h"
+#include "CVEDSP/Algorithm/PSOLA.h"
+#include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/IntrinUtil/Calculation.h"
 
-#include <RFILE3/CVDB3/CVDB3IO.h>
+#include "RFILE3/CVDB3/CVDB3IO.h"
+
+#include "../CSPR.h"
 
 //$ CMin FileName [-C / -V] [-F0] [-F1] [-F2] [-F3] [-L]
 
@@ -31,6 +33,20 @@ void GetFileName(String* Dest, String* Path)
             break;
     Start = i;
     Mid(Dest, Path, Start + 1, End - Start - 1);
+}
+
+int GetMaxIndex(float* Dest, int Length)
+{
+    int i, record;
+    float Max = - 9999;
+    record = 0;
+    for(i = 0; i < Length; i ++)
+        if(Dest[i] > Max)
+        {
+            Max = Dest[i];
+            record = i;
+        }
+    return record;
 }
 
 int Arg_LenAvaliable = 0;
@@ -109,6 +125,12 @@ int main(int ArgQ, char** ArgList)
     int32_t* Pulses = (int32_t*)malloc(4 * 10000);
     CVDB3 Output;
 
+    CSPR CNet;
+    CSPR_Ctor(& CNet);
+    String_FromChars(CSPRPath, "/tmp/x.cspr");
+    CSPR_Load(& CNet, & CSPRPath);
+    String_Dtor(& CSPRPath);
+
     WaveLen = LoadWaveAll(Wave, & Path);
     printf("Length: %d samples, %fs.\n", WaveLen, (float)WaveLen / SampleRate);
 
@@ -159,20 +181,31 @@ int main(int ArgQ, char** ArgList)
     SpectralEnvelopeFromMagnitude(Spectrum, Spectrum, BaseFreq, 1024);
     FormantEnvelopeFromWave(Formant, Wave + WaveLen / 2, BaseFreq, 5000, 50, 10);
 
-    float* LPC = (float*)malloc(4 * 100);
-    float* LPCS = (float*)malloc(4 * 1024);
-
+    int FIndex = - 1;
+    float* LPC = (float*)malloc(sizeof(float) * 100);
+    float* LPCS = (float*)malloc(sizeof(float) * 1024);
     LPCFromWave(LPC, Wave + WaveLen / 2, 1024, 50);
     SpectralEnvelopeFromLPC(LPCS, LPC, 50, 10);
     NormalizeSpectrum(LPCS, 105);
+    if(BaseFreq < CNet.DividingFreq)
+    {
+        FeedForward_SetInput(& CNet.FFNetLow, LPCS);
+        FeedForward_UpdateState(& CNet.FFNetLow);
+        FIndex = GetMaxIndex(CNet.FFNetLow.Layers[2].O, CNet.ClassNum);
+    }
+    else
+    {
+        FeedForward_SetInput(& CNet.FFNetHigh, LPCS);
+        FeedForward_UpdateState(& CNet.FFNetHigh);
+        FIndex = GetMaxIndex(CNet.FFNetHigh.Layers[2].O, CNet.ClassNum);
+    }
+    free(LPC);
+    free(LPCS);
+    printf("F1: %f, F2:%f, F3:%f.\n",
+           CNet.FormantClasses[FIndex].F1,
+           CNet.FormantClasses[FIndex].F2,
+           CNet.FormantClasses[FIndex].F3);
 
-    printf("float Spectrum_%s [] = \n{\n", String_GetChars(& SymbolName));
-    for(i = 0; i < 104; i ++)
-        printf("\t%f,\t", LPCS[i]);
-    printf("\t%f\n", LPCS[104]);
-    printf("};\n");
-
-    free(LPC); free(LPCS);
     FormantFreq = AnalyzeFormantFromEnvelope(Formant, 1024);
     if(Arg_F1Avaliable)
         Output.Header.F1 = Arg_F1;
@@ -201,6 +234,7 @@ int main(int ArgQ, char** ArgList)
 
     printf("Saved as %s.\n", String_GetChars(& SymbolName));
 
+    CSPR_Dtor(& CNet);
     CVDB3_Dtor(& Output);
     free(Pulses);
     free(Wave);

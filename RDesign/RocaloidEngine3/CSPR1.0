@@ -5,9 +5,11 @@ CSPR 1.0
 6-9	Float			Dividing Frequency
 10-13	Int32			Class Num
 14-?	Formant Descriptor	Formant Classes
+	Int32			FFNetLow Input Layer Size	105 by default
 	Int32			FFNetLow Hidden Layer Size	130 by default
-	105 * HLS * Float	FFNetLow Layer 1
+	ILS * HLS * Float	FFNetLow Layer 1
 	HLS * Class Num * Float	FFNetLow Layer 2
+	Int32			FFNetHigh Input Layer Size	105 by default
 	Int32			FFNetHigh Hidden Layer Size	130 by default
-	105 * HLS * Float	FFNetHigh Layer 1
+	ILS * HLS * Float	FFNetHigh Layer 1
 	HLS * Class Num * Float	FFNetHigh Layer 2

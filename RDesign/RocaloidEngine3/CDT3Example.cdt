@@ -10,11 +10,14 @@ CDT
 	CDTMapping
 		DBLayerMap
 #				Name	FAddr					#
-			>	a_C3	a_C3.cbv
-			>	a_G3	a_G3.cbv
-			>	a_C4	a_C4.cbv
-			>	o_C3	o_C3.cbv
-			>	b@_C3	b@_C3.cbv
+			>	a_C3	/tmp/DB/a_C3.cvdb
+			>	a_G3	/tmp/DB/a_G3.cvdb
+			>	a_C4	/tmp/DB/a_C4.cvdb
+			>	o_C3	/tmp/DB/o_C3.cvdb
+			>	pa_A3	/tmp/DB/p@_A3.cvdb
+			>	po_E3	/tmp/DB/p[_E3.cvdb
+			>	pa_E3	/tmp/DB/p@_E3.cvdb
+			>	ba_C3	/tmp/DB/b@_C3.cvdb
 		End
 		SymbolLayerMap
 #				Name	Type	VOI	VOT	F0	F1	F2	F3	S1	S2	S3	#
@@ -22,7 +25,7 @@ CDT
 			>	a_G3	V	4	0.015	391	1100	1350	4100	1.3	1.3	1
 			>	a_C4	V	4	0.015	522	1100	1350	4100	1.3	1.3	1
 			>	o_C3	V	4	0.015	262	755	1305	3755	1.3	1.3	1.2
-			>	b@_C3	C	4	0.015	262	1100	1350	4100	1.3	1.3	1
+			>	ba_C3	C	4	0.015	262	1100	1350	4100	1.3	1.3	1
 		End
 		FreqLayerMap
 #				FPhone	F0	Name				#
@@ -30,7 +33,7 @@ CDT
 			>	a	391	a_G3
 			>	a	522	a_C4
 			>	o	262	o_C3
-			>	b@	262	b@_C3
+			>	ba	262	ba_C3
 		End
 		FormantLayerMap
 #				Phone	F0	FPhone	F1	F2	F3	S1	S2	S3			#
@@ -40,9 +43,9 @@ CDT
 			>	i	262	a	320	3650	4100	1.5	1.0	1
 			>	i	400	a	470	3650	4100	1.5	1.0	1
 			>	i	600	a	600	3650	4100	1.5	1.0	1
-			>	b@	262	b@	1100	1350	4100	1.3	1.3	1
+			>	ba	262	ba	1100	1350	4100	1.3	1.3	1
 			>	o	262	o	755	1305	3755	1.3	1.3	1.2
-			>	b[	262	b@	755	1305	3755	1.3	1.3	1.2
+			>	bo	262	ba	755	1305	3755	1.3	1.3	1.2
 		End
 		TransitionLayerMap
 #				Phone1	Phone2	Ratio						#
@@ -52,12 +55,12 @@ CDT
 			>	i	i	1
 			>	i	o	0.3
 			>	o	o	1
-			>	b@	a	0.5
-			>	b@	i	0.7
-			>	b@	o	0.5
-			>	b[	a	0.5
-			>	b[	i	0.7
-			>	b[	o	0.5
+			>	ba	a	0.5
+			>	ba	i	0.7
+			>	ba	o	0.5
+			>	bo	a	0.5
+			>	bo	i	0.7
+			>	bo	o	0.5
 		End
 	End
 	PhoneticInfo

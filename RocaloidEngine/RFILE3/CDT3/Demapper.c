@@ -264,7 +264,7 @@ void Demapper_SetCDTMap(CDTMap* Src)
 int Demapper_QueryDBLayer(String* Name)
 {
     int i;
-    for(i = 0; i < QueryMap -> DBLayerMap_Index; i ++)
+    for(i = 0; i <= QueryMap -> DBLayerMap_Index; i ++)
         if(String_Equal(& QueryMap -> DBLayerMap[i].Name, Name))
             return i;
     return - 1;
@@ -274,7 +274,7 @@ int Demapper_QueryDBLayer(String* Name)
 int Demapper_QuerySymbolLayer(String* Name)
 {
     int i;
-    for(i = 0; i < QueryMap -> SymbolLayerMap_Index; i ++)
+    for(i = 0; i <= QueryMap -> SymbolLayerMap_Index; i ++)
         if(String_Equal(& QueryMap -> SymbolLayerMap[i].Name, Name))
             return i;
     return - 1;

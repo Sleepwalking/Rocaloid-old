@@ -11,18 +11,16 @@ SOURCES += main.c \
     RUtil/IO/FileStream.c \
     RUtil/Misc/Converter.c \
     RUtil/Structure/String.c \
+    RFILE3/RDL.c \
+    RFILE3/CDT3/Demapper.c \
+    RFILE3/CDT3/CDT3Reader.c \
+    RFILE3/CDT3/CDT3.c \
     RFILE3/CVDB3/CVDB3IO.c \
-    ../CSPR.c \
-    CVEANN/Rand.c \
-    CVEANN/Activator.c \
-    CVEANN/Network/SOFM.c \
-    CVEANN/Network/LVQ.c \
-    CVEANN/Network/FeedForwardMomentum.c \
-    CVEANN/Network/FeedForward.c \
-    CVEANN/Trainer/Trainer_SOFM.c \
-    CVEANN/Trainer/Trainer_LVQ.c \
-    CVEANN/Trainer/Trainer_FeedForward.c \
-    CVEANN/Trainer/Trainer_BPMomentum.c
+    RFILE3/CVS3/CVSRDLWriter.c \
+    RFILE3/CVS3/CVSRDLReader.c \
+    RFILE3/CVS3/CVS3.c \
+    Synthesizer/CSynth.c \
+    CVEGlobal.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -67,23 +65,25 @@ HEADERS += \
     RUtil/Misc/Converter.h \
     RUtil/Structure/String.h \
     RUtil/Structure/Array.h \
+    RFILE3/RDL.h \
+    RFILE3/CDT3/Demapper.h \
+    RFILE3/CDT3/CDT3Reader.h \
+    RFILE3/CDT3/CDT3.h \
     RFILE3/CVDB3/CVDB3IO.h \
-    ../CSPR.h \
-    CVEANN/Rand.h \
-    CVEANN/Activator.h \
-    CVEANN/Network/SOFM.h \
-    CVEANN/Network/LVQ.h \
-    CVEANN/Network/FeedForwardMomentum.h \
-    CVEANN/Network/FeedForward.h \
-    CVEANN/Trainer/Trainer_SOFM.h \
-    CVEANN/Trainer/Trainer_LVQ.h \
-    CVEANN/Trainer/Trainer_FeedForward.h \
-    CVEANN/Trainer/Trainer_BPMomentum.h
+    RFILE3/CVS3/CVSRDLWriter.h \
+    RFILE3/CVS3/CVSRDLReader.h \
+    RFILE3/CVS3/CVS3.h \
+    Synthesizer/CSynth.h \
+    DSPInclude.h \
+    CVEGlobal.h
 
-
-unix:!macx: LIBS += -L$$PWD/CVEDSP/ -lCVEDSP
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP
+else:unix: LIBS += -L$$PWD/CVEDSP/ -lCVEDSP
 
 INCLUDEPATH += $$PWD/CVEDSP
 DEPENDPATH += $$PWD/CVEDSP
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/CVEDSP/libCVEDSP.a
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CVEDSP/release/CVEDSP.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CVEDSP/debug/CVEDSP.lib
+else:unix: PRE_TARGETDEPS += $$PWD/CVEDSP/libCVEDSP.a
