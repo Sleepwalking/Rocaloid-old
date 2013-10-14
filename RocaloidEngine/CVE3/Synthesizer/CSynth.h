@@ -9,9 +9,11 @@
 AutoClass
 {
     String Symbol;
-    unsigned int PlayIndex;
-    unsigned int PlayPosition;
+    float FPlayIndex;
+    int PlayIndex;
+    int PlayPosition;
     float ConsonantRatio;
+    float VowelRatio;
     CVDB3 Data;
 
     //Synth Control
@@ -21,11 +23,13 @@ AutoClass
 
 typedef struct
 {
-    unsigned int PSOLAFrameLength;
+    int PSOLAFrameHopSize;
+    int BeforeVOT;
 } CSynthSendback;
 
 extern void CSynth_SetSymbol(CSynth* Dest, String* Symbol);
 extern void CSynth_SetConsonantRatio(CSynth* Dest, float CRatio);
+extern void CSynth_SetVowelRatio(CSynth* Dest, float VRatio);
 extern void CSynth_Reset(CSynth* Dest);
 
 extern CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output);

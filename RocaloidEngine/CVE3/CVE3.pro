@@ -20,7 +20,9 @@ SOURCES += main.c \
     RFILE3/CVS3/CVSRDLReader.c \
     RFILE3/CVS3/CVS3.c \
     Synthesizer/CSynth.c \
-    CVEGlobal.c
+    CVEGlobal.c \
+    Synthesizer/FSynth.c \
+    Type/FDFrame.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -75,7 +77,9 @@ HEADERS += \
     RFILE3/CVS3/CVS3.h \
     Synthesizer/CSynth.h \
     DSPInclude.h \
-    CVEGlobal.h
+    CVEGlobal.h \
+    Synthesizer/FSynth.h \
+    Type/FDFrame.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP

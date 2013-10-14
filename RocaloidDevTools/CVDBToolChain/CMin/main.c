@@ -180,7 +180,7 @@ int main(int ArgQ, char** ArgList)
     MagnitudeFromWave(Spectrum, Wave + WaveLen / 2, 10);
     SpectralEnvelopeFromMagnitude(Spectrum, Spectrum, BaseFreq, 1024);
     FormantEnvelopeFromWave(Formant, Wave + WaveLen / 2, BaseFreq, 5000, 50, 10);
-
+/*
     int FIndex = - 1;
     float* LPC = (float*)malloc(sizeof(float) * 100);
     float* LPCS = (float*)malloc(sizeof(float) * 1024);
@@ -205,7 +205,7 @@ int main(int ArgQ, char** ArgList)
            CNet.FormantClasses[FIndex].F1,
            CNet.FormantClasses[FIndex].F2,
            CNet.FormantClasses[FIndex].F3);
-
+*/
     FormantFreq = AnalyzeFormantFromEnvelope(Formant, 1024);
     if(Arg_F1Avaliable)
         Output.Header.F1 = Arg_F1;

@@ -6,6 +6,8 @@
 
 extern CDT3 CGDict;
 extern CDTMappingQuerySpace CGQuerySpace;
+extern float Hamming2048[];
+extern float Hamming1024[];
 
 extern void CVEGlobal_Init() __attribute((constructor));
 extern void CVEGlobal_Exit() __attribute((destructor));

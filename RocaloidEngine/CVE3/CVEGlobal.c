@@ -1,8 +1,11 @@
 #include "CVEGlobal.h"
 #include "RFILE3/CDT3/CDT3Reader.h"
+#include "CVEDSP/DSPBase/Window.h"
 
 CDT3 CGDict;
 CDTMappingQuerySpace CGQuerySpace;
+float Hamming2048[2048];
+float Hamming1024[1024];
 
 void CVEGlobal_Init()
 {

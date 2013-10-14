@@ -9,9 +9,11 @@ _Constructor_ (CSynth)
 {
     CVDB3_Ctor(& Dest -> Data);
     String_Ctor(& Dest -> Symbol);
-    Dest -> PlayIndex = 0;
+    Dest -> FPlayIndex = 1;
+    Dest -> PlayIndex = 1;
     Dest -> PlayPosition = 0;
     Dest -> ConsonantRatio = 1;
+    Dest -> VowelRatio = 1;
 }
 
 _Destructor_ (CSynth)
@@ -36,11 +38,18 @@ void CSynth_SetConsonantRatio(CSynth* Dest, float CRatio)
     Dest -> ConsonantRatio = CRatio;
 }
 
+void CSynth_SetVowelRatio(CSynth* Dest, float VRatio)
+{
+    Dest -> VowelRatio = VRatio;
+}
+
 void CSynth_Reset(CSynth* Dest)
 {
+    Dest -> FPlayIndex = 1;
     Dest -> PlayIndex = 1;
     Dest -> PlayPosition = 0;
     Dest -> ConsonantRatio = 1;
+    Dest -> VowelRatio = 1;
     unsigned int i;
     for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
         if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
@@ -53,7 +62,7 @@ void CSynth_Reset(CSynth* Dest)
 void CSynth_UpdateIndex(CSynth* Dest)
 {
     unsigned int i;
-    unsigned int record;
+    unsigned int record = 0;
     int Min = 999;
     int Dist;
     for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
@@ -66,7 +75,8 @@ void CSynth_UpdateIndex(CSynth* Dest)
         }
     }
     Dest -> PlayIndex = record;
-    Dest -> PlayPosition = Dest -> Data.PulseOffsets[record];
+    //Dest -> PlayPosition = Dest -> Data.PulseOffsets[record];
+    Dest -> FPlayIndex = record;
 }
 
 #define DPlayIndex (Dest -> PlayIndex)
@@ -78,7 +88,8 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
 {
     CSynthSendback Ret;
     float TRatio = 0;
-    if(DPlayIndex > DPulseNum - Dest -> CycleLength)
+    DPlayIndex = Dest -> FPlayIndex;
+    if(DPlayIndex > (signed int)(DPulseNum - Dest -> CycleLength))
     {
         //In transition
         PSOLAFrame Temp;
@@ -104,20 +115,22 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
                              Dest -> Data.Header.WaveSize,
                              DPulseOffsets[DPlayIndex]);
     }
-    if(Dest -> Data.Header.PhoneType == 'C' && DPlayIndex <= Dest -> Data.Header.VOI)
+    if(Dest -> Data.Header.PhoneType == 'C' && DPlayIndex <= (signed int)Dest -> Data.Header.VOI)
     {
         //In Consonant
-        Ret.PSOLAFrameLength = (DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex]) / Dest -> ConsonantRatio;
-        DPlayPos += Ret.PSOLAFrameLength;
+        Ret.PSOLAFrameHopSize = 512;//(DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex]);
+        Ret.BeforeVOT = 1;
+        DPlayPos += Ret.PSOLAFrameHopSize / Dest -> ConsonantRatio;
         CSynth_UpdateIndex(Dest);
     }else
     {
         //In Cycle
-        Ret.PSOLAFrameLength = DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex];
-        DPlayIndex ++;
+        Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex];
+        Ret.BeforeVOT = 0;
+        Dest -> FPlayIndex += 1.0f / Dest -> VowelRatio;
     }
-    if(DPlayIndex > DPulseNum)
-        DPlayIndex = Dest -> CycleStart + Dest -> CycleLength;
+    if(Dest -> FPlayIndex > DPulseNum)
+        Dest -> FPlayIndex = Dest -> CycleStart + Dest -> CycleLength;
 
     return Ret;
 }
