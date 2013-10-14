@@ -22,7 +22,9 @@ SOURCES += main.c \
     Synthesizer/CSynth.c \
     CVEGlobal.c \
     Synthesizer/FSynth.c \
-    Type/FDFrame.c
+    DSPEx/FDFrame.c \
+    DSPEx/FECSOLAEx.c \
+    Synthesizer/FSynthSpectrumModification.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -79,7 +81,8 @@ HEADERS += \
     DSPInclude.h \
     CVEGlobal.h \
     Synthesizer/FSynth.h \
-    Type/FDFrame.h
+    DSPEx/FDFrame.h \
+    DSPEx/FECSOLAEx.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP

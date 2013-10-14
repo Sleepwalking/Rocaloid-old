@@ -5,12 +5,13 @@
 #include "RUtil/RUtil.h"
 #include "DSPInclude.h"
 #include "CSynth.h"
-#include "Type/FDFrame.h"
+#include "DSPEx/FDFrame.h"
 
 AutoClass
 {
     CSynth SubSynth;
     float SynthFreq;
+    float* EnvMomentum;
 } EndClass(FSynth);
 
 typedef struct

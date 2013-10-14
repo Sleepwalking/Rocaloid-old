@@ -4,11 +4,14 @@
 #include "DSPInclude.h"
 #include "Synthesizer/CSynth.h"
 #include "Synthesizer/FSynth.h"
+#include "CVEDSP/Plot.h"
 
 int main(void)
 {
     GenerateHamming(Hamming2048, 2048);
     GenerateHamming(Hamming1024, 1024);
+
+    GNUPlot_Open();
 
     String_FromChars(CDTPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt");
     CVEGlobal_LoadCDT(& CDTPath);
@@ -18,7 +21,7 @@ int main(void)
     float* Wave = (float*)malloc(sizeof(float) * SampleRate * 100);
     Boost_FloatSet(Wave, 0, SampleRate * 100);
 
-    String_FromChars(SName, "pa_C3");
+    String_FromChars(SName, "a_C4");
     /*
     CSynth CS;
     CSynth_Ctor(& CS);
@@ -44,9 +47,9 @@ int main(void)
     CSynth_SetVowelRatio(& CS, 1);
     CSynth_SetConsonantRatio(& CS, 1);*/
 
-    for(i = 0; i < 3000; i ++)
+    for(i = 0; i < 20000; i ++)
     {
-        FSynth_SetFrequency(& FreqGen, (float)i / 10 + 260);
+        FSynth_SetFrequency(& FreqGen, (float)i / 50 + 500);
         Ret = FSynth_Synthesis(& FreqGen, & Out);
         PSOLAFrame_FromFDFrame(& POut, & Out);
         Boost_FloatDivArr(POut.Data, POut.Data, Hamming1024, 1024);
@@ -66,6 +69,8 @@ int main(void)
     String_FromChars(Output, "/tmp/aN.wav");
     WriteWaveAll(& Output, Wave, SampleRate * 100, SampleRate);
     String_Dtor(& Output);
+
+    GNUPlot_Close();
 
     free(Wave);
     printf("Hello World!\n");
