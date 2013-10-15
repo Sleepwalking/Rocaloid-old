@@ -21,7 +21,7 @@ int main(void)
     float* Wave = (float*)malloc(sizeof(float) * SampleRate * 100);
     Boost_FloatSet(Wave, 0, SampleRate * 100);
 
-    String_FromChars(SName, "a_C4");
+    String_FromChars(SName, "ee_C3");
     /*
     CSynth CS;
     CSynth_Ctor(& CS);
@@ -47,9 +47,9 @@ int main(void)
     CSynth_SetVowelRatio(& CS, 1);
     CSynth_SetConsonantRatio(& CS, 1);*/
 
-    for(i = 0; i < 20000; i ++)
+    for(i = 0; i < 6000; i ++)
     {
-        FSynth_SetFrequency(& FreqGen, (float)i / 50 + 500);
+        FSynth_SetFrequency(& FreqGen, (float)i / 40 + 262);
         Ret = FSynth_Synthesis(& FreqGen, & Out);
         PSOLAFrame_FromFDFrame(& POut, & Out);
         Boost_FloatDivArr(POut.Data, POut.Data, Hamming1024, 1024);
@@ -57,7 +57,6 @@ int main(void)
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
     }
-
     PSOLAFrame_Dtor(& POut);
     //CSynth_Dtor(& CS);
 

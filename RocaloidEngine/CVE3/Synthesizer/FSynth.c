@@ -104,9 +104,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     float* Orig   = FloatMalloc(2048);
 
     Boost_FloatMulArr(Orig, BFWave.Data, Hamming2048, 2048);
-    RFFT(OrigRe, OrigIm, BFWave.Data, 11);
-    MagnitudeFromComplex(OrigMa, OrigRe, OrigIm, 2048);
-    ExtractFormantCPF(& OrigEnv, OrigMa, BF, 2048);
+    RFFT(OrigRe, OrigIm, Orig, 11);
 
     //Nyquist LPF
     if(! Ret.BeforeVOT && BF / Dest -> SynthFreq < 1.0f)

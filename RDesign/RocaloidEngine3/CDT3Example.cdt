@@ -11,18 +11,25 @@ CDT
 		DBLayerMap
 #				Name	FAddr					#
 			>	a_C3	/tmp/DB/a_C3.cvdb
+			>	a_E3	/tmp/DB/a_C3.cvdb
+			>	a_C2	/tmp/DB/a_C2.cvdb
 			>	a_G3	/tmp/DB/a_G3.cvdb
 			>	a_C4	/tmp/DB/a_C4.cvdb
 			>	o_C3	/tmp/DB/o_C3.cvdb
+			>	o_E3	/tmp/DB/o_E3.cvdb
+			>	o_C4	/tmp/DB/o_C4.cvdb
 			>	i_C3	/tmp/DB/i_C3.cvdb
 			>	u_C3	/tmp/DB/u_C3.cvdb
 			>	e_C3	/tmp/DB/e_C3.cvdb
+			>	e_D3	/tmp/DB/e_D3.cvdb
 			>	ee_C3	/tmp/DB/e-_C3.cvdb
 			>	pa_A#2	/tmp/DB/p@_A#2.cvdb
 			>	pa_C3	/tmp/DB/p@_C3.cvdb
 			>	pa_D3	/tmp/DB/p@_D3.cvdb
 			>	pa_A3	/tmp/DB/p@_A3.cvdb
+			>	po_C3	/tmp/DB/p[_E3.cvdb
 			>	po_E3	/tmp/DB/p[_E3.cvdb
+			>	po_G3	/tmp/DB/p[_G3.cvdb
 			>	pa_E3	/tmp/DB/p@_E3.cvdb
 			>	ba_C3	/tmp/DB/b@_C3.cvdb
 			>	pe_C3	/tmp/DB/p3_C3.cvdb
@@ -33,6 +40,7 @@ CDT
 			>	fu_C3	/tmp/DB/f~_C3.cvdb
 			>	fu_E3	/tmp/DB/f~_E3.cvdb
 			>	fu_G3	/tmp/DB/f~_G3.cvdb
+			>	myvoice	/tmp/DB/myvoice.cvdb
 		End
 		SymbolLayerMap
 #				Name	Type	VOI	VOT	F0	F1	F2	F3	S1	S2	S3	#
