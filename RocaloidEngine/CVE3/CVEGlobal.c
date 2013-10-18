@@ -4,8 +4,8 @@
 
 CDT3 CGDict;
 CDTMappingQuerySpace CGQuerySpace;
-float Hamming2048[2048];
-float Hamming1024[1024];
+float Hanning2048[2048];
+float Hanning1024[1024];
 
 void CVEGlobal_Init()
 {

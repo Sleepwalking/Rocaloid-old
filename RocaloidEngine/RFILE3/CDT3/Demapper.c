@@ -308,6 +308,7 @@ Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0)
     Ret.SubIndex = i - 1;
     if(Ret.SubIndex < 0)
     {
+        //Reach Min
         Ret.SubIndex = 0;
         Ret.Ratio = 0;
     }else
@@ -321,6 +322,9 @@ Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0)
                         (GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 1).F0 -
                          GetFusedFormantLayerEntry(QuerySpace, Match, Ret.SubIndex + 0).F0);
     }
+    Ret.Reach = 0;
+    if(Ret.SubIndex == QuerySpace -> FormantLayerFusedList[Match].EntryList_Index)
+        Ret.Reach = 1;
     return Ret;
 }
 

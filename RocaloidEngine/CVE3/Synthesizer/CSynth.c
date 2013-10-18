@@ -50,7 +50,14 @@ void CSynth_Reset(CSynth* Dest)
     Dest -> PlayPosition = 0;
     Dest -> ConsonantRatio = 1;
     Dest -> VowelRatio = 1;
+
     unsigned int i;
+    if(Dest -> Data.Header.PhoneType == 'V')
+    {
+        //Vowels should start after VOT
+        Dest -> PlayIndex = Dest -> Data.Header.VOI;
+        Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
+    }
     for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
         if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
             break;

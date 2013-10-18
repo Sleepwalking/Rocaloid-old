@@ -11,13 +11,13 @@ AutoClass
 {
     CSynth SubSynth;
     float SynthFreq;
-    float* EnvMomentum;
 } EndClass(FSynth);
 
 typedef struct
 {
     int PSOLAFrameHopSize;
     int BeforeVOT;
+    FECSOLAState FState;
 } FSynthSendback;
 
 extern void FSynth_SetSymbol(FSynth* Dest, String* Symbol);

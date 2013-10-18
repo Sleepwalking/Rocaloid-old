@@ -6,13 +6,16 @@
 
 extern CDT3 CGDict;
 extern CDTMappingQuerySpace CGQuerySpace;
-extern float Hamming2048[];
-extern float Hamming1024[];
+extern float Hanning2048[];
+extern float Hanning1024[];
 
 extern void CVEGlobal_Init() __attribute((constructor));
 extern void CVEGlobal_Exit() __attribute((destructor));
 
 extern int CVEGlobal_LoadCDT(String* Path);
+
+#define FreqToIndex2048(x) ((x) * 2048 / SampleRate)
+#define FreqToIndex1024(x) ((x) * 1024 / SampleRate)
 
 #define FloatMalloc(Size) (float*)malloc(sizeof(float) * Size)
 

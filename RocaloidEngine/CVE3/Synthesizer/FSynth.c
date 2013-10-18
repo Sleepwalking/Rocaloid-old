@@ -13,14 +13,11 @@ _Constructor_ (FSynth)
 {
     CSynth_Ctor(& Dest -> SubSynth);
     Dest -> SynthFreq = 500;
-    Dest -> EnvMomentum = FloatMalloc(512);
-    Boost_FloatSet(Dest -> EnvMomentum, 0, 512);
 }
 
 _Destructor_ (FSynth)
 {
     CSynth_Dtor(& Dest -> SubSynth);
-    free(Dest -> EnvMomentum);
 }
 
 void FSynth_SetSymbol(FSynth* Dest, String* Symbol)
@@ -73,9 +70,6 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
     }
 }
 
-#define FreqToIndex2048(x) ((x) * 2048 / SampleRate)
-#define FreqToIndex1024(x) ((x) * 1024 / SampleRate)
-
 void QuadHPF(float* Dest, float Freq)
 {
     int i;
@@ -103,7 +97,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     float* OrigMa = FloatMalloc(2048);
     float* Orig   = FloatMalloc(2048);
 
-    Boost_FloatMulArr(Orig, BFWave.Data, Hamming2048, 2048);
+    Boost_FloatMulArr(Orig, BFWave.Data, Hanning2048, 2048);
     RFFT(OrigRe, OrigIm, Orig, 11);
 
     //Nyquist LPF
@@ -116,13 +110,13 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         RIFFT(Orig, OrigRe, OrigIm, 11);
     }
 
-    Boost_FloatDivArr(BFWave.Data, Orig, Hamming2048, 2048);
+    Boost_FloatDivArr(BFWave.Data, Orig, Hanning2048, 2048);
 
     if(Ret.BeforeVOT)
     {
         //Consonants
         Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
-        Boost_FloatMulArr(TempWave.Data, TempWave.Data, Hamming1024, 1024);
+        Boost_FloatMulArr(TempWave.Data, TempWave.Data, Hanning1024, 1024);
         FDFrame_FromPSOLAFrame(Output, & TempWave);
 
         float FreqExpand = 1;

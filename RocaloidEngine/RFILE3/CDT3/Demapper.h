@@ -61,6 +61,7 @@ typedef struct
     int Index;
     int SubIndex;
     float Ratio;
+    int Reach;
 } Transition;
 extern Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0);
 
