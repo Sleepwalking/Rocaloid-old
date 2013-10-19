@@ -14,7 +14,7 @@ int main(void)
     Boost_FloatAdd(Hanning2048, Hanning2048, 0.001, 2048);
     Boost_FloatAdd(Hanning1024, Hanning1024, 0.001, 1024);
 
-    //GNUPlot_Open();
+    GNUPlot_Open();
 
     String_FromChars(CDTPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt");
     CVEGlobal_LoadCDT(& CDTPath);
@@ -40,13 +40,17 @@ int main(void)
     FDFrame_CtorSize(& Out, 1024);
 
     int count = 0;
-    int i;
+    int i, f;
     Ret2.PSOLAFrameHopSize = 0;
 
-    PitchMixer_SetLimitedFrequency(& test, 500);
-    for(i = 0; i < 6000; i ++)
+    //PitchMixer_SetLimitedFrequency(& test, 500);
+    for(i = 0; i < 12000; i ++)
     {
-        PitchMixer_SetFrequency(& test, i / 15 + 200);
+        if(i < 6000)
+            f = i;
+        else
+            f = 12000 - i;
+        PitchMixer_SetFrequency(& test, f / 15 + 200);
         Ret = PitchMixer_Synthesis(& test, & Out);
 
         PSOLAFrame_FromFDFrame(& POut, & Out);
@@ -62,11 +66,11 @@ int main(void)
     PitchMixer_Dtor(& test);
     String_Dtor(& SName);
 
-    String_FromChars(Output, "/tmp/aN.wav");
+    String_FromChars(Output, "/tmp/a.wav");
     WriteWaveAll(& Output, Wave, SampleRate * 100, SampleRate);
     String_Dtor(& Output);
 
-    //GNUPlot_Close();
+    GNUPlot_Close();
 
     free(Wave);
 

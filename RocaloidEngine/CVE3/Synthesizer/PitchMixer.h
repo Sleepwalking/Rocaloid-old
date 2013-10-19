@@ -7,6 +7,8 @@
 #include "FSynth.h"
 #include "CVEGlobal.h"
 
+#define PitchMixer_TransitionRatio 0.8
+
 AutoClass
 {
     FSynth SubSynth1;

@@ -7,8 +7,6 @@
 
 #include "DSPEx/FECSOLAEx.h"
 
-#define FSynth_ConsonantTransition 1000
-
 _Constructor_ (FSynth)
 {
     CSynth_Ctor(& Dest -> SubSynth);

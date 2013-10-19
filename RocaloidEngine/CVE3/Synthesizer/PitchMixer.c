@@ -1,5 +1,7 @@
 #include "PitchMixer.h"
+#include "PitchMixerMacro.h"
 #include "CVEDSP/Algorithm/Formant.h"
+#include "CVEDSP/Plot.h"
 
 _Constructor_(PitchMixer)
 {
@@ -63,6 +65,14 @@ void PitchMixer_SwapSynth(PitchMixer* Dest)
     FSynth Tmp        = Dest -> SubSynth1;
     Dest -> SubSynth1 = Dest -> SubSynth2;
     Dest -> SubSynth2 = Tmp;
+
+    int TmpIndex           = Dest -> SubSynth1Index;
+    Dest -> SubSynth1Index = Dest -> SubSynth2Index;
+    Dest -> SubSynth2Index = TmpIndex;
+
+    FormantLayerPartialEntry TmpEntry = Dest -> Entry1;
+    Dest -> Entry1                    = Dest -> Entry2;
+    Dest -> Entry2                    = TmpEntry;
 }
 
 void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
@@ -103,6 +113,11 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
     }else
     {
         Target = Demapper_QueryFusedFormantLayer(& Dest -> Phone, Freq);
+        /*if(Target.SubIndex != Dest -> SubSynth2Index && Target.SubIndex + 1 == Dest -> SubSynth1Index)
+        {
+            PitchMixer_SwapSynth(Dest);
+        }*/
+
         if(Target.SubIndex + 0 == Dest -> SubSynth1Index && Target.SubIndex + 1 == Dest -> SubSynth2Index)
         {
             //Normal Transition: SS1 -> SS2
@@ -140,6 +155,28 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 }
                 Dest -> TransitionRatio = 1.0f - Target.Ratio;
                 Dest -> ForwardTransition = 0;
+            }else if(Target.SubIndex + 1 == Dest -> SubSynth1Index)
+            {
+                //Transition: SS1 -> SS2
+                //Then SubSynth1 needs to be reloaded.
+                PitchMixer_SwapSynth(Dest);
+                Dest -> SubSynth1Index = Target.SubIndex;
+                if(Target.Reach != 1)
+                {
+                    Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                    FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                }
+                Dest -> TransitionRatio = Target.Ratio;
+                Dest -> ForwardTransition = 0;
+            }else if(Target.SubIndex + 1 == Dest -> SubSynth2Index)
+            {
+                //SubSynth1 needs to be reloaded.
+                //Transition: SS1 -> SS2
+                Dest -> SubSynth1Index = Target.SubIndex;
+                Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                Dest -> TransitionRatio = Target.Ratio;
+                Dest -> ForwardTransition = 0;
             }else
             {
                 //Both SubSynth1 and SubSynth2 needs to be reloaded.
@@ -160,7 +197,12 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
         FSynth_SetFrequency(& Dest -> SubSynth1, Freq);
         FSynth_SetFrequency(& Dest -> SubSynth2, Freq);
     }
-    //printf("SS1 -> SS2 at %f, Ratio: %f\n", Freq, Dest -> TransitionRatio);
+    /*
+    if(Dest -> ForwardTransition)
+        printf("SS1 -> SS2 at %f, Ratio: %f, SI1: %d, SI2: %d\n", Freq, Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
+    else
+        printf("SS2 -> SS1 at %f, Ratio: %f, SI1: %d, SI2: %d\n", Freq, Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
+    */
     Dest -> SynthFreq = Freq;
 }
 
@@ -168,38 +210,6 @@ void PitchMixer_SetLimitedFrequency(PitchMixer* Dest, float Freq)
 {
     Dest -> LimitedFreq = Freq;
 }
-
-#define PitchMixer_SoleSynth_Prepare(Num)\
-    MagnitudeFromComplex(Magn, Tmp##Num.Re, Tmp##Num.Im, Tmp##Num.Length);\
-    ExtractFormantCPF(& CPF##Num, Magn, Dest -> SubSynth##Num.SynthFreq, 1024);\
-    CPF_Bake(Magn, & CPF##Num, 512);\
-    Boost_FloatCopy(TmpMagn, Magn, 512);\
-    Boost_FloatAdd(Magn, Magn, 0.01, 512);\
-    Boost_FloatDivArr(Tmp##Num.Re, Tmp##Num.Re, Magn, 512);\
-    Boost_FloatDivArr(Tmp##Num.Im, Tmp##Num.Im, Magn, 512)\
-
-#define PitchMixer_SoleSynth_Bake(Num)\
-    FECSOLAFilter_Bake(Magn, & FFilter##Num, & DestState, 1024);\
-    Boost_FloatCopy(Magn + FreqToIndex1024(6000), TmpMagn + FreqToIndex1024(6000), 512 - FreqToIndex1024(6000));\
-    Boost_FloatMulArr(Output -> Re, Tmp##Num.Re, Magn, 512);\
-    Boost_FloatMulArr(Output -> Im, Tmp##Num.Im, Magn, 512);\
-    Reflect(Output -> Re, Output -> Im, Output -> Re, Output -> Im, 10)
-
-#define PitchMixer_TransSynth_Bake(Num)\
-    FECSOLAFilter_Bake(Magn, & FFilter##Num, & DestState, 1024);\
-    Boost_FloatCopy(Magn + FreqToIndex1024(6000), TmpMagn + FreqToIndex1024(6000), 512 - FreqToIndex1024(6000));\
-    Boost_FloatMulArr(Tmp##Num.Re, Tmp##Num.Re, Magn, 512);\
-    Boost_FloatMulArr(Tmp##Num.Im, Tmp##Num.Im, Magn, 512);\
-    Reflect(Tmp##Num.Re, Tmp##Num.Im, Tmp##Num.Re, Tmp##Num.Im, 10)
-
-#define PitchMixer_CreateState(_Dest, Num)\
-    FECSOLAState_CreateFormant\
-    (\
-        _Dest,\
-        Dest -> Entry##Num.F0, Dest -> Entry##Num.F1, Dest -> Entry##Num.F2, Dest -> Entry##Num.F3,\
-        0, 0, 0, 0,\
-        1                , Dest -> Entry##Num.S1, Dest -> Entry##Num.S2, Dest -> Entry##Num.S3\
-    )
 
 PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 {
@@ -217,6 +227,9 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     FECSOLAState DestState;
     float* Magn = FloatMalloc(1024);
     float* TmpMagn = FloatMalloc(1024);
+    float* AvgMagn = FloatMalloc(1024);
+    float HopSize;
+    float Ratio;
     if(Dest -> IsLimitedFreq)
     {
         //Diphone Mix
@@ -234,6 +247,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         }
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
         Ret.BeforeVOT = SubRet.BeforeVOT;
+        goto SynthesisFinished;
     }else
     {
         PitchMixer_CreateState(State1, 1);
@@ -244,7 +258,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         {
             //SubSynth1: LF
             //SubSynth2: HF
-            if(Dest -> TransitionRatio < 0.8)
+            if(Dest -> TransitionRatio < PitchMixer_TransitionRatio)
             {
                 //Sole Synth: SubSynth1
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
@@ -254,41 +268,17 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
+                goto SynthesisFinished;
             }else
             {
                 //Trans Synth
-                //Re|Im 1 -> Tmp1
-                float HopSize;
-                float Ratio = (Dest -> TransitionRatio - 0.8) / 0.2;
-
-                FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
-                PitchMixer_SoleSynth_Prepare(1);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
-                PitchMixer_TransSynth_Bake(1);
-                HopSize = (float)SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
-
-                //Re|Im 2 -> Tmp2
-                SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
-                PitchMixer_SoleSynth_Prepare(2);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter2, & CPF2, & SubRet.FState);
-                PitchMixer_TransSynth_Bake(2);
-                HopSize += (float)SubRet.PSOLAFrameHopSize * Ratio;
-
-                Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
-                Boost_FloatMul(Tmp2.Re, Tmp2.Re,        Ratio, 1024);
-                Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
-                Boost_FloatMul(Tmp2.Im, Tmp2.Im,        Ratio, 1024);
-                Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
-                Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
-
-                Ret.PSOLAFrameHopSize = (int)HopSize;
-                Ret.BeforeVOT = 0;
+                Ratio = (Dest -> TransitionRatio - PitchMixer_TransitionRatio) / (1.0f - PitchMixer_TransitionRatio);
             }
         }else
         {
             //SubSynth1: HF
             //SubSynth2: LF
-            if(Dest -> TransitionRatio > 0.2)
+            if(Dest -> TransitionRatio > 1.0f - PitchMixer_TransitionRatio)
             {
                 //Sole Synth: SubSynth2
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
@@ -298,40 +288,25 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
+                goto SynthesisFinished;
             }else
             {
                 //Trans Synth
-                //Re|Im 1 -> Tmp1
-                float HopSize;
-                float Ratio = Dest -> TransitionRatio / 0.2;
-
-                FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
-                PitchMixer_SoleSynth_Prepare(1);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
-                PitchMixer_TransSynth_Bake(1);
-                HopSize = (float)SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
-
-                //Re|Im 2 -> Tmp2
-                SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
-                PitchMixer_SoleSynth_Prepare(2);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter2, & CPF2, & SubRet.FState);
-                PitchMixer_TransSynth_Bake(2);
-                HopSize += (float)SubRet.PSOLAFrameHopSize * Ratio;
-
-                Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
-                Boost_FloatMul(Tmp2.Re, Tmp2.Re,        Ratio, 1024);
-                Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
-                Boost_FloatMul(Tmp2.Im, Tmp2.Im,        Ratio, 1024);
-                Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
-                Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
-
-                Ret.PSOLAFrameHopSize = (int)HopSize;
-                Ret.BeforeVOT = 0;
+                Ratio = Dest -> TransitionRatio / (1.0f - PitchMixer_TransitionRatio);
             }
         }
     }
+
+    //Transition Synthesis
+    #include "PitchMixerPitchTransition.c"
+    Ret.PSOLAFrameHopSize = (int)HopSize;
+    Ret.BeforeVOT = 0;
+
+    SynthesisFinished:
+
     free(Magn);
     free(TmpMagn);
+    free(AvgMagn);
     CPF_Dtor(& CPF1);
     CPF_Dtor(& CPF2);
     FECSOLAFilter_Dtor(& FFilter1);

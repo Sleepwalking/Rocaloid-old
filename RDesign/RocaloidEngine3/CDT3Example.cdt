@@ -11,8 +11,7 @@ CDT
 		DBLayerMap
 #				Name	FAddr					#
 			>	a_C3	/tmp/DB/a_C3.cvdb
-			>	a_E3	/tmp/DB/a_C3.cvdb
-			>	a_C2	/tmp/DB/a_C2.cvdb
+			>	a_E3	/tmp/DB/a_E3.cvdb
 			>	a_G3	/tmp/DB/a_G3.cvdb
 			>	a_C4	/tmp/DB/a_C4.cvdb
 			>	o_C3	/tmp/DB/o_C3.cvdb

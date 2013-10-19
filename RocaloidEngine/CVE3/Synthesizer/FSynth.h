@@ -7,6 +7,8 @@
 #include "CSynth.h"
 #include "DSPEx/FDFrame.h"
 
+#define FSynth_ConsonantTransition 1000
+
 AutoClass
 {
     CSynth SubSynth;

@@ -2,9 +2,6 @@
 #include "RFILE3/CDT3/Demapper.h"
 #include "CVEGlobal.h"
 
-#define CSynth_CycleDelay 20000
-#define CSynth_CycleSample 10000
-
 _Constructor_ (CSynth)
 {
     CVDB3_Ctor(& Dest -> Data);
