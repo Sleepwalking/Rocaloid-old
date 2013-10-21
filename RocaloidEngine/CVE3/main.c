@@ -5,7 +5,10 @@
 #include "Synthesizer/CSynth.h"
 #include "Synthesizer/FSynth.h"
 #include "Synthesizer/PitchMixer.h"
+#include "Synthesizer/SpeechMixer.h"
 #include "CVEDSP/Plot.h"
+#include "RFILE3/CVS3/CVS3.h"
+#include "RFILE3/CVS3/CVSRDLReader.h"
 
 int main(void)
 {
@@ -22,19 +25,32 @@ int main(void)
 
     SetSampleRate(44100);
 
-    String_FromChars(SName, "a");
+    String_FromChars(SName, "i");
+    String_FromChars(CVSPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs");
 
     PitchMixer test;
     PitchMixer_Ctor(& test);
     PitchMixer_SetSymbol(& test, & SName);
     PitchMixer_SetLimitedFrequency(& test, 800);
+/*
+    CVS3 testcvs;
+    CVS3_Ctor(& testcvs);
+    CVSRDLReader_Open(& CVSPath);
+    CVS3_Read(& testcvs);
+    CVSRDLReader_Close();
 
+    SpeechMixer test;
+    SpeechMixer_Ctor(& test);
+    SpeechMixer_SetSyllable(& test, testcvs.SyllableList + 0);
+    SpeechMixer_SetConsonantRatio(& test, 0);
+*/
     float* Wave = (float*)malloc(sizeof(float) * SampleRate * 100);
     Boost_FloatSet(Wave, 0, SampleRate * 100);
 
     PSOLAFrame POut;
     PSOLAFrame_CtorSize(& POut, 1024);
 
+    //SpeechMixerSendback Ret, Ret2;
     PitchMixerSendback Ret, Ret2;
     FDFrame Out;
     FDFrame_CtorSize(& Out, 1024);
@@ -43,14 +59,20 @@ int main(void)
     int i, f;
     Ret2.PSOLAFrameHopSize = 0;
 
-    //PitchMixer_SetLimitedFrequency(& test, 500);
-    for(i = 0; i < 12000; i ++)
+    float t;
+    /*
+    for(t = 0; t < 0.8; t += 0.01)
     {
-        if(i < 6000)
-            f = i;
-        else
-            f = 12000 - i;
-        PitchMixer_SetFrequency(& test, f / 15 + 200);
+        SpeechMixer_SetTime(& test, t);
+    }
+*/
+    //PitchMixer_SetLimitedFrequency(& test, 500);
+
+    for(i = 0; i < 1200; i ++)
+    //for(t = 0; t < 2.4;)
+    {
+        //SpeechMixer_SetTime(& test, t);
+        PitchMixer_SetFrequency(& test, i / 1.5 + 200);
         Ret = PitchMixer_Synthesis(& test, & Out);
 
         PSOLAFrame_FromFDFrame(& POut, & Out);
@@ -58,16 +80,20 @@ int main(void)
         PSOLAFrame_MixByRatio(Wave, &POut, count - Ret2.PSOLAFrameHopSize, count, count + Ret.PSOLAFrameHopSize, 1, MixNormal);
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
+        t = (float)count / 44100;
     }
     PSOLAFrame_Dtor(& POut);
 
     FDFrame_Dtor(& Out);
 
+    //SpeechMixer_Dtor(& test);
     PitchMixer_Dtor(& test);
     String_Dtor(& SName);
 
+    //CVS3_Dtor(& testcvs);
+    String_Dtor(& CVSPath);
     String_FromChars(Output, "/tmp/a.wav");
-    WriteWaveAll(& Output, Wave, SampleRate * 100, SampleRate);
+    WriteWaveAll(& Output, Wave, SampleRate * 4, SampleRate);
     String_Dtor(& Output);
 
     GNUPlot_Close();

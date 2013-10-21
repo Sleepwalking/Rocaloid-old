@@ -7,7 +7,7 @@
 #include "FSynth.h"
 #include "CVEGlobal.h"
 
-#define PitchMixer_TransitionRatio 0.8
+#define PitchMixer_TransitionRatio 0.5
 
 AutoClass
 {
@@ -29,6 +29,7 @@ AutoClass
 
 typedef struct
 {
+    FECSOLAState FState;
     int PSOLAFrameHopSize;
     int BeforeVOT;
 } PitchMixerSendback;
@@ -41,6 +42,7 @@ extern void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq);
 extern void PitchMixer_SetLimitedFrequency(PitchMixer* Dest, float Freq);
 
 extern PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output);
+extern PitchMixerSendback PitchMixer_EmptySynthesis(PitchMixer* Dest);
 extern float PitchMixer_GetVOT(PitchMixer* Dest);
 
 #endif

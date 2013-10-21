@@ -38,7 +38,9 @@ QuadHPF(OrigMa, Dest -> SynthFreq);
 Boost_FloatMulArr(OrigRe, OrigRe, OrigMa, 512);
 Boost_FloatMulArr(OrigIm, OrigIm, OrigMa, 512);
 
-Reflect(Output -> Re, Output -> Im, OrigRe, OrigIm, 10);
+Reflect(OrigRe, OrigIm, OrigRe, OrigIm, 10);
+Boost_FloatCopy(Output -> Re, OrigRe, 1024);
+Boost_FloatCopy(Output -> Im, OrigIm, 1024);
 
 Ret.FState = PitchState;
 

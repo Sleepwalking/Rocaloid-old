@@ -226,14 +226,31 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
                 String_Copy(& CopyDest.Name, & Src -> FreqLayerMap[GetFreqLayerIndex(Dest, SymbolIndex, k)].Name);
 
                 CopyDest.F0 = Dest -> FreqLayerEntryList[SymbolIndex].F0[k];
-                Ratio = (CopyDest.F0 - LowerEntry -> F0) / (UpperEntry -> F0 - LowerEntry -> F0);
 
-                CopyDest.F1 = Mix(LowerEntry -> F1, UpperEntry -> F1, Ratio);
-                CopyDest.F2 = Mix(LowerEntry -> F2, UpperEntry -> F2, Ratio);
-                CopyDest.F3 = Mix(LowerEntry -> F3, UpperEntry -> F3, Ratio);
-                CopyDest.S1 = Mix(LowerEntry -> S1, UpperEntry -> S1, Ratio);
-                CopyDest.S2 = Mix(LowerEntry -> S2, UpperEntry -> S2, Ratio);
-                CopyDest.S3 = Mix(LowerEntry -> S3, UpperEntry -> S3, Ratio);
+                int FIndex;
+                FormantLayerEntry* LowerFEntry, *UpperFEntry;
+                ArrayType_IncreaseSortFind(FIndex, float,
+                                           Dest -> FormantLayerEntryList[i].F0,
+                                           CopyDest.F0);
+                if(FIndex == 0)
+                {
+                    Ratio = 0;
+                    LowerFEntry = Src -> FormantLayerMap + Dest -> FormantLayerEntryList[i].Index[FIndex];
+                    UpperFEntry = Src -> FormantLayerMap + Dest -> FormantLayerEntryList[i].Index[FIndex];
+                }else
+                {
+                    Ratio = (CopyDest.F0 - Dest -> FormantLayerEntryList[i].F0[FIndex - 1]) /
+                            (Dest -> FormantLayerEntryList[i].F0[FIndex] -
+                             Dest -> FormantLayerEntryList[i].F0[FIndex - 1]);
+                    LowerFEntry = Src -> FormantLayerMap + Dest -> FormantLayerEntryList[i].Index[FIndex - 1];
+                    UpperFEntry = Src -> FormantLayerMap + Dest -> FormantLayerEntryList[i].Index[FIndex];
+                }
+                CopyDest.F1 = Mix(LowerFEntry -> F1, UpperFEntry -> F1, Ratio);
+                CopyDest.F2 = Mix(LowerFEntry -> F2, UpperFEntry -> F2, Ratio);
+                CopyDest.F3 = Mix(LowerFEntry -> F3, UpperFEntry -> F3, Ratio);
+                CopyDest.S1 = Mix(LowerFEntry -> S1, UpperFEntry -> S1, Ratio);
+                CopyDest.S2 = Mix(LowerFEntry -> S2, UpperFEntry -> S2, Ratio);
+                CopyDest.S3 = Mix(LowerFEntry -> S3, UpperFEntry -> S3, Ratio);
                 #undef CopyDest
             }
         }
