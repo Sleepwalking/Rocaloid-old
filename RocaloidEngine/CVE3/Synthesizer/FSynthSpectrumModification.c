@@ -6,7 +6,7 @@ float* OrigMEnv = FloatMalloc(1024);
 Boost_FloatMulArr(Orig, BFWave.Data + 512, Hanning1024, 1024);
 MagnitudeFromWave(OrigMEnv, Orig, 10);
 ExtractFormantCPF(& OrigEnv, OrigMEnv, BF,1024);
-CPF_Bake(OrigMEnv, & OrigEnv, 512);
+CPF_Bake(OrigMEnv, & OrigEnv, 513);
 
 Boost_FloatMulArr(Orig, TempWave.Data, Hanning1024, 1024);
 
@@ -15,14 +15,17 @@ MagnitudeFromComplex(OrigMa, OrigRe, OrigIm, 1024);
 
 SpectralEnvelopeFromMagnitude(OrigMa, OrigMa, Dest -> SynthFreq, 1024);
 Boost_FloatAdd(OrigMa, OrigMa, 0.01, 1024);
-Boost_FloatDivArr(OrigRe, OrigRe, OrigMa, 512);
-Boost_FloatDivArr(OrigIm, OrigIm, OrigMa, 512);
+Boost_FloatDivArr(OrigRe, OrigRe, OrigMa, 513);
+Boost_FloatDivArr(OrigIm, OrigIm, OrigMa, 513);
 
 FECSOLAState PitchState;
 FECSOLAFilter PitchFilter;
 FECSOLAFilter_Ctor(& PitchFilter);
 
-FECSOLAState_FromCVDB(& PitchState, & Dest -> SubSynth.Data);
+String_FromChars(Symbol, Dest -> SubSynth.Data.Header.Symbol);
+FECSOLAState_FromSymbolLayer(& PitchState, & Symbol);
+String_Dtor(& Symbol);
+
 FECSOLAFilter_GetFromFormantEnvelope(& PitchFilter, & OrigEnv, & PitchState);
 PitchState.F0 = Dest -> SynthFreq;
 
@@ -31,12 +34,12 @@ if(BF > Dest -> SynthFreq)
     PitchState.S0 *= pow(Dest -> SynthFreq / BF, 1);
 
 FECSOLAFilter_Bake(OrigMa, & PitchFilter, & PitchState, 1024);
-Boost_FloatCopy(OrigMa + FreqToIndex1024(6000), OrigMEnv + FreqToIndex1024(6000), 512 - FreqToIndex1024(6000));
+Boost_FloatCopy(OrigMa + FreqToIndex1024(6000), OrigMEnv + FreqToIndex1024(6000), 513 - FreqToIndex1024(6000));
 
 QuadHPF(OrigMa, Dest -> SynthFreq);
 
-Boost_FloatMulArr(OrigRe, OrigRe, OrigMa, 512);
-Boost_FloatMulArr(OrigIm, OrigIm, OrigMa, 512);
+Boost_FloatMulArr(OrigRe, OrigRe, OrigMa, 513);
+Boost_FloatMulArr(OrigIm, OrigIm, OrigMa, 513);
 
 Reflect(OrigRe, OrigIm, OrigRe, OrigIm, 10);
 Boost_FloatCopy(Output -> Re, OrigRe, 1024);

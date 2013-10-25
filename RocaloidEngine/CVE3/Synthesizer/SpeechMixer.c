@@ -2,6 +2,8 @@
 #include "MixerMacro.h"
 #include "CVEDSP/Algorithm/Formant.h"
 #include "CVEDSP/Plot.h"
+#include "CVEDSP/Interpolation.h"
+#include "DSPEx/LCFECSOLA.h"
 
 #define CVSData (Dest -> OnSynth)
 
@@ -73,6 +75,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
         Dest -> TransitionRatio = (Time - CVSData -> TransitionTickList[BaseIndex]) /
                                   (CVSData -> TransitionTickList[BaseIndex + 1] -
                                    CVSData -> TransitionTickList[BaseIndex]);
+        Dest -> TransitionRatio = CosineInterpolate(0, 1, Dest -> TransitionRatio);
     }else if(BaseIndex == Dest -> SubSynth2Index)
     {
         //Next Phoneme
@@ -97,7 +100,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
     PitchMixer_SetFrequency(& Dest -> SubSynth1, SynthFreq);
     PitchMixer_SetFrequency(& Dest -> SubSynth2, SynthFreq);
 
-    printf("TR: %f, SI1: %d, SI2: %d\n", Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
+    //printf("TR: %f, SI1: %d, SI2: %d\n", Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
 }
 
 void SpeechMixer_Reset(SpeechMixer* Dest)
@@ -166,6 +169,8 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             //Trans Synth
             //float Ratio = Dest -> TransitionRatio;
             float Ratio = (Dest -> TransitionRatio - MixRatio) / (1.0f - MixRatio);
+#define SpeechMixer_FECSOLA
+#ifdef SpeechMixer_Linear
             Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
             Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
             HopSize = SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
@@ -175,10 +180,13 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
             Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
             HopSize += SubRet.PSOLAFrameHopSize * (Ratio);
-/*
+#endif
+#ifdef SpeechMixer_FECSOLA
             #define _SpeechMixer_
             #include "MixerPitchTransition.h"
-            #undef _SpeechMixer_*/
+            #undef _SpeechMixer_
+#endif
+            //printf("%f %f %f\n", DestState.F1, DestState.F2, DestState.F3);
             Ret.PSOLAFrameHopSize = (int)HopSize;
             Ret.BeforeVOT = 0;
             Ret.FState = DestState;

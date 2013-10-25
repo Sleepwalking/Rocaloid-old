@@ -197,12 +197,12 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
         FSynth_SetFrequency(& Dest -> SubSynth1, Freq);
         FSynth_SetFrequency(& Dest -> SubSynth2, Freq);
     }
-
+/*
     if(Dest -> ForwardTransition)
         printf("SS1 -> SS2 at %f, Ratio: %f, SI1: %d, SI2: %d\n", Freq, Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
     else
         printf("SS2 -> SS1 at %f, Ratio: %f, SI1: %d, SI2: %d\n", Freq, Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
-
+*/
     Dest -> SynthFreq = Freq;
 }
 
@@ -268,13 +268,14 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
-                printf("\t \t SS1");
+                //GNUPlot_SetTitleAndNumber("Sole", Dest -> SynthFreq);
+                //GNUPlot_PlotFloat(Magn, 100);
+                //getchar();
                 goto SynthesisFinished;
             }else
             {
                 //Trans Synth
                 Ratio = (Dest -> TransitionRatio - PitchMixer_TransitionRatio) / (1.0f - PitchMixer_TransitionRatio);
-                printf("\t \t Trans Ratio: %f\n", Ratio);
             }
         }else
         {
@@ -289,13 +290,14 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 Mixer_SoleSynth_Bake(2);
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
-                printf("\t \t SS2");
+                //GNUPlot_SetTitleAndNumber("Sole", Dest -> SynthFreq);
+                //GNUPlot_PlotFloat(Magn, 100);
+                //getchar();
                 goto SynthesisFinished;
             }else
             {
                 //Trans Synth
                 Ratio = (Dest -> TransitionRatio) / (1.0f - PitchMixer_TransitionRatio);
-                printf("\t \t Trans Ratio: %f\n", Ratio);
             }
         }
     }
@@ -313,6 +315,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
     SynthesisFinished:
     Ret.FState = DestState;
+
 
     free(Magn);
     free(TmpMagn);

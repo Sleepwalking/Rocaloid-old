@@ -26,7 +26,8 @@ SOURCES += main.c \
     DSPEx/FECSOLAEx.c \
     Synthesizer/FSynthSpectrumModification.c \
     Synthesizer/PitchMixer.c \
-    Synthesizer/SpeechMixer.c
+    Synthesizer/SpeechMixer.c \
+    DSPEx/LCFECSOLA.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -88,7 +89,8 @@ HEADERS += \
     Synthesizer/PitchMixer.h \
     Synthesizer/SpeechMixer.h \
     Synthesizer/MixerMacro.h \
-    Synthesizer/MixerPitchTransition.h
+    Synthesizer/MixerPitchTransition.h \
+    DSPEx/LCFECSOLA.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP

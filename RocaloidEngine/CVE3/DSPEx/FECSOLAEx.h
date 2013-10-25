@@ -6,5 +6,6 @@
 #include "RFILE3/CVDB3/CVDB3IO.h"
 
 extern void FECSOLAState_FromCVDB(FECSOLAState* Dest, CVDB3* Src);
+extern void FECSOLAState_FromSymbolLayer(FECSOLAState* Dest, String* Src);
 
 #endif

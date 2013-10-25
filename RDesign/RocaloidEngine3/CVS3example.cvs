@@ -2,9 +2,9 @@
 CVS
 	SyllableList
 		Syllable
-			TransQ 4
-			TransPhoneList	pa	i	i	o
-			TransTickList	0	1.2	2.0	3.4
+			TransQ 9
+			TransPhoneList	i	i	a	i	a	o	i	i	o
+			TransTickList	0	0.2	0.5	0.7	1.0	1.2	1.4	1.8	2.0
 			TransRatioList
 				>	0.25	0.3
 				>	0.62	0.8
@@ -33,8 +33,12 @@ CVS
 			End
 			FreqList
 				>	0	260
-				>	0.3	260
-				>	0.5	260
+#
+				>	0.5	200
+				>	1.3	360
+				>	1.8	400
+#
+				>	2.4	260
 			End
 			Effects
 				EnvelopeList
@@ -78,9 +82,9 @@ CVS
 				End
 			End
 			FreqList
-				>	0	262
-				>	0.3	270
-				>	0.5	262
+				>	0	300
+				>	0.3	310
+				>	0.6	320
 			End
 			Effects
 				EnvelopeList
