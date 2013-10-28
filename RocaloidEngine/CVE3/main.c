@@ -9,6 +9,10 @@
 #include "CVEDSP/Plot.h"
 #include "RFILE3/CVS3/CVS3.h"
 #include "RFILE3/CVS3/CVSRDLReader.h"
+#include "Debug/ALblLog.h"
+
+#include "CVEDSP/DFT/SplitRadixGen.h"
+#include "CVEDSP/DFT/SplitRadix.h"
 
 int main(void)
 {
@@ -27,12 +31,11 @@ int main(void)
 
     String_FromChars(SName, "i");
     String_FromChars(CVSPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs");
-/*
-    PitchMixer test;
-    PitchMixer_Ctor(& test);
-    PitchMixer_SetSymbol(& test, & SName);
-    PitchMixer_SetLimitedFrequency(& test, 800);
-*/
+
+    String_FromChars(AupPath, "/tmp/testx.txt");
+    ALblLog_Create(& AupPath);
+    String_Dtor(& AupPath);
+
     CVS3 testcvs;
     CVS3_Ctor(& testcvs);
     CVSRDLReader_Open(& CVSPath);
@@ -51,28 +54,16 @@ int main(void)
     PSOLAFrame_CtorSize(& POut, 1024);
 
     SpeechMixerSendback Ret, Ret2;
-    //PitchMixerSendback Ret, Ret2;
     FDFrame Out;
     FDFrame_CtorSize(& Out, 1024);
 
     int count = 0;
-    int i, f;
     Ret2.PSOLAFrameHopSize = 0;
 
     float t;
-    /*
-    for(t = 0; t < 0.8; t += 0.01)
-    {
-        SpeechMixer_SetTime(& test, t);
-    }
-*/
-    //PitchMixer_SetLimitedFrequency(& test, 500);
-
-    //for(i = 0; i < 1200; i ++)
     for(t = 0; t < 2.4;)
     {
         SpeechMixer_SetTime(& test, t);
-        //PitchMixer_SetFrequency(& test, (float)i / 2 + 300);
         Ret = SpeechMixer_Synthesis(& test, & Out);
 
         PSOLAFrame_FromFDFrame(& POut, & Out);
@@ -81,13 +72,14 @@ int main(void)
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
         t = (float)count / 44100;
+        //ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
+        ALblLog_SetTime(t);
     }
     PSOLAFrame_Dtor(& POut);
 
     FDFrame_Dtor(& Out);
 
     SpeechMixer_Dtor(& test);
-    //PitchMixer_Dtor(& test);
     String_Dtor(& SName);
 
     CVS3_Dtor(& testcvs);
@@ -97,9 +89,20 @@ int main(void)
     String_Dtor(& Output);
 
     GNUPlot_Close();
+    ALblLog_Save();
 
     free(Wave);
 
     printf("Hello World\n");
+
+/*
+    SRExpression Plan;
+    SRExpressionCtor(& Plan);
+    SRExpressionGenerator_L(& Plan, 0, 256);
+    SplitRadix_Generator(& Plan, 0);
+
+    SRExpressionDtor(& Plan);
+*/
+//    SplitRadix_RadixL_Generator_SSE(0, 2048);
     return 0;
 }

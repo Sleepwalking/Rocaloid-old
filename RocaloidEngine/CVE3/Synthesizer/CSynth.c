@@ -27,6 +27,7 @@ void CSynth_SetSymbol(CSynth* Dest, String* Symbol)
         CVDB3_Load(& Dest -> Data, & CGDict.CDTMapping.DBLayerMap[LoadIndex].FileAddr);
         Dest -> Data.Header.PulseNum -= 2;
         CSynth_Reset(Dest);
+        printf("%s Loaded.\n", Dest -> Data.Header.Symbol);
     }
 }
 

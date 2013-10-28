@@ -29,7 +29,6 @@
 
 #define Mixer_TransSynth_Bake_LCFECSOLA(Num)\
     LCFECSOLAFilter_Bake(Magn, & LCFilter##Num, & DestState);\
-    Boost_FloatCopy(Magn + FreqToIndex1024(6000), TmpMagn + FreqToIndex1024(6000), 513 - FreqToIndex1024(6000));\
     Boost_FloatMulArr(Tmp##Num.Re, Tmp##Num.Re, Magn, 513);\
     Boost_FloatMulArr(Tmp##Num.Im, Tmp##Num.Im, Magn, 513);\
     Reflect(Tmp##Num.Re, Tmp##Num.Im, Tmp##Num.Re, Tmp##Num.Im, 10)

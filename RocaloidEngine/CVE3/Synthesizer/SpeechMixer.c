@@ -4,8 +4,11 @@
 #include "CVEDSP/Plot.h"
 #include "CVEDSP/Interpolation.h"
 #include "DSPEx/LCFECSOLA.h"
+#include "Debug/ALblLog.h"
 
 #define CVSData (Dest -> OnSynth)
+#define SkipSynth 0
+#define SpeechMixer_FECSOLA
 
 _Constructor_ (SpeechMixer)
 {
@@ -14,23 +17,28 @@ _Constructor_ (SpeechMixer)
 
     Dest -> SubSynth1Index = - 1;
     Dest -> SubSynth2Index = - 1;
+
+    ALblLog_Print("SpeechMixer Ctor");
 }
 
 _Destructor_ (SpeechMixer)
 {
     PitchMixer_Dtor(& Dest -> SubSynth1);
     PitchMixer_Dtor(& Dest -> SubSynth2);
+    ALblLog_Print("SpeechMixer Dtor");
 }
 
 void SpeechMixer_SetSyllable(SpeechMixer* Dest, const Syllable* _Syllable)
 {
     Dest -> OnSynth = _Syllable;
+    ALblLog_Print("SpeechMixer SetSyllable");
 }
 
 void SpeechMixer_SetConsonantRatio(SpeechMixer* Dest, float CRatio)
 {
     PitchMixer_SetConsonantRatio(& Dest -> SubSynth1, CRatio);
     PitchMixer_SetConsonantRatio(& Dest -> SubSynth2, CRatio);
+    ALblLog_Print("SpeechMixer SetConsonantRatio as %f", CRatio);
 }
 
 int SpeechMixer_QuerySyllablePhoneIndex(const Syllable* Src, float Time)
@@ -84,6 +92,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
         Dest -> SubSynth2Index = BaseIndex + 1;
         PitchMixer_SetSymbol(& Dest -> SubSynth2, CVSData -> TransitionPhoneList + Dest -> SubSynth2Index);
         Dest -> TransitionRatio = 0;
+        ALblLog_Print("SpeechMixer SetTime: Next Phoneme");
     }else
     {
         //Reload All
@@ -93,6 +102,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
         PitchMixer_SetSymbol(& Dest -> SubSynth2, CVSData -> TransitionPhoneList + Dest -> SubSynth2Index);
         PitchMixer_SetLimitedFrequency(& Dest -> SubSynth1, CVSData -> FreqList[0].Freq); //Assuming first load
         Dest -> TransitionRatio = 0;
+        ALblLog_Print("SpeechMixer SetTime: Reload All");
     }
 
     //Step2: Set Freq
@@ -109,6 +119,7 @@ void SpeechMixer_Reset(SpeechMixer* Dest)
     PitchMixer_Reset(& Dest -> SubSynth2);
     Dest -> SubSynth1Index = - 1;
     Dest -> SubSynth2Index = - 1;
+    ALblLog_Print("SpeechMixer Reset");
 }
 
 SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
@@ -127,24 +138,37 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             MixRatio = 1.0f - MixRatio;
     }
 
+    MixRatio = 0;
+
+    //ALblLog_Print("SpeechMixer Synthesis: MixRatio = %f, TransitionRatio = %f", MixRatio, Dest -> TransitionRatio);
+
     FDFrame Tmp1, Tmp2;
     FDFrame_CtorSize(& Tmp1, 1024);
     FDFrame_CtorSize(& Tmp2, 1024);
 
     CPF_Setup(CPF1);
     CPF_Setup(CPF2);
-    FECSOLAFilter FFilter1, FFilter2;
-    FECSOLAFilter_Ctor(& FFilter1);
-    FECSOLAFilter_Ctor(& FFilter2);
+    LCFECSOLAFilter LCFilter1, LCFilter2;
+    LCFECSOLAFilter_Ctor(& LCFilter1);
+    LCFECSOLAFilter_Ctor(& LCFilter2);
     FECSOLAState DestState;
     float* Magn = FloatMalloc(1024);
     float* TmpMagn = FloatMalloc(1024);
     float* AvgMagn = FloatMalloc(1024);
     float HopSize;
 
-    MixRatio = 0;
-
-    PitchMixerSendback SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, & Tmp1);
+    PitchMixerSendback SubRet;
+    {
+    #if SkipSynth == 1
+        SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, Output);
+        Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
+        Ret.BeforeVOT = SubRet.BeforeVOT;
+        Ret.FState = SubRet.FState;
+        goto JMP_SkipSynth;
+    #else
+        SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, & Tmp1);
+    #endif
+    }
     if(SubRet.BeforeVOT)
     {
         Boost_FloatCopy(Output -> Re, Tmp1.Re, Tmp1.Length);
@@ -159,47 +183,50 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
         {
             //Sole Synth: SubSynth1
             Mixer_SoleSynth_Prepare(1);
-            FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
-            Mixer_SoleSynth_Bake(1);
+            LCFECSOLAFilter_GetFromCPF(& LCFilter1, & CPF1, & SubRet.FState);
+            Mixer_SoleSynth_Bake_LCFECSOLA(1);
             Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
             Ret.BeforeVOT = 0;
             Ret.FState = DestState;
         }else
         {
             //Trans Synth
-            //float Ratio = Dest -> TransitionRatio;
             float Ratio = (Dest -> TransitionRatio - MixRatio) / (1.0f - MixRatio);
-#define SpeechMixer_FECSOLA
-#ifdef SpeechMixer_Linear
-            Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
-            Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
-            HopSize = SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
-            SubRet = PitchMixer_Synthesis(& Dest -> SubSynth2, & Tmp2);
-            Boost_FloatMul(Tmp2.Re, Tmp2.Re, Ratio, 1024);
-            Boost_FloatMul(Tmp2.Im, Tmp2.Im, Ratio, 1024);
-            Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
-            Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
-            HopSize += SubRet.PSOLAFrameHopSize * (Ratio);
-#endif
-#ifdef SpeechMixer_FECSOLA
-            #define _SpeechMixer_
-            #include "MixerPitchTransition.h"
-            #undef _SpeechMixer_
-#endif
-            //printf("%f %f %f\n", DestState.F1, DestState.F2, DestState.F3);
+            ALblLog_Print("SpeechMixer Synthesis: Ratio = %f", Ratio);
+            #ifdef SpeechMixer_Linear
+                Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
+                Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
+                HopSize = SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
+                SubRet = PitchMixer_Synthesis(& Dest -> SubSynth2, & Tmp2);
+                Boost_FloatMul(Tmp2.Re, Tmp2.Re, Ratio, 1024);
+                Boost_FloatMul(Tmp2.Im, Tmp2.Im, Ratio, 1024);
+                Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
+                Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
+                HopSize += SubRet.PSOLAFrameHopSize * (Ratio);
+            #endif
+            #ifdef SpeechMixer_FECSOLA
+                #define _SpeechMixer_
+                #include "MixerPitchTransition.h"
+                #undef _SpeechMixer_
+            #endif
+            //ALblLog_Print("SpeechMixer Synthesis: F1 = %f, F2 = %f, F3 = %f", DestState.F1, DestState.F2, DestState.F3);
             Ret.PSOLAFrameHopSize = (int)HopSize;
             Ret.BeforeVOT = 0;
             Ret.FState = DestState;
         }
     }
 
+    #if SkipSynth == 1
+    JMP_SkipSynth:
+    #endif
+
     free(Magn);
     free(TmpMagn);
     free(AvgMagn);
     CPF_Dtor(& CPF1);
     CPF_Dtor(& CPF2);
-    FECSOLAFilter_Dtor(& FFilter1);
-    FECSOLAFilter_Dtor(& FFilter2);
+    LCFECSOLAFilter_Dtor(& LCFilter1);
+    LCFECSOLAFilter_Dtor(& LCFilter2);
     FDFrame_Dtor(& Tmp1);
     FDFrame_Dtor(& Tmp2);
     return Ret;

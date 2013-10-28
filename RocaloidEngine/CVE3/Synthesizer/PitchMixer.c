@@ -3,6 +3,8 @@
 #include "CVEDSP/Algorithm/Formant.h"
 #include "CVEDSP/Plot.h"
 
+#define SkipSynth 0
+
 _Constructor_(PitchMixer)
 {
     FSynth_Ctor(& Dest -> SubSynth1);
@@ -230,6 +232,15 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     float* AvgMagn = FloatMalloc(1024);
     float HopSize;
     float Ratio;
+
+    #if SkipSynth == 1
+        FSynthSendback _SubRet = FSynth_Synthesis(& Dest -> SubSynth1, Output);
+        Ret.PSOLAFrameHopSize = _SubRet.PSOLAFrameHopSize;
+        Ret.BeforeVOT = _SubRet.BeforeVOT;
+        Ret.FState = _SubRet.FState;
+        goto JMP_SkipSynth;
+    #endif
+
     if(Dest -> IsLimitedFreq)
     {
         //Diphone Mix
@@ -304,7 +315,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
     //Transition Synthesis
 
-    #define _Synth1_ 0
+    #define _Synth1_
     #include "MixerPitchTransition.h"
     #undef _Synth1_
     /*
@@ -316,6 +327,9 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     SynthesisFinished:
     Ret.FState = DestState;
 
+    #if SkipSynth == 1
+    JMP_SkipSynth:
+    #endif
 
     free(Magn);
     free(TmpMagn);
