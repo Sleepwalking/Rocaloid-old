@@ -96,6 +96,8 @@ void LCFECSOLAFilter_GetFromCPF(LCFECSOLAFilter* Dest, CPF* Src, FECSOLAState* F
 {
     float* E = FloatMalloc(Dest -> Length);
     CPF_Bake(E, Src, Dest -> Length);
+    LCFECSOLAFilter_GetFromFormantEnvelope(Dest, E, FState);
+    /*
     Dest -> OrigState = *FState;
     float* S0 = FloatMalloc(Dest -> Length);
     float* S1 = FloatMalloc(Dest -> Length);
@@ -150,25 +152,75 @@ void LCFECSOLAFilter_GetFromCPF(LCFECSOLAFilter* Dest, CPF* Src, FECSOLAState* F
     Boost_FloatDiv(Dest -> F2Env, Dest -> F2Env, FState -> S2, Dest -> Length);
     Boost_FloatDiv(Dest -> F3Env, Dest -> F3Env, FState -> S3, Dest -> Length);
 
-    if(FState -> F1 == 755)
+    free(S0);
+    free(S1);
+    free(S2);
+    free(S3);
+    free(S);
+    free(E);*/
+}
+
+void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, FECSOLAState* FState)
+{
+    Dest -> OrigState = *FState;
+    float* S0 = FloatMalloc(Dest -> Length);
+    float* S1 = FloatMalloc(Dest -> Length);
+    float* S2 = FloatMalloc(Dest -> Length);
+    float* S3 = FloatMalloc(Dest -> Length);
+    float* S = FloatMalloc(Dest -> Length);
+    Boost_FloatSet(S0, 0, Dest -> Length);
+    Boost_FloatSet(S1, 0, Dest -> Length);
+    Boost_FloatSet(S2, 0, Dest -> Length);
+    Boost_FloatSet(S3, 0, Dest -> Length);
+
+
+    if(DecayLength != Dest -> Length)
     {
-        /*
-        GNUPlot_PlotFloat(Dest -> F0Env, 120);
-        WaitForDraw(10000);
-        GNUPlot_PlotFloat(Dest -> F1Env, 120);
-        WaitForDraw(10000);
-        GNUPlot_PlotFloat(Dest -> F2Env, 120);
-        WaitForDraw(10000);
-        GNUPlot_PlotFloat(Dest -> F3Env, 120);
-        WaitForDraw(10000);*/
+        DecayLength = Dest -> Length;
+        LCFECSOLAFilter_GenerateDecay(Decay, DecayLength);
+        GenerateHanning(Filter0, FreqToIndex(600));
+        GenerateHanning(Filter1, FreqToIndex(1000));
+        GenerateHanning(Filter2, FreqToIndex(1500));
+        GenerateHanning(Filter3, FreqToIndex(2000));
     }
+    Boost_FloatDivArr(Src, Src, Decay, Dest -> Length);
+
+    LCFECSOLAFilter_MoveWindow(S0, Filter0, FState -> F0, FState -> S0, 600 , Dest -> Length);
+    LCFECSOLAFilter_MoveWindow(S1, Filter1, FState -> F1, FState -> S1, 1000, Dest -> Length);
+    LCFECSOLAFilter_MoveWindow(S2, Filter2, FState -> F2, FState -> S2, 1500, Dest -> Length);
+    LCFECSOLAFilter_MoveWindow(S3, Filter3, FState -> F3, FState -> S3, 2000, Dest -> Length);
+
+    Boost_FloatAdd(S0, S0, 0.03, Dest -> Length);
+    Boost_FloatAdd(S1, S1, 0.03, Dest -> Length);
+    Boost_FloatAdd(S2, S2, 0.03, Dest -> Length);
+    Boost_FloatAdd(S3, S3, 0.03, Dest -> Length);
+
+    Boost_FloatSet(S, 0, Dest -> Length);
+    Boost_FloatAddArr(S, S, S0, Dest -> Length);
+    Boost_FloatAddArr(S, S, S1, Dest -> Length);
+    Boost_FloatAddArr(S, S, S2, Dest -> Length);
+    Boost_FloatAddArr(S, S, S3, Dest -> Length);
+
+    Boost_FloatDivArr(S0, S0, S, Dest -> Length);
+    Boost_FloatDivArr(S1, S1, S, Dest -> Length);
+    Boost_FloatDivArr(S2, S2, S, Dest -> Length);
+    Boost_FloatDivArr(S3, S3, S, Dest -> Length);
+
+    Boost_FloatMulArr(Dest -> F0Env, S0, Src, Dest -> Length);
+    Boost_FloatMulArr(Dest -> F1Env, S1, Src, Dest -> Length);
+    Boost_FloatMulArr(Dest -> F2Env, S2, Src, Dest -> Length);
+    Boost_FloatMulArr(Dest -> F3Env, S3, Src, Dest -> Length);
+
+    Boost_FloatDiv(Dest -> F0Env, Dest -> F0Env, FState -> S0, Dest -> Length);
+    Boost_FloatDiv(Dest -> F1Env, Dest -> F1Env, FState -> S1, Dest -> Length);
+    Boost_FloatDiv(Dest -> F2Env, Dest -> F2Env, FState -> S2, Dest -> Length);
+    Boost_FloatDiv(Dest -> F3Env, Dest -> F3Env, FState -> S3, Dest -> Length);
 
     free(S0);
     free(S1);
     free(S2);
     free(S3);
     free(S);
-    free(E);
 }
 
 void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FState)

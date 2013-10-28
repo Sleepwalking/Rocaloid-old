@@ -4,6 +4,7 @@
 #include "CVEDSP/Interpolation.h"
 #include "CVEDSP/Plot.h"
 #include "CVEGlobal.h"
+#include "Debug/ALblLog.h"
 
 #include "DSPEx/FECSOLAEx.h"
 
@@ -20,6 +21,7 @@ _Destructor_ (FSynth)
 
 void FSynth_SetSymbol(FSynth* Dest, String* Symbol)
 {
+    ALblLog_Print("FSynth_SetSymbol %s", String_GetChars(Symbol));
     CSynth_SetSymbol(& Dest -> SubSynth, Symbol);
     Dest -> SynthFreq = Dest -> SubSynth.Data.Header.F0;
 }
@@ -51,19 +53,37 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
     float Offset;
     int SrcHalf = Src -> Length / 2;
     float* Center = Src -> Data + SrcHalf;
-    for(i = 0; i < Dest -> Length; i ++)
+
+    Offset = (float)(0 - Dest -> Length / 2) * Ratio;
+    if(Offset > - SrcHalf + 1)
     {
-        Offset = (float)(i - Dest -> Length / 2) * Ratio;
-        if(Offset > - SrcHalf && Offset < SrcHalf)
+        //No bound checking
+        for(i = 0; i < Dest -> Length; i ++)
         {
             //In Src range: linear interpolation.
             int LOffset;
             LOffset = (int)(Offset + SrcHalf) - SrcHalf;
             Dest -> Data[i] = LinearInterpolate(Center[LOffset], Center[LOffset + 1], Offset - LOffset);
-        }else
+            Offset += Ratio;
+        }
+    }else
+    {
+        //Bound checking
+        for(i = 0; i < Dest -> Length; i ++)
         {
-            //Beyond Src range.
-            Dest -> Data[i] = 0;
+            if(Offset > - SrcHalf + 1 && Offset < SrcHalf - 1)
+            {
+                //In Src range: linear interpolation.
+                int LOffset;
+                LOffset = (int)(Offset + SrcHalf) - SrcHalf;
+                Dest -> Data[i] = LinearInterpolate(Center[LOffset], Center[LOffset + 1], Offset - LOffset);
+            }
+            else
+            {
+                //Beyond Src range.
+                Dest -> Data[i] = 0;
+            }
+            Offset += Ratio;
         }
     }
 }
@@ -127,6 +147,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     {
         FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
+        ALblLog_Print("%d", Ret.PSOLAFrameHopSize);
         //Maintain Spectral Envelope
         #include "FSynthSpectrumModification.c"
     }

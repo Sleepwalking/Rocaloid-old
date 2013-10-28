@@ -26,7 +26,7 @@ String_FromChars(Symbol, Dest -> SubSynth.Data.Header.Symbol);
 FECSOLAState_FromSymbolLayer(& PitchState, & Symbol);
 String_Dtor(& Symbol);
 
-FECSOLAFilter_GetFromFormantEnvelope(& PitchFilter, & OrigEnv, & PitchState);
+FECSOLAFilter_GetFromCPF(& PitchFilter, & OrigEnv, & PitchState);
 PitchState.F0 = Dest -> SynthFreq;
 
 //Reduce S0 for low freq.

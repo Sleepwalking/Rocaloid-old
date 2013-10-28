@@ -20,6 +20,7 @@ AutoClass
 
 extern void LCFECSOLAFilter_CtorSize(LCFECSOLAFilter* Dest, int Length);
 extern void LCFECSOLAFilter_GetFromCPF(LCFECSOLAFilter* Dest, CPF* Src, FECSOLAState* FState);
+extern void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, FECSOLAState* FState);
 extern void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FState);
 
 #endif

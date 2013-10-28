@@ -109,7 +109,11 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
     float SynthFreq = SpeechMixer_QuerySyllableFreq(CVSData, Time);
     PitchMixer_SetFrequency(& Dest -> SubSynth1, SynthFreq);
     PitchMixer_SetFrequency(& Dest -> SubSynth2, SynthFreq);
-
+/*
+    ALblLog_Print("SpeechMixer SetTime: SS1 = %s, SS2 = %s",
+                  Dest -> SubSynth1.SubSynth1.SubSynth.Data.Header.Symbol,
+                  Dest -> SubSynth2.SubSynth1.SubSynth.Data.Header.Symbol);
+*/
     //printf("TR: %f, SI1: %d, SI2: %d\n", Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
 }
 
@@ -192,7 +196,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
         {
             //Trans Synth
             float Ratio = (Dest -> TransitionRatio - MixRatio) / (1.0f - MixRatio);
-            ALblLog_Print("SpeechMixer Synthesis: Ratio = %f", Ratio);
+            //ALblLog_Print("SpeechMixer Synthesis: Ratio = %f", Ratio);
             #ifdef SpeechMixer_Linear
                 Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
                 Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);

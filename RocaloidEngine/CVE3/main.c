@@ -60,9 +60,14 @@ int main(void)
     int count = 0;
     Ret2.PSOLAFrameHopSize = 0;
 
+    ALblLog_Disable();
     float t;
     for(t = 0; t < 2.4;)
     {
+        if(t > 0.5 && t < 0.7)
+            ALblLog_Enable();
+        if(t > 0.7)
+            ALblLog_Disable();
         SpeechMixer_SetTime(& test, t);
         Ret = SpeechMixer_Synthesis(& test, & Out);
 
@@ -72,6 +77,7 @@ int main(void)
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
         t = (float)count / 44100;
+        ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
         //ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
         ALblLog_SetTime(t);
     }
@@ -94,7 +100,6 @@ int main(void)
     free(Wave);
 
     printf("Hello World\n");
-
 /*
     SRExpression Plan;
     SRExpressionCtor(& Plan);
@@ -103,6 +108,6 @@ int main(void)
 
     SRExpressionDtor(& Plan);
 */
-//    SplitRadix_RadixL_Generator_SSE(0, 2048);
+//    SplitRadix_RadixL_Generator_AVX(0, 512);
     return 0;
 }

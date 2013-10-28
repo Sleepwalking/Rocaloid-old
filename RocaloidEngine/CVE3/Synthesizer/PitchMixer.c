@@ -252,7 +252,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         }else
         {
             Mixer_SoleSynth_Prepare(1);
-            FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
+            FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
             PitchMixer_CreateState(DestState, 1);
             Mixer_SoleSynth_Bake(1);
         }
@@ -274,7 +274,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth1
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
                 Mixer_SoleSynth_Prepare(1);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
+                FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
                 Mixer_SoleSynth_Bake(1);
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
@@ -297,7 +297,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth2
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
                 Mixer_SoleSynth_Prepare(2);
-                FECSOLAFilter_GetFromFormantEnvelope(& FFilter2, & CPF2, & SubRet.FState);
+                FECSOLAFilter_GetFromCPF(& FFilter2, & CPF2, & SubRet.FState);
                 Mixer_SoleSynth_Bake(2);
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;

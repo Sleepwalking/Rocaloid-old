@@ -3,11 +3,11 @@
 #ifdef _Synth1_
     FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
     Mixer_SoleSynth_Prepare(1);
-    FECSOLAFilter_GetFromFormantEnvelope(& FFilter1, & CPF1, & SubRet.FState);
+    FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
     Mixer_TransSynth_Bake(1);
 #else
     Mixer_SoleSynth_Prepare(1);
-    LCFECSOLAFilter_GetFromCPF(& LCFilter1, & CPF1, & SubRet.FState);
+    LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
     Mixer_TransSynth_Bake_LCFECSOLA(1);
     //GNUPlot_PlotFloat(Magn, 120);
     //getchar();
@@ -20,12 +20,12 @@ Boost_FloatMul(AvgMagn, Magn, 1.0f - Ratio, 513);
 #ifdef _Synth1_
     SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
     Mixer_SoleSynth_Prepare(2);
-    FECSOLAFilter_GetFromFormantEnvelope(& FFilter2, & CPF2, & SubRet.FState);
+    FECSOLAFilter_GetFromCPF(& FFilter2, & CPF2, & SubRet.FState);
     Mixer_TransSynth_Bake(2);
 #else
     SubRet = PitchMixer_Synthesis(& Dest -> SubSynth2, & Tmp2);
     Mixer_SoleSynth_Prepare(2);
-    LCFECSOLAFilter_GetFromCPF(& LCFilter2, & CPF2, & SubRet.FState);
+    LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter2, Magn, & SubRet.FState);
     Mixer_TransSynth_Bake_LCFECSOLA(2);
 #endif
 

@@ -9,6 +9,8 @@
 extern void ALblLog_Create(String* Dest);
 extern void ALblLog_Print(const char* Format, ...);
 extern void ALblLog_SetTime(float Time);
+extern void ALblLog_Enable();
+extern void ALblLog_Disable();
 extern void ALblLog_Save();
 
 #endif

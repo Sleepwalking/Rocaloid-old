@@ -2,6 +2,8 @@
 #include "RFILE3/CDT3/Demapper.h"
 #include "CVEGlobal.h"
 
+#include "Debug/ALblLog.h"
+
 _Constructor_ (CSynth)
 {
     CVDB3_Ctor(& Dest -> Data);
@@ -28,6 +30,7 @@ void CSynth_SetSymbol(CSynth* Dest, String* Symbol)
         Dest -> Data.Header.PulseNum -= 2;
         CSynth_Reset(Dest);
         printf("%s Loaded.\n", Dest -> Data.Header.Symbol);
+        ALblLog_Print("CS Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
     }
 }
 
@@ -55,6 +58,8 @@ void CSynth_Reset(CSynth* Dest)
         //Vowels should start after VOT
         Dest -> PlayIndex = Dest -> Data.Header.VOI;
         Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
+        Dest -> FPlayIndex = Dest -> PlayIndex;
+        ALblLog_Print("Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
     }
     for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
         if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
@@ -82,6 +87,7 @@ void CSynth_UpdateIndex(CSynth* Dest)
     Dest -> PlayIndex = record;
     //Dest -> PlayPosition = Dest -> Data.PulseOffsets[record];
     Dest -> FPlayIndex = record;
+    ALblLog_Print("FPlayIndex = %f", Dest -> FPlayIndex);
 }
 
 #define DPlayIndex (Dest -> PlayIndex)
@@ -94,6 +100,7 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
     CSynthSendback Ret;
     float TRatio = 0;
     DPlayIndex = Dest -> FPlayIndex;
+    //ALblLog_Print("Routine %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
     if(DPlayIndex > (signed int)(DPulseNum - Dest -> CycleLength))
     {
         //In transition
@@ -120,17 +127,19 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
                              Dest -> Data.Header.WaveSize,
                              DPulseOffsets[DPlayIndex]);
     }
-    if(Dest -> Data.Header.PhoneType == 'C' && DPlayIndex <= (signed int)Dest -> Data.Header.VOI)
+    if(/*Dest -> Data.Header.PhoneType == 'C' && */DPlayIndex < (signed int)Dest -> Data.Header.VOI)
     {
         //In Consonant
         Ret.PSOLAFrameHopSize = 512;//(DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex]);
         Ret.BeforeVOT = 1;
         DPlayPos += Ret.PSOLAFrameHopSize / Dest -> ConsonantRatio;
+        ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         CSynth_UpdateIndex(Dest);
     }else
     {
         //In Cycle
         Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex];
+        ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         Ret.BeforeVOT = 0;
         Dest -> FPlayIndex += 1.0f / Dest -> VowelRatio;
     }
