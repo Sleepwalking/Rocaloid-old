@@ -7,6 +7,7 @@
 #include "Debug/ALblLog.h"
 
 #include "DSPEx/FECSOLAEx.h"
+#include "DSPEx/LCFECSOLA.h"
 
 _Constructor_ (FSynth)
 {
@@ -50,7 +51,9 @@ void FSynth_SetFrequency(FSynth* Dest, float Freq)
 void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
 {
     int i;
+    int LOffset;
     float Offset;
+    float IRatio;
     int SrcHalf = Src -> Length / 2;
     float* Center = Src -> Data + SrcHalf;
 
@@ -60,10 +63,9 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
         //No bound checking
         for(i = 0; i < Dest -> Length; i ++)
         {
-            //In Src range: linear interpolation.
-            int LOffset;
             LOffset = (int)(Offset + SrcHalf) - SrcHalf;
-            Dest -> Data[i] = LinearInterpolate(Center[LOffset], Center[LOffset + 1], Offset - LOffset);
+            IRatio = Offset - LOffset;
+            Dest -> Data[i] = Center[LOffset] * (1 - IRatio) + Center[LOffset + 1] * IRatio;
             Offset += Ratio;
         }
     }else
@@ -74,9 +76,9 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
             if(Offset > - SrcHalf + 1 && Offset < SrcHalf - 1)
             {
                 //In Src range: linear interpolation.
-                int LOffset;
                 LOffset = (int)(Offset + SrcHalf) - SrcHalf;
-                Dest -> Data[i] = LinearInterpolate(Center[LOffset], Center[LOffset + 1], Offset - LOffset);
+                IRatio = Offset - LOffset;
+                Dest -> Data[i] = Center[LOffset] * (1 - IRatio) + Center[LOffset + 1] * IRatio;
             }
             else
             {
@@ -116,9 +118,11 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     float* Orig   = FloatMalloc(2048);
 
     Boost_FloatMulArr(Orig, BFWave.Data, Hanning2048, 2048);
+
     RFFT(OrigRe, OrigIm, Orig, 11);
 
     //Nyquist LPF
+
     if(! Ret.BeforeVOT && BF / Dest -> SynthFreq < 1.0f)
     {
         int LPF = FreqToIndex2048(22050 * BF / Dest -> SynthFreq);

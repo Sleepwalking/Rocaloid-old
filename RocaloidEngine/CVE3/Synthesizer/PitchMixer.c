@@ -3,6 +3,8 @@
 #include "CVEDSP/Algorithm/Formant.h"
 #include "CVEDSP/Plot.h"
 
+#include "DSPEx/LCFECSOLA.h"
+
 #define SkipSynth 0
 
 _Constructor_(PitchMixer)
@@ -213,6 +215,9 @@ void PitchMixer_SetLimitedFrequency(PitchMixer* Dest, float Freq)
     Dest -> LimitedFreq = Freq;
 }
 
+#undef  LCEnabled
+#define LCEnabled
+
 PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 {
     PitchMixerSendback Ret;
@@ -222,9 +227,15 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
     CPF_Setup(CPF1);
     CPF_Setup(CPF2);
+#ifdef LCEnabled
+    LCFECSOLAFilter LCFilter1, LCFilter2;
+    LCFECSOLAFilter_Ctor(& LCFilter1);
+    LCFECSOLAFilter_Ctor(& LCFilter2);
+#else
     FECSOLAFilter FFilter1, FFilter2;
     FECSOLAFilter_Ctor(& FFilter1);
     FECSOLAFilter_Ctor(& FFilter2);
+#endif
     FECSOLAState State1, State2;
     FECSOLAState DestState;
     float* Magn = FloatMalloc(1024);
@@ -252,9 +263,15 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         }else
         {
             Mixer_SoleSynth_Prepare(1);
-            FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
-            PitchMixer_CreateState(DestState, 1);
-            Mixer_SoleSynth_Bake(1);
+            #ifdef LCEnabled
+                LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
+                PitchMixer_CreateState(DestState, 1);
+                Mixer_SoleSynth_Bake_LCFECSOLA(1);
+            #else
+                FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
+                PitchMixer_CreateState(DestState, 1);
+                Mixer_SoleSynth_Bake(1);
+            #endif
         }
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
         Ret.BeforeVOT = SubRet.BeforeVOT;
@@ -274,8 +291,13 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth1
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
                 Mixer_SoleSynth_Prepare(1);
-                FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
-                Mixer_SoleSynth_Bake(1);
+                #ifdef LCEnabled
+                    LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
+                    Mixer_SoleSynth_Bake_LCFECSOLA(1);
+                #else
+                    FECSOLAFilter_GetFromCPF(& FFilter1, & CPF1, & SubRet.FState);
+                    Mixer_SoleSynth_Bake(1);
+                #endif
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
@@ -297,8 +319,13 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth2
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
                 Mixer_SoleSynth_Prepare(2);
-                FECSOLAFilter_GetFromCPF(& FFilter2, & CPF2, & SubRet.FState);
-                Mixer_SoleSynth_Bake(2);
+                #ifdef LCEnabled
+                    LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter2, Magn, & SubRet.FState);
+                    Mixer_SoleSynth_Bake_LCFECSOLA(2);
+                #else
+                    FECSOLAFilter_GetFromCPF(& FFilter2, & CPF2, & SubRet.FState);
+                    Mixer_SoleSynth_Bake(2);
+                #endif
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
                 //GNUPlot_SetTitleAndNumber("Sole", Dest -> SynthFreq);
@@ -316,7 +343,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     //Transition Synthesis
 
     #define _Synth1_
-    #include "MixerPitchTransition.h"
+    #include "MixerPitchTransition.c"
     #undef _Synth1_
     /*
     FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2,Output);
@@ -336,8 +363,13 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     free(AvgMagn);
     CPF_Dtor(& CPF1);
     CPF_Dtor(& CPF2);
+#ifdef LCEnabled
+    LCFECSOLAFilter_Dtor(& LCFilter1);
+    LCFECSOLAFilter_Dtor(& LCFilter2);
+#else
     FECSOLAFilter_Dtor(& FFilter1);
     FECSOLAFilter_Dtor(& FFilter2);
+#endif
     FDFrame_Dtor(& Tmp1);
     FDFrame_Dtor(& Tmp2);
     return Ret;

@@ -28,4 +28,7 @@ extern int CVEGlobal_LoadCDT(String* Path);
         CPF_AddControlFreq(& Name, 0, 0);\
     } while(0)
 
+#define CVE_FFTSize 1024
+#define CVE_FFTHalf 512
+
 #endif

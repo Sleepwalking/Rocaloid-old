@@ -210,7 +210,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             #endif
             #ifdef SpeechMixer_FECSOLA
                 #define _SpeechMixer_
-                #include "MixerPitchTransition.h"
+                #include "MixerPitchTransition.c"
                 #undef _SpeechMixer_
             #endif
             //ALblLog_Print("SpeechMixer Synthesis: F1 = %f, F2 = %f, F3 = %f", DestState.F1, DestState.F2, DestState.F3);

@@ -3,6 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CFLAGS += -O3 -msse -ffast-math -lm
+
 SOURCES += main.c \
     RUtil/Memory.c \
     RUtil/IO/Wave.c \
@@ -19,26 +21,51 @@ SOURCES += main.c \
     RFILE3/CVS3/CVSRDLWriter.c \
     RFILE3/CVS3/CVSRDLReader.c \
     RFILE3/CVS3/CVS3.c \
-    Synthesizer/CSynth.c \
-    CVEGlobal.c \
-    Synthesizer/FSynth.c \
-    DSPEx/FDFrame.c \
-    DSPEx/FECSOLAEx.c \
-    Synthesizer/FSynthSpectrumModification.c \
-    Synthesizer/PitchMixer.c \
-    Synthesizer/SpeechMixer.c \
-    DSPEx/LCFECSOLA.c \
-    Debug/ALblLog.c \
-    Synthesizer/MixerPitchTransition.c
+    CVEANN/Rand.c \
+    CVEANN/Activator.c \
+    CVEANN/Network/SOFM.c \
+    CVEANN/Network/LVQ.c \
+    CVEANN/Network/FeedForwardMomentum.c \
+    CVEANN/Network/FeedForward.c \
+    CVEANN/Trainer/Trainer_SOFM.c \
+    CVEANN/Trainer/Trainer_LVQ.c \
+    CVEANN/Trainer/Trainer_FeedForward.c \
+    CVEANN/Trainer/Trainer_BPMomentum.c
 
 HEADERS += \
+    RUtil/RUtil.h \
+    RUtil/Memory.h \
+    RUtil/IO/Wave.h \
+    RUtil/IO/StringStream.h \
+    RUtil/IO/FileUtil.h \
+    RUtil/IO/FileStream.h \
+    RUtil/Misc/Converter.h \
+    RUtil/Structure/String.h \
+    RUtil/Structure/Array.h \
+    RFILE3/RDL.h \
+    RFILE3/CDT3/Demapper.h \
+    RFILE3/CDT3/CDT3Reader.h \
+    RFILE3/CDT3/CDT3.h \
+    RFILE3/CVDB3/CVDB3IO.h \
+    RFILE3/CVS3/CVSRDLWriter.h \
+    RFILE3/CVS3/CVSRDLReader.h \
+    RFILE3/CVS3/CVS3.h \
+    CVEANN/Rand.h \
+    CVEANN/Activator.h \
+    CVEANN/Network/SOFM.h \
+    CVEANN/Network/LVQ.h \
+    CVEANN/Network/FeedForwardMomentum.h \
+    CVEANN/Network/FeedForward.h \
+    CVEANN/Trainer/Trainer_SOFM.h \
+    CVEANN/Trainer/Trainer_LVQ.h \
+    CVEANN/Trainer/Trainer_FeedForward.h \
+    CVEANN/Trainer/Trainer_BPMomentum.h \
     CVEDSP/Interpolation.h \
     CVEDSP/FrameProcessor.h \
     CVEDSP/Plot.h \
     CVEDSP/Tester.h \
     CVEDSP/DFT/StaticRev.h \
     CVEDSP/DFT/StaticFFT_Small.h \
-    CVEDSP/DFT/StaticFFT_11.h \
     CVEDSP/DFT/StaticFFT_9.h \
     CVEDSP/DFT/StaticFFT_8.h \
     CVEDSP/DFT/StaticFFT_7.h \
@@ -64,35 +91,7 @@ HEADERS += \
     CVEDSP/DSPBase/LinearWarping.h \
     CVEDSP/DSPBase/Filter.h \
     CVEDSP/DSPBase/ControlPointFilter.h \
-    RUtil/RUtil.h \
-    RUtil/Memory.h \
-    RUtil/IO/Wave.h \
-    RUtil/IO/StringStream.h \
-    RUtil/IO/FileUtil.h \
-    RUtil/IO/FileStream.h \
-    RUtil/Misc/Converter.h \
-    RUtil/Structure/String.h \
-    RUtil/Structure/Array.h \
-    RFILE3/RDL.h \
-    RFILE3/CDT3/Demapper.h \
-    RFILE3/CDT3/CDT3Reader.h \
-    RFILE3/CDT3/CDT3.h \
-    RFILE3/CVDB3/CVDB3IO.h \
-    RFILE3/CVS3/CVSRDLWriter.h \
-    RFILE3/CVS3/CVSRDLReader.h \
-    RFILE3/CVS3/CVS3.h \
-    Synthesizer/CSynth.h \
-    DSPInclude.h \
-    CVEGlobal.h \
-    Synthesizer/FSynth.h \
-    DSPEx/FDFrame.h \
-    DSPEx/FECSOLAEx.h \
-    Synthesizer/PitchMixer.h \
-    Synthesizer/SpeechMixer.h \
-    Synthesizer/MixerMacro.h \
-    DSPEx/LCFECSOLA.h \
-    Debug/ALblLog.h \
-    CVEDSP/DFT/StaticRadix.h
+
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP

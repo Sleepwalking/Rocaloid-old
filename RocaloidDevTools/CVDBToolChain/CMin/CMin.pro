@@ -31,8 +31,6 @@ HEADERS += \
     CVEDSP/Tester.h \
     CVEDSP/DFT/StaticRev.h \
     CVEDSP/DFT/StaticFFT_Small.h \
-    CVEDSP/DFT/StaticFFT_11.h \
-    CVEDSP/DFT/StaticFFT_10.h \
     CVEDSP/DFT/StaticFFT_9.h \
     CVEDSP/DFT/StaticFFT_8.h \
     CVEDSP/DFT/StaticFFT_7.h \

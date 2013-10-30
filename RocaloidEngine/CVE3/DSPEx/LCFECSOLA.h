@@ -7,12 +7,15 @@
 #include "CVEGlobal.h"
 #include "DSPInclude.h"
 
+#define LCFECSOLA_ResidualFreq 5000
+
 AutoClass
 {
     float* F0Env;
     float* F1Env;
     float* F2Env;
     float* F3Env;
+    float* ResidualEnv;
 
     FECSOLAState OrigState;
     int Length;
