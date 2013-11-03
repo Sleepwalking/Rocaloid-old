@@ -1,5 +1,5 @@
 #include "LCFECSOLA.h"
-#include "CVEDSP/Plot.h"
+#include "../CVEDSP/Plot.h"
 
 float Decay[2048];
 float Filter0[1024];

@@ -2,7 +2,7 @@
 #define CDT3READER_H
 
 #include "CDT3.h"
-#include "RUtil/Structure/String.h"
+#include "../RUtil/Structure/String.h"
 
 extern int CDTReader_Open(String* Src);
 extern void CDTReader_Close();

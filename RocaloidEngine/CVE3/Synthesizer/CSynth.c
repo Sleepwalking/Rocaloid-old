@@ -1,8 +1,7 @@
 #include "CSynth.h"
-#include "RFILE3/CDT3/Demapper.h"
-#include "CVEGlobal.h"
-
-#include "Debug/ALblLog.h"
+#include "../RFILE3/CDT3/Demapper.h"
+#include "../CVEGlobal.h"
+#include "../Debug/ALblLog.h"
 
 _Constructor_ (CSynth)
 {

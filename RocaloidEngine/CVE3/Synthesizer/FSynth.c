@@ -1,13 +1,13 @@
 #include "FSynth.h"
-#include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/Interpolation.h"
-#include "CVEDSP/Plot.h"
-#include "CVEGlobal.h"
-#include "Debug/ALblLog.h"
+#include "../CVEDSP/DFT/FFT.h"
+#include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Interpolation.h"
+#include "../CVEDSP/Plot.h"
+#include "../CVEGlobal.h"
+#include "../Debug/ALblLog.h"
 
-#include "DSPEx/FECSOLAEx.h"
-#include "DSPEx/LCFECSOLA.h"
+#include "../DSPEx/FECSOLAEx.h"
+#include "../DSPEx/LCFECSOLA.h"
 
 _Constructor_ (FSynth)
 {
@@ -153,7 +153,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
         ALblLog_Print("%d", Ret.PSOLAFrameHopSize);
         //Maintain Spectral Envelope
-        #include "FSynthSpectrumModification.c"
+        #include "FSynthSpectrumModification.h"
     }
 
     CPF_Dtor(& OrigEnv);

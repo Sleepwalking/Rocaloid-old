@@ -1,11 +1,11 @@
 #ifndef PITCHMIXER_H
 #define PITCHMIXER_H
 
-#include "DSPInclude.h"
-#include "RUtil/RUtil.h"
-#include "DSPEx/FDFrame.h"
+#include "../DSPInclude.h"
+#include "../RUtil/RUtil.h"
+#include "../DSPEx/FDFrame.h"
+#include "../CVEGlobal.h"
 #include "FSynth.h"
-#include "CVEGlobal.h"
 
 #define PitchMixer_TransitionRatio 0.3
 

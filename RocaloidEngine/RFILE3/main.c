@@ -1,3 +1,5 @@
+#ifdef COMPILE_EXEC_RFILE3
+
 #include <stdio.h>
 #include "CVDB3/CVDB3IO.h"
 #include "CDT3/CDT3.h"
@@ -94,3 +96,4 @@ int main(void)
     return 0;
 }
 
+#endif

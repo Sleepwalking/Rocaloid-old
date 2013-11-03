@@ -1,8 +1,8 @@
 #ifndef GPITCH_H
 #define GPITCH_H
 
-#include "RUtil/RUtil.h"
-#include "GeneticSimulator.h"
+#include "../RUtil/RUtil.h"
+#include "../GeneticSimulator.h"
 
 AutoClass
 {

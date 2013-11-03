@@ -2,7 +2,7 @@
 #define CVSRDLREADER_H
 
 #include "CVS3.h"
-#include "RUtil/RUtil.h"
+#include "../RUtil/RUtil.h"
 
 extern int CVSRDLReader_Open(String* Src);
 extern void CVSRDLReader_Close();

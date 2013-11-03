@@ -1,9 +1,8 @@
 #include "PitchMixer.h"
 #include "MixerMacro.h"
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/Plot.h"
-
-#include "DSPEx/LCFECSOLA.h"
+#include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Plot.h"
+#include "../DSPEx/LCFECSOLA.h"
 
 #define SkipSynth 0
 
@@ -343,7 +342,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     //Transition Synthesis
 
     #define _Synth1_
-    #include "MixerPitchTransition.c"
+    #include "MixerPitchTransition.h"
     #undef _Synth1_
     /*
     FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2,Output);

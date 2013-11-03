@@ -11,8 +11,13 @@
 #include "RFILE3/CVS3/CVSRDLReader.h"
 #include "Debug/ALblLog.h"
 
-#include "CVEDSP/DFT/SplitRadixGen.h"
-#include "CVEDSP/DFT/SplitRadix.h"
+//#include "CVEDSP/DFT/SplitRadixGen.h"
+//#include "CVEDSP/DFT/SplitRadix.h"
+
+#define CDT_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt"
+#define CVS_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs"
+#define AUP_PATH "/tmp/cvedebug.txt"
+#define WAV_PATH "/tmp/a.wav"
 
 int main(void)
 {
@@ -23,16 +28,15 @@ int main(void)
 
     GNUPlot_Open();
 
-    String_FromChars(CDTPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt");
+    String_FromChars(CDTPath, CDT_PATH);
     CVEGlobal_LoadCDT(& CDTPath);
     String_Dtor(& CDTPath);
 
     SetSampleRate(44100);
 
-    String_FromChars(SName, "i");
-    String_FromChars(CVSPath, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs");
+    String_FromChars(CVSPath, CVS_PATH);
 
-    String_FromChars(AupPath, "/tmp/testx.txt");
+    String_FromChars(AupPath, AUP_PATH);
     ALblLog_Create(& AupPath);
     String_Dtor(& AupPath);
 
@@ -64,10 +68,11 @@ int main(void)
     float t;
     for(t = 0; t < 2.4;)
     {
+        /*
         if(t > 0.5 && t < 0.7)
             ALblLog_Enable();
         if(t > 0.7)
-            ALblLog_Disable();
+            ALblLog_Disable();*/
         SpeechMixer_SetTime(& test, t);
         Ret = SpeechMixer_Synthesis(& test, & Out);
 
@@ -77,7 +82,7 @@ int main(void)
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
         t = (float)count / 44100;
-        ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
+        //ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
         //ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
         ALblLog_SetTime(t);
     }
@@ -86,11 +91,10 @@ int main(void)
     FDFrame_Dtor(& Out);
 
     SpeechMixer_Dtor(& test);
-    String_Dtor(& SName);
 
     CVS3_Dtor(& testcvs);
     String_Dtor(& CVSPath);
-    String_FromChars(Output, "/tmp/a.wav");
+    String_FromChars(Output, WAV_PATH);
     WriteWaveAll(& Output, Wave, SampleRate * 4, SampleRate);
     String_Dtor(& Output);
 
@@ -99,7 +103,7 @@ int main(void)
 
     free(Wave);
 
-    printf("Hello World\n");
+    printf("Synthesis successfully finished.\n");
 /*
     SRExpression Plan;
     SRExpressionCtor(& Plan);

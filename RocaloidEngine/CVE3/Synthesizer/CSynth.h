@@ -5,9 +5,10 @@
 #define CSynth_CycleSample 10000
 
 //Consecutive Synthesizer
-#include "RUtil/RUtil.h"
-#include "RFILE3/CVDB3/CVDB3IO.h"
-#include "DSPInclude.h"
+
+#include "../RUtil/RUtil.h"
+#include "../RFILE3/CVDB3/CVDB3IO.h"
+#include "../DSPInclude.h"
 
 AutoClass
 {

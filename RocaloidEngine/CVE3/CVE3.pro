@@ -24,12 +24,10 @@ SOURCES += main.c \
     Synthesizer/FSynth.c \
     DSPEx/FDFrame.c \
     DSPEx/FECSOLAEx.c \
-    Synthesizer/FSynthSpectrumModification.c \
     Synthesizer/PitchMixer.c \
     Synthesizer/SpeechMixer.c \
     DSPEx/LCFECSOLA.c \
     Debug/ALblLog.c \
-    Synthesizer/MixerPitchTransition.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -92,7 +90,9 @@ HEADERS += \
     Synthesizer/MixerMacro.h \
     DSPEx/LCFECSOLA.h \
     Debug/ALblLog.h \
-    CVEDSP/DFT/StaticRadix.h
+    CVEDSP/DFT/StaticRadix.h \
+    Synthesizer/MixerPitchTransition.h \
+    Synthesizer/FSynthSpectrumModification.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CVEDSP/debug/ -lCVEDSP

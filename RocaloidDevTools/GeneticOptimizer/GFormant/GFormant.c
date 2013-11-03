@@ -1,12 +1,12 @@
 #include "GFormant.h"
-#include "Rand.h"
-#include "RUtil/IO/FileUtil.h"
-#include "RUtil/Misc/Converter.h"
+#include "../Rand.h"
+#include "../RUtil/IO/FileUtil.h"
+#include "../RUtil/Misc/Converter.h"
 
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/Algorithm/BaseFreq.h"
-#include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/DSPBase/Filter.h"
+#include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Algorithm/BaseFreq.h"
+#include "../CVEDSP/DFT/FFT.h"
+#include "../CVEDSP/DSPBase/Filter.h"
 
 #include <malloc.h>
 #include <math.h>

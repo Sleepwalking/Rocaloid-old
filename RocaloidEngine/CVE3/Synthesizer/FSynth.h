@@ -1,11 +1,12 @@
 #ifndef FSYNTH_H
 #define FSYNTH_H
 
-//Frequency Generator
-#include "RUtil/RUtil.h"
-#include "DSPInclude.h"
+//Tone(Freq) Synthesizer
+
+#include "../RUtil/RUtil.h"
+#include "../DSPInclude.h"
+#include "../DSPEx/FDFrame.h"
 #include "CSynth.h"
-#include "DSPEx/FDFrame.h"
 
 #define FSynth_ConsonantTransition 1000
 

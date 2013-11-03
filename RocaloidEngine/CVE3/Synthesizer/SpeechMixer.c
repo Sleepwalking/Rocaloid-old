@@ -1,10 +1,10 @@
 #include "SpeechMixer.h"
 #include "MixerMacro.h"
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/Plot.h"
-#include "CVEDSP/Interpolation.h"
-#include "DSPEx/LCFECSOLA.h"
-#include "Debug/ALblLog.h"
+#include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Plot.h"
+#include "../CVEDSP/Interpolation.h"
+#include "../DSPEx/LCFECSOLA.h"
+#include "../Debug/ALblLog.h"
 
 #define CVSData (Dest -> OnSynth)
 #define SkipSynth 0
@@ -210,7 +210,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             #endif
             #ifdef SpeechMixer_FECSOLA
                 #define _SpeechMixer_
-                #include "MixerPitchTransition.c"
+                #include "MixerPitchTransition.h"
                 #undef _SpeechMixer_
             #endif
             //ALblLog_Print("SpeechMixer Synthesis: F1 = %f, F2 = %f, F3 = %f", DestState.F1, DestState.F2, DestState.F3);

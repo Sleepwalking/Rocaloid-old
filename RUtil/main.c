@@ -1,3 +1,5 @@
+#ifdef COMPILE_EXEC_RUTIL
+
 #include <stdio.h>
 #include <time.h>
 #include "Structure/Array.h"
@@ -40,4 +42,6 @@ int main(void)
     String_Dtor(&test);
     return 0;
 }
+
+#endif
 

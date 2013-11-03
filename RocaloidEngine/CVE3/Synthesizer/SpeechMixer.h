@@ -1,12 +1,12 @@
 #ifndef SPEECHMIXER_H
 #define SPEECHMIXER_H
 
-#include "DSPInclude.h"
-#include "RUtil/RUtil.h"
-#include "DSPEx/FDFrame.h"
+#include "../DSPInclude.h"
+#include "../RUtil/RUtil.h"
+#include "../DSPEx/FDFrame.h"
+#include "../CVEGlobal.h"
+#include "../RFILE3/CVS3/CVS3.h"
 #include "PitchMixer.h"
-#include "CVEGlobal.h"
-#include "RFILE3/CVS3/CVS3.h"
 
 AutoClass
 {

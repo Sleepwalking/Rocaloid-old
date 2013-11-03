@@ -1,16 +1,16 @@
 #include "GDetect.h"
-#include "Rand.h"
-#include "RUtil/IO/FileUtil.h"
-#include "RUtil/Misc/Converter.h"
-#include "GFormant/GFormant.h"
+#include "../Rand.h"
+#include "../RUtil/IO/FileUtil.h"
+#include "../RUtil/Misc/Converter.h"
+#include "../GFormant/GFormant.h"
 
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/Algorithm/BaseFreq.h"
-#include "CVEDSP/DSPBase/Spectrum.h"
-#include "CVEDSP/DFT/FFT.h"
-#include "CVEDSP/DSPBase/Filter.h"
-#include "CVEDSP/Algorithm/SpeechDetector.h"
-#include "CVEDSP/IntrinUtil/FloatArray.h"
+#include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Algorithm/BaseFreq.h"
+#include "../CVEDSP/DSPBase/Spectrum.h"
+#include "../CVEDSP/DFT/FFT.h"
+#include "../CVEDSP/DSPBase/Filter.h"
+#include "../CVEDSP/Algorithm/SpeechDetector.h"
+#include "../CVEDSP/IntrinUtil/FloatArray.h"
 
 #include <malloc.h>
 #include <math.h>

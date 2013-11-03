@@ -3,7 +3,7 @@
 
 //Logs runtime information into Audacity label format.
 
-#include "RUtil/RUtil.h"
+#include "../RUtil/RUtil.h"
 #include <stdarg.h>
 
 extern void ALblLog_Create(String* Dest);

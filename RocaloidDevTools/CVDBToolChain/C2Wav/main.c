@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-#include <RUtil/RUtil.h>
-#include <RUtil/IO/FileUtil.h>
+#include "RUtil/RUtil.h"
+#include "RUtil/IO/FileUtil.h"
 
-#include <RFILE3/CVDB3/CVDB3IO.h>
+#include "RFILE3/CVDB3/CVDB3IO.h"
 
 void GetFileName(String* Dest, String* Path)
 {
