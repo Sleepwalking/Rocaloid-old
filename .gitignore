@@ -2,6 +2,8 @@
 *.o
 *.autosave
 *.pro.user
+*.ms
+*.txt.user
 RocaloidEngine/Debug
 RocaloidEngine/Optimized
 RocaloidEngine/.anjuta_sym_db.db

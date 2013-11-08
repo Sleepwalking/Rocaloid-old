@@ -26,7 +26,7 @@ int main(void)
     Boost_FloatAdd(Hanning2048, Hanning2048, 0.001, 2048);
     Boost_FloatAdd(Hanning1024, Hanning1024, 0.001, 1024);
 
-    GNUPlot_Open();
+    //GNUPlot_Open();
 
     String_FromChars(CDTPath, CDT_PATH);
     CVEGlobal_LoadCDT(& CDTPath);
@@ -98,7 +98,7 @@ int main(void)
     WriteWaveAll(& Output, Wave, SampleRate * 4, SampleRate);
     String_Dtor(& Output);
 
-    GNUPlot_Close();
+    //GNUPlot_Close();
     ALblLog_Save();
 
     free(Wave);

@@ -12,7 +12,7 @@
         RNext();\
         Dest -> B = CFloatStr(& Buffer);\
         TemplateReadFuncNonLoopEnd;\
-    } typedef int __NO_USE__
+    } 
 
 char* Temp;
 int CVSLen;

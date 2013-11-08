@@ -16,7 +16,7 @@
         RDL_WriteString(& Buffer);\
         String_Dtor(& Buffer);\
         return 1;\
-    } typedef int __NO_USE__
+    }
 
 StringStream CWriter;
 
