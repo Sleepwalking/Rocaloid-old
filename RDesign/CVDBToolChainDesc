@@ -15,5 +15,5 @@ a. 数据库片段(.cvdb)传入C2Wav，生成带有拆帧标记的波形(.wav)�
 5. The sample configuration and splited sample are sent to Wpp. Splited sample(.wsp) is regenerated after preprocessing.
 6. Based on preprocessed splited sample(.wsp), the average formant information stored in database scheme(.cds), and sample configuration(.wconf), CMin generates database fragments(.cvdb).
 7. Database fragments(.cvdb) are sent to DBPack, which packs them into the final singer database(.cdb).
-[调试]
+[Debuging]
 a. Database fragments(.cvdb) are sent to C2Wav, waves with periodic marks(.wav) are generated. Further checking works can be done.
