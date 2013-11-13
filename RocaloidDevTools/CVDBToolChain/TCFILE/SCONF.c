@@ -111,8 +111,7 @@ int TemplateWriteFunc(TickList_Type)
     String_Ctor(& Buffer);
     RDL_WriteChars(">");
 
-    CStrInt(& Buffer, Src -> Time);
-    RDL_WriteString(& Buffer);
+    WriteFloat(Time);
 
     RDL_WriteString(& Src -> Consonant);
     RDL_WriteString(& Src -> Vowel);

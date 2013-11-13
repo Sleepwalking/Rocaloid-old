@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "CDS.h"
 #include "SCONF.h"
+#include "WCONF.h"
 
 int main()
 {
@@ -14,7 +15,7 @@ int main()
 
     String_Dtor(& Path);
     CDS_Dtor(& Test);*/
-
+/*
     SCONF Test;
     SCONF_Ctor(& Test);
     String_FromChars(Path, "/tmp/SCONFExample.sconf");
@@ -28,7 +29,22 @@ int main()
     SCONFWriter_Write(& Path);
 
     String_Dtor(& Path);
-    SCONF_Dtor(& Test);
+    SCONF_Dtor(& Test);*/
+
+    WCONF Test;
+    WCONF_Ctor(& Test);
+    String_FromChars(Path, "/tmp/WCONFExample.wconf");
+    WCONFReader_Open(& Path);
+    WCONF_Read(& Test);
+    WCONFReader_Close();
+
+    String_SetChars(& Path, "/tmp/WCONFOutput.wconf");
+    WCONFWriter_Save();
+    WCONF_Write(& Test);
+    WCONFWriter_Write(& Path);
+
+    String_Dtor(& Path);
+    WCONF_Dtor(& Test);
     printf("Hello, world!\n");
     return 0;
 }
