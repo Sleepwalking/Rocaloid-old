@@ -1,0 +1,15 @@
+#WCONF 0.1
+WCONF
+	AverageMagnitude	0.15
+	SampleList
+		#	C	V	Num	F0	#
+		>	\	a	0	262
+		>	\	a	1	350
+		>	\	a	2	430
+		>	b	a	0	262
+		>	b	a	1	350
+		>	b	a	2	430
+		>	b	e	0	262
+	End
+End
+

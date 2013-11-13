@@ -1,0 +1,14 @@
+#SCONF 0.1
+SCONF
+	TickList
+		#	Time	C	V	#
+		>	0	\	a
+		>	1	\	a
+		>	2	\	a
+		>	3	b	a
+		>	4	b	a
+		>	5	b	a
+		>	6	b	e
+	End
+End
+

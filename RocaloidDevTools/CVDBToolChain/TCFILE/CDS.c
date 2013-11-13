@@ -47,6 +47,11 @@ _Constructor_ (CDS)
 
 _Destructor_ (CDS)
 {
+    ArrayType_ObjDtor(SrcVList_Type, Dest -> SrcVList);
+    ArrayType_ObjDtor(String, Dest -> SrcCList);
+    ArrayType_ObjDtor(DestVList_Type, Dest -> DestVList);
+    ArrayType_ObjDtor(DestCList_Type, Dest -> DestCList);
+
     ArrayType_Dtor(SrcVList_Type, Dest -> SrcVList);
     ArrayType_Dtor(String, Dest -> SrcCList);
     ArrayType_Dtor(DestVList_Type, Dest -> DestVList);

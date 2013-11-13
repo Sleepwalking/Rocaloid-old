@@ -15,6 +15,7 @@ void CDTWriter_Save()
 
 void CDTWriter_Write(String* Dest)
 {
+    RDL_WriteNewLine();
     WriteFileAll(Dest, CWriter.BasePtr, CWriter.Offset);
     free(CWriter.BasePtr);
 }
