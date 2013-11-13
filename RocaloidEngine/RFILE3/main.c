@@ -1,9 +1,11 @@
+#define COMPILE_EXEC_RFILE3
 #ifdef COMPILE_EXEC_RFILE3
 
 #include <stdio.h>
 #include "CVDB3/CVDB3IO.h"
 #include "CDT3/CDT3.h"
 #include "CDT3/CDT3Reader.h"
+#include "CDT3/CDT3Writer.h"
 #include "CDT3/Demapper.h"
 #include "CVS3/CVS3.h"
 #include "CVS3/CVSRDLReader.h"
@@ -18,8 +20,9 @@ int main(void)
     //CVDB3 test;
     //CVDB3_Ctor(&test);
 
-    String_FromChars(Path, "/tmp/CVSOutput.cvs.txt");
-
+    String_FromChars(Path, "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt");
+    String_FromChars(Out, "/tmp/Output.cdt");
+/*
     CVS3 test;
     CVS3_Ctor(& test);
     CVSRDLReader_Open(& Path);
@@ -28,13 +31,13 @@ int main(void)
 
     CVSRDLWriter_Save();
     CVS3_Write(& test);
-    String_SetChars(& Path, "/tmp/CVSOutput2.cvs.txt");
+    String_SetChars(& Path, "/tmp/CVSOutput2.cvs");
     CVSRDLWriter_Write(& Path);
 
     CVS3_Dtor(& test);
     String_Dtor(&Path);
+*/
 
-    /*
     CDTMappingQuerySpace test;
     CDTMappingQuerySpace_Ctor(& test);
 
@@ -58,10 +61,16 @@ int main(void)
     String_Dtor(& QS2);
     CDTMappingQuerySpace_Dtor(& test);
 
-    CDTReader_Close();
-    CDT3_Dtor(&a);
+    CDTWriter_Save();
+    CDT3_Write(& a);
+    CDTWriter_Write(& Out);
 
-*/
+    CDTReader_Close();
+    CDT3_Dtor(& a);
+    String_Dtor(& Path);
+    String_Dtor(& Out);
+
+
     /*
     CVDB3_Load(&test, &Path);
     memcpy(&test.Header.Identifier, "CVDB", 4);

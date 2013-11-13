@@ -115,6 +115,7 @@ int TemplateWriteFunc(CVS3)
     TemplateWriteFuncHead("CVS");
 
     TemplateWriteFuncList(Syllable, SyllableList, "SyllableList", 1);
+    RDL_WriteNewLine();
 
     TemplateWriteFuncEnd
 }

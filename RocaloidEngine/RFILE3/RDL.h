@@ -123,7 +123,6 @@ extern void RDL_WritePopIndent();
         RDL_WriteNewLine()
 #define TemplateWriteFuncEnd\
         RDL_WritePopIndent();\
-        RDL_WriteNewLine();\
         RDL_WriteChars("End");\
         RDL_WriteNewLine();\
         String_Dtor(& Buffer);\

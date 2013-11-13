@@ -1,9 +1,9 @@
 1. DBMake读入数据库方案(.cds)，生成分割配置(.sconf)。
 2. 经过删减编辑的分割配置(.sconf)和原采样(.wav)传入WSplit，生成带有时间节点的分割配置(.sconf)。
 3. 经过时间节点调整的分割配置(.sconf)传入WSplit，生成采样片段(.wsp)和采样配置(.wconf)。
-4. 经过基频检查调整的采样配置(.wconf)传入DBMake，生成发音词典(.cdt)。
-5. 采样配置(.wconf)和采样片段(.wsp)传入Wpp，预处理后重新生成采样片段(.wsp)。
-6. 根据预处理后的采样片段(.wsp)，数据库方案(.cds)中的大致共振峰，和采样配置(.wconf)，由CMin生成数据库片段(.cvdb)。
+4. 采样配置(.wconf)和采样片段(.wsp)传入Wpp，预处理后重新生成采样片段(.wsp)。
+5. 根据预处理后的采样片段(.wsp)，数据库方案(.cds)中的大致共振峰，和经过基频检查调整的采样配置(.wconf)，由CMin生成数据库片段(.cvdb)。
+6. 采样配置(.wconf)和数据库片段(.cvdb)传入DBMake，生成发音词典(.cdt)。
 7. 数据库片段(.cvdb)传入DBPack，整合生成歌手数据库(.cdb)。
 [调试]
 a. 数据库片段(.cvdb)传入C2Wav，生成带有拆帧标记的波形(.wav)，从而进行检查工作。
@@ -11,9 +11,9 @@ a. 数据库片段(.cvdb)传入C2Wav，生成带有拆帧标记的波形(.wav)�
 1. DBMake loads database scheme(.cds) and generates spliting configuration(.sconf).
 2. The abridged spliting configuration(.sconf) is loaded into WSplit along with raw data(.wav). Spliting configuration with time intervals(.sconf) is generated.
 3. The time-shifted spliting configuration(.sconf) is sent to WSplit. Splited sample(.wsp) and sample configuration(.wconf) is generated.
-4. The frequency-modified sample configuration(.wconf) is sent to DBMake. Cybervoice Dictionary(.cdt) is generated.
-5. The sample configuration and splited sample are sent to Wpp. Splited sample(.wsp) is regenerated after preprocessing.
-6. Based on preprocessed splited sample(.wsp), the average formant information stored in database scheme(.cds), and sample configuration(.wconf), CMin generates database fragments(.cvdb).
+4. The sample configuration and splited sample are sent to Wpp. Splited sample(.wsp) is regenerated after preprocessing.
+5. Based on preprocessed splited sample(.wsp), the average formant information stored in database scheme(.cds), and frequency-modified sample configuration(.wconf), CMin generates database fragments(.cvdb).
+6. The sample configuration(.wconf) and database fragments(.cvdb) are sent to DBMake. Cybervoice Dictionary(.cdt) is generated.
 7. Database fragments(.cvdb) are sent to DBPack, which packs them into the final singer database(.cdb).
 [Debuging]
 a. Database fragments(.cvdb) are sent to C2Wav, waves with periodic marks(.wav) are generated. Further checking works can be done.
