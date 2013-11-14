@@ -132,7 +132,7 @@ int TemplateReadFunc(CDS)
     IfBufferIsNot("#CDS")
         return 0;
     RNext();
-    IfBufferIsNot("0.1")
+    IfBufferIsNot("0.11")
         return 0;
 
     RNext();
@@ -140,6 +140,12 @@ int TemplateReadFunc(CDS)
         return 0;
 
     TemplateReadFuncLoop
+
+    IfBufferIs("PitchStep")
+    {
+        RNext();
+        Dest -> PitchStep = CIntStr(& Buffer);
+    }
 
     IfBufferIs("SrcVList")
     {

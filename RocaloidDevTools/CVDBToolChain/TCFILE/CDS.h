@@ -38,6 +38,7 @@ AutoClass
 
 AutoClass
 {
+    int PitchStep;
     ArrayType_Define(SrcVList_Type, SrcVList);
     ArrayType_Define(String, SrcCList);
     ArrayType_Define(DestVList_Type, DestVList);

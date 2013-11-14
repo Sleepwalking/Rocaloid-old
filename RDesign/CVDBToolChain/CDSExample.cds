@@ -1,5 +1,6 @@
-#CDS 0.1
+#CDS 0.11
 CDS
+	PitchStep	3
 	SrcVList
 	#		Vowel	F1	F2	F3	S1	S2	S3	#
 		>	a	1200	1600	4100	1	0.15	0.5
@@ -39,8 +40,10 @@ CDS
 		>	ce-	e-
 		>	cu	u
 	End
+#
 	DestExpandList
-	#		Symbol	Src	F1	F2	F3	S1	S2	S3	#
+			Symbol	Src	F1	F2	F3	S1	S2	S3	
 	End
+#
 End
 
