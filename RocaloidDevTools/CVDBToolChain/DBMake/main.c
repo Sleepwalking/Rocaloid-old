@@ -3,7 +3,7 @@
 #include "Routines.h"
 
 /*
-    dbmake [dir] -config|-gsconf|-grecdict|-testsplit|-split|-prep|-gcvdb|-gcdt|-gcdb|-dbg-wav
+    DBMake [dir] [-config | -gsconf | -grecdict | -testsplit | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]
 */
 
 rFunc Operation;
@@ -52,6 +52,13 @@ int main(int argc, char** argv)
             }else
                 GotDir = 1;
         }
+    }
+
+    if(! GotOperation || ! GotDir)
+    {
+        printf("Rocaloid DBMake 0.1\n");
+        printf("DBMake [dir] [-config | -gsconf | -grecdict | -testsplit | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
+        return 0;
     }
 
     String_Copy(& Dir_BIN, & Dir);
