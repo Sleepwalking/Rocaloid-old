@@ -2,7 +2,8 @@
 #define SCANNER_H
 
 #include "../../../RUtil/RUtil.h"
+#include "../TCFILE/SCONF.h"
 
-extern int Scan();
+extern int Scan(SCONF* Dest, String* Raw);
 
 #endif
