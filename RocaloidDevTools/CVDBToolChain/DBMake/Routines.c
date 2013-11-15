@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
 #include "../TCFILE/CDS.h"
 #include "../TCFILE/SCONF.h"
+#include "../TCFILE/WCONF.h"
 #include "../../../RUtil/IO/FileStream.h"
 
 String Dir;
@@ -145,5 +148,69 @@ int GenRecDictionary()
     FileStream_Dtor(& Writer);
     String_Dtor(& Path);
     SCONF_Dtor(& Split);
+    return 1;
+}
+
+int Scan()
+{
+    chdir(String_GetChars(& Dir));
+    if(fork() == 0)
+    {
+        execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav", "-conf", "./Split.sconf", "-scan", (char*)0);
+        exit(0);
+    }else
+        wait(0);
+    return 1;
+}
+
+int Split()
+{
+    chdir(String_GetChars(& Dir));
+    if(fork() == 0)
+    {
+        execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav", "-conf", "./Split.sconf", "-split", "./Frag/", "-wconf", "./Fragments.wconf", (char*)0);
+        exit(0);
+    }else
+        wait(0);
+    return 1;
+}
+
+int Preprocess()
+{
+    chdir(String_GetChars(& Dir));
+    WCONF Frag;
+    String File;
+    String_FromChars(Path, "./Fragments.wconf");
+    String_Ctor(& File);
+    WCONF_Ctor(& Frag);
+    WCONFReader_Open(& Path);
+    WCONF_Read(& Frag);
+    WCONFReader_Close();
+
+    String Tmp;
+    String_Ctor(& Tmp);
+    int i;
+    for(i = 0; i <= Frag.SampleList_Index; i ++)
+    {
+        String_SetChars(& File, "./Frag/");
+        if(! String_EqualChars(& Frag.SampleList[i].Consonant, "/"))
+            String_Join(& File, & Frag.SampleList[i].Consonant);
+        String_Join(& File, & Frag.SampleList[i].Vowel);
+        CStrInt(& Tmp, Frag.SampleList[i].Num);
+        String_Join(& File, & Tmp);
+        String_JoinChars(& File, ".wsp");
+
+        CStrFloat(& Tmp, Frag.AverageMagnitude);
+        if(fork() == 0)
+        {
+            execl("./Bin/Wpp", "Wpp", String_GetChars(& File), "-normalize", String_GetChars(& Tmp), "-balance", (char*)0);
+            exit(0);
+        }else
+            wait(0);
+    }
+    String_Dtor(& Tmp);
+    String_Dtor(& Path);
+    String_Dtor(& File);
+    WCONF_Dtor(& Frag);
     return 1;
 }

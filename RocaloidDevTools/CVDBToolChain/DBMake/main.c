@@ -3,7 +3,7 @@
 #include "Routines.h"
 
 /*
-    DBMake [dir] [-config | -gsconf | -grecdict | -testsplit | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]
+    DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]
 */
 
 rFunc Operation;
@@ -35,6 +35,19 @@ int main(int argc, char** argv)
             }else if(String_EqualChars(& Arg, "-grecdict"))
             {
                 Operation = GenRecDictionary;
+            }else if(String_EqualChars(& Arg, "-scan"))
+            {
+                Operation = Scan;
+            }else if(String_EqualChars(& Arg, "-split"))
+            {
+                Operation = Split;
+            }else if(String_EqualChars(& Arg, "-prep"))
+            {
+                Operation = Preprocess;
+            }else
+            {
+                printf("Error: Invalid parameter.\n");
+                return 1;
             }
             if(GotOperation)
             {
@@ -57,7 +70,7 @@ int main(int argc, char** argv)
     if(! GotOperation || ! GotDir)
     {
         printf("Rocaloid DBMake 0.1\n");
-        printf("DBMake [dir] [-config | -gsconf | -grecdict | -testsplit | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
+        printf("DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
         return 0;
     }
 

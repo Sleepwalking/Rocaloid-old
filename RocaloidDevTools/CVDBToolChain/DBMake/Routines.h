@@ -15,6 +15,8 @@ extern String Dir_DEBUG;
 extern int Config();
 extern int GenSCONF();
 extern int GenRecDictionary();
-
+extern int Scan();
+extern int Split();
+extern int Preprocess();
 
 #endif
