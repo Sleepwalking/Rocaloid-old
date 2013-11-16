@@ -10,17 +10,20 @@
 #include "RFILE3/CVS3/CVS3.h"
 #include "RFILE3/CVS3/CVSRDLReader.h"
 #include "Debug/ALblLog.h"
+#include <unistd.h>
 
 //#include "CVEDSP/DFT/SplitRadixGen.h"
 //#include "CVEDSP/DFT/SplitRadix.h"
 
-#define CDT_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt"
+#define CDT_PATH "/tmp/a/Dict.cdt"
+//#define CDT_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt"
 #define CVS_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs"
 #define AUP_PATH "/tmp/cvedebug.txt"
 #define WAV_PATH "/tmp/a.wav"
 
 int main(void)
 {
+    chdir("/tmp/a");
     GenerateHanning(Hanning2048, 2048);
     GenerateHanning(Hanning1024, 1024);
     Boost_FloatAdd(Hanning2048, Hanning2048, 0.001, 2048);
@@ -64,7 +67,7 @@ int main(void)
     int count = 0;
     Ret2.PSOLAFrameHopSize = 0;
 
-    ALblLog_Disable();
+    //ALblLog_Disable();
     float t;
     for(t = 0; t < 2.4;)
     {
@@ -82,8 +85,8 @@ int main(void)
         count += Ret.PSOLAFrameHopSize;
         Ret2 = Ret;
         t = (float)count / 44100;
-        //ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
-        //ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
+        ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
+        ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
         ALblLog_SetTime(t);
     }
     PSOLAFrame_Dtor(& POut);

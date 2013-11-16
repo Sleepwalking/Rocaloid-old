@@ -4,6 +4,7 @@ CVS
 		Syllable
 			TransQ 5
 			TransPhoneList	a	i	a	i	o
+		#	TransPhoneList	a	i	a	i	o #
 			TransTickList	0	0.4	0.9	1.8	2.4
 			TransRatioList
 				>	0.25	0.3

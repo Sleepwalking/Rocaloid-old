@@ -55,7 +55,7 @@ void CSynth_Reset(CSynth* Dest)
     if(Dest -> Data.Header.PhoneType == 'V')
     {
         //Vowels should start after VOT
-        Dest -> PlayIndex = Dest -> Data.Header.VOI;
+        Dest -> PlayIndex = Dest -> Data.Header.VOI + 10;
         Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
         Dest -> FPlayIndex = Dest -> PlayIndex;
         ALblLog_Print("Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
@@ -132,13 +132,13 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
         Ret.PSOLAFrameHopSize = 512;//(DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex]);
         Ret.BeforeVOT = 1;
         DPlayPos += Ret.PSOLAFrameHopSize / Dest -> ConsonantRatio;
-        ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        //ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         CSynth_UpdateIndex(Dest);
     }else
     {
         //In Cycle
         Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex];
-        ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        //ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         Ret.BeforeVOT = 0;
         Dest -> FPlayIndex += 1.0f / Dest -> VowelRatio;
     }

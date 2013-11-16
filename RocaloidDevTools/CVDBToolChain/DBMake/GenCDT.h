@@ -83,6 +83,25 @@ int GenCDT()
         Name.Data_Index --;
         String_Copy(& DestFreqEntry -> FPhone, & Name);
         DestFreqEntry -> F0 = Frag.SampleList[i].F0;
+
+        //FormantLayerMap
+        //if(i == 0 || (! String_Equal(& Frag.SampleList[i].Consonant, & Frag.SampleList[i - 1].Consonant))
+        //          || (! String_Equal(& Frag.SampleList[i].Vowel    , & Frag.SampleList[i - 1].Vowel    )))
+        {
+            ArrayType_PushNull(FormantLayerEntry, Output.CDTMapping.FormantLayerMap);
+            FormantLayerEntry* DestFormantEntry =
+                    Output.CDTMapping.FormantLayerMap + Output.CDTMapping.FormantLayerMap_Index;
+            FormantLayerEntry_Ctor(DestFormantEntry);
+            String_Copy(& DestFormantEntry -> Phone , & Name);
+            String_Copy(& DestFormantEntry -> FPhone, & Name);
+            DestFormantEntry -> F0 = Frag.SampleList[i].F0;
+            DestFormantEntry -> F1 = Scheme.SrcVList[SrcVIndex].F1;
+            DestFormantEntry -> F2 = Scheme.SrcVList[SrcVIndex].F2;
+            DestFormantEntry -> F3 = Scheme.SrcVList[SrcVIndex].F3;
+            DestFormantEntry -> S1 = Scheme.SrcVList[SrcVIndex].S1;
+            DestFormantEntry -> S2 = Scheme.SrcVList[SrcVIndex].S2;
+            DestFormantEntry -> S3 = Scheme.SrcVList[SrcVIndex].S3;
+        }
     }
     CVDB3_Dtor(& DFrag);
     String_Dtor(& File);

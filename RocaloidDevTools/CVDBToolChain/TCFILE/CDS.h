@@ -43,8 +43,8 @@ AutoClass
     float VowelLen;
     ArrayType_Define(SrcVList_Type, SrcVList);
     ArrayType_Define(String, SrcCList);
-    ArrayType_Define(DestVList_Type, DestVList);
-    ArrayType_Define(DestCList_Type, DestCList);
+    ArrayType_Define(DestVList_Type, DestVList); //Disabled
+    ArrayType_Define(DestCList_Type, DestCList); //Disabled
 } EndClass(CDS);
 
 extern int CDSReader_Open(String* Src);

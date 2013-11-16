@@ -169,6 +169,8 @@ int TemplateReadFunc(CDS)
         TemplateReadFuncEmbededDynamicList(String, Dest -> SrcCList);
     }
 
+    //Disabled
+    /*
     IfBufferIs("DestVList")
     {
         TemplateReadFuncDynamicList(DestVList_Type, Dest -> DestVList);
@@ -178,6 +180,6 @@ int TemplateReadFunc(CDS)
     {
         TemplateReadFuncDynamicList(DestCList_Type, Dest -> DestCList);
     }
-
+    */
     TemplateReadFuncEnd
 }
