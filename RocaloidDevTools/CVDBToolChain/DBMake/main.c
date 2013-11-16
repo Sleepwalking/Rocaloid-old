@@ -44,6 +44,15 @@ int main(int argc, char** argv)
             }else if(String_EqualChars(& Arg, "-prep"))
             {
                 Operation = Preprocess;
+            }else if(String_EqualChars(& Arg, "-gcvdb"))
+            {
+                Operation = GenCVDB;
+            }else if(String_EqualChars(& Arg, "-gcdt"))
+            {
+                Operation = GenCDT;
+            }else if(String_EqualChars(& Arg, "-dbg-wav"))
+            {
+                Operation = DebugWav;
             }else
             {
                 printf("Error: Invalid parameter.\n");

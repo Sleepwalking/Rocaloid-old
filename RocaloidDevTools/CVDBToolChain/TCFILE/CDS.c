@@ -147,6 +147,18 @@ int TemplateReadFunc(CDS)
         Dest -> PitchStep = CIntStr(& Buffer);
     }
 
+    IfBufferIs("DiphoneLen")
+    {
+        RNext();
+        Dest -> DiphoneLen = CFloatStr(& Buffer);
+    }
+
+    IfBufferIs("VowelLen")
+    {
+        RNext();
+        Dest -> VowelLen = CFloatStr(& Buffer);
+    }
+
     IfBufferIs("SrcVList")
     {
         TemplateReadFuncDynamicList(SrcVList_Type, Dest -> SrcVList);

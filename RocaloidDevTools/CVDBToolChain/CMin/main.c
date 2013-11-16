@@ -16,9 +16,7 @@
 
 #include "RFILE3/CVDB3/CVDB3IO.h"
 
-#include "../CSPR.h"
-
-//$ CMin FileName [-C / -V] [-F0] [-F1] [-F2] [-F3] [-L]
+//$ CMin FileName [-C / -V] [-F0] [-F1] [-F2] [-F3] [-L] [-o OutputDir]
 
 void GetFileName(String* Dest, String* Path)
 {
@@ -61,9 +59,11 @@ int Arg_F3Avaliable = 0;
 float Arg_F3 = 0;
 int Arg_CVAvaliable = 0;
 int Arg_C = 1;
+int Arg_NextOutput = 0;
 int main(int ArgQ, char** ArgList)
 {
     int i;
+    String_FromChars(OutputPath, ".");
     String_FromChars(Path, ArgList[1]);
     ArrayType_Ctor(String, ArgStrList);
     for(i = 0; i < ArgQ; i ++)
@@ -71,9 +71,10 @@ int main(int ArgQ, char** ArgList)
         ArrayType_PushNull(String, ArgStrList);
         String_Ctor(ArgStrList + i);
         String_SetChars(ArgStrList + i, ArgList[i]);
-        UpperCase(ArgStrList + i, ArgStrList +i);
+        if(String_GetChar(ArgStrList + i, 0) == '-')
+            UpperCase(ArgStrList + i, ArgStrList +i);
     }
-    for(i = 2; i < ArgQ; i ++)
+    for(i = 1; i < ArgQ; i ++)
     {
         if(String_EqualChars(ArgStrList + i, "-L"))
         {
@@ -108,6 +109,18 @@ int main(int ArgQ, char** ArgList)
         {
             Arg_CVAvaliable = 1;
             Arg_C = 0;
+        }else if(String_EqualChars(ArgStrList + i, "-O"))
+        {
+            Arg_NextOutput = 1;
+        }else if(Arg_NextOutput == 1)
+        {
+            if(OutputPath.Data_Index > 0)
+            {
+                printf("Error: Multiple output directories specified.\n");
+                return 1;
+            }
+            String_Copy(& OutputPath, ArgStrList + i);
+            Arg_NextOutput = 0;
         }
     }
 
@@ -125,11 +138,11 @@ int main(int ArgQ, char** ArgList)
     int32_t* Pulses = (int32_t*)malloc(4 * 10000);
     CVDB3 Output;
 
-    CSPR CNet;
-    CSPR_Ctor(& CNet);
-    String_FromChars(CSPRPath, "/tmp/x.cspr");
-    CSPR_Load(& CNet, & CSPRPath);
-    String_Dtor(& CSPRPath);
+    //CSPR CNet;
+    //CSPR_Ctor(& CNet);
+    //String_FromChars(CSPRPath, "/tmp/x.cspr");
+    //CSPR_Load(& CNet, & CSPRPath);
+    //String_Dtor(& CSPRPath);
 
     WaveLen = LoadWaveAll(Wave, & Path);
     printf("Length: %d samples, %fs.\n", WaveLen, (float)WaveLen / SampleRate);
@@ -230,11 +243,14 @@ int main(int ArgQ, char** ArgList)
     free(Spectrum);
     free(Formant);
     String_JoinChars(& SymbolName, ".cvdb");
-    CVDB3_Write(& SymbolName, & Output);
+    String_JoinChars(& OutputPath, "/");
+    String_Join(& OutputPath, & SymbolName);
+    CVDB3_Write(& OutputPath, & Output);
 
     printf("Saved as %s.\n", String_GetChars(& SymbolName));
 
-    CSPR_Dtor(& CNet);
+    //CSPR_Dtor(& CNet);
+    String_Dtor(& OutputPath);
     CVDB3_Dtor(& Output);
     free(Pulses);
     free(Wave);

@@ -16,7 +16,11 @@ HEADERS += \
     ../TCFILE/WCONF.h \
     ../TCFILE/SCONF.h \
     ../TCFILE/CDS.h \
-    ../../../RocaloidEngine/RFILE3/RDL.h
+    ../../../RocaloidEngine/RFILE3/RDL.h \
+    GenCDT.h \
+    ../../../RocaloidEngine/RFILE3/CDT3/CDT3Writer.h \
+    ../../../RocaloidEngine/RFILE3/CDT3/CDT3.h \
+    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.h
 
 SOURCES += \
     ../../../RUtil/IO/Wave.c \
@@ -30,4 +34,7 @@ SOURCES += \
     ../TCFILE/WCONF.c \
     ../TCFILE/SCONF.c \
     ../TCFILE/CDS.c \
-    ../../../RocaloidEngine/RFILE3/RDL.c
+    ../../../RocaloidEngine/RFILE3/RDL.c \
+    ../../../RocaloidEngine/RFILE3/CDT3/CDT3Writer.c \
+    ../../../RocaloidEngine/RFILE3/CDT3/CDT3.c \
+    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.c

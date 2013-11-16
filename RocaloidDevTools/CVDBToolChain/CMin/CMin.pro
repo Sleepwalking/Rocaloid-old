@@ -11,18 +11,7 @@ SOURCES += main.c \
     RUtil/IO/FileStream.c \
     RUtil/Misc/Converter.c \
     RUtil/Structure/String.c \
-    RFILE3/CVDB3/CVDB3IO.c \
-    ../CSPR.c \
-    CVEANN/Rand.c \
-    CVEANN/Activator.c \
-    CVEANN/Network/SOFM.c \
-    CVEANN/Network/LVQ.c \
-    CVEANN/Network/FeedForwardMomentum.c \
-    CVEANN/Network/FeedForward.c \
-    CVEANN/Trainer/Trainer_SOFM.c \
-    CVEANN/Trainer/Trainer_LVQ.c \
-    CVEANN/Trainer/Trainer_FeedForward.c \
-    CVEANN/Trainer/Trainer_BPMomentum.c
+    RFILE3/CVDB3/CVDB3IO.c
 
 HEADERS += \
     CVEDSP/Interpolation.h \
@@ -65,18 +54,7 @@ HEADERS += \
     RUtil/Misc/Converter.h \
     RUtil/Structure/String.h \
     RUtil/Structure/Array.h \
-    RFILE3/CVDB3/CVDB3IO.h \
-    ../CSPR.h \
-    CVEANN/Rand.h \
-    CVEANN/Activator.h \
-    CVEANN/Network/SOFM.h \
-    CVEANN/Network/LVQ.h \
-    CVEANN/Network/FeedForwardMomentum.h \
-    CVEANN/Network/FeedForward.h \
-    CVEANN/Trainer/Trainer_SOFM.h \
-    CVEANN/Trainer/Trainer_LVQ.h \
-    CVEANN/Trainer/Trainer_FeedForward.h \
-    CVEANN/Trainer/Trainer_BPMomentum.h
+    RFILE3/CVDB3/CVDB3IO.h
 
 
 unix:!macx: LIBS += -L$$PWD/CVEDSP/ -lCVEDSP

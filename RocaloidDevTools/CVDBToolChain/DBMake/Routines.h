@@ -18,5 +18,8 @@ extern int GenRecDictionary();
 extern int Scan();
 extern int Split();
 extern int Preprocess();
+extern int GenCVDB();
+extern int GenCDT();
+extern int DebugWav();
 
 #endif

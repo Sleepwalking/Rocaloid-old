@@ -20,11 +20,13 @@ void GetFileName(String* Dest, String* Path)
     Mid(Dest, Path, Start + 1, End - Start - 1);
 }
 
+int Arg_NextOutput = 0;
 int Arg_ExtractOnly = 0;
 int Arg_Inspect = 0;
 int main(int ArgQ, char** ArgList)
 {
     uint32_t i;
+    String_FromChars(OutputPath, ".");
     String_FromChars(Path, ArgList[1]);
     ArrayType_Ctor(String, ArgStrList);
     for(i = 0; i < (uint32_t)ArgQ; i ++)
@@ -32,7 +34,8 @@ int main(int ArgQ, char** ArgList)
         ArrayType_PushNull(String, ArgStrList);
         String_Ctor(ArgStrList + i);
         String_SetChars(ArgStrList + i, ArgList[i]);
-        UpperCase(ArgStrList + i, ArgStrList +i);
+        if(String_GetChar(ArgStrList + i, 0) == '-')
+            UpperCase(ArgStrList + i, ArgStrList +i);
     }
     for(i = 2; i < (uint32_t)ArgQ; i ++)
     {
@@ -42,6 +45,18 @@ int main(int ArgQ, char** ArgList)
         }else if(String_EqualChars(ArgStrList + i, "-I"))
         {
             Arg_Inspect = 1;
+        }else if(String_EqualChars(ArgStrList + i, "-O"))
+        {
+            Arg_NextOutput = 1;
+        }else if(Arg_NextOutput)
+        {
+            Arg_NextOutput = 0;
+            if(OutputPath.Data_Index > 0)
+            {
+                printf("Error: Multiple output path specified.\n");
+                return 1;
+            }
+            String_Copy(& OutputPath, ArgStrList + i);
         }
     }
 
@@ -54,9 +69,11 @@ int main(int ArgQ, char** ArgList)
     CVDB3_Load(& Input, & Path);
 
     if(! Arg_ExtractOnly)
+    {
         for(i = 0; i < Input.Header.PulseNum; i ++)
             Input.Wave[Input.PulseOffsets[i]] = 1;
-
+        Input.Wave[Input.PulseOffsets[Input.Header.VOI]] = - 1;
+    }
     if(Arg_Inspect)
     {
         printf("Length: %d samples, %fs, %d pulses.\n", Input.Header.WaveSize, (float)Input.Header.WaveSize / 44100, Input.Header.PulseNum);
@@ -72,11 +89,15 @@ int main(int ArgQ, char** ArgList)
     }
 
     String_JoinChars(& SymbolName, ".wav");
-    WriteWaveAll(& SymbolName, Input.Wave, Input.Header.WaveSize, 44100);
+    String_JoinChars(& OutputPath, "/");
+    String_Join(& OutputPath, & SymbolName);
+    WriteWaveAll(& OutputPath, Input.Wave, Input.Header.WaveSize, 44100);
 
+    printf("Finished.\n");
     CVDB3_Dtor(& Input);
     String_Dtor(& SymbolName);
     String_Dtor(& Path);
+    String_Dtor(& OutputPath);
     ArrayType_ObjDtor(String, ArgStrList);
     ArrayType_Dtor(String, ArgStrList);
     return 0;
