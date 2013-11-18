@@ -6,7 +6,7 @@
 
 //Consecutive Synthesizer
 
-#include "../RUtil/RUtil.h"
+#include "../../RUtil/RUtil.h"
 #include "../RFILE3/CVDB3/CVDB3IO.h"
 #include "../DSPInclude.h"
 

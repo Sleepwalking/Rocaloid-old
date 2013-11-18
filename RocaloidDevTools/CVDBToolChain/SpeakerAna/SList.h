@@ -1,8 +1,8 @@
 #ifndef SLIST_H
 #define SLIST_H
 
-#include "RUtil/RUtil.h"
-#include "RUtil/Structure/String.h"
+#include "../../../RUtil/RUtil.h"
+#include "../../../RUtil/Structure/String.h"
 
 AutoClass
 {

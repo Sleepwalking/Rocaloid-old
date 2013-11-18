@@ -1,8 +1,8 @@
 #ifndef RDL_H
 #define RDL_H
 
-#include "RUtil/Structure/String.h"
-#include "RUtil/IO/StringStream.h"
+#include "../../RUtil/Structure/String.h"
+#include "../../RUtil/IO/StringStream.h"
 #include <stdint.h>
 
 extern void RDL_ReadIgnoreComment(String* Dest, StringStream* Src);

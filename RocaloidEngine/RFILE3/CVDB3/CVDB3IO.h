@@ -1,8 +1,8 @@
 #ifndef CVDB3IO_H
 #define CVDB3IO_H
 
-#include "../RUtil/IO/FileUtil.h"
-#include "../RUtil/RUtil.h"
+#include "../../../RUtil/IO/FileUtil.h"
+#include "../../../RUtil/RUtil.h"
 #include <stdint.h>
 
 typedef struct

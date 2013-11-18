@@ -2,7 +2,7 @@
 #define PITCHMIXER_H
 
 #include "../DSPInclude.h"
-#include "../RUtil/RUtil.h"
+#include "../../RUtil/RUtil.h"
 #include "../DSPEx/FDFrame.h"
 #include "../CVEGlobal.h"
 #include "FSynth.h"

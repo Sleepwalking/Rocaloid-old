@@ -1,9 +1,9 @@
 #ifndef CSPR_H
 #define CSPR_H
 
-#include "CMin/RUtil/RUtil.h"
-#include "CMin/CVEDSP/Algorithm/Formant.h"
-#include "CMin/CVEANN/Network/FeedForward.h"
+#include "../../RUtil/RUtil.h"
+#include "../../CVEDSP/Algorithm/Formant.h"
+#include "../../CVEANN/Network/FeedForward.h"
 #include <stdint.h>
 
 AutoClass

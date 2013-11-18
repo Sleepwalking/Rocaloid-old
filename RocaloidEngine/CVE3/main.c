@@ -6,9 +6,9 @@
 #include "Synthesizer/FSynth.h"
 #include "Synthesizer/PitchMixer.h"
 #include "Synthesizer/SpeechMixer.h"
-#include "CVEDSP/Plot.h"
-#include "RFILE3/CVS3/CVS3.h"
-#include "RFILE3/CVS3/CVSRDLReader.h"
+#include "../../CVEDSP/Plot.h"
+#include "../RFILE3/CVS3/CVS3.h"
+#include "../RFILE3/CVS3/CVSRDLReader.h"
 #include "Debug/ALblLog.h"
 #include <unistd.h>
 

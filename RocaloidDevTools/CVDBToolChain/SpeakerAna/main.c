@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include "SList.h"
 #include "TData.h"
-#include "RUtil/RUtil.h"
+#include "../../../RUtil/RUtil.h"
 #include "../CSPR.h"
 
-#include "CVEANN/Network/SOFM.h"
-#include "CVEANN/Trainer/Trainer_SOFM.h"
-#include "CVEANN/Trainer/Trainer_FeedForward.h"
-#include "CVEANN/Network/FeedForwardMomentum.h"
-#include "CVEDSP/IntrinUtil/Calculation.h"
-#include "CVEDSP/IntrinUtil/FloatArray.h"
-#include "CVEDSP/DSPBase/Filter.h"
+#include "../../../CVEANN/Network/SOFM.h"
+#include "../../../CVEANN/Trainer/Trainer_SOFM.h"
+#include "../../../CVEANN/Trainer/Trainer_FeedForward.h"
+#include "../../../CVEANN/Network/FeedForwardMomentum.h"
+#include "../../../CVEDSP/IntrinUtil/Calculation.h"
+#include "../../../CVEDSP/IntrinUtil/FloatArray.h"
+#include "../../../CVEDSP/DSPBase/Filter.h"
 
 float Distance(float X1, float Y1, float X2, float Y2)
 {

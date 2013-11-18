@@ -1,7 +1,7 @@
 #ifndef CVS3_H
 #define CVS3_H
 
-#include "../RUtil/RUtil.h"
+#include "../../../RUtil/RUtil.h"
 
 AutoClass
 {

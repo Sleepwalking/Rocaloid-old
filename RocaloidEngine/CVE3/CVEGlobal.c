@@ -1,6 +1,6 @@
 #include "CVEGlobal.h"
-#include "RFILE3/CDT3/CDT3Reader.h"
-#include "CVEDSP/DSPBase/Window.h"
+#include "../RFILE3/CDT3/CDT3Reader.h"
+#include "../../CVEDSP/DSPBase/Window.h"
 
 CDT3 CGDict;
 CDTMappingQuerySpace CGQuerySpace;

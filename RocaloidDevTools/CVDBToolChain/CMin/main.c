@@ -3,18 +3,18 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "RUtil/RUtil.h"
-#include "RUtil/IO/FileUtil.h"
-#include "CVEDSP/DSPBase/Filter.h"
-#include "CVEDSP/DSPBase/Spectrum.h"
-#include "CVEDSP/DSPBase/ControlPointFilter.h"
-#include "CVEDSP/DSPBase/LPC.h"
-#include "CVEDSP/Algorithm/BaseFreq.h"
-#include "CVEDSP/Algorithm/PSOLA.h"
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/IntrinUtil/Calculation.h"
+#include "../../../RUtil/RUtil.h"
+#include "../../../RUtil/IO/FileUtil.h"
+#include "../../../CVEDSP/DSPBase/Filter.h"
+#include "../../../CVEDSP/DSPBase/Spectrum.h"
+#include "../../../CVEDSP/DSPBase/ControlPointFilter.h"
+#include "../../../CVEDSP/DSPBase/LPC.h"
+#include "../../../CVEDSP/Algorithm/BaseFreq.h"
+#include "../../../CVEDSP/Algorithm/PSOLA.h"
+#include "../../../CVEDSP/Algorithm/Formant.h"
+#include "../../../CVEDSP/IntrinUtil/Calculation.h"
 
-#include "RFILE3/CVDB3/CVDB3IO.h"
+#include "../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.h"
 
 //$ CMin FileName [-C / -V] [-F0] [-F1] [-F2] [-F3] [-L] [-o OutputDir]
 

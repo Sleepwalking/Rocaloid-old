@@ -1,7 +1,7 @@
 #include "SList.h"
-#include "RUtil/IO/FileUtil.h"
-#include "RUtil/IO/StringStream.h"
-#include "RFILE3/RDL.h"
+#include "../../../RUtil/IO/FileUtil.h"
+#include "../../../RUtil/IO/StringStream.h"
+#include "../../../RocaloidEngine/RFILE3/RDL.h"
 
 _Constructor_ (SClass)
 {

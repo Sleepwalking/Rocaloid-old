@@ -3,7 +3,7 @@
 
 //Linear Combination - Formant Envelope Components Shift and OverLap Add
 
-#include "../RUtil/RUtil.h"
+#include "../../RUtil/RUtil.h"
 #include "../CVEGlobal.h"
 #include "../DSPInclude.h"
 

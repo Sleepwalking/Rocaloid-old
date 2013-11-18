@@ -3,7 +3,7 @@
 
 //Tone(Freq) Synthesizer
 
-#include "../RUtil/RUtil.h"
+#include "../../RUtil/RUtil.h"
 #include "../DSPInclude.h"
 #include "../DSPEx/FDFrame.h"
 #include "CSynth.h"

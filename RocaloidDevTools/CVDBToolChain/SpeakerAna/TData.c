@@ -1,9 +1,9 @@
 #include "TData.h"
-#include "RUtil/IO/FileUtil.h"
-#include "CVEDSP/Algorithm/Formant.h"
-#include "CVEDSP/DSPBase/LPC.h"
-#include "CVEDSP/Algorithm/BaseFreq.h"
-#include "CVEDSP/DSPBase/Spectrum.h"
+#include "../../../RUtil/IO/FileUtil.h"
+#include "../../../CVEDSP/Algorithm/Formant.h"
+#include "../../../CVEDSP/DSPBase/LPC.h"
+#include "../../../CVEDSP/Algorithm/BaseFreq.h"
+#include "../../../CVEDSP/DSPBase/Spectrum.h"
 
 _Constructor_ (Wave)
 {
