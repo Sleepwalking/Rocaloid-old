@@ -162,6 +162,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     if(Ret.PSOLAFrameHopSize > 512)
         Ret.PSOLAFrameHopSize = 512;
 
+
     PSOLAFrame_Dtor(& BFWave);
     PSOLAFrame_Dtor(& TempWave);
     return Ret;

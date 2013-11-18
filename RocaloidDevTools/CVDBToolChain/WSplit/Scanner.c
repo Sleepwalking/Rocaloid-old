@@ -24,6 +24,7 @@ int Scan(SCONF* Dest, String* Raw)
 
     int Onset = 0;
     int Keep = 0;
+    int OffsetTime = 0;
     SetSampleRate(44100);
     printf("Scanning...\n");
     while(Count <= Dest -> TickList_Index && Position + Step < WaveSize)
@@ -42,8 +43,11 @@ int Scan(SCONF* Dest, String* Raw)
                 Keep = 0;
                 if(Count == 0)
                 {
-                    Dest -> TickList[Count].Time = (float)Position / 44100;
-                    Count ++;
+                    Dest -> TickList[Count ++].Time = (float)Position / 44100;
+                }else
+                {
+                    printf(".");
+                    Dest -> TickList[Count ++].Time = (float)(Position + OffsetTime) / 44100 / 2;
                 }
             }
         }else
@@ -55,9 +59,12 @@ int Scan(SCONF* Dest, String* Raw)
             {
                 Onset = 0;
                 Keep = 0;
-                printf(".");
-                Dest -> TickList[Count].Time = (float)Position / 44100;
-                Count ++;
+                OffsetTime = Position;
+                if(Count == Dest -> TickList_Index)
+                {
+                    printf(".");
+                    Dest -> TickList[Count ++].Time = (float)(Position + OffsetTime) / 44100 / 2;
+                }
             }
         }
         Position += Step;

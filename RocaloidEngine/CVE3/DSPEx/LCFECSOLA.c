@@ -14,6 +14,8 @@ float S2[2048];
 float S3[2048];
 float S[2048];
 
+float W[1024];
+
 _Constructor_ (LCFECSOLAFilter)
 {
     LCFECSOLAFilter_CtorSize(Dest, 512);
@@ -79,21 +81,20 @@ void LCFECSOLAFilter_MoveWindow(float* Dest, float* Hanning, float Freq, float W
     Boost_FloatMul(Dest + LowIndex, Hanning, Weight, CopyLen);
 }
 
+int Debug = 0;
 void LCFECSOLAFilter_MoveSubEnv(float* Dest, float* Env, float DeltaFreq, float Weight, int DestLen)
 {
     int FIndex = FreqToIndex(DeltaFreq);
     int CopyLen = DestLen;
     float* Tmp = FloatMalloc(DestLen);
+    Boost_FloatMul(Tmp, Env, Weight, DestLen);
     if(FIndex < 0)
     {
-        CopyLen += FIndex;
-        FIndex = 0;
+        Boost_FloatAddArr(Dest, Dest, Tmp - FIndex, CopyLen + FIndex);
     }else
     {
-        CopyLen -= FIndex;
+        Boost_FloatAddArr(Dest + FIndex, Dest + FIndex, Tmp, CopyLen - FIndex);
     }
-    Boost_FloatMul(Tmp, Env, Weight, DestLen);
-    Boost_FloatAddArr(Dest + FIndex, Dest + FIndex, Tmp, CopyLen);
     free(Tmp);
 }
 
@@ -111,13 +112,7 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
 {
     Dest -> OrigState = *FState;
     int ResidualLength = FreqToIndex(LCFECSOLA_ResidualFreq);
-/*
-    float* S0 = FloatMalloc(Dest -> Length);
-    float* S1 = FloatMalloc(Dest -> Length);
-    float* S2 = FloatMalloc(Dest -> Length);
-    float* S3 = FloatMalloc(Dest -> Length);
-    float* S = FloatMalloc(Dest -> Length);
-*/
+
     Boost_FloatSet(S0, 0, Dest -> Length);
     Boost_FloatSet(S1, 0, Dest -> Length);
     Boost_FloatSet(S2, 0, Dest -> Length);
@@ -127,16 +122,16 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
     {
         DecayLength = Dest -> Length;
         LCFECSOLAFilter_GenerateDecay(Decay, DecayLength);
-        GenerateHanning(Filter0, FreqToIndex(600));
+        GenerateHanning(Filter0, FreqToIndex(1000));
         GenerateHanning(Filter1, FreqToIndex(1000));
-        GenerateHanning(Filter2, FreqToIndex(1500));
+        GenerateHanning(Filter2, FreqToIndex(1000));
         GenerateHanning(Filter3, FreqToIndex(2000));
     }
-    Boost_FloatDivArr(Src, Src, Decay, Dest -> Length);
+    Boost_FloatDivArr(W, Src, Decay, Dest -> Length);
 
-    LCFECSOLAFilter_MoveWindow(S0, Filter0, FState -> F0, FState -> S0, 600 , Dest -> Length);
+    LCFECSOLAFilter_MoveWindow(S0, Filter0, FState -> F0, FState -> S0, 1000 , Dest -> Length);
     LCFECSOLAFilter_MoveWindow(S1, Filter1, FState -> F1, FState -> S1, 1000, Dest -> Length);
-    LCFECSOLAFilter_MoveWindow(S2, Filter2, FState -> F2, FState -> S2, 1500, Dest -> Length);
+    LCFECSOLAFilter_MoveWindow(S2, Filter2, FState -> F2, FState -> S2, 1000, Dest -> Length);
     LCFECSOLAFilter_MoveWindow(S3, Filter3, FState -> F3, FState -> S3, 2000, Dest -> Length);
 
     Boost_FloatAdd(S0, S0, 0.03, ResidualLength);
@@ -155,17 +150,19 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
     Boost_FloatDivArr(S2, S2, S, ResidualLength);
     Boost_FloatDivArr(S3, S3, S, ResidualLength);
 
-    Boost_FloatMulArr(Dest -> F0Env, S0, Src, ResidualLength);
-    Boost_FloatMulArr(Dest -> F1Env, S1, Src, ResidualLength);
-    Boost_FloatMulArr(Dest -> F2Env, S2, Src, ResidualLength);
-    Boost_FloatMulArr(Dest -> F3Env, S3, Src, ResidualLength);
+    Boost_FloatMulArr(Dest -> F0Env, S0, W, ResidualLength);
+    Boost_FloatMulArr(Dest -> F1Env, S1, W, ResidualLength);
+    Boost_FloatMulArr(Dest -> F2Env, S2, W, ResidualLength);
+    Boost_FloatMulArr(Dest -> F3Env, S3, W, ResidualLength);
+
 
     Boost_FloatDiv(Dest -> F0Env, Dest -> F0Env, FState -> S0, ResidualLength);
     Boost_FloatDiv(Dest -> F1Env, Dest -> F1Env, FState -> S1, ResidualLength);
     Boost_FloatDiv(Dest -> F2Env, Dest -> F2Env, FState -> S2, ResidualLength);
     Boost_FloatDiv(Dest -> F3Env, Dest -> F3Env, FState -> S3, ResidualLength);
 
-    Boost_FloatCopy(Dest -> ResidualEnv, Src, Dest -> Length);
+    Boost_FloatCopy(Dest -> ResidualEnv, W, Dest -> Length);
+
 /*
     free(S0);
     free(S1);
@@ -179,6 +176,7 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
 #define FreqToIndex(x) ((x) * Src -> Length * 2 / SampleRate)
 void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FState)
 {
+
     int ResidualLength = FreqToIndex(LCFECSOLA_ResidualFreq);
     Boost_FloatCopy(Dest, Src -> ResidualEnv, Src -> Length);
     Boost_FloatSet(Dest, 0, ResidualLength);
@@ -187,4 +185,6 @@ void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FStat
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F2Env, FState -> F2 - Src -> OrigState.F2, FState -> S2, Src -> Length);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F3Env, FState -> F3 - Src -> OrigState.F3, FState -> S3, Src -> Length);
     Boost_FloatMulArr(Dest, Dest, Decay, Src -> Length);
+
+
 }
