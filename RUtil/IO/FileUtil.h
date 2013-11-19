@@ -4,6 +4,10 @@
 #include "../Structure/String.h"
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 extern int64_t GetFileLength(String* Path);
 
 extern int64_t LoadFileAll(void* Dest, String* Path);
@@ -13,4 +17,7 @@ extern int WriteFileAll(String* Path, void* Src, int64_t size);
 extern int LoadWaveAll(float* Dest, String* Path);
 extern int WriteWaveAll(String* Dest, float* Src, int Size, int SampleRate);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

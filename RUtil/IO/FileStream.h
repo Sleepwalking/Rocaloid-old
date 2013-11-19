@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef enum
 {
     READONLY = 0,
@@ -66,4 +70,7 @@ extern void FileStream_ReadAll(String* Dest, FileStream* Src);
 extern void FileStream_WriteStr(FileStream* Dest, String* Src);
 extern void FileStream_WriteLine(FileStream* Dest, String* Src);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

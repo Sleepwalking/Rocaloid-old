@@ -2,7 +2,7 @@ Rocaloid is a vocal synthesis system which aims at synthesizing songs with outst
 
 The Rocaloid Project not only contains a synthesizer, but also provides a set of tools from signal processing library to music score editor.
 
-* Language: C
+* Language: C(Engine), C++(Subsidiaries)
 * License : GPLv3
 * Platform: x86(with SSE instruction set)
 
@@ -41,6 +41,7 @@ Directorys
 		* CMin  : tool for generating `.cvdb`.
 		* C2Wav : `.cvdb` inspector.
 		* SpeakerAna: analyze speaker characteristics, generates `.cspr` for CMin. (Obsoleted)
+		* FormantMarker: spectrum visulizer used for fitting LCFECSOLA parameters. (Depends on Qt)
 		* TCFILE: toolchain IO support.
 	* GeneticOptimizer: an implemention of Genetic Algorithm for optimizing parameters (for certain algorithms used in Rocaloid).
 	* FormantTester: visualize spectrums for testing algorithms & evaluating the quality of FECSOLA. (Obsoleted)

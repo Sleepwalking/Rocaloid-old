@@ -142,8 +142,8 @@ void Right(String* Dest, const String* Src, int Count)
 void Left(String* Dest, const String* Src, int Count)
 {
     int i;
-    if(Count > Dest -> Data_Index + 1)
-        Count = Dest -> Data_Index + 1;
+    if(Count > Src -> Data_Index + 1)
+        Count = Src -> Data_Index + 1;
     if(Count < 0)
         Count = 0;
     String_AllocLength(Dest, Count);

@@ -3,6 +3,10 @@
 
 #include "../Structure/String.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef struct
 {
     char* BasePtr;
@@ -15,4 +19,7 @@ extern void StringStream_ReadWord(String* Dest, StringStream* Src);
 extern void StringStream_ReadLine(String* Dest, StringStream* Src);
 extern void StringStream_ReadAll(String* Dest, StringStream* Src);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

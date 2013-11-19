@@ -5,6 +5,10 @@
 #include "../Structure/String.h"
 #include "../Structure/Array.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef struct
 {
     //Required while writing
@@ -50,5 +54,9 @@ extern void PCMWaveFile_WriteAllFloat(PCMWaveFile* Dest, float* Src, int Size);
 extern void PCMWaveFile_WriteAllFloatStereo(PCMWaveFile* Dest, float* SrcL, float* SrcR, int Size);
 extern void PCMWaveFile_Write(PCMWaveFile* Dest, float Data);
 extern void PCMWaveFile_WriteStereo(PCMWaveFile* Dest, float DataL, float DataR);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -3,6 +3,10 @@
 #include "../Structure/String.h"
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 void CStrChars(String* Dest, const char* Src);
 void CStrBool(String* Dest, int Src);
 void CStrChar(String* Dest, char Src);
@@ -43,4 +47,7 @@ float CFloatChars(const char* Src);
 double CDoubleStr(String* Src);
 double CDoubleChars(const char* Src);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

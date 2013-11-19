@@ -3,8 +3,8 @@ CVS
 	SyllableList
 		Syllable
 			TransQ 5
-			TransPhoneList	ca	i	o	i	a
-			TransTickList	0	0.7	1.5	2.1	2.4
+			TransPhoneList	ca	o	a	i	o
+			TransTickList	0	0.7	1.1	1.6	2.4
 			TransRatioList
 				>	0.1	1
 			End

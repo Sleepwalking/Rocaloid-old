@@ -144,6 +144,14 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
     Boost_FloatAddArr(S, S, S1, ResidualLength);
     Boost_FloatAddArr(S, S, S2, ResidualLength);
     Boost_FloatAddArr(S, S, S3, ResidualLength);
+/*
+    if(Dest -> OrigState.F2 < 2000)
+    {
+        GNUPlot_PlotFloat(S, 120);
+        WaitForDraw(15000);
+        GNUPlot_PlotFloat(W, 120);
+        getchar();
+    }*/
 
     Boost_FloatDivArr(S0, S0, S, ResidualLength);
     Boost_FloatDivArr(S1, S1, S, ResidualLength);
@@ -181,11 +189,6 @@ void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FStat
     Boost_FloatCopy(Dest, Src -> ResidualEnv, Src -> Length);
     Boost_FloatSet(Dest, 0, ResidualLength);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F2Env, FState -> F2 - Src -> OrigState.F2, FState -> S2, Src -> Length);
-    if(Src -> OrigState.F2 < 3000 && FState -> F2 > 2100)
-    {
-        //GNUPlot_PlotFloat(Dest, 120);
-        //WaitForDraw(15000);
-    }
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F0Env, FState -> F0 - Src -> OrigState.F0, FState -> S0, Src -> Length);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F1Env, FState -> F1 - Src -> OrigState.F1, FState -> S1, Src -> Length);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F3Env, FState -> F3 - Src -> OrigState.F3, FState -> S3, Src -> Length);

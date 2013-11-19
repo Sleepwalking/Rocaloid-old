@@ -1,6 +1,10 @@
 #ifndef STRING_H
 #define STRING_H
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef struct
 {
     char* Data;
@@ -56,4 +60,7 @@ extern void Trim(String* Dest, const String* Src);
 extern void LTrim(String* Dest, const String* Src);
 extern void RTrim(String* Dest, const String* Src);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
