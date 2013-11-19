@@ -1,9 +1,11 @@
+#define COMPILE_EXEC_RUTIL
 #ifdef COMPILE_EXEC_RUTIL
 
 #include <stdio.h>
 #include <time.h>
 #include "Structure/Array.h"
 #include "Structure/String.h"
+#include "Structure/VariationList.h"
 #include "Misc/Converter.h"
 #include "IO/FileStream.h"
 #include "IO/FileUtil.h"
@@ -12,34 +14,20 @@
 
 int main(void)
 {
-    int t1, t2;
-    String test;
-    String_Ctor(&test);
-    t1 = clock();
+    VariationList testList;
+    VariationList_Ctor(& testList);
+    VariationList_AddPair(& testList, 1, 2.5);
+    VariationList_AddPair(& testList, 0.5, 2);
+    VariationList_AddPair(& testList, 2, 5);
+    VariationList_AddPair(& testList, 1.5, 10);
+    float i;
+    for(i = 0; i < 3; i += 0.1)
+    {
+        TransResult ret = VariationList_Query(& testList, i);
+        printf("%f, %f, index: %d, ratio: %f\n", i, ret.Weighted, ret.LowerIndex, ret.Ratio);
+    }
 
-    PCMWaveFile wave;
-    PCMWaveFile_Ctor(&wave);
-    String_SetChars(&test, "/tmp/sounds.wav");
-    int ret;
-    ret = PCMWaveFile_Open(&wave, &test);
-    printf("Open Status: %d\n", ret);
-
-    float* Data1 = malloc(4 * 44100 * 10);
-    float* Data2 = malloc(4 * 44100 * 10);
-    ret = PCMWaveFile_FetchAllFloatStereo(Data1, Data2, &wave);
-    printf("Size: %d\n", ret);
-
-    String_SetChars(&test, "/tmp/sound2.wav");
-
-    WriteWaveAll(&test, Data1, 10000, 48000);
-
-    PCMWaveFile_Dtor(&wave);
-    free(Data1);
-    free(Data2);
-
-    t2 = clock();
-    printf("Time: %d\n", t2 - t1);
-    String_Dtor(&test);
+    VariationList_Dtor(& testList);
     return 0;
 }
 

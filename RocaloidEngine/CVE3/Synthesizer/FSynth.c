@@ -1,5 +1,6 @@
 #include "FSynth.h"
 #include "../CVEDSP/DFT/FFT.h"
+#include "../CVEDSP/Algorithm/FECSOLA.h"
 #include "../CVEDSP/Algorithm/Formant.h"
 #include "../CVEDSP/Interpolation.h"
 #include "../CVEDSP/Plot.h"

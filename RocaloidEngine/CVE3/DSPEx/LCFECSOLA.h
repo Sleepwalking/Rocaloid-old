@@ -7,8 +7,6 @@
 #include "../CVEGlobal.h"
 #include "../DSPInclude.h"
 
-#define LCFECSOLA_ResidualFreq 5000
-
 #ifdef __cplusplus
 extern "C"{
 #endif

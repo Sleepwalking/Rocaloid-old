@@ -7,8 +7,6 @@
 #include "../Debug/ALblLog.h"
 
 #define CVSData (Dest -> OnSynth)
-#define SkipSynth 0
-#define SpeechMixer_FECSOLA
 
 _Constructor_ (SpeechMixer)
 {
@@ -129,26 +127,29 @@ void SpeechMixer_Reset(SpeechMixer* Dest)
 SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
 {
     SpeechMixerSendback Ret;
-    String* Phone1 = CVSData -> TransitionPhoneList + Dest -> SubSynth1Index;
-    String* Phone2 = CVSData -> TransitionPhoneList + Dest -> SubSynth2Index;
-    TransitionLayerQueryResult QRsut = Demapper_QueryTransitionLayer(Phone1, Phone2);
-    float MixRatio;
-    if(QRsut.Index < 0)
-        MixRatio = 1.0f;
-    else
-    {
-        MixRatio = CGDict.CDTMapping.TransitionLayerMap[QRsut.Index].Ratio;
-        if(QRsut.MatchRev)
-            MixRatio = 1.0f - MixRatio;
-    }
 
-    MixRatio = 0;
+    float MixRatio;
+    #if SpeechMixer_TransitionLayerEnabled == 1
+        String* Phone1 = CVSData -> TransitionPhoneList + Dest -> SubSynth1Index;
+        String* Phone2 = CVSData -> TransitionPhoneList + Dest -> SubSynth2Index;
+        TransitionLayerQueryResult QRsut = Demapper_QueryTransitionLayer(Phone1, Phone2);
+        if(QRsut.Index < 0)
+            MixRatio = 1.0f;
+        else
+        {
+            MixRatio = CGDict.CDTMapping.TransitionLayerMap[QRsut.Index].Ratio;
+            if(QRsut.MatchRev)
+                MixRatio = 1.0f - MixRatio;
+        }
+    #else
+        MixRatio = 0;
+    #endif
 
     //ALblLog_Print("SpeechMixer Synthesis: MixRatio = %f, TransitionRatio = %f", MixRatio, Dest -> TransitionRatio);
 
     FDFrame Tmp1, Tmp2;
-    FDFrame_CtorSize(& Tmp1, 1024);
-    FDFrame_CtorSize(& Tmp2, 1024);
+    FDFrame_CtorSize(& Tmp1, CVE_FFTSize);
+    FDFrame_CtorSize(& Tmp2, CVE_FFTSize);
 
     CPF_Setup(CPF1);
     CPF_Setup(CPF2);
@@ -156,14 +157,14 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     LCFECSOLAFilter_Ctor(& LCFilter1);
     LCFECSOLAFilter_Ctor(& LCFilter2);
     FECSOLAState DestState;
-    float* Magn = FloatMalloc(1024);
-    float* TmpMagn = FloatMalloc(1024);
-    float* AvgMagn = FloatMalloc(1024);
+    float* Magn = FloatMalloc(CVE_FFTSize);
+    float* TmpMagn = FloatMalloc(CVE_FFTSize);
+    float* AvgMagn = FloatMalloc(CVE_FFTSize);
     float HopSize;
 
     PitchMixerSendback SubRet;
     {
-    #if SkipSynth == 1
+    #if SpeechMixer_SkipSynth == 1
         SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, Output);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
         Ret.BeforeVOT = SubRet.BeforeVOT;
@@ -198,14 +199,14 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             float Ratio = (Dest -> TransitionRatio - MixRatio) / (1.0f - MixRatio);
             //ALblLog_Print("SpeechMixer Synthesis: Ratio = %f", Ratio);
             #ifdef SpeechMixer_Linear
-                Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, 1024);
-                Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, 1024);
+                Boost_FloatMul(Tmp1.Re, Tmp1.Re, 1.0f - Ratio, CVE_FFTSize);
+                Boost_FloatMul(Tmp1.Im, Tmp1.Im, 1.0f - Ratio, CVE_FFTSize);
                 HopSize = SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
                 SubRet = PitchMixer_Synthesis(& Dest -> SubSynth2, & Tmp2);
-                Boost_FloatMul(Tmp2.Re, Tmp2.Re, Ratio, 1024);
-                Boost_FloatMul(Tmp2.Im, Tmp2.Im, Ratio, 1024);
-                Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, 1024);
-                Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, 1024);
+                Boost_FloatMul(Tmp2.Re, Tmp2.Re, Ratio, CVE_FFTSize);
+                Boost_FloatMul(Tmp2.Im, Tmp2.Im, Ratio, CVE_FFTSize);
+                Boost_FloatAddArr(Output -> Re, Tmp1.Re, Tmp2.Re, CVE_FFTSize);
+                Boost_FloatAddArr(Output -> Im, Tmp1.Im, Tmp2.Im, CVE_FFTSize);
                 HopSize += SubRet.PSOLAFrameHopSize * (Ratio);
             #endif
             #ifdef SpeechMixer_FECSOLA
@@ -220,7 +221,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
         }
     }
 
-    #if SkipSynth == 1
+    #if SpeechMixer_SkipSynth == 1
     JMP_SkipSynth:
     #endif
 

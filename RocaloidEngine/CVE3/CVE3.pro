@@ -92,7 +92,8 @@ HEADERS += \
     DSPEx/LCFECSOLA.h \
     Debug/ALblLog.h \
     Synthesizer/MixerPitchTransition.h \
-    Synthesizer/FSynthSpectrumModification.h
+    Synthesizer/FSynthSpectrumModification.h \
+    CVEConfig.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../CVEDSP/debug/ -lCVEDSP

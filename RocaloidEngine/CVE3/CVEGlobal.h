@@ -3,6 +3,7 @@
 
 #include "../RFILE3/CDT3/CDT3.h"
 #include "../RFILE3/CDT3/Demapper.h"
+#include "CVEConfig.h"
 
 extern CDT3 CGDict;
 extern CDTMappingQuerySpace CGQuerySpace;

@@ -8,8 +8,6 @@
 #include "../DSPEx/FDFrame.h"
 #include "CSynth.h"
 
-#define FSynth_ConsonantTransition 1000
-
 AutoClass
 {
     CSynth SubSynth;

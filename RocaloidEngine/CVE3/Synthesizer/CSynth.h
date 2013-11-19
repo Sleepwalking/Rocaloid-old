@@ -1,9 +1,6 @@
 #ifndef CSYNTH_H
 #define CSYNTH_H
 
-#define CSynth_CycleDelay 20000
-#define CSynth_CycleSample 10000
-
 //Consecutive Synthesizer
 
 #include "../../RUtil/RUtil.h"

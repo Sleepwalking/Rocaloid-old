@@ -2,9 +2,6 @@
 //BFWave:   Wave at original base freq.      2048
 //TempWave: Wave after resample.             1024
 
-#undef  LCEnabled
-#define LCEnabled
-
 float* OrigMEnv = FloatMalloc(CVE_FFTSize);
 Boost_FloatMulArr(Orig, BFWave.Data + 512, Hanning1024, CVE_FFTSize);
 MagnitudeFromWave(OrigMEnv, Orig, 10); //Performance: Change to static form
@@ -22,7 +19,7 @@ Boost_FloatDivArr(OrigRe, OrigRe, OrigMa, CVE_FFTHalf);
 Boost_FloatDivArr(OrigIm, OrigIm, OrigMa, CVE_FFTHalf);
 
 FECSOLAState PitchState;
-#ifdef LCEnabled
+#ifdef FSynth_LCEnabled
     LCFECSOLAFilter PitchFilter;
     LCFECSOLAFilter_Ctor(& PitchFilter);
 #else
@@ -33,7 +30,7 @@ String_FromChars(Symbol, Dest -> SubSynth.Data.Header.Symbol);
 FECSOLAState_FromSymbolLayer(& PitchState, & Symbol);
 String_Dtor(& Symbol);
 
-#ifdef LCEnabled
+#ifdef FSynth_LCEnabled
     LCFECSOLAFilter_GetFromFormantEnvelope(& PitchFilter, OrigMEnv, & PitchState);
 #else
     FECSOLAFilter_GetFromCPF(& PitchFilter, & OrigEnv, & PitchState);
@@ -44,7 +41,7 @@ PitchState.F0 = Dest -> SynthFreq;
 if(BF > Dest -> SynthFreq)
     PitchState.S0 *= pow(Dest -> SynthFreq / BF, 1);
 
-#ifdef LCEnabled
+#ifdef FSynth_LCEnabled
     LCFECSOLAFilter_Bake(OrigMa, & PitchFilter, & PitchState);
 #else
     FECSOLAFilter_Bake(OrigMa, & PitchFilter, & PitchState, CVE_FFTSize);
@@ -62,7 +59,7 @@ Boost_FloatCopy(Output -> Im, OrigIm, CVE_FFTSize);
 
 Ret.FState = PitchState;
 
-#ifdef LCEnabled
+#ifdef FSynth_LCEnabled
     LCFECSOLAFilter_Dtor(& PitchFilter);
 #else
     FECSOLAFilter_Dtor(& PitchFilter);

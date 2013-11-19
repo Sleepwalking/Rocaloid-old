@@ -1,9 +1,9 @@
 //Re|Im 1 -> Tmp1
 
-#ifdef _Synth1_
+#ifdef _PitchMixer_
     FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
     Mixer_SoleSynth_Prepare(1);
-    #ifdef LCEnabled
+    #ifdef PitchMixer_LCEnabled
         LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
         Mixer_TransSynth_Bake_LCFECSOLA(1);
     #else
@@ -14,18 +14,16 @@
     Mixer_SoleSynth_Prepare(1);
     LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
     Mixer_TransSynth_Bake_LCFECSOLA(1);
-    //GNUPlot_PlotFloat(Magn, 120);
-    //getchar();
 #endif
 
 HopSize = (float)SubRet.PSOLAFrameHopSize * (1.0f - Ratio);
 Boost_FloatMul(AvgMagn, Magn, 1.0f - Ratio, CVE_FFTHalf);
 
 //Re|Im 2 -> Tmp2
-#ifdef _Synth1_
+#ifdef _PitchMixer_
     SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
     Mixer_SoleSynth_Prepare(2);
-    #ifdef LCEnabled
+    #ifdef PitchMixer_LCEnabled
         LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter2, Magn, & SubRet.FState);
         Mixer_TransSynth_Bake_LCFECSOLA(2);
     #else
@@ -61,15 +59,9 @@ MagnitudeFromComplex(Magn, Output -> Re, Output -> Im, CVE_FFTHalf);
 
 CPF_Bake(Magn, & CPF1, CVE_FFTHalf);
 
-#ifdef _SpeechMixer_
-    //GNUPlot_SetTitleAndNumber("Trans", Dest -> SubSynth1.SynthFreq);
-    //GNUPlot_PlotFloat(AvgMagn, 120);
-    //getchar();
-#endif
-
 Boost_FloatAdd(Magn, Magn, 0.01, CVE_FFTHalf);
 Boost_FloatDivArr(Magn, AvgMagn, Magn, CVE_FFTHalf);
-#ifdef _Synth1
+#ifdef _PitchMixer_
 Boost_FloatMulArr(Output -> Re, Output -> Re, Magn, CVE_FFTHalf);
 Boost_FloatMulArr(Output -> Im, Output -> Im, Magn, CVE_FFTHalf);
 #endif

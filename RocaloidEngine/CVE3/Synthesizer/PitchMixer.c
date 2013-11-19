@@ -1,10 +1,9 @@
 #include "PitchMixer.h"
 #include "MixerMacro.h"
 #include "../CVEDSP/Algorithm/Formant.h"
+#include "../CVEDSP/Algorithm/FECSOLA.h"
 #include "../CVEDSP/Plot.h"
 #include "../DSPEx/LCFECSOLA.h"
-
-#define SkipSynth 0
 
 _Constructor_(PitchMixer)
 {
@@ -214,19 +213,17 @@ void PitchMixer_SetLimitedFrequency(PitchMixer* Dest, float Freq)
     Dest -> LimitedFreq = Freq;
 }
 
-#undef  LCEnabled
-#define LCEnabled
 
 PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 {
     PitchMixerSendback Ret;
     FDFrame Tmp1, Tmp2;
-    FDFrame_CtorSize(& Tmp1, 1024);
-    FDFrame_CtorSize(& Tmp2, 1024);
+    FDFrame_CtorSize(& Tmp1, CVE_FFTSize);
+    FDFrame_CtorSize(& Tmp2, CVE_FFTSize);
 
     CPF_Setup(CPF1);
     CPF_Setup(CPF2);
-#ifdef LCEnabled
+#ifdef PitchMixer_LCEnabled
     LCFECSOLAFilter LCFilter1, LCFilter2;
     LCFECSOLAFilter_Ctor(& LCFilter1);
     LCFECSOLAFilter_Ctor(& LCFilter2);
@@ -237,13 +234,13 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 #endif
     FECSOLAState State1, State2;
     FECSOLAState DestState;
-    float* Magn = FloatMalloc(1024);
-    float* TmpMagn = FloatMalloc(1024);
-    float* AvgMagn = FloatMalloc(1024);
+    float* Magn = FloatMalloc(CVE_FFTSize);
+    float* TmpMagn = FloatMalloc(CVE_FFTSize);
+    float* AvgMagn = FloatMalloc(CVE_FFTSize);
     float HopSize;
     float Ratio;
 
-    #if SkipSynth == 1
+    #if PitchMixer_SkipSynth == 1
         FSynthSendback _SubRet = FSynth_Synthesis(& Dest -> SubSynth1, Output);
         Ret.PSOLAFrameHopSize = _SubRet.PSOLAFrameHopSize;
         Ret.BeforeVOT = _SubRet.BeforeVOT;
@@ -262,7 +259,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         }else
         {
             Mixer_SoleSynth_Prepare(1);
-            #ifdef LCEnabled
+            #ifdef PitchMixer_LCEnabled
                 LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
                 PitchMixer_CreateState(DestState, 1);
                 Mixer_SoleSynth_Bake_LCFECSOLA(1);
@@ -290,7 +287,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth1
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
                 Mixer_SoleSynth_Prepare(1);
-                #ifdef LCEnabled
+                #ifdef PitchMixer_LCEnabled
                     LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter1, Magn, & SubRet.FState);
                     Mixer_SoleSynth_Bake_LCFECSOLA(1);
                 #else
@@ -300,9 +297,6 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
-                //GNUPlot_SetTitleAndNumber("Sole", Dest -> SynthFreq);
-                //GNUPlot_PlotFloat(Magn, 100);
-                //getchar();
                 goto SynthesisFinished;
             }else
             {
@@ -318,7 +312,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 //Sole Synth: SubSynth2
                 FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2, & Tmp2);
                 Mixer_SoleSynth_Prepare(2);
-                #ifdef LCEnabled
+                #ifdef PitchMixer_LCEnabled
                     LCFECSOLAFilter_GetFromFormantEnvelope(& LCFilter2, Magn, & SubRet.FState);
                     Mixer_SoleSynth_Bake_LCFECSOLA(2);
                 #else
@@ -327,9 +321,6 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
                 #endif
                 Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
                 Ret.BeforeVOT = 0;
-                //GNUPlot_SetTitleAndNumber("Sole", Dest -> SynthFreq);
-                //GNUPlot_PlotFloat(Magn, 100);
-                //getchar();
                 goto SynthesisFinished;
             }else
             {
@@ -341,19 +332,17 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
 
     //Transition Synthesis
 
-    #define _Synth1_
+    #define _PitchMixer_
     #include "MixerPitchTransition.h"
-    #undef _Synth1_
-    /*
-    FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth2,Output);
-    HopSize = SubRet.PSOLAFrameHopSize;*/
+    #undef _PitchMixer_
+
     Ret.PSOLAFrameHopSize = (int)HopSize;
     Ret.BeforeVOT = 0;
 
     SynthesisFinished:
     Ret.FState = DestState;
 
-    #if SkipSynth == 1
+    #if PitchMixer_SkipSynth == 1
     JMP_SkipSynth:
     #endif
 
@@ -363,7 +352,7 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     free(AvgMagn);
     CPF_Dtor(& CPF1);
     CPF_Dtor(& CPF2);
-#ifdef LCEnabled
+#ifdef PitchMixer_LCEnabled
     LCFECSOLAFilter_Dtor(& LCFilter1);
     LCFECSOLAFilter_Dtor(& LCFilter2);
 #else
