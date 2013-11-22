@@ -106,6 +106,8 @@ int TemplateReadFunc(Syllable)
     IfBufferIs("TransTickList")
     {
         TemplateReadFuncEmbededDynamicList(float, Dest -> TransitionTickList);
+        Dest -> Duration = Dest -> TransitionTickList[Dest -> TransitionTickList_Index];
+        Dest -> EndTime = Dest -> StartTime + Dest -> Duration;
     }
 
     IfBufferIs("TransRatioList")
@@ -144,6 +146,7 @@ int TemplateReadFunc(Syllable)
     {
         RNext();
         Dest -> StartTime = CFloatStr(& Buffer);
+        Dest -> EndTime = Dest -> StartTime + Dest -> Duration;
     }
 
     TemplateReadFuncEnd

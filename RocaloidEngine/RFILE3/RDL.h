@@ -15,6 +15,8 @@ extern void RDL_WriteNewLine();
 extern void RDL_WritePushIndent();
 extern void RDL_WritePopIndent();
 
+#define Implicit //Identify variables in data structure but not required in RDL file.
+
 #define String_Read(Dest) String_Copy(Dest, & Buffer)
 #define float_Read(Dest) *(Dest) = CFloatStr(& Buffer)
 #define double_Read(Dest) *(Dest) = CDoubleStr(& Buffer)

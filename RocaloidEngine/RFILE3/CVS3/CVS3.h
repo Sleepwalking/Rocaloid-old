@@ -2,6 +2,7 @@
 #define CVS3_H
 
 #include "../../../RUtil/RUtil.h"
+#include "../RDL.h"
 
 AutoClass
 {
@@ -56,6 +57,8 @@ AutoClass
     ArrayType_Define(TimeFreqPair, FreqList);
 
     float StartTime;
+    Implicit float Duration;
+    Implicit float EndTime;
 } EndClass(Syllable);
 
 AutoClass

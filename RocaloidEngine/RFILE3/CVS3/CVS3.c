@@ -63,6 +63,9 @@ _Destructor_ (Syllable)
 
     FormantInfo_Dtor(& Dest -> FormantDeviation);
     EffectInfo_Dtor(& Dest -> Effects);
+    Dest -> StartTime = 0;
+    Dest -> Duration = 0;
+    Dest -> EndTime = 0;
 }
 
 _Constructor_ (CVS3)

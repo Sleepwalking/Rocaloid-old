@@ -2,7 +2,7 @@
 CVS
 	SyllableList
 		Syllable
-			TransPhoneList	cha_n	a_n	_n	End
+			TransPhoneList	cha	a_n	_n	End
 			TransTickList	0	0.3	1.5	End
 			TransRatioList
 				>	0.5	0.2

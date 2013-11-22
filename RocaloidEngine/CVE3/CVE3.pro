@@ -29,7 +29,8 @@ SOURCES += main.c \
     DSPEx/LCFECSOLA.c \
     Debug/ALblLog.c \
     ../../RUtil/Structure/VariationList.c \
-    Synthesizer/SyllableVariator.c
+    Synthesizer/SyllableVariator.c \
+    Synthesizer/Synthesizer.c
 
 HEADERS += \
     ../../CVEDSP/Interpolation.h \
@@ -97,7 +98,8 @@ HEADERS += \
     Synthesizer/FSynthSpectrumModification.h \
     CVEConfig.h \
     ../../RUtil/Structure/VariationList.h \
-    Synthesizer/SyllableVariator.h
+    Synthesizer/SyllableVariator.h \
+    Synthesizer/Synthesizer.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../CVEDSP/debug/ -lCVEDSP
