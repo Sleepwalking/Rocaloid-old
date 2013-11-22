@@ -142,7 +142,7 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
         Ret.BeforeVOT = 0;
         Dest -> FPlayIndex += 1.0f / Dest -> VowelRatio;
     }
-    if(Dest -> FPlayIndex > DPulseNum)
+    if(Dest -> FPlayIndex > DPulseNum - CSynth_CycleTail)
         Dest -> FPlayIndex = Dest -> CycleStart + Dest -> CycleLength;
 
     return Ret;

@@ -4,6 +4,7 @@
 #include "../CVEDSP/Algorithm/FECSOLA.h"
 #include "../CVEDSP/Plot.h"
 #include "../DSPEx/LCFECSOLA.h"
+#include <string.h>
 
 _Constructor_(PitchMixer)
 {
@@ -239,6 +240,8 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     float* AvgMagn = FloatMalloc(CVE_FFTSize);
     float HopSize;
     float Ratio;
+    memset(& State1, 0, sizeof(FECSOLAState));
+    memset(& State2, 0, sizeof(FECSOLAState));
 
     #if PitchMixer_SkipSynth == 1
         FSynthSendback _SubRet = FSynth_Synthesis(& Dest -> SubSynth1, Output);
@@ -274,8 +277,14 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
         goto SynthesisFinished;
     }else
     {
-        PitchMixer_CreateState(State1, 1);
-        PitchMixer_CreateState(State2, 2);
+        if(Dest -> TransitionRatio < 0.999)
+        {
+            PitchMixer_CreateState(State1, 1);
+        }
+        if(Dest -> TransitionRatio > 0.001)
+        {
+            PitchMixer_CreateState(State2, 2);
+        }
         FECSOLAState_Transition(& DestState, & State1, & State2, Dest -> TransitionRatio);
 
         if(Dest -> SubSynth1Index < Dest -> SubSynth2Index)
@@ -369,10 +378,18 @@ PitchMixerSendback PitchMixer_EmptySynthesis(PitchMixer* Dest)
     PitchMixerSendback Ret;
 
     FECSOLAState State1, State2;
+    memset(& State1, 0, sizeof(FECSOLAState));
+    memset(& State2, 0, sizeof(FECSOLAState));
     if(! Dest -> IsLimitedFreq)
     {
-        PitchMixer_CreateState(State1, 1);
-        PitchMixer_CreateState(State2, 2);
+        if(Dest -> TransitionRatio < 0.999)
+        {
+            PitchMixer_CreateState(State1, 1);
+        }
+        if(Dest -> TransitionRatio > 0.001)
+        {
+            PitchMixer_CreateState(State2, 2);
+        }
         FECSOLAState_Transition(& Ret.FState, & State1, & State2, Dest -> TransitionRatio);
     }
 

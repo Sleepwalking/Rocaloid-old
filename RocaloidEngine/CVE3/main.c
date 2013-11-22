@@ -52,10 +52,9 @@ int main(void)
     SpeechMixer test;
     SpeechMixer_Ctor(& test);
     SpeechMixer_SetSyllable(& test, testcvs.SyllableList + 0);
-    SpeechMixer_SetConsonantRatio(& test, 1);
 
-    float* Wave = (float*)malloc(sizeof(float) * SampleRate * 100);
-    Boost_FloatSet(Wave, 0, SampleRate * 100);
+    float* Wave = (float*)malloc(sizeof(float) * SampleRate * 20);
+    Boost_FloatSet(Wave, 0, SampleRate * 10);
 
     PSOLAFrame POut;
     PSOLAFrame_CtorSize(& POut, 1024);
@@ -67,15 +66,10 @@ int main(void)
     int count = 0;
     Ret2.PSOLAFrameHopSize = 0;
 
-    //ALblLog_Disable();
+    ALblLog_Disable();
     float t;
-    for(t = 0; t < 2.4;)
+    for(t = 0; t < 1.5;)
     {
-        /*
-        if(t > 0.5 && t < 0.7)
-            ALblLog_Enable();
-        if(t > 0.7)
-            ALblLog_Disable();*/
         SpeechMixer_SetTime(& test, t);
         Ret = SpeechMixer_Synthesis(& test, & Out);
 

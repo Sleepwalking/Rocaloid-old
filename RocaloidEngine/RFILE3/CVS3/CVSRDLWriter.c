@@ -69,17 +69,14 @@ int TemplateWriteFunc(Syllable)
 {
     TemplateWriteFuncHead("Syllable");
 
-    RDL_WriteChars("TransQ");
-    CStrInt(& Buffer, Src -> TransitionQ + 1);
-    RDL_WriteString(& Buffer);
-    RDL_WriteNewLine();
-
     RDL_WriteChars("TransPhoneList");
     TemplateWriteFuncEmbededStaticList(String, TransitionPhoneList);
+    RDL_WriteChars("End");
     RDL_WriteNewLine();
 
     RDL_WriteChars("TransTickList");
     TemplateWriteFuncEmbededStaticList(float, TransitionTickList);
+    RDL_WriteChars("End");
     RDL_WriteNewLine();
 
     TemplateWriteFuncList(TimeRatioPair, TransitionRatioList, "TransRatioList", 0);

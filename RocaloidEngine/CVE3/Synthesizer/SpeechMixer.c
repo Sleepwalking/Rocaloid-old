@@ -6,12 +6,13 @@
 #include "../DSPEx/LCFECSOLA.h"
 #include "../Debug/ALblLog.h"
 
-#define CVSData (Dest -> OnSynth)
+#define CVSData (Dest -> CurrentSyl)
 
 _Constructor_ (SpeechMixer)
 {
     PitchMixer_Ctor(& Dest -> SubSynth1);
     PitchMixer_Ctor(& Dest -> SubSynth2);
+    SyllableVariator_Ctor(& Dest -> CurrentVar);
 
     Dest -> SubSynth1Index = - 1;
     Dest -> SubSynth2Index = - 1;
@@ -23,12 +24,15 @@ _Destructor_ (SpeechMixer)
 {
     PitchMixer_Dtor(& Dest -> SubSynth1);
     PitchMixer_Dtor(& Dest -> SubSynth2);
+    SyllableVariator_Dtor(& Dest -> CurrentVar);
     ALblLog_Print("SpeechMixer Dtor");
 }
 
-void SpeechMixer_SetSyllable(SpeechMixer* Dest, const Syllable* _Syllable)
+void SpeechMixer_SetSyllable(SpeechMixer* Dest, Syllable* _Syllable)
 {
-    Dest -> OnSynth = _Syllable;
+    Dest -> CurrentSyl = _Syllable;
+    SyllableVariator_LoadSyllable(& Dest -> CurrentVar, _Syllable);
+    SpeechMixer_SetConsonantRatio(Dest, _Syllable -> ConsonantRatio);
     ALblLog_Print("SpeechMixer SetSyllable");
 }
 
@@ -39,26 +43,13 @@ void SpeechMixer_SetConsonantRatio(SpeechMixer* Dest, float CRatio)
     ALblLog_Print("SpeechMixer SetConsonantRatio as %f", CRatio);
 }
 
-int SpeechMixer_QuerySyllablePhoneIndex(const Syllable* Src, float Time)
+int SpeechMixer_QuerySyllablePhoneIndex(Syllable* Src, float Time)
 {
     int i;
-    for(i = 0; i < Src -> TransitionQ; i ++)
+    for(i = 0; i <= Src -> TransitionPhoneList_Index; i ++)
         if(Src -> TransitionTickList[i] > Time)
             break;
     return i - 1;
-}
-
-float SpeechMixer_QuerySyllableFreq(const Syllable* Src, float Time)
-{
-    int i;
-    for(i = 0; i <= Src -> FreqList_Index; i ++)
-        if(Src -> FreqList[i].Time > Time)
-            goto Found;
-    return Src -> FreqList[Src -> FreqList_Index].Freq;
-    Found:
-    i --;
-    float Ratio = (Time - Src -> FreqList[i].Time) / (Src -> FreqList[i + 1].Time - Src -> FreqList[i].Time);
-    return Ratio * Src -> FreqList[i + 1].Freq + (1.0f - Ratio) * Src -> FreqList[i].Freq;
 }
 
 void SpeechMixer_Swap(SpeechMixer* Dest)
@@ -71,6 +62,24 @@ void SpeechMixer_Swap(SpeechMixer* Dest)
     Dest -> SubSynth2 = TmpPitchMixer;
 }
 
+void SpeechMixer_Reset(SpeechMixer* Dest)
+{
+    PitchMixer_Reset(& Dest -> SubSynth1);
+    PitchMixer_Reset(& Dest -> SubSynth2);
+    Dest -> SubSynth1Index = - 1;
+    Dest -> SubSynth2Index = - 1;
+    ALblLog_Print("SpeechMixer Reset");
+}
+
+void SpeechMixer_FormantVariation(FECSOLAState* Dest, SyllableVariator* Offset, float Time)
+{
+    Dest -> F1 += SyllableVariator_QueryF1(Offset, Time);
+    Dest -> F2 += SyllableVariator_QueryF2(Offset, Time);
+    Dest -> F3 += SyllableVariator_QueryF3(Offset, Time);
+    Dest -> S1 *= SyllableVariator_QueryS1(Offset, Time);
+    Dest -> S2 *= SyllableVariator_QueryS2(Offset, Time);
+    Dest -> S3 *= SyllableVariator_QueryS3(Offset, Time);
+}
 void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
 {
     //Step1: Reload SubSynth
@@ -81,12 +90,14 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
         Dest -> TransitionRatio = (Time - CVSData -> TransitionTickList[BaseIndex]) /
                                   (CVSData -> TransitionTickList[BaseIndex + 1] -
                                    CVSData -> TransitionTickList[BaseIndex]);
-        Dest -> TransitionRatio = CosineInterpolate(0, 1, Dest -> TransitionRatio);
+        Dest -> TransitionRatio = SyllableVariator_QueryTransRatio(& Dest -> CurrentVar, Time);
+        //Dest -> TransitionRatio = CosineInterpolate(0, 1, Dest -> TransitionRatio);
     }else if(BaseIndex == Dest -> SubSynth2Index)
     {
         //Next Phoneme
         //SS2 needs to be reloaded.
         SpeechMixer_Swap(Dest);
+        SyllableVariator_LoadTrans(& Dest -> CurrentVar, Dest -> CurrentSyl, BaseIndex);
         Dest -> SubSynth2Index = BaseIndex + 1;
         PitchMixer_SetSymbol(& Dest -> SubSynth2, CVSData -> TransitionPhoneList + Dest -> SubSynth2Index);
         Dest -> TransitionRatio = 0;
@@ -96,6 +107,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
         //Reload All
         Dest -> SubSynth1Index = BaseIndex;
         Dest -> SubSynth2Index = BaseIndex + 1;
+        SyllableVariator_LoadTrans(& Dest -> CurrentVar, Dest -> CurrentSyl, BaseIndex);
         PitchMixer_SetSymbol(& Dest -> SubSynth1, CVSData -> TransitionPhoneList + Dest -> SubSynth1Index);
         PitchMixer_SetSymbol(& Dest -> SubSynth2, CVSData -> TransitionPhoneList + Dest -> SubSynth2Index);
         PitchMixer_SetLimitedFrequency(& Dest -> SubSynth1, CVSData -> FreqList[0].Freq); //Assuming first load
@@ -104,24 +116,18 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
     }
 
     //Step2: Set Freq
-    float SynthFreq = SpeechMixer_QuerySyllableFreq(CVSData, Time);
+    float SynthFreq = SyllableVariator_QueryF0(& Dest -> CurrentVar, Time);
     PitchMixer_SetFrequency(& Dest -> SubSynth1, SynthFreq);
     PitchMixer_SetFrequency(& Dest -> SubSynth2, SynthFreq);
+    PitchMixer_SetConsonantRatio(& Dest -> SubSynth1, CVSData -> ConsonantRatio);
+    PitchMixer_SetConsonantRatio(& Dest -> SubSynth2, CVSData -> ConsonantRatio);
+    Dest -> CurrentTime = Time;
 /*
     ALblLog_Print("SpeechMixer SetTime: SS1 = %s, SS2 = %s",
                   Dest -> SubSynth1.SubSynth1.SubSynth.Data.Header.Symbol,
                   Dest -> SubSynth2.SubSynth1.SubSynth.Data.Header.Symbol);
-*/
     //printf("TR: %f, SI1: %d, SI2: %d\n", Dest -> TransitionRatio, Dest -> SubSynth1Index, Dest -> SubSynth2Index);
-}
-
-void SpeechMixer_Reset(SpeechMixer* Dest)
-{
-    PitchMixer_Reset(& Dest -> SubSynth1);
-    PitchMixer_Reset(& Dest -> SubSynth2);
-    Dest -> SubSynth1Index = - 1;
-    Dest -> SubSynth2Index = - 1;
-    ALblLog_Print("SpeechMixer Reset");
+*/
 }
 
 SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
@@ -163,7 +169,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     float HopSize;
 
     PitchMixerSendback SubRet;
-    {
+
     #if SpeechMixer_SkipSynth == 1
         SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, Output);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
@@ -173,7 +179,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     #else
         SubRet = PitchMixer_Synthesis(& Dest -> SubSynth1, & Tmp1);
     #endif
-    }
+
     if(SubRet.BeforeVOT)
     {
         Boost_FloatCopy(Output -> Re, Tmp1.Re, Tmp1.Length);
@@ -184,6 +190,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     {
         PitchMixerSendback SubRet2 = PitchMixer_EmptySynthesis(& Dest -> SubSynth2);
         FECSOLAState_Transition(& DestState, & SubRet.FState, & SubRet2.FState, Dest -> TransitionRatio);
+        SpeechMixer_FormantVariation(& DestState, & Dest -> CurrentVar, Dest -> CurrentTime);
         if(Dest -> TransitionRatio < MixRatio)
         {
             //Sole Synth: SubSynth1
@@ -225,6 +232,12 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     JMP_SkipSynth:
     #endif
 
+    Boost_FloatMul(Output -> Re, Output -> Re,
+                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime),
+                   CVE_FFTSize);
+    Boost_FloatMul(Output -> Im, Output -> Im,
+                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime),
+                   CVE_FFTSize);
 
     free(Magn);
     free(TmpMagn);

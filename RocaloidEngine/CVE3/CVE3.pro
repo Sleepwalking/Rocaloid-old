@@ -28,6 +28,8 @@ SOURCES += main.c \
     Synthesizer/SpeechMixer.c \
     DSPEx/LCFECSOLA.c \
     Debug/ALblLog.c \
+    ../../RUtil/Structure/VariationList.c \
+    Synthesizer/SyllableVariator.c
 
 HEADERS += \
     ../../CVEDSP/Interpolation.h \
@@ -93,7 +95,9 @@ HEADERS += \
     Debug/ALblLog.h \
     Synthesizer/MixerPitchTransition.h \
     Synthesizer/FSynthSpectrumModification.h \
-    CVEConfig.h
+    CVEConfig.h \
+    ../../RUtil/Structure/VariationList.h \
+    Synthesizer/SyllableVariator.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../CVEDSP/debug/ -lCVEDSP

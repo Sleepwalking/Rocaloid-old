@@ -2,8 +2,8 @@
 
 //Width of formants in LCFECSOLA.
 #define LCFECSOLA_L0 1000
-#define LCFECSOLA_L1 1300
-#define LCFECSOLA_L2 1300
+#define LCFECSOLA_L1 800
+#define LCFECSOLA_L2 800
 #define LCFECSOLA_L3 2000
 
 //The minimum formant strength in LCFECSOLA.
@@ -11,6 +11,9 @@
 
 //Any signal above this frequency will not be processed by LCFECSOLA.
 #define LCFECSOLA_ResidualFreq 5000
+
+//Length before the end of wave involved in cycle (uint: periods)
+#define CSynth_CycleTail 30
 
 //Position where wave loop starts (unit: samples).
 #define CSynth_CycleDelay 15000
@@ -42,5 +45,5 @@
 //Use LCFECSOLA transition in SpeechMixer
 #define SpeechMixer_FECSOLA
 
-//User Linear transition in SpeechMixer
+//Use Linear transition in SpeechMixer
 //#define SpeechMixer_Linear

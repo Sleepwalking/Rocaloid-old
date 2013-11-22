@@ -98,20 +98,14 @@ int TemplateReadFunc(Syllable)
     TemplateReadFuncHead
     TemplateReadFuncLoop
 
-    IfBufferIs("TransQ")
-    {
-        RNext();
-        Dest -> TransitionQ = CIntStr(& Buffer) - 1;
-    }
-
     IfBufferIs("TransPhoneList")
     {
-        TemplateReadFuncEmbededStaticList(String, Dest -> TransitionPhoneList, Dest -> TransitionQ);
+        TemplateReadFuncEmbededDynamicList(String, Dest -> TransitionPhoneList);
     }
 
     IfBufferIs("TransTickList")
     {
-        TemplateReadFuncEmbededStaticList(float, Dest -> TransitionTickList, Dest -> TransitionQ);
+        TemplateReadFuncEmbededDynamicList(float, Dest -> TransitionTickList);
     }
 
     IfBufferIs("TransRatioList")

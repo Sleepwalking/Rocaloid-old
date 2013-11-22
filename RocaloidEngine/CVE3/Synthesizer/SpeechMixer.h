@@ -1,12 +1,13 @@
 #ifndef SPEECHMIXER_H
 #define SPEECHMIXER_H
 
-#include "../DSPInclude.h"
 #include "../../RUtil/RUtil.h"
+#include "../RFILE3/CVS3/CVS3.h"
+#include "../DSPInclude.h"
 #include "../DSPEx/FDFrame.h"
 #include "../CVEGlobal.h"
-#include "../RFILE3/CVS3/CVS3.h"
 #include "PitchMixer.h"
+#include "SyllableVariator.h"
 
 AutoClass
 {
@@ -17,7 +18,9 @@ AutoClass
     int SubSynth2Index;
     float TransitionRatio;
 
-    const Syllable* OnSynth;
+    float CurrentTime;
+    SyllableVariator CurrentVar;
+    Syllable* CurrentSyl;
 } EndClass(SpeechMixer);
 
 typedef struct
@@ -27,7 +30,7 @@ typedef struct
     int BeforeVOT;
 } SpeechMixerSendback;
 
-extern void SpeechMixer_SetSyllable(SpeechMixer* Dest, const Syllable* _Syllable);
+extern void SpeechMixer_SetSyllable(SpeechMixer* Dest, Syllable* _Syllable);
 extern void SpeechMixer_SetConsonantRatio(SpeechMixer* Dest, float CRatio);
 extern void SpeechMixer_SetTime(SpeechMixer* Dest, float Time);
 extern void SpeechMixer_Reset(SpeechMixer* Dest);

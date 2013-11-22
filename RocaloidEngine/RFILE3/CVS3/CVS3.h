@@ -45,7 +45,6 @@ AutoClass
 
 AutoClass
 {
-    int TransitionQ;
     ArrayType_Define(String, TransitionPhoneList);
     ArrayType_Define(float, TransitionTickList);
     ArrayType_Define(TimeRatioPair, TransitionRatioList);
