@@ -87,9 +87,6 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
     if(BaseIndex == Dest -> SubSynth1Index)
     {
         //Normal Transition
-        Dest -> TransitionRatio = (Time - CVSData -> TransitionTickList[BaseIndex]) /
-                                  (CVSData -> TransitionTickList[BaseIndex + 1] -
-                                   CVSData -> TransitionTickList[BaseIndex]);
         Dest -> TransitionRatio = SyllableVariator_QueryTransRatio(& Dest -> CurrentVar, Time);
         //Dest -> TransitionRatio = CosineInterpolate(0, 1, Dest -> TransitionRatio);
     }else if(BaseIndex == Dest -> SubSynth2Index)
@@ -186,6 +183,7 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
         Boost_FloatCopy(Output -> Im, Tmp1.Im, Tmp1.Length);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize;
         Ret.BeforeVOT = 1;
+        Dest -> CurrentVar.TransVariator.Independent[0] = (float)PitchMixer_GetVOT(& Dest -> SubSynth1) / SampleRate;
     }else
     {
         PitchMixerSendback SubRet2 = PitchMixer_EmptySynthesis(& Dest -> SubSynth2);

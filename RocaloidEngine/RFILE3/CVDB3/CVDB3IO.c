@@ -6,6 +6,8 @@ _Constructor_ (CVDB3)
 {
     Dest -> PulseOffsets = (uint32_t*)malloc(4);
     Dest -> Wave = (float*)malloc(4);
+    Dest -> Header.CVDBVersion = 0;
+    Dest -> Header.VOI = 0;
 }
 
 _Destructor_ (CVDB3)

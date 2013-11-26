@@ -16,7 +16,7 @@ aux_source_directory(DSPEx SRC_LIST)
 aux_source_directory(Synthesizer SRC_LIST)
 aux_source_directory(. SRC_LIST)
 
-link_directories(${PROJECT_SOURCE_DIR}/CVEDSP/)
+link_directories(${PROJECT_SOURCE_DIR}../../CVEDSP/)
 link_libraries(CVEDSP)
 link_libraries(m)
 

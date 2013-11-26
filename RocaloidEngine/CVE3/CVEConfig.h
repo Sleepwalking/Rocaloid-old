@@ -2,8 +2,8 @@
 
 //Width of formants in LCFECSOLA.
 #define LCFECSOLA_L0 1000
-#define LCFECSOLA_L1 800
-#define LCFECSOLA_L2 800
+#define LCFECSOLA_L1 1000
+#define LCFECSOLA_L2 1000
 #define LCFECSOLA_L3 2000
 
 //The minimum formant strength in LCFECSOLA.
@@ -20,6 +20,9 @@
 
 //Length of wave loop (unit: samples).
 #define CSynth_CycleSample 20000
+
+//[Debug Use] 0: maintain spectral envelope in FSynth, 1: Only resample in FSynth.
+#define FSynth_SkipSynth 0
 
 //Enable LCFECSOLA in FSynth, otherwise use FECSOLA.
 #define FSynth_LCEnabled

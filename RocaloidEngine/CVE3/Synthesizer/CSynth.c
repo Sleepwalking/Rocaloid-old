@@ -51,20 +51,24 @@ void CSynth_Reset(CSynth* Dest)
     Dest -> ConsonantRatio = 1;
     Dest -> VowelRatio = 1;
 
-    unsigned int i;
-    if(Dest -> Data.Header.PhoneType == 'V')
+    //Loaded
+    if(Dest -> Data.Header.CVDBVersion > 0)
     {
-        //Vowels should start after VOT
-        Dest -> PlayIndex = Dest -> Data.Header.VOI + 10;
-        Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
-        Dest -> FPlayIndex = Dest -> PlayIndex;
-        ALblLog_Print("Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
+        unsigned int i;
+        if(Dest -> Data.Header.PhoneType == 'V')
+        {
+            //Vowels should start after VOT
+            Dest -> PlayIndex = Dest -> Data.Header.VOI + 10;
+            Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
+            Dest -> FPlayIndex = Dest -> PlayIndex;
+            ALblLog_Print("Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
+        }
+        for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
+            if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
+                break;
+        Dest -> CycleStart = i;
+        Dest -> CycleLength = CSynth_CycleSample / (SampleRate / Dest -> Data.Header.F0);
     }
-    for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
-        if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
-            break;
-    Dest -> CycleStart = i;
-    Dest -> CycleLength = CSynth_CycleSample / (SampleRate / Dest -> Data.Header.F0);
 }
 
 //Find the nearest bin to PlayPosition.
@@ -126,21 +130,27 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
                              Dest -> Data.Header.WaveSize,
                              DPulseOffsets[DPlayIndex]);
     }
-    if(/*Dest -> Data.Header.PhoneType == 'C' && */DPlayIndex < (signed int)Dest -> Data.Header.VOI)
+    if(DPlayIndex < (signed int)Dest -> Data.Header.VOI)
     {
         //In Consonant
-        Ret.PSOLAFrameHopSize = 512;//(DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex]);
+        Ret.PSOLAFrameHopSize = 512;
         Ret.BeforeVOT = 1;
-        DPlayPos += Ret.PSOLAFrameHopSize / Dest -> ConsonantRatio;
-        //ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        DPlayPos += Ret.PSOLAFrameHopSize * Dest -> ConsonantRatio;
+
+        if(DPlayPos > CSynth_GetVOT(Dest))
+        {
+            Ret.PSOLAFrameHopSize = CSynth_GetVOT(Dest) + 1 - DPlayPos + 512;
+            DPlayPos = CSynth_GetVOT(Dest) + 1;
+        }
+        ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         CSynth_UpdateIndex(Dest);
     }else
     {
         //In Cycle
-        Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex + 1] - DPulseOffsets[DPlayIndex];
-        //ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex] - DPulseOffsets[DPlayIndex - 1];
+        ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         Ret.BeforeVOT = 0;
-        Dest -> FPlayIndex += 1.0f / Dest -> VowelRatio;
+        Dest -> FPlayIndex += Dest -> VowelRatio;
     }
     if(Dest -> FPlayIndex > DPulseNum - CSynth_CycleTail)
         Dest -> FPlayIndex = Dest -> CycleStart + Dest -> CycleLength;

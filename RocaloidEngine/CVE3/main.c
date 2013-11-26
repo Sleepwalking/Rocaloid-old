@@ -6,6 +6,7 @@
 #include "Synthesizer/FSynth.h"
 #include "Synthesizer/PitchMixer.h"
 #include "Synthesizer/SpeechMixer.h"
+#include "Synthesizer/Synthesizer.h"
 #include "../../CVEDSP/Plot.h"
 #include "../RFILE3/CVS3/CVS3.h"
 #include "../RFILE3/CVS3/CVSRDLReader.h"
@@ -49,50 +50,33 @@ int main(void)
     CVS3_Read(& testcvs);
     CVSRDLReader_Close();
 
-    SpeechMixer test;
-    SpeechMixer_Ctor(& test);
-    SpeechMixer_SetSyllable(& test, testcvs.SyllableList + 0);
-
     float* Wave = (float*)malloc(sizeof(float) * SampleRate * 20);
     Boost_FloatSet(Wave, 0, SampleRate * 10);
 
-    PSOLAFrame POut;
-    PSOLAFrame_CtorSize(& POut, 1024);
-
-    SpeechMixerSendback Ret, Ret2;
-    FDFrame Out;
-    FDFrame_CtorSize(& Out, 1024);
-
-    int count = 0;
-    Ret2.PSOLAFrameHopSize = 0;
-
-    ALblLog_Disable();
-    float t;
-    for(t = 0; t < 1.5;)
+    ALblLog_Enable();
+    int i = 0;
+    Synthesizer MainSynth;
+    Synthesizer_Ctor(& MainSynth);
+    Synthesizer_SetCVS(& MainSynth, & testcvs);
+    Synthesizer_PrepareSynthesis(& MainSynth, 0);
+    SynthesizerSendback MainRet;
+    MainRet.Finished = 0;
+    do
     {
-        SpeechMixer_SetTime(& test, t);
-        Ret = SpeechMixer_Synthesis(& test, & Out);
-
-        PSOLAFrame_FromFDFrame(& POut, & Out);
-        Boost_FloatDivArr(POut.Data, POut.Data, Hanning1024, 1024);
-        PSOLAFrame_MixByRatio(Wave, &POut, count - Ret2.PSOLAFrameHopSize, count, count + Ret.PSOLAFrameHopSize, 1, MixNormal);
-        count += Ret.PSOLAFrameHopSize;
-        Ret2 = Ret;
-        t = (float)count / 44100;
-        ALblLog_Print("PLen: %d", Ret.PSOLAFrameHopSize);
-        ALblLog_Print("Main: PSOLAMix at %d (%f sec)", count, t);
-        ALblLog_SetTime(t);
-    }
-    PSOLAFrame_Dtor(& POut);
-
-    FDFrame_Dtor(& Out);
-
-    SpeechMixer_Dtor(& test);
+        ALblLog_SetTime((float)i / 44100);
+        MainRet = Synthesizer_Synthesis(& MainSynth);
+        if(MainRet.Finished)
+            break;
+        Boost_FloatCopy(Wave + i, MainRet.Data, MainRet.Length);
+        i += MainRet.Length;
+        SynthesizerSendback_Free(& MainRet);
+    } while(1);
+    Synthesizer_Dtor(& MainSynth);
 
     CVS3_Dtor(& testcvs);
     String_Dtor(& CVSPath);
     String_FromChars(Output, WAV_PATH);
-    WriteWaveAll(& Output, Wave, SampleRate * 4, SampleRate);
+    WriteWaveAll(& Output, Wave, SampleRate * 10, SampleRate);
     String_Dtor(& Output);
 
     GNUPlot_Close();

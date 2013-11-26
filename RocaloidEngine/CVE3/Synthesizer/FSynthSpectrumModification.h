@@ -11,6 +11,7 @@ CPF_Bake(OrigMEnv, & OrigEnv, CVE_FFTHalf);
 Boost_FloatMulArr(Orig, TempWave.Data, Hanning1024, CVE_FFTSize);
 
 RFFT(OrigRe, OrigIm, Orig, 10);
+#if FSynth_SkipSynth == 0
 MagnitudeFromComplex(OrigMa, OrigRe, OrigIm, CVE_FFTHalf);
 
 SpectralEnvelopeFromMagnitude(OrigMa, OrigMa, Dest -> SynthFreq, CVE_FFTSize);
@@ -63,5 +64,9 @@ Ret.FState = PitchState;
     LCFECSOLAFilter_Dtor(& PitchFilter);
 #else
     FECSOLAFilter_Dtor(& PitchFilter);
+#endif
+#else
+Boost_FloatCopy(Output -> Re, OrigRe, CVE_FFTSize);
+Boost_FloatCopy(Output -> Im, OrigIm, CVE_FFTSize);
 #endif
 free(OrigMEnv);

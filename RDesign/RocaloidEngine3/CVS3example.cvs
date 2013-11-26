@@ -2,67 +2,51 @@
 CVS
 	SyllableList
 		Syllable
-			TransPhoneList	cha	a_n	_n	End
-			TransTickList	0	0.3	1.5	End
+			TransPhoneList	se	e	_n	End
+			TransTickList	0	0.8	1.5	End
 			TransRatioList
+				>	0	0
 				>	0.5	0.2
-				>	1.25	0.3
+				>	0.9	0.3
 			End
-			TransEndRatio 0.5
-			ConsonantRatio 0.5
+			TransEndRatio 0.7
+			ConsonantRatio 1
 			FormantDeviation
 				F1List
 					>	0.0	0
-						0.3	-200
-					>	1.5	0
 				End
 				F2List
-					>	0	0
-					>	1.25	200
-					>	1.5	500
+					>	0.0	0
 				End
 				F3List
 					>	0.0	0
 				End
 				S1List
 					>	0.0	1
-					>	1.25	1
-					>	1.5	0
 				End
 				S2List
-					>	0.3	1
-					>	1.5	1
+					>	0.0	1
 				End
 				S3List
 					>	0.0	1
 				End
 			End
 			FreqList
-				>	0	256
-#
-				>	0.5	200
-				>	1.3	360
-				>	1.8	400
-#
-				>	1.5	256
+				>	0	262
+				>	3	262
 			End
 			Effects
 				EnvelopeList
-					>	0	0.5
-					>	0.1	1.2
-					>	0.2	1.0
-					>	0.6	0.6
-					>	1.5	0
+					>	0.1	0.2
+					>	3	0.2
 				End
 			End
 			StartTime 0.0
 		End
 		Syllable
-			TransPhoneList	bi	i	ng	End
-			TransTickList	0	0.2	1.0	End
+			TransPhoneList	ba	a_n	_n	End
+			TransTickList	0	0.3	1.0	End
 			TransRatioList
-				>	0.25	0.3
-				>	0.62	0.4
 			End
 			TransEndRatio 1.0
 			ConsonantRatio 0.5
@@ -88,26 +72,20 @@ CVS
 			End
 			FreqList
 				>	0	300
-				>	0.3	310
-				>	0.6	320
+				>	0.3	300
+				>	0.6	300
 			End
 			Effects
 				EnvelopeList
-					>	0	0.5
-					>	0.1	1.2
-					>	0.2	1.0
-					>	0.6	0.6
-					>	0.7	0
+					>	0	1
 				End
 			End
-			StartTime 0.0
-		End
+			StartTime 5.0
+		End	#
 		Syllable
-			TransPhoneList	be	e	n	End
-			TransTickList	0	0.2	1.0	End
+			TransPhoneList	bi	i	_n	End
+			TransTickList	0	0.3	1.0	End
 			TransRatioList
-				>	0.25	0.3
-				>	0.62	0.8
 			End
 			TransEndRatio 1.0
 			ConsonantRatio 0.5
@@ -132,23 +110,19 @@ CVS
 				End
 			End
 			FreqList
-				>	0	262
-				>	0.3	270
-				>	0.5	262
+				>	0	362
+				>	0.3	362
+				>	0.5	362
 			End
 			Effects
 				EnvelopeList
-					>	0	0.5
-					>	0.1	1.2
-					>	0.2	1.0
-					>	0.6	0.6
-					>	0.7	0
+					>	0	1
 				End
 			End
-			StartTime 0.0
+			StartTime 8.0
 		End
 		Syllable
-			TransPhoneList	be	i	End
+			TransPhoneList	pe	i	End
 			TransTickList	0	0.6	End
 			TransRatioList
 				>	0.25	0.3
@@ -189,7 +163,7 @@ CVS
 					>	0.6	0.6
 				End
 			End
-			StartTime 0.0
+			StartTime 9
 		End
 		Syllable
 			TransPhoneList	pu	u	o	End
@@ -234,8 +208,8 @@ CVS
 					>	0.7	0
 				End
 			End
-			StartTime 0.0
-		End
+			StartTime 8.0
+		End	#
 	End
 End
 

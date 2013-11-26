@@ -108,7 +108,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
     PSOLAFrame_CtorSize(& TempWave, 1024);
 
     float BF = Dest -> SubSynth.Data.Header.F0;
-    CSynth_SetVowelRatio(& Dest -> SubSynth, Dest -> SynthFreq / BF);
+    CSynth_SetVowelRatio(& Dest -> SubSynth, BF / Dest -> SynthFreq);
     CSynthSendback SubRet = CSynth_Synthesis(& Dest -> SubSynth, & BFWave);
     Ret.BeforeVOT = SubRet.BeforeVOT;
 
@@ -142,14 +142,17 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         Boost_FloatMulArr(TempWave.Data, TempWave.Data, Hanning1024, 1024);
         FDFrame_FromPSOLAFrame(Output, & TempWave);
 
+        //TODO: GetVOT from CDT
         float FreqExpand = 1;
-        int TransLast = CSynth_GetVOT(& Dest -> SubSynth) - Dest -> SubSynth.PlayPosition;
+        int TransLast = CSynth_GetVOT(& Dest -> SubSynth) - Dest -> SubSynth.PlayPosition + SubRet.PSOLAFrameHopSize;
+        printf("%d\n", TransLast);
         if(TransLast < FSynth_ConsonantTransition)
             FreqExpand = TransLast / FSynth_ConsonantTransition
                        + BF / Dest -> SynthFreq * (1.0f - TransLast / FSynth_ConsonantTransition);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * FreqExpand;
     }else
     {
+        //Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
         FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
         //ALblLog_Print("%d", Ret.PSOLAFrameHopSize);
