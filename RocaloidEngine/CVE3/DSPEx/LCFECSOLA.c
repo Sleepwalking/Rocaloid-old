@@ -15,6 +15,8 @@ float S3[2048];
 float S[2048];
 
 float W[1024];
+float W0[1024];
+float W1[1024];
 
 _Constructor_ (LCFECSOLAFilter)
 {
@@ -61,41 +63,53 @@ void LCFECSOLAFilter_CtorSize(LCFECSOLAFilter* Dest, int Length)
 }
 
 #define FreqToIndex(x) ((x) * DestLen * 2 / SampleRate)
-void LCFECSOLAFilter_MoveWindow(float* Dest, float* Hanning, float Freq, float Weight, float FWidth, int DestLen)
+void LCFECSOLAFilter_MoveWindow(float* Dest, float* Window, float Freq, float Weight, float FWidth, int DestLen)
 {
-    int FIndex = FreqToIndex(Freq);
-    int LowIndex = FIndex - FreqToIndex(FWidth / 2);
-    int HighIndex = LowIndex + FreqToIndex(FWidth);
-    int CopyLen = HighIndex - LowIndex;
-    if(LowIndex < 0)
+    Boost_FloatSet(W0, 0, DestLen);
+    Boost_FloatSet(W1, 0, DestLen);
+    if(Freq - FWidth / 2 < 0)
     {
-        CopyLen += LowIndex;
-        Hanning -= LowIndex;
-        LowIndex = 0;
-    }
-    if(HighIndex > DestLen)
+        //       ^
+        //       | F
+        //       | |
+        // |-------|-------|
+        //.......0-|------------------->
+        float MoveSrc = FreqToIndex(FWidth / 2 - Freq);
+        Boost_FloatMul(W0, Window + (int)(MoveSrc + 0.0), Weight * (1.0 - (MoveSrc - floor(MoveSrc))), (int)FreqToIndex(Freq + FWidth / 2.0));
+        Boost_FloatMul(W1, Window + (int)(MoveSrc + 1.0), Weight * (0.0 + (MoveSrc - floor(MoveSrc))), (int)FreqToIndex(Freq + FWidth / 2.0));
+    }else
     {
-        CopyLen += DestLen - HighIndex;
-        HighIndex = DestLen;
+        //       ^
+        //       |           F
+        //       |           |
+        //       |   |-------|-------|
+        //.......0-----------|------------>
+        float MoveDest = FreqToIndex(Freq - FWidth / 2);
+        Boost_FloatMul(W0 + (int)(MoveDest + 0.0), Window, Weight * (1.0 - (MoveDest - floor(MoveDest))), (int)FreqToIndex(FWidth));
+        Boost_FloatMul(W1 + (int)(MoveDest + 1.0), Window, Weight * (0.0 + (MoveDest - floor(MoveDest))), (int)FreqToIndex(FWidth));
     }
-    Boost_FloatMul(Dest + LowIndex, Hanning, Weight, CopyLen);
+    Boost_FloatAddArr(Dest, Dest, W0, DestLen);
+    Boost_FloatAddArr(Dest, Dest, W1, DestLen);
 }
 
 int Debug = 0;
 void LCFECSOLAFilter_MoveSubEnv(float* Dest, float* Env, float DeltaFreq, float Weight, int DestLen)
 {
-    int FIndex = FreqToIndex(DeltaFreq);
-    int CopyLen = DestLen;
-    float* Tmp = FloatMalloc(DestLen);
-    Boost_FloatMul(Tmp, Env, Weight, DestLen);
-    if(FIndex < 0)
+    Boost_FloatSet(W0, 0, DestLen);
+    Boost_FloatSet(W1, 0, DestLen);
+    if(FreqToIndex(DeltaFreq) < 0)
     {
-        Boost_FloatAddArr(Dest, Dest, Tmp - FIndex, CopyLen + FIndex);
+        float MoveSrc = - FreqToIndex(DeltaFreq);
+        Boost_FloatMul(W0, Env + (int)(MoveSrc) + 0, Weight * (1.0 - (MoveSrc - floor(MoveSrc))), DestLen - (int)(MoveSrc) - 0);
+        Boost_FloatMul(W1, Env + (int)(MoveSrc) + 1, Weight * (0.0 + (MoveSrc - floor(MoveSrc))), DestLen - (int)(MoveSrc) - 1);
     }else
     {
-        Boost_FloatAddArr(Dest + FIndex, Dest + FIndex, Tmp, CopyLen - FIndex);
+        float MoveDest = FreqToIndex(DeltaFreq);
+        Boost_FloatMul(W0 + (int)(MoveDest) + 0, Env, Weight * (1.0 - (MoveDest - floor(MoveDest))), DestLen - (int)(MoveDest) - 0);
+        Boost_FloatMul(W1 + (int)(MoveDest) + 1, Env, Weight * (0.0 + (MoveDest - floor(MoveDest))), DestLen - (int)(MoveDest) - 1);
     }
-    free(Tmp);
+    Boost_FloatAddArr(Dest, Dest, W0, DestLen);
+    Boost_FloatAddArr(Dest, Dest, W1, DestLen);
 }
 
 #undef FreqToIndex
@@ -144,14 +158,6 @@ void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, F
     Boost_FloatAddArr(S, S, S1, ResidualLength);
     Boost_FloatAddArr(S, S, S2, ResidualLength);
     Boost_FloatAddArr(S, S, S3, ResidualLength);
-/*
-    if(Dest -> OrigState.F2 < 2000)
-    {
-        GNUPlot_PlotFloat(S, 120);
-        WaitForDraw(15000);
-        GNUPlot_PlotFloat(W, 120);
-        getchar();
-    }*/
 
     Boost_FloatDivArr(S0, S0, S, ResidualLength);
     Boost_FloatDivArr(S1, S1, S, ResidualLength);
@@ -184,5 +190,14 @@ void LCFECSOLAFilter_Bake(float* Dest, LCFECSOLAFilter* Src, FECSOLAState* FStat
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F0Env, FState -> F0 - Src -> OrigState.F0, FState -> S0, Src -> Length);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F1Env, FState -> F1 - Src -> OrigState.F1, FState -> S1, Src -> Length);
     LCFECSOLAFilter_MoveSubEnv(Dest, Src -> F3Env, FState -> F3 - Src -> OrigState.F3, FState -> S3, Src -> Length);
+/*
+        if(Src -> OrigState.F2 > 1900)
+        {
+            GNUPlot_PlotFloat(Dest, 120);
+            WaitForDraw(15000);
+            //GNUPlot_PlotFloat(W, 120);
+            //getchar();
+        }
+*/
     Boost_FloatMulArr(Dest, Dest, Decay, Src -> Length);
 }

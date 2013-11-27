@@ -155,6 +155,7 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         //Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
         FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
+        //printf("%f\n", BF);
         //ALblLog_Print("%d", Ret.PSOLAFrameHopSize);
         //Maintain Spectral Envelope
         #include "FSynthSpectrumModification.h"
