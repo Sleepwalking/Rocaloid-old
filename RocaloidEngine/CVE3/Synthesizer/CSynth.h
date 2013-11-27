@@ -24,7 +24,7 @@ AutoClass
 
 typedef struct
 {
-    int PSOLAFrameHopSize;
+    float PSOLAFrameHopSize;
     int BeforeVOT;
 } CSynthSendback;
 

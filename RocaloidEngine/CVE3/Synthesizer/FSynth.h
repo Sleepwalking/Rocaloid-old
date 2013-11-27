@@ -16,7 +16,7 @@ AutoClass
 
 typedef struct
 {
-    int PSOLAFrameHopSize;
+    float PSOLAFrameHopSize;
     int BeforeVOT;
     FECSOLAState FState;
 } FSynthSendback;

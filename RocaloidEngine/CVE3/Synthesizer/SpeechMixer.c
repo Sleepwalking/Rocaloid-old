@@ -216,11 +216,11 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
             #endif
             #ifdef SpeechMixer_FECSOLA
                 #define _SpeechMixer_
-                #include "MixerPitchTransition.h"
+                #include "MixerTransition.h"
                 #undef _SpeechMixer_
             #endif
             //ALblLog_Print("SpeechMixer Synthesis: F1 = %f, F2 = %f, F3 = %f", DestState.F1, DestState.F2, DestState.F3);
-            Ret.PSOLAFrameHopSize = (int)HopSize;
+            Ret.PSOLAFrameHopSize = HopSize;
             Ret.BeforeVOT = 0;
             Ret.FState = DestState;
         }

@@ -1,5 +1,4 @@
 //Re|Im 1 -> Tmp1
-
 #ifdef _PitchMixer_
     FSynthSendback SubRet = FSynth_Synthesis(& Dest -> SubSynth1, & Tmp1);
     Mixer_SoleSynth_Prepare(1);
@@ -59,11 +58,17 @@ MagnitudeFromComplex(Magn, Output -> Re, Output -> Im, CVE_FFTHalf);
 
 CPF_Bake(Magn, & CPF1, CVE_FFTHalf);
 
+
 Boost_FloatAdd(Magn, Magn, 0.01, CVE_FFTHalf);
 Boost_FloatDivArr(Magn, AvgMagn, Magn, CVE_FFTHalf);
+/*
+GNUPlot_PlotFloat(Magn, 120);
+WaitForDraw(20000);
+GNUPlot_PlotFloat(AvgMagn, 120);
+WaitForDraw(20000);*/
 #ifdef _PitchMixer_
-Boost_FloatMulArr(Output -> Re, Output -> Re, Magn, CVE_FFTHalf);
-Boost_FloatMulArr(Output -> Im, Output -> Im, Magn, CVE_FFTHalf);
+//Boost_FloatMulArr(Output -> Re, Output -> Re, Magn, CVE_FFTHalf);
+//Boost_FloatMulArr(Output -> Im, Output -> Im, Magn, CVE_FFTHalf);
 #endif
 Reflect(Output -> Re, Output -> Im, Output -> Re, Output -> Im, 10);
 

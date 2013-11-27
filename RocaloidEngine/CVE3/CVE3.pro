@@ -94,12 +94,12 @@ HEADERS += \
     Synthesizer/MixerMacro.h \
     DSPEx/LCFECSOLA.h \
     Debug/ALblLog.h \
-    Synthesizer/MixerPitchTransition.h \
     Synthesizer/FSynthSpectrumModification.h \
     CVEConfig.h \
     ../../RUtil/Structure/VariationList.h \
     Synthesizer/SyllableVariator.h \
-    Synthesizer/Synthesizer.h
+    Synthesizer/Synthesizer.h \
+    Synthesizer/MixerTransition.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../CVEDSP/debug/ -lCVEDSP

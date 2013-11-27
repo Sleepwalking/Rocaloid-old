@@ -73,9 +73,9 @@ void PitchMixer_SwapSynth(PitchMixer* Dest)
     Dest -> SubSynth1Index = Dest -> SubSynth2Index;
     Dest -> SubSynth2Index = TmpIndex;
 
-    FormantLayerPartialEntry TmpEntry = Dest -> Entry1;
-    Dest -> Entry1                    = Dest -> Entry2;
-    Dest -> Entry2                    = TmpEntry;
+    FormantLayerPartialEntry* TmpEntry = Dest -> Entry1;
+    Dest -> Entry1                     = Dest -> Entry2;
+    Dest -> Entry2                     = TmpEntry;
 }
 
 void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
@@ -88,8 +88,8 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
         {
             //SubSynth1 needs to be reloaded.
             Dest -> SubSynth1Index = Target.SubIndex + 0;
-            Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
-            FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+            Dest -> Entry1 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+            FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1 -> Name);
         }
         Dest -> TransitionRatio = 0;
         FSynth_SetFrequency(& Dest -> SubSynth1, Freq);
@@ -141,8 +141,8 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 Dest -> SubSynth2Index = Target.SubIndex + 1;
                 if(Target.Reach != 1)
                 {
-                    Dest -> Entry2 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth2Index);
-                    FSynth_SetSymbol(& Dest -> SubSynth2, & Dest -> Entry2.Name);
+                    Dest -> Entry2 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth2Index);
+                    FSynth_SetSymbol(& Dest -> SubSynth2, & Dest -> Entry2 -> Name);
                 }
                 Dest -> TransitionRatio = Target.Ratio;
                 Dest -> ForwardTransition = 1;
@@ -153,8 +153,8 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 Dest -> SubSynth1Index = Target.SubIndex + 1;
                 if(Target.Reach != 1)
                 {
-                    Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
-                    FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                    Dest -> Entry1 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                    FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1 -> Name);
                 }
                 Dest -> TransitionRatio = 1.0f - Target.Ratio;
                 Dest -> ForwardTransition = 0;
@@ -166,8 +166,8 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 Dest -> SubSynth1Index = Target.SubIndex;
                 if(Target.Reach != 1)
                 {
-                    Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
-                    FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                    Dest -> Entry1 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                    FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1 -> Name);
                 }
                 Dest -> TransitionRatio = Target.Ratio;
                 Dest -> ForwardTransition = 0;
@@ -176,8 +176,8 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 //SubSynth1 needs to be reloaded.
                 //Transition: SS1 -> SS2
                 Dest -> SubSynth1Index = Target.SubIndex;
-                Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
-                FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                Dest -> Entry1 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1 -> Name);
                 Dest -> TransitionRatio = Target.Ratio;
                 Dest -> ForwardTransition = 0;
             }else
@@ -186,12 +186,12 @@ void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq)
                 //Transition: SS1 -> SS2
                 Dest -> SubSynth1Index = Target.SubIndex + 0;
                 Dest -> SubSynth2Index = Target.SubIndex + 1;
-                Dest -> Entry1 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
-                FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1.Name);
+                Dest -> Entry1 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth1Index);
+                FSynth_SetSymbol(& Dest -> SubSynth1, & Dest -> Entry1 -> Name);
                 if(Target.Reach != 1)
                 {
-                    Dest -> Entry2 = GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth2Index);
-                    FSynth_SetSymbol(& Dest -> SubSynth2, & Dest -> Entry2.Name);
+                    Dest -> Entry2 = & GetFusedFormantLayerEntry((& CGQuerySpace), Target.Index, Dest -> SubSynth2Index);
+                    FSynth_SetSymbol(& Dest -> SubSynth2, & Dest -> Entry2 -> Name);
                 }
                 Dest -> TransitionRatio = Target.Ratio;
                 Dest -> ForwardTransition = 1;
@@ -342,10 +342,10 @@ PitchMixerSendback PitchMixer_Synthesis(PitchMixer* Dest, FDFrame* Output)
     //Transition Synthesis
 
     #define _PitchMixer_
-    #include "MixerPitchTransition.h"
+    #include "MixerTransition.h"
     #undef _PitchMixer_
 
-    Ret.PSOLAFrameHopSize = (int)HopSize;
+    Ret.PSOLAFrameHopSize = HopSize;
     Ret.BeforeVOT = 0;
 
     SynthesisFinished:

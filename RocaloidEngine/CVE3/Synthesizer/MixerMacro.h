@@ -37,7 +37,7 @@
     FECSOLAState_CreateFormant\
     (\
         _Dest,\
-        Dest -> Entry##Num.F0, Dest -> Entry##Num.F1, Dest -> Entry##Num.F2, Dest -> Entry##Num.F3,\
-        0                    , 0                    , 0                    , 0                    ,\
-        1                    , Dest -> Entry##Num.S1, Dest -> Entry##Num.S2, Dest -> Entry##Num.S3 \
+        Dest -> Entry##Num -> F0, Dest -> Entry##Num -> F1, Dest -> Entry##Num -> F2, Dest -> Entry##Num -> F3,\
+        0                       , 0                       , 0                       , 0                       ,\
+        1                       , Dest -> Entry##Num -> S1, Dest -> Entry##Num -> S2, Dest -> Entry##Num -> S3 \
     )

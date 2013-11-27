@@ -18,8 +18,8 @@ AutoClass
     int SubSynth2Index;
     float TransitionRatio;
     int ForwardTransition;
-    FormantLayerPartialEntry Entry1;
-    FormantLayerPartialEntry Entry2;
+    FormantLayerPartialEntry* Entry1;
+    FormantLayerPartialEntry* Entry2;
 
     float LimitedFreq;
     int IsLimitedFreq;
@@ -28,7 +28,7 @@ AutoClass
 typedef struct
 {
     FECSOLAState FState;
-    int PSOLAFrameHopSize;
+    float PSOLAFrameHopSize;
     int BeforeVOT;
 } PitchMixerSendback;
 

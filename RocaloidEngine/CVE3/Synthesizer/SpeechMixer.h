@@ -26,7 +26,7 @@ AutoClass
 typedef struct
 {
     FECSOLAState FState;
-    int PSOLAFrameHopSize;
+    float PSOLAFrameHopSize;
     int BeforeVOT;
 } SpeechMixerSendback;
 

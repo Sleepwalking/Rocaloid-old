@@ -10,7 +10,7 @@ CDTMap* QueryMap;
 
 _Constructor_ (FormantLayerPartialEntry)
 {
-    memset(Dest, sizeof(FormantLayerPartialEntry), 1);
+    memset(Dest, 0, sizeof(FormantLayerPartialEntry));
     String_Ctor(& Dest -> Name);
 }
 
@@ -255,7 +255,7 @@ void Demapper_ConstructFormantFusedList(CDTMappingQuerySpace* Dest, CDTMap* Src)
             }
         }
         #ifdef VERBOSE
-        Demapper_FormantFusedListVerbose(Dest, i);
+        //Demapper_FormantFusedListVerbose(Dest, i);
         #endif
     }
 }
@@ -313,6 +313,7 @@ Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0)
     Transition Ret;
     int Match, i;
     Match = Demapper_FindFormantLayerFreqQuerySpace(QuerySpace, Phone);
+    CDTMappingQuerySpace* QS = QuerySpace;
     Ret.Index = Match;
     if(Match == - 1)
     {

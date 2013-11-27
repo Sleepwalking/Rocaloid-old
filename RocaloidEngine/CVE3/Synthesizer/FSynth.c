@@ -49,6 +49,7 @@ void FSynth_SetFrequency(FSynth* Dest, float Freq)
     Dest -> SynthFreq = Freq;
 }
 
+float TmpF[1024];
 void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
 {
     int i;
@@ -68,7 +69,12 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
             IRatio = Offset - LOffset;
             Dest -> Data[i] = Center[LOffset] * (1 - IRatio) + Center[LOffset + 1] * IRatio;
             Offset += Ratio;
-        }
+        }/*
+        Boost_FloatMul(TmpF, Dest -> Data, 20, 1024);
+        Boost_FloatAdd(TmpF, TmpF, 3.5, 1024);
+        GNUPlot_SetTitleAndNumber("", Ratio * 100);
+        GNUPlot_PlotFloat(TmpF, 1024);
+        WaitForDraw(80000);*/
     }else
     {
         //Bound checking
@@ -145,7 +151,6 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         //TODO: GetVOT from CDT
         float FreqExpand = 1;
         int TransLast = CSynth_GetVOT(& Dest -> SubSynth) - Dest -> SubSynth.PlayPosition + SubRet.PSOLAFrameHopSize;
-        printf("%d\n", TransLast);
         if(TransLast < FSynth_ConsonantTransition)
             FreqExpand = TransLast / FSynth_ConsonantTransition
                        + BF / Dest -> SynthFreq * (1.0f - TransLast / FSynth_ConsonantTransition);
@@ -155,8 +160,6 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         //Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
         FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
-        //printf("%f\n", BF);
-        //ALblLog_Print("%d", Ret.PSOLAFrameHopSize);
         //Maintain Spectral Envelope
         #include "FSynthSpectrumModification.h"
     }
@@ -166,7 +169,6 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
 
     if(Ret.PSOLAFrameHopSize > 512)
         Ret.PSOLAFrameHopSize = 512;
-
 
     PSOLAFrame_Dtor(& BFWave);
     PSOLAFrame_Dtor(& TempWave);

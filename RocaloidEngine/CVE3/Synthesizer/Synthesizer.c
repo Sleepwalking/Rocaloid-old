@@ -91,7 +91,7 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
         Synthesizer_RightWindow(SynthBuffer, SubRet.PSOLAFrameHopSize);
         Synthesizer_LeftWindow(TVocalFrame.Data, SubRet.PSOLAFrameHopSize);
         Boost_FloatAddArr(SynthBuffer, SynthBuffer,
-                          TVocalFrame.Data + CVE_FFTHalf - SubRet.PSOLAFrameHopSize,
+                          TVocalFrame.Data + (int)(CVE_FFTHalf - SubRet.PSOLAFrameHopSize),
                           CVE_FFTHalf + SubRet.PSOLAFrameHopSize);
 
         //Dump
@@ -135,7 +135,7 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
             Synthesizer_LeftWindow(TVocalFrame.Data, SubRet.PSOLAFrameHopSize);
             Boost_FloatSet(SynthBuffer, 0, SilenceLength);
             Boost_FloatCopy(SynthBuffer + SilenceLength,
-                            TVocalFrame.Data + CVE_FFTHalf - SubRet.PSOLAFrameHopSize,
+                            TVocalFrame.Data + (int)(CVE_FFTHalf - SubRet.PSOLAFrameHopSize),
                             SubRet.PSOLAFrameHopSize + CVE_FFTHalf);
 
             //Dump
