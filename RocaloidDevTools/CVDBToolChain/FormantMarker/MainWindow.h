@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSlider>
 #include <QLabel>
+#include <QListView>
+#include <QStandardItem>
 #include "WaveBox.h"
 
 class MainWindow : public QWidget
@@ -23,6 +25,8 @@ private slots:
     void UpdateFilter(int);
 
 private:
+    QStandardItemModel* CONFModel;
+    QListView* CONFList;
     WaveBox* InnerWaveBox;
     QSlider* F1Slider;
     QSlider* F2Slider;

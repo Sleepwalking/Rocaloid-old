@@ -10,6 +10,7 @@ int NewLineValid;
 
 void RDL_ReadIgnoreComment(String* Dest, StringStream* Src)
 {
+    Next:
     StringStream_ReadWord(Dest, Src);
     if(Dest -> Data_Index == 0 && String_EqualChars(Dest, "#"))
     {
@@ -17,10 +18,7 @@ void RDL_ReadIgnoreComment(String* Dest, StringStream* Src)
         {
             StringStream_ReadWord(Dest, Src);
             if(Dest -> Data_Index == 0 && String_EqualChars(Dest, "#"))
-            {
-                StringStream_ReadWord(Dest, Src);
-                break;
-            }
+                goto Next;
         }
     }
 }

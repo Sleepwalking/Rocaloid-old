@@ -24,7 +24,6 @@
 
 int main(void)
 {
-
     chdir("/tmp/Rocaloid_LuoTianYi_Build");
     GenerateHanning(Hanning2048, 2048);
     GenerateHanning(Hanning1024, 1024);

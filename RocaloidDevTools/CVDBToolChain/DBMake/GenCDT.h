@@ -66,7 +66,7 @@ int GenCDT()
             DestSymbolEntry -> Type = 'C';
         DestSymbolEntry -> VOI = DFrag.Header.VOI;
         DestSymbolEntry -> VOT = (float)DFrag.PulseOffsets[DFrag.Header.VOI] / 44100;
-        DestSymbolEntry -> F0 = Frag.SampleList[i].F0;
+        DestSymbolEntry -> F0 = DFrag.Header.F0; //Frag.SampleList[i].F0;
         DestSymbolEntry -> F1 = Scheme.SrcVList[SrcVIndex].F1;
         DestSymbolEntry -> F2 = Scheme.SrcVList[SrcVIndex].F2;
         DestSymbolEntry -> F3 = Scheme.SrcVList[SrcVIndex].F3;
@@ -82,9 +82,10 @@ int GenCDT()
         String_Copy(& DestFreqEntry -> Name, & Name);
         Name.Data_Index --;
         String_Copy(& DestFreqEntry -> FPhone, & Name);
-        DestFreqEntry -> F0 = Frag.SampleList[i].F0;
+        DestFreqEntry -> F0 = DFrag.Header.F0; //Frag.SampleList[i].F0;
 
         //FormantLayerMap
+        //Uncomment to generate one entry for each combination.
         //if(i == 0 || (! String_Equal(& Frag.SampleList[i].Consonant, & Frag.SampleList[i - 1].Consonant))
         //          || (! String_Equal(& Frag.SampleList[i].Vowel    , & Frag.SampleList[i - 1].Vowel    )))
         {
@@ -94,7 +95,7 @@ int GenCDT()
             FormantLayerEntry_Ctor(DestFormantEntry);
             String_Copy(& DestFormantEntry -> Phone , & Name);
             String_Copy(& DestFormantEntry -> FPhone, & Name);
-            DestFormantEntry -> F0 = Frag.SampleList[i].F0;
+            DestFormantEntry -> F0 = DFrag.Header.F0; //Frag.SampleList[i].F0;
             DestFormantEntry -> F1 = Scheme.SrcVList[SrcVIndex].F1;
             DestFormantEntry -> F2 = Scheme.SrcVList[SrcVIndex].F2;
             DestFormantEntry -> F3 = Scheme.SrcVList[SrcVIndex].F3;

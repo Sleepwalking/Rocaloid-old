@@ -187,13 +187,19 @@ int main(int ArgQ, char** ArgList)
     memcpy(Output.Wave, Wave + Pulses[0], Output.Header.WaveSize * sizeof(float));
     Output.PulseOffsets[0] = 0;
 
-    float* Spectrum = (float*)malloc(sizeof(float) * 1024);
+    float PeriodSum = 0;
+    int LPeriod = (Output.Header.PulseNum - Output.Header.VOI) / 3 + Output.Header.VOI;
+    int HPeriod = (Output.Header.PulseNum - Output.Header.VOI) / 2 + Output.Header.VOI;
+    PeriodSum = Output.PulseOffsets[HPeriod] - Output.PulseOffsets[LPeriod];
+    Output.Header.F0 = 44100.0 / (PeriodSum / (HPeriod - LPeriod));
+    printf("Adjusted F0: %f\n", Output.Header.F0);
+
     float* Formant = (float*)malloc(sizeof(float) * 1024);
     FormantDescriptor FormantFreq;
-    MagnitudeFromWave(Spectrum, Wave + WaveLen / 2, 10);
-    SpectralEnvelopeFromMagnitude(Spectrum, Spectrum, BaseFreq, 1024);
     FormantEnvelopeFromWave(Formant, Wave + WaveLen / 2, BaseFreq, 5000, 50, 10);
-/*
+
+/*  Obsoleted codes for ANN-based formant extraction.
+
     int FIndex = - 1;
     float* LPC = (float*)malloc(sizeof(float) * 100);
     float* LPCS = (float*)malloc(sizeof(float) * 1024);
@@ -219,6 +225,7 @@ int main(int ArgQ, char** ArgList)
            CNet.FormantClasses[FIndex].F2,
            CNet.FormantClasses[FIndex].F3);
 */
+
     FormantFreq = AnalyzeFormantFromEnvelope(Formant, 1024);
     if(Arg_F1Avaliable)
         Output.Header.F1 = Arg_F1;
@@ -240,7 +247,6 @@ int main(int ArgQ, char** ArgList)
     printf("F2 = %fHz, S2 = %f.\n", Output.Header.F2, Output.Header.S2);
     printf("F3 = %fHz, S3 = %f.\n", Output.Header.F3, Output.Header.S3);
 
-    free(Spectrum);
     free(Formant);
     String_JoinChars(& SymbolName, ".cvdb");
     String_JoinChars(& OutputPath, "/");

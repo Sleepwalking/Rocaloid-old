@@ -108,14 +108,15 @@ int GenSCONF()
     {
         for(j = 0; j <= Scheme.SrcVList_Index; j ++)
         {
-            for(k = 0; k < Scheme.PitchStep; k ++)
-            {
-                ArrayType_PushNull(TickList_Type, Split.TickList);
-                TickList_Type_Ctor(Split.TickList + Split.TickList_Index);
-                Split.TickList[Split.TickList_Index].Time = 0;
-                String_Copy(& Split.TickList[Split.TickList_Index].Consonant, Scheme.SrcCList + i);
-                String_Copy(& Split.TickList[Split.TickList_Index].Vowel, & Scheme.SrcVList[j].Vowel);
-            }
+            if(String_GetChar(& Scheme.SrcVList[j].Vowel, 0) != '_')
+                for(k = 0; k < Scheme.PitchStep; k ++)
+                {
+                    ArrayType_PushNull(TickList_Type, Split.TickList);
+                    TickList_Type_Ctor(Split.TickList + Split.TickList_Index);
+                    Split.TickList[Split.TickList_Index].Time = 0;
+                    String_Copy(& Split.TickList[Split.TickList_Index].Consonant, Scheme.SrcCList + i);
+                    String_Copy(& Split.TickList[Split.TickList_Index].Vowel, & Scheme.SrcVList[j].Vowel);
+                }
         }
     }
 
@@ -168,6 +169,10 @@ int GenRecDictionary()
     int i;
     for(i = 0; i <= Split.TickList_Index; i ++)
     {
+        if(i != Split.TickList_Index)
+            if(String_Equal(& Split.TickList[i].Consonant, & Split.TickList[i + 1].Consonant)
+            && String_Equal(& Split.TickList[i].Vowel    , & Split.TickList[i + 1].Vowel))
+                continue;
         if(String_EqualChars(& Split.TickList[i].Consonant, "/"))
             String_SetChars(& Tmp, "");
         else

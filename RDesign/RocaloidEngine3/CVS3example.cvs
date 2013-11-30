@@ -1,12 +1,19 @@
 #CVS 3.0
 CVS
 	SyllableList
-		Syllable
+		Syllable #
 			TransPhoneList	sa	a	i	End
 			TransTickList	0	0.2	3	End
 			TransRatioList
 				>	0	0
-				>	0.5	0.2
+				>	0.4	0.1
+				>	2.6	0.2
+			End #
+			TransPhoneList	sa	a	_n	End
+			TransTickList	0	0.2	3	End
+			TransRatioList
+				>	0	0
+				>	0.4	0.1
 				>	2.6	0.2
 			End
 			TransEndRatio 0.6
@@ -32,8 +39,8 @@ CVS
 				End
 			End
 			FreqList
-				>	0	262
-				>	3	262
+				>	0	462
+				>	3	462
 			End
 			Effects
 				EnvelopeList
@@ -44,7 +51,7 @@ CVS
 			StartTime 0.0
 		End
 		Syllable
-			TransPhoneList	ba	a_n	_n	End
+			TransPhoneList	ba	a	_n	End
 			TransTickList	0	0.3	1.0	End
 			TransRatioList
 			End

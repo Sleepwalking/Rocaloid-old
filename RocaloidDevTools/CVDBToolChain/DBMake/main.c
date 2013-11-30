@@ -78,7 +78,7 @@ int main(int argc, char** argv)
 
     if(! GotOperation || ! GotDir)
     {
-        printf("Rocaloid DBMake 0.1\n");
+        printf("Rocaloid DBMake 0.12  2013.11.30C\n");
         printf("DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
         return 0;
     }

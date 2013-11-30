@@ -11,6 +11,7 @@ float Spec[256];
 
 float BaseFreqDetect(float* Wave, int Length, float LowFreq)
 {
+    //Obtain the approximated freq
     ArrayType_Ctor(float, FF);
     int i;
     for(i = Length / 3 > 5000 ? 5000 : Length / 3; i < Length - 1536; i += 1536)

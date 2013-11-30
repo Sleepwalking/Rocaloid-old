@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     ../../../RUtil/IO/FileStream.c \
     ../../../RUtil/Misc/Converter.c \
     ../../../RUtil/Structure/String.c \
-    ../../../RocaloidEngine/CVE3/DSPEx/LCFECSOLA.c
+    ../../../RocaloidEngine/CVE3/DSPEx/LCFECSOLA.c \
+    ../TCFILE/WCONF.c \
+    ../../../RocaloidEngine/RFILE3/RDL.c
 
 HEADERS  += MainWindow.h \
     WaveBox.h \
@@ -65,7 +67,10 @@ HEADERS  += MainWindow.h \
     ../../../CVEDSP/DSPBase/Filter.h \
     ../../../CVEDSP/DSPBase/ControlPointFilter.h \
     DSP.h \
-    ../../../RocaloidEngine/CVE3/DSPEx/LCFECSOLA.h
+    ../../../RocaloidEngine/CVE3/DSPEx/LCFECSOLA.h \
+    CONFIO.h \
+    ../TCFILE/WCONF.h \
+    ../../../RocaloidEngine/RFILE3/RDL.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../CVEDSP/release/ -lCVEDSP
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../CVEDSP/debug/ -lCVEDSP
