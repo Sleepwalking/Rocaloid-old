@@ -69,12 +69,7 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
             IRatio = Offset - LOffset;
             Dest -> Data[i] = Center[LOffset] * (1 - IRatio) + Center[LOffset + 1] * IRatio;
             Offset += Ratio;
-        }/*
-        Boost_FloatMul(TmpF, Dest -> Data, 20, 1024);
-        Boost_FloatAdd(TmpF, TmpF, 3.5, 1024);
-        GNUPlot_SetTitleAndNumber("", Ratio * 100);
-        GNUPlot_PlotFloat(TmpF, 1024);
-        WaitForDraw(80000);*/
+        }
     }else
     {
         //Bound checking
@@ -86,8 +81,7 @@ void FSynth_Resample(PSOLAFrame* Dest, PSOLAFrame* Src, float Ratio)
                 LOffset = (int)(Offset + SrcHalf) - SrcHalf;
                 IRatio = Offset - LOffset;
                 Dest -> Data[i] = Center[LOffset] * (1 - IRatio) + Center[LOffset + 1] * IRatio;
-            }
-            else
+            }else
             {
                 //Beyond Src range.
                 Dest -> Data[i] = 0;
@@ -157,8 +151,18 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * FreqExpand;
     }else
     {
-        //Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
-        FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
+        int DPlayIndex = Dest -> SubSynth.PlayIndex;
+        unsigned int* DPulseOffsets = Dest -> SubSynth.Data.PulseOffsets;
+        float AvgPeriod = ((float)DPulseOffsets[DPlayIndex + 1] - (float)DPulseOffsets[DPlayIndex - 1]) / 2.0;
+        BF = (float)SampleRate / AvgPeriod;
+        if(Dest -> SynthFreq > BF)
+        {
+            FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
+        }else
+        {
+            //This will be the equivalent to PSOLA pitch change.
+            FSynth_Resample(& TempWave, & BFWave, 1);
+        }
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
         //Maintain Spectral Envelope
         #include "FSynthSpectrumModification.h"

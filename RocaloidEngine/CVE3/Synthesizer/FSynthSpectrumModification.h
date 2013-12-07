@@ -15,7 +15,7 @@ RFFT(OrigRe, OrigIm, Orig, 10);
 MagnitudeFromComplex(OrigMa, OrigRe, OrigIm, CVE_FFTHalf);
 
 SpectralEnvelopeFromMagnitude(OrigMa, OrigMa, Dest -> SynthFreq, CVE_FFTSize);
-Boost_FloatAdd(OrigMa, OrigMa, 0.01, CVE_FFTHalf);
+Boost_FloatAdd(OrigMa, OrigMa, 0.00001, CVE_FFTHalf);
 Boost_FloatDivArr(OrigRe, OrigRe, OrigMa, CVE_FFTHalf);
 Boost_FloatDivArr(OrigIm, OrigIm, OrigMa, CVE_FFTHalf);
 
@@ -39,6 +39,7 @@ String_Dtor(& Symbol);
 PitchState.F0 = Dest -> SynthFreq;
 
 //Reduce S0 for low freq.
+
 if(BF > Dest -> SynthFreq)
     PitchState.S0 *= pow(Dest -> SynthFreq / BF, 1);
 

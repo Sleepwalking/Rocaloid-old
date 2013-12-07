@@ -67,7 +67,7 @@ void CSynth_Reset(CSynth* Dest)
             if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
                 break;
         Dest -> CycleStart = i;
-        Dest -> CycleLength = CSynth_CycleSample / (SampleRate / Dest -> Data.Header.F0);
+        Dest -> CycleLength = CSynth_CycleTransition / (SampleRate / Dest -> Data.Header.F0);
     }
 }
 
@@ -109,7 +109,7 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
         //In transition
         PSOLAFrame Temp;
         PSOLAFrame_CtorSize(& Temp, Output -> Length);
-        int ExceedLength = DPlayIndex - DPulseNum + Dest -> CycleLength;
+        int ExceedLength = DPlayIndex - DPulseNum + Dest -> CycleLength + CSynth_CycleTail;
         TRatio = (float)ExceedLength / Dest -> CycleLength;
         PSOLAFrame_SecureGet(Output,
                              Dest -> Data.Wave,
@@ -123,12 +123,15 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
         Boost_FloatMul(Output -> Data, Output -> Data, 1.0f - TRatio, Output -> Length);
         Boost_FloatAddArr(Output -> Data, Temp.Data, Output -> Data, Temp.Length);
         PSOLAFrame_Dtor(& Temp);
+        //printf("%d : %d\n", DPlayIndex, Dest -> CycleStart + ExceedLength);
+        ALblLog_Print("T");
     }else
     {
         PSOLAFrame_SecureGet(Output,
                              Dest -> Data.Wave,
                              Dest -> Data.Header.WaveSize,
                              DPulseOffsets[DPlayIndex]);
+        //printf("%d\n", DPlayIndex);
     }
     if(DPlayIndex < (signed int)Dest -> Data.Header.VOI)
     {
@@ -142,16 +145,17 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
             Ret.PSOLAFrameHopSize = CSynth_GetVOT(Dest) + 1 - DPlayPos + 512;
             DPlayPos = CSynth_GetVOT(Dest) + 1;
         }
-        ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        //ALblLog_Print("Before %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         CSynth_UpdateIndex(Dest);
     }else
     {
         //In Cycle
         Ret.PSOLAFrameHopSize = DPulseOffsets[DPlayIndex] - DPulseOffsets[DPlayIndex - 1];
-        ALblLog_Print("After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
+        //ALblLog_Print("C: After %d (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);
         Ret.BeforeVOT = 0;
         Dest -> FPlayIndex += Dest -> VowelRatio;
     }
+    //printf("%d\n", DPlayIndex);
     if(Dest -> FPlayIndex > DPulseNum - CSynth_CycleTail)
         Dest -> FPlayIndex = Dest -> CycleStart + Dest -> CycleLength;
 

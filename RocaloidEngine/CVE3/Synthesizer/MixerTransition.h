@@ -71,5 +71,3 @@ WaitForDraw(20000);*/
 //Boost_FloatMulArr(Output -> Im, Output -> Im, Magn, CVE_FFTHalf);
 #endif
 Reflect(Output -> Re, Output -> Im, Output -> Re, Output -> Im, 10);
-
-

@@ -120,7 +120,7 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
             //|--------Dumped------|-Moved|   (Ret.Data)
             //               |-Hop-|-Half-|
             //|----Silence---|-PSOLAFrame-|
-            //...............-.-.-.-.-.-.-.   (SynthBuffer)
+            //...............~.~.~.~.~.~.~.   (SynthBuffer)
 
             //Synthesize
             SpeechMixer_Reset(& SubSynth);
@@ -150,7 +150,6 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
             CurrentSylIndex ++;
         }
         CurrentTime += (float)Ret.Length / SampleRate;
-        //Ret.Finished = 1;
     }else
     {
         //Mix Synthesis

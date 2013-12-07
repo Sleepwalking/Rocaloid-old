@@ -27,8 +27,8 @@ int main(void)
     chdir("/tmp/Rocaloid_LuoTianYi_Build");
     GenerateHanning(Hanning2048, 2048);
     GenerateHanning(Hanning1024, 1024);
-    Boost_FloatAdd(Hanning2048, Hanning2048, 0.001, 2048);
-    Boost_FloatAdd(Hanning1024, Hanning1024, 0.001, 1024);
+    Boost_FloatAdd(Hanning2048, Hanning2048, 0.00001, 2048);
+    Boost_FloatAdd(Hanning1024, Hanning1024, 0.00001, 1024);
 
     GNUPlot_Open();
 
@@ -76,7 +76,7 @@ int main(void)
     CVS3_Dtor(& testcvs);
     String_Dtor(& CVSPath);
     String_FromChars(Output, WAV_PATH);
-    WriteWaveAll(& Output, Wave, SampleRate * 10, SampleRate);
+    WriteWaveAll(& Output, Wave, i, SampleRate);
     String_Dtor(& Output);
 
     GNUPlot_Close();

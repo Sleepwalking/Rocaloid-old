@@ -13,13 +13,13 @@
 #define LCFECSOLA_ResidualFreq 5000
 
 //Length before the end of wave involved in cycle (uint: periods)
-#define CSynth_CycleTail 30
+#define CSynth_CycleTail 20
 
 //Position where wave loop starts (unit: samples).
 #define CSynth_CycleDelay 15000
 
-//Length of wave loop (unit: samples).
-#define CSynth_CycleSample 20000
+//Length of wave loop transition (unit: samples).
+#define CSynth_CycleTransition 12000
 
 //[Debug Use] 0: maintain spectral envelope in FSynth, 1: Only resample in FSynth.
 #define FSynth_SkipSynth 0

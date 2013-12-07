@@ -54,7 +54,8 @@ HEADERS += \
     ../../../CVEDSP/IntrinUtil/IntArray.h \
     ../../../CVEDSP/IntrinUtil/FloatArray.h \
     ../../../CVEDSP/IntrinUtil/Calculation.h \
-    Processor.h
+    Processor.h \
+    ../../../RUtil/Misc/Math.h
 
 SOURCES += \
     ../../../RUtil/IO/Wave.c \
@@ -68,7 +69,8 @@ SOURCES += \
     ../TCFILE/SCONF.c \
     ../TCFILE/CDS.c \
     ../../../RocaloidEngine/RFILE3/RDL.c \
-    Processor.c
+    Processor.c \
+    ../../../RUtil/Misc/Math.c
 
 
 

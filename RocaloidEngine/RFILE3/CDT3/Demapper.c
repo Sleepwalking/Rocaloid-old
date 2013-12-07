@@ -313,7 +313,6 @@ Transition Demapper_QueryFusedFormantLayer(String* Phone, float F0)
     Transition Ret;
     int Match, i;
     Match = Demapper_FindFormantLayerFreqQuerySpace(QuerySpace, Phone);
-    CDTMappingQuerySpace* QS = QuerySpace;
     Ret.Index = Match;
     if(Match == - 1)
     {
