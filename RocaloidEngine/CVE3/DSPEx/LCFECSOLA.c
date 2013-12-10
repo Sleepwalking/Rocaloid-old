@@ -120,6 +120,7 @@ void LCFECSOLAFilter_GetFromCPF(LCFECSOLAFilter* Dest, CPF* Src, FECSOLAState* F
     float* E = FloatMalloc(Dest -> Length);
     CPF_Bake(E, Src, Dest -> Length);
     LCFECSOLAFilter_GetFromFormantEnvelope(Dest, E, FState);
+    free(E);
 }
 
 void LCFECSOLAFilter_GetFromFormantEnvelope(LCFECSOLAFilter* Dest, float* Src, FECSOLAState* FState)

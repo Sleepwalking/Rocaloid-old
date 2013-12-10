@@ -14,7 +14,9 @@ AutoClass
     int CurrentSylIndex;
 
     float* SynthBuffer;
-    float BufferPos;
+    float* SynthMixBuffer;
+    int BufferPos;
+    int MixBufferPos;
 } EndClass(Synthesizer);
 
 typedef struct

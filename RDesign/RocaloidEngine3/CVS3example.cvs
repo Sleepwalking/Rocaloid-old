@@ -12,7 +12,7 @@ CVS
 			End
 #
 
-			TransPhoneList	a	a	i	i	a	a	End
+			TransPhoneList	cha	a	i	i	a	a	End
 			TransTickList	0	0.5	1.0	1.5	2.0	3	End
 			TransRatioList
 			End
@@ -30,7 +30,7 @@ CVS
 			End
 #
 			TransEndRatio 0
-			ConsonantRatio 1
+			ConsonantRatio 0.5
 			FormantDeviation
 				F1List
 					>	0.0	0
@@ -58,18 +58,19 @@ CVS
 			Effects
 				EnvelopeList
 					>	0	1
-					>	3	1
+					>	2.8	0.2
+					>	3	0
 				End
 			End
 			StartTime 0.0
 		End
 		Syllable
-			TransPhoneList	ba	a	_n	End
+			TransPhoneList	cha	a	_n	End
 			TransTickList	0	0.3	1.0	End
 			TransRatioList
 			End
 			TransEndRatio 1.0
-			ConsonantRatio 0.5
+			ConsonantRatio 1
 			FormantDeviation
 				F1List
 					>	0.0	0
@@ -100,11 +101,11 @@ CVS
 					>	0	1
 				End
 			End
-			StartTime 5.0
-		End	#
+			StartTime 2.8
+		End
 		Syllable
 			TransPhoneList	bi	i	_n	End
-			TransTickList	0	0.3	1.0	End
+			TransTickList	0	0.3	1.1	End
 			TransRatioList
 			End
 			TransEndRatio 1.0
@@ -137,6 +138,8 @@ CVS
 			Effects
 				EnvelopeList
 					>	0	1
+					>	1	0.5
+					>	1.1	0
 				End
 			End
 			StartTime 8.0
@@ -228,8 +231,8 @@ CVS
 					>	0.7	0
 				End
 			End
-			StartTime 8.0
-		End	#
+			StartTime 10
+		End
 	End
 End
 

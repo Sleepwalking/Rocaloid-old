@@ -31,7 +31,8 @@ TransResult VariationList_Query(VariationList* Dest, float IndependentVar)
 {
     TransResult Ret;
     ArrayType_IncreaseSortFind(Ret.LowerIndex, float, Dest -> Independent, IndependentVar);
-    Ret.LowerIndex --;
+    if(Ret.LowerIndex > 0)
+        Ret.LowerIndex --;
     if(Ret.LowerIndex < Dest -> Independent_Index)
     {
         Ret.Ratio = (IndependentVar - Dest -> Independent[Ret.LowerIndex]) /
