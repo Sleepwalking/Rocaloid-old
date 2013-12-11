@@ -100,10 +100,10 @@ void GenerateFilterStrength(float* Dest, float F0, float F1, float F2, float F3,
     LCFECSOLAFilter_MoveWindow(DSP_S2, DSP_Filter2, F2, S2, 1000, 512);
     LCFECSOLAFilter_MoveWindow(DSP_S3, DSP_Filter3, F3, S3, 2000, 512);
 
-    Boost_FloatAdd(DSP_S0, DSP_S0, 0.03, ResidualLength);
-    Boost_FloatAdd(DSP_S1, DSP_S1, 0.03, ResidualLength);
-    Boost_FloatAdd(DSP_S2, DSP_S2, 0.03, ResidualLength);
-    Boost_FloatAdd(DSP_S3, DSP_S3, 0.03, ResidualLength);
+    Boost_FloatAdd(DSP_S0, DSP_S0, 0.01, ResidualLength);
+    Boost_FloatAdd(DSP_S1, DSP_S1, 0.01, ResidualLength);
+    Boost_FloatAdd(DSP_S2, DSP_S2, 0.01, ResidualLength);
+    Boost_FloatAdd(DSP_S3, DSP_S3, 0.01, ResidualLength);
 
     Boost_FloatSet(DSP_S, 0, ResidualLength);
 

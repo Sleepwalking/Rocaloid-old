@@ -283,6 +283,7 @@ int GenCVDB()
     for(i = 0; i <= Frag.SampleList_Index; i ++)
     {
         int Vowel = String_EqualChars(& Frag.SampleList[i].Consonant, "/");
+        //CDS is unused yet.
         int SrcVIndex = CDS_SearchByVowel(& Scheme, & Frag.SampleList[i].Vowel);
 
         String_SetChars(& FileIn, "./Frag/");
@@ -298,9 +299,9 @@ int GenCVDB()
         else
             CStrFloat(& LenStr, Scheme.DiphoneLen);
         CStrFloat(& Tmp, Frag.SampleList[i].F0);
-        CStrFloat(& F1Str, Scheme.SrcVList[SrcVIndex].F1);
-        CStrFloat(& F2Str, Scheme.SrcVList[SrcVIndex].F2);
-        CStrFloat(& F3Str, Scheme.SrcVList[SrcVIndex].F3);
+        CStrFloat(& F1Str, Frag.SampleList[i].F1);
+        CStrFloat(& F2Str, Frag.SampleList[i].F2);
+        CStrFloat(& F3Str, Frag.SampleList[i].F3);
         if(fork() == 0)
         {
             if(Vowel)

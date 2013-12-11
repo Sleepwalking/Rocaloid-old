@@ -32,6 +32,7 @@ int GenCDT()
     for(i = 0; i <= Frag.SampleList_Index; i ++)
     {
         int Vowel = String_EqualChars(& Frag.SampleList[i].Consonant, "/");
+        //CDS is unused yet.
         int SrcVIndex = CDS_SearchByVowel(& Scheme, & Frag.SampleList[i].Vowel);
         String_SetChars(& File, "CVDB/");
         String_SetChars(& Name, "");
@@ -67,12 +68,20 @@ int GenCDT()
         DestSymbolEntry -> VOI = DFrag.Header.VOI;
         DestSymbolEntry -> VOT = (float)DFrag.PulseOffsets[DFrag.Header.VOI] / 44100;
         DestSymbolEntry -> F0 = DFrag.Header.F0; //Frag.SampleList[i].F0;
+        /*
         DestSymbolEntry -> F1 = Scheme.SrcVList[SrcVIndex].F1;
         DestSymbolEntry -> F2 = Scheme.SrcVList[SrcVIndex].F2;
         DestSymbolEntry -> F3 = Scheme.SrcVList[SrcVIndex].F3;
         DestSymbolEntry -> S1 = Scheme.SrcVList[SrcVIndex].S1;
         DestSymbolEntry -> S2 = Scheme.SrcVList[SrcVIndex].S2;
         DestSymbolEntry -> S3 = Scheme.SrcVList[SrcVIndex].S3;
+        */
+        DestSymbolEntry -> F1 = Frag.SampleList[i].F1;
+        DestSymbolEntry -> F2 = Frag.SampleList[i].F2;
+        DestSymbolEntry -> F3 = Frag.SampleList[i].F3;
+        DestSymbolEntry -> S1 = Frag.SampleList[i].S1;
+        DestSymbolEntry -> S2 = Frag.SampleList[i].S2;
+        DestSymbolEntry -> S3 = Frag.SampleList[i].S3;
 
         //FreqLayerMap
         ArrayType_PushNull(FreqLayerEntry, Output.CDTMapping.FreqLayerMap);
@@ -96,12 +105,20 @@ int GenCDT()
             String_Copy(& DestFormantEntry -> Phone , & Name);
             String_Copy(& DestFormantEntry -> FPhone, & Name);
             DestFormantEntry -> F0 = DFrag.Header.F0; //Frag.SampleList[i].F0;
+            /*
             DestFormantEntry -> F1 = Scheme.SrcVList[SrcVIndex].F1;
             DestFormantEntry -> F2 = Scheme.SrcVList[SrcVIndex].F2;
             DestFormantEntry -> F3 = Scheme.SrcVList[SrcVIndex].F3;
             DestFormantEntry -> S1 = Scheme.SrcVList[SrcVIndex].S1;
             DestFormantEntry -> S2 = Scheme.SrcVList[SrcVIndex].S2;
             DestFormantEntry -> S3 = Scheme.SrcVList[SrcVIndex].S3;
+            */
+            DestSymbolEntry -> F1 = Frag.SampleList[i].F1;
+            DestSymbolEntry -> F2 = Frag.SampleList[i].F2;
+            DestSymbolEntry -> F3 = Frag.SampleList[i].F3;
+            DestSymbolEntry -> S1 = Frag.SampleList[i].S1;
+            DestSymbolEntry -> S2 = Frag.SampleList[i].S2;
+            DestSymbolEntry -> S3 = Frag.SampleList[i].S3;
         }
     }
     CVDB3_Dtor(& DFrag);
