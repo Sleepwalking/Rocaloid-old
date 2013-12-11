@@ -49,17 +49,6 @@ int LoadCDS(CDS* Dest, String* Path)
     return 1;
 }
 
-int CDS_SearchByVowel(CDS* Src, String* Vowel)
-{
-    int i;
-    for(i = 0; i <= Src -> SrcVList_Index; i ++)
-    {
-        if(String_Equal(& Src -> SrcVList[i].Vowel, Vowel))
-            return i;
-    }
-    return - 1;
-}
-
 #include "GenCDT.h"
 
 int Config()
@@ -213,6 +202,7 @@ int Split()
     {
         execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav",
               "-conf", "./Split.sconf",
+              "-cds", "./Scheme.cds",
               "-split", "./Frag/",
               "-wconf", "./Fragments.wconf", (char*)0);
         exit(0);

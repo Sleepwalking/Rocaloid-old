@@ -9,6 +9,7 @@ float F0 = 0;
 #include "../../../CVEDSP/DSPBase/Filter.h"
 #include "../../../CVEDSP/DSPBase/Window.h"
 #include "../../../CVEDSP/IntrinUtil/FloatArray.h"
+#include "../../../CVEDSP/Plot.h"
 #include "../../../RocaloidEngine/CVE3/DSPEx/LCFECSOLA.h"
 
 #define FreqToIndex(x) ((x) * 1024 / SampleRate)
@@ -28,12 +29,14 @@ float DSP_S[2048];
 
 float DSP_W[1024];
 
+float Scale = 1;
+
 void SpectrumEnvelopeFromWave(float* Dest, float* Wave, float F0)
 {
-    float Hamming[1024];
+    float Hanning[1024];
     float TmpWave[1024];
-    GenerateHamming(Hamming, 1024);
-    Boost_FloatMulArr(TmpWave, Hamming, Wave, 1024);
+    GenerateHanning(Hanning, 1024);
+    Boost_FloatMulArr(TmpWave, Hanning, Wave, 1024);
     MagnitudeFromWave(TmpWave, TmpWave, 10);
 
     CPF EnvelopeFeature;
@@ -51,13 +54,21 @@ void GenerateSpectrum(WaveBox* Dest)
     float AvgWave[1024];
     SetSampleRate(44100);
     Boost_FloatSet(AvgWave, 0, 1024);
-    F0 = GetBaseFrequencyFromSpectrum(TmpWave, 80, 1500, 1024);
     qDebug() << "F0 = " << F0;
-    for(i = 0; i < 5; i ++)
+    int Count = 0;
+    for(i = 0; i < 30; i ++)
     {
-        SpectrumEnvelopeFromWave(TmpWave, MainWave + MainWaveLen / 3 + i * 1024, F0);
-        Boost_FloatAddArr(AvgWave, AvgWave, TmpWave, 1024);
+        if(Boost_FloatMax(MainWave, MainWaveLen * i / 31, MainWaveLen * i / 31 + 1024) > 0.01)
+        {
+            SpectrumEnvelopeFromWave(TmpWave, MainWave + MainWaveLen * i / 31, F0);
+            Boost_FloatAddArr(AvgWave, AvgWave, TmpWave, 1024);
+            Count ++;
+        }
     }
+    qDebug() << Count;
+    Boost_FloatMul(AvgWave, AvgWave, 1.0 / Count * Scale, 1024);
+    //Boost_FloatMul(AvgWave, AvgWave, 0.3, 1024);
+    //GNUPlot_PlotFloat(AvgWave, 120);
 
     if(DSP_DecayLength != 512)
     {
@@ -101,5 +112,5 @@ void GenerateFilterStrength(float* Dest, float F0, float F1, float F2, float F3,
     Boost_FloatAddArr(DSP_S, DSP_S, DSP_S2, ResidualLength);
     Boost_FloatAddArr(DSP_S, DSP_S, DSP_S3, ResidualLength);
 
-    Boost_FloatMul(Dest, DSP_S, 0.3, 1024);
+    Boost_FloatMul(Dest, DSP_S, 0.3 * Scale, 1024);
 }

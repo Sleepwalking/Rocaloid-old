@@ -1,24 +1,26 @@
 #include <stdio.h>
 #include "../../../RUtil/RUtil.h"
-#include "../TCFILE/SCONF.h"
 #include "Scanner.h"
 #include "Spliter.h"
 /*
-    WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF]
+    WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF] [-cds] [CDS]
 */
 
 String RawPath;
 String FragPath;
 String SCONFPath;
 String WCONFPath;
+String CDSPath;
 
 int GotRaw = 0;
 int GotFrag = 0;
 int GotSCONF = 0;
 int GotWCONF = 0;
+int GotCDS = 0;
 
 int NextSCONF = 0;
 int NextWCONF = 0;
+int NextCDS = 0;
 int NextFrag = 0;
 
 int Task_Scan = 0;
@@ -30,6 +32,7 @@ int main(int argc, char** argv)
     String_Ctor(& FragPath);
     String_Ctor(& SCONFPath);
     String_Ctor(& WCONFPath);
+    String_Ctor(& CDSPath);
 
     String Tmp;
     String_Ctor(& Tmp);
@@ -80,6 +83,15 @@ int main(int argc, char** argv)
                     printf("Error: multiple wconfs!\n");
                     return 1;
                 }
+            }else if(String_EqualChars(& Tmp, "-cds"))
+            {
+                if(! GotCDS)
+                    NextCDS = 1;
+                else
+                {
+                    printf("Error: multiple cdses!\n");
+                    return 1;
+                }
             }else
             {
                 printf("Error: unknown parameter.\n");
@@ -92,25 +104,26 @@ int main(int argc, char** argv)
                 String_SetChars(& SCONFPath, argv[i]);
                 GotSCONF = 1;
                 NextSCONF = 0;
-            }
-            else if(NextWCONF)
+            }else if(NextWCONF)
             {
                 String_SetChars(& WCONFPath, argv[i]);
                 GotWCONF = 1;
                 NextWCONF = 0;
-            }
-            else if(NextFrag)
+            }else if(NextCDS)
+            {
+                String_SetChars(& CDSPath, argv[i]);
+                GotCDS = 1;
+                NextCDS = 0;
+            }else if(NextFrag)
             {
                 String_SetChars(& FragPath, argv[i]);
                 GotFrag = 1;
                 NextFrag = 0;
-            }
-            else if(! GotRaw)
+            }else if(! GotRaw)
             {
                 String_SetChars(& RawPath, argv[i]);
                 GotRaw = 1;
-            }
-            else
+            }else
             {
                 printf("Error: unrecognized parameter.\n");
                 return 1;
@@ -151,12 +164,25 @@ int main(int argc, char** argv)
             printf("Error: wconf not specified.\n");
             return 1;
         }
+        if(! GotCDS)
+        {
+            printf("Error: cds not specified.\n");
+            return 1;
+        }
+        CDS Scheme;
         WCONF SampleConf;
+        CDS_Ctor(& Scheme);
         WCONF_Ctor(& SampleConf);
-        WSplit(& SampleConf, & FragPath, & Split, & RawPath);
+        CDSReader_Open(& CDSPath);
+        CDS_Read(& Scheme);
+        CDSReader_Close();
+
+        WSplit(& SampleConf, & FragPath, & Split, & Scheme, & RawPath);
         WCONFWriter_Save();
         WCONF_Write(& SampleConf);
         WCONFWriter_Write(& WCONFPath);
+
+        CDS_Dtor(& Scheme);
         WCONF_Dtor(& SampleConf);
         printf("WCONF generated.\n");
     }else if(Task_Scan)
@@ -168,8 +194,8 @@ int main(int argc, char** argv)
         printf("SCONF regenerated.\n");
     }else
     {
-        printf("Rocaloid WSplit 0.1\n");
-        printf("WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF]\n");
+        printf("Rocaloid WSplit 0.2\n");
+        printf("WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF] [-cds] [CDS]\n");
     }
 
     SCONF_Dtor(& Split);
@@ -177,6 +203,7 @@ int main(int argc, char** argv)
     String_Dtor(& FragPath);
     String_Dtor(& SCONFPath);
     String_Dtor(& WCONFPath);
+    String_Dtor(& CDSPath);
     printf("WSplit Finished.\n");
     return 0;
 }

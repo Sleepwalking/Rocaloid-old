@@ -1,26 +1,39 @@
 #include "MainWindow.h"
 #include <QGridLayout>
 #include <QSlider>
+#include <QPushButton>
 
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
 #include <QDebug>
 
-#include "DSP.h"
-#include "CONFIO.h"
 #include "../../../RUtil/RUtil.h"
 #include "../../../RUtil/IO/FileUtil.h"
 #include "../../../RUtil/Misc/Converter.h"
+#include "DSP.h"
+#include "CONFIO.h"
 
 #include <math.h>
 #include <unistd.h>
+
+#define ConnectScrolls()\
+connect(F1Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(F2Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(F3Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(S1Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(S2Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(S3Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
+connect(SSlider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)))
 
 MainWindow::MainWindow(QWidget*)
 {
     CONFList = new QListView(this);
     QGridLayout* MainLayout = new QGridLayout(this);
     QGridLayout* WaveLayout = new QGridLayout(this);
+    QPushButton* SaveButton = new QPushButton(this);
+    QPushButton* ScaleInButton = new QPushButton(this);
+    QPushButton* ScaleOutButton = new QPushButton(this);
     CONFModel = new QStandardItemModel(this);
 
     InnerWaveBox = new WaveBox(this);
@@ -35,17 +48,24 @@ MainWindow::MainWindow(QWidget*)
 
     MainLayout -> setColumnStretch(0, 3);
     MainLayout -> setColumnStretch(1, 7);
-    MainLayout -> addWidget(CONFList, 0, 0, 10, 1);
+    MainLayout -> addWidget(CONFList, 0, 0, 9, 1);
+    MainLayout -> addWidget(SaveButton, 9, 0, 1, 1);
     MainLayout -> addLayout(WaveLayout, 0, 1, 10, 1);
     WaveLayout -> addWidget(InnerWaveBox, 0, 0, 5, 20);
-    WaveLayout -> addWidget(F1Slider, 5, 0, 1, 10);
-    WaveLayout -> addWidget(F2Slider, 6, 0, 1, 10);
-    WaveLayout -> addWidget(F3Slider, 7, 0, 1, 10);
-    WaveLayout -> addWidget(S1Slider, 5, 10, 1, 9);
-    WaveLayout -> addWidget(S2Slider, 6, 10, 1, 9);
-    WaveLayout -> addWidget(S3Slider, 7, 10, 1, 9);
-    WaveLayout -> addWidget(SSlider, 5, 19, 3, 1);
-    WaveLayout -> addWidget(StatusLabel, 8, 0, 1, 20);
+    WaveLayout -> addWidget(F1Slider, 6, 0, 1, 10);
+    WaveLayout -> addWidget(F2Slider, 7, 0, 1, 10);
+    WaveLayout -> addWidget(F3Slider, 8, 0, 1, 10);
+    WaveLayout -> addWidget(S1Slider, 6, 10, 1, 9);
+    WaveLayout -> addWidget(S2Slider, 7, 10, 1, 9);
+    WaveLayout -> addWidget(S3Slider, 8, 10, 1, 9);
+    WaveLayout -> addWidget(SSlider, 6, 19, 3, 1);
+    WaveLayout -> addWidget(StatusLabel, 9, 0, 1, 20);
+    WaveLayout -> addWidget(ScaleOutButton, 5, 18, 1, 1);
+    WaveLayout -> addWidget(ScaleInButton, 5, 19, 1, 1);
+
+    SaveButton -> setText(tr("Save WCONF"));
+    ScaleInButton -> setText(tr("+"));
+    ScaleOutButton -> setText(tr("-"));
 
     F1Slider -> setMaximum(5000);
     F2Slider -> setMaximum(5000);
@@ -65,13 +85,7 @@ MainWindow::MainWindow(QWidget*)
 
     StatusLabel -> setText(tr("Wave not loaded."));
 
-    connect(F1Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(F2Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(F3Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(S1Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(S2Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(S3Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
-    connect(SSlider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));
+    ConnectScrolls();
 
     setLayout(MainLayout);
     setAcceptDrops(true);
@@ -87,20 +101,18 @@ MainWindow::MainWindow(QWidget*)
     this -> InnerWaveBox -> LoadWave(TestWave, 0);
     this -> InnerWaveBox -> LoadWave(TestWave, 1);
 
-    CONFModel->setRowCount(100);
     CONFList -> setModel(CONFModel);
     CONFList -> setEditTriggers(QAbstractItemView::NoEditTriggers);
+    connect(CONFList, SIGNAL(clicked(QModelIndex)), SLOT(CONFSelect(QModelIndex)));
+    connect(SaveButton, SIGNAL(clicked()), SLOT(WCONFSave()));
+    connect(ScaleInButton, SIGNAL(clicked()), SLOT(ScaleIn()));
+    connect(ScaleOutButton, SIGNAL(clicked()), SLOT(ScaleOut()));
+
     WCONF_Ctor(& Project);
-    //QStandardItem* a = new QStandardItem(tr("/a0\t258.398\t1400\t1800\t4100\t1.00\t0.21\t0.40"));
-    //CONFModel->appendRow(a);
-    //QStandardItem* b = new QStandardItem(tr("/a1\t333.765"));
-    //CONFModel->appendRow(b);
-    int i;
-    for(i = 0; i < 100; i ++)
-        CONFModel->setItem(i, new QStandardItem(/*tr("/a0\t258.398\t1400\t1800\t4100\t1.00\t0.21\t0.40"))*/QString(i)));
-    for(i = 50; i < 80; i ++)
-        CONFModel->item(i)->setData(tr("a"), Qt::EditRole);
-    //CONFModel->setItem(1, b);
+    GlobalCONFModel = CONFModel;
+    GlobalWindow = this;
+    String_Ctor(& WCONFPath);
+    GNUPlot_Open();
 }
 
 MainWindow::~MainWindow()
@@ -131,28 +143,59 @@ void MainWindow::dropEvent(QDropEvent *event)
     {
         MidFrom(& Path, & Mime, 7);
         Right(& Tmp, & Path, 4);
+        /*
         if(String_EqualChars(& Tmp, ".wav") || String_EqualChars(& Tmp, ".wsp"))
         {
-            MainWave = (float*)realloc(MainWave, sizeof(float) * GetFileLength(& Path) / 2);
-            MainWaveLen = LoadWaveAll(MainWave, & Path);
-            qDebug() << "Wave loaded. Length: " << MainWaveLen;
+            LoadWave(& Path);
             GenerateSpectrum(this -> InnerWaveBox);
             UpdateFilter(1);
-        }
+        }*/
         Right(& Tmp, & Path, 6);
         if(String_EqualChars(& Tmp, ".wconf"))
         {
+            WCONF_Dtor(& Project);
+            WCONF_Ctor(& Project);
             WCONFReader_Open(& Path);
             WCONF_Read(& Project);
             WCONFReader_Close();
+            String_Copy(& WCONFPath, & Path);
             GetDir(& Tmp, & Path);
             chdir(String_GetChars(& Tmp));
             qDebug() << "WCONF loaded. " << Project.SampleList_Index + 1 << "items.";
+            SetCONFNum(Project.SampleList_Index + 1);
+            UpdateAllCONF();
         }
     }
     String_Dtor(& Mime);
     String_Dtor(& Tmp);
     String_Dtor(& Path);
+}
+
+void MainWindow::SetFormant(float F1, float F2, float F3, float S1, float S2, float S3, float Mul)
+{
+    F1Slider -> blockSignals(true);
+    F2Slider -> blockSignals(true);
+    F3Slider -> blockSignals(true);
+    S1Slider -> blockSignals(true);
+    S2Slider -> blockSignals(true);
+    S3Slider -> blockSignals(true);
+    SSlider -> blockSignals(true);
+
+    F1Slider -> setValue(F1);
+    F2Slider -> setValue(F2);
+    F3Slider -> setValue(F3);
+    S1Slider -> setValue(S1);
+    S2Slider -> setValue(S2);
+    S3Slider -> setValue(S3);
+    SSlider -> setValue(Mul);
+
+    F1Slider -> blockSignals(false);
+    F2Slider -> blockSignals(false);
+    F3Slider -> blockSignals(false);
+    S1Slider -> blockSignals(false);
+    S2Slider -> blockSignals(false);
+    S3Slider -> blockSignals(false);
+    SSlider -> blockSignals(false);
 }
 
 void MainWindow::UpdateFilter(int)
@@ -165,6 +208,15 @@ void MainWindow::UpdateFilter(int)
     float S2 = (float)S2Slider -> value() / 100;
     float S3 = (float)S3Slider -> value() / 100;
     float S = (float)SSlider -> value() / 100;
+
+    Project.SampleList[CurrentIndex].F1 = F1;
+    Project.SampleList[CurrentIndex].F2 = F2;
+    Project.SampleList[CurrentIndex].F3 = F3;
+    Project.SampleList[CurrentIndex].S1 = S1;
+    Project.SampleList[CurrentIndex].S2 = S2;
+    Project.SampleList[CurrentIndex].S3 = S3;
+    Project.SampleList[CurrentIndex].Mul = S;
+
     String StatusStr, TmpStr;
     String_Ctor(& StatusStr);
     String_Ctor(& TmpStr);
@@ -201,4 +253,42 @@ void MainWindow::UpdateFilter(int)
     }
     String_Dtor(& TmpStr);
     String_Dtor(& StatusStr);
+}
+
+void MainWindow::CONFSelect(QModelIndex QMI)
+{
+    int Index = QMI.row();
+    qDebug() << Index;
+    SelectIndex(Index);
+    SetFormant(Project.SampleList[Index].F1,
+               Project.SampleList[Index].F2,
+               Project.SampleList[Index].F3,
+               Project.SampleList[Index].S1 * 100,
+               Project.SampleList[Index].S2 * 100,
+               Project.SampleList[Index].S3 * 100,
+               Project.SampleList[Index].Mul * 100);
+    GenerateSpectrum(this -> InnerWaveBox);
+    UpdateFilter(1);
+}
+
+void MainWindow::WCONFSave()
+{
+    WCONFWriter_Save();
+    WCONF_Write(& Project);
+    WCONFWriter_Write(& WCONFPath);
+    StatusLabel -> setText(tr("WCONF Saved."));
+}
+
+void MainWindow::ScaleIn()
+{
+    Scale *= 1.1;
+    GenerateSpectrum(this -> InnerWaveBox);
+    UpdateFilter(1);
+}
+
+void MainWindow::ScaleOut()
+{
+    Scale /= 1.1;
+    GenerateSpectrum(this -> InnerWaveBox);
+    UpdateFilter(1);
 }

@@ -183,3 +183,14 @@ int TemplateReadFunc(CDS)
     */
     TemplateReadFuncEnd
 }
+
+int CDS_SearchByVowel(CDS* Src, String* Vowel)
+{
+    int i;
+    for(i = 0; i <= Src -> SrcVList_Index; i ++)
+    {
+        if(String_Equal(& Src -> SrcVList[i].Vowel, Vowel))
+            return i;
+    }
+    return - 1;
+}

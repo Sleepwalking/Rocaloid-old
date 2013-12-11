@@ -55,4 +55,6 @@ extern int DestVList_Type_Read(DestVList_Type* Dest);
 extern int DestCList_Type_Read(DestCList_Type* Dest);
 extern int CDS_Read(CDS* Dest);
 
+extern int CDS_SearchByVowel(CDS* Src, String* Vowel);
+
 #endif

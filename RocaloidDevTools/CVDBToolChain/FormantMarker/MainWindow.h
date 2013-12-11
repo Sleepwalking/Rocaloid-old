@@ -15,6 +15,7 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void SetFormant(float F1, float F2, float F3, float S1, float S2, float S3, float Mul);
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -23,6 +24,10 @@ protected:
 
 private slots:
     void UpdateFilter(int);
+    void CONFSelect(QModelIndex);
+    void WCONFSave();
+    void ScaleIn();
+    void ScaleOut();
 
 private:
     QStandardItemModel* CONFModel;

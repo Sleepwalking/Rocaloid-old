@@ -9,6 +9,14 @@ AutoClass
     String Consonant;
     int Num;
     float F0;
+
+    float F1;
+    float F2;
+    float F3;
+    float S1;
+    float S2;
+    float S3;
+    float Mul;
 } EndClass(SampleList_Type);
 
 AutoClass

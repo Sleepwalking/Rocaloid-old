@@ -52,7 +52,7 @@ float MagnitudeDetect(float* Wave, int Length)
     return MagnSum / MagnNum;
 }
 
-int WSplit(WCONF* Dest, String* FragPath, SCONF* Src, String* Raw)
+int WSplit(WCONF* Dest, String* FragPath, SCONF* Src, CDS* Scheme, String* Raw)
 {
     int i;
     int WaveSize = GetFileLength(Raw) / 2;
@@ -115,6 +115,15 @@ int WSplit(WCONF* Dest, String* FragPath, SCONF* Src, String* Raw)
         String_Copy(& Top -> Vowel    , & Src -> TickList[i].Vowel);
         Top -> Num = RepeatCount;
         Top -> F0  = LastFreq;
+
+        int CDSIndex = CDS_SearchByVowel(Scheme, & Top -> Vowel);
+        Top -> F1 = Scheme -> SrcVList[CDSIndex].F1;
+        Top -> F2 = Scheme -> SrcVList[CDSIndex].F2;
+        Top -> F3 = Scheme -> SrcVList[CDSIndex].F3;
+        Top -> S1 = Scheme -> SrcVList[CDSIndex].S1;
+        Top -> S2 = Scheme -> SrcVList[CDSIndex].S2;
+        Top -> S3 = Scheme -> SrcVList[CDSIndex].S3;
+        Top -> Mul = 1;
 
         MagnSum += MagnitudeDetect(Wave, WaveLen);
     }

@@ -3,6 +3,8 @@
 #include "../../../RocaloidEngine/RFILE3/RDL.h"
 #include <malloc.h>
 
+float ReadingVersion;
+
 _Constructor_ (WCONF)
 {
     ArrayType_Init(SampleList_Type, Dest -> SampleList);
@@ -59,6 +61,27 @@ int TemplateReadFunc(SampleList_Type)
     RNext();    Dest -> Num = CIntStr(& Buffer);
     RNext();    Dest -> F0  = CFloatStr(& Buffer);
 
+    if(ReadingVersion > 0.100001)
+    {
+        RNext();    Dest -> F1 = CFloatStr(& Buffer);
+        RNext();    Dest -> F2 = CFloatStr(& Buffer);
+        RNext();    Dest -> F3 = CFloatStr(& Buffer);
+        RNext();    Dest -> S1 = CFloatStr(& Buffer);
+        RNext();    Dest -> S2 = CFloatStr(& Buffer);
+        RNext();    Dest -> S3 = CFloatStr(& Buffer);
+        RNext();    Dest -> Mul = CFloatStr(& Buffer);
+    }else
+    {
+        //Formant info not support, assign default value.
+        Dest -> F1 = 1000;
+        Dest -> F2 = 2000;
+        Dest -> F3 = 3000;
+        Dest -> S1 = 1;
+        Dest -> S2 = 1;
+        Dest -> S3 = 1;
+        Dest -> Mul = 1;
+    }
+
     TemplateReadFuncNonLoopEnd
 }
 
@@ -70,7 +93,8 @@ int TemplateReadFunc(WCONF)
     IfBufferIsNot("#WCONF")
         return 0;
     RNext();
-    IfBufferIsNot("0.1")
+    ReadingVersion = CFloatStr(& Buffer);
+    if(ReadingVersion > 0.200001)
         return 0;
 
     RNext();
@@ -126,6 +150,18 @@ int TemplateWriteFunc(SampleList_Type)
 
     WriteFloat(F0);
 
+    CStrInt(& Buffer, Src -> F1);
+    RDL_WriteString(& Buffer);
+    CStrInt(& Buffer, Src -> F2);
+    RDL_WriteString(& Buffer);
+    CStrInt(& Buffer, Src -> F3);
+    RDL_WriteString(& Buffer);
+
+    WriteFloat(S1);
+    WriteFloat(S2);
+    WriteFloat(S3);
+    WriteFloat(Mul);
+
     RDL_WriteNewLine();
     String_Dtor(& Buffer);
     return 1;
@@ -133,7 +169,7 @@ int TemplateWriteFunc(SampleList_Type)
 
 int TemplateWriteFunc(WCONF)
 {
-    RDL_WriteChars("#WCONF 0.1");
+    RDL_WriteChars("#WCONF 0.2");
     RDL_WriteNewLine();
     TemplateWriteFuncHead("WCONF");
 
@@ -143,7 +179,7 @@ int TemplateWriteFunc(WCONF)
     RDL_WriteString(& Buffer);
     RDL_WriteNewLine();
 
-    RDL_WriteChars("\t#\tC\tV\tNum\tF0\t#");
+    RDL_WriteChars("\t#\tC\tV\tNum\tF0\tF1\tF2\tF3\tS1\tS2\tS3\tMul\t#");
     RDL_WriteNewLine();
     TemplateWriteFuncList(SampleList_Type, SampleList, "SampleList", 1);
     RDL_WriteNewLine();
