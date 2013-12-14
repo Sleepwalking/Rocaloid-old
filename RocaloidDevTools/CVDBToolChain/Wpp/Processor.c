@@ -45,7 +45,7 @@ int Normalize(float* Wave, int Length, float Magnitude)
             ArrayType_Push(float, Level, Max - Min);
         ArrayType_Push(float, Level, Max - Min);
     }
-    for(i = 0; i < Level_Index - 1; i ++)
+    for(i = 0; i < Level_Index; i ++)
     {
         for(j = 0; j < Step; j ++)
         {

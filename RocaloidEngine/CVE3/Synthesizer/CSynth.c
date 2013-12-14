@@ -43,6 +43,11 @@ void CSynth_SetVowelRatio(CSynth* Dest, float VRatio)
     Dest -> VowelRatio = VRatio;
 }
 
+void CSynth_SetSkipTime(CSynth *Dest, float STime)
+{
+    Dest -> SkipTime = STime;
+}
+
 void CSynth_Reset(CSynth* Dest)
 {
     Dest -> FPlayIndex = 1;
@@ -62,6 +67,18 @@ void CSynth_Reset(CSynth* Dest)
             Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
             Dest -> FPlayIndex = Dest -> PlayIndex;
             ALblLog_Print("Load on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
+        }else
+        {
+            if(Dest -> SkipTime > 0.00001)
+            {
+                for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
+                    if(Dest -> Data.PulseOffsets[i] > Dest -> SkipTime * SampleRate + CSynth_GetVOT(Dest))
+                        break;
+                Dest -> PlayIndex = i;
+                Dest -> PlayPosition = Dest -> Data.PulseOffsets[Dest -> PlayIndex];
+                Dest -> FPlayIndex = Dest -> PlayIndex;
+                ALblLog_Print("Load and skipped on %d, FPI = %f", Dest -> PlayIndex, Dest -> FPlayIndex);
+            }
         }
         for(i = 0; i < Dest -> Data.Header.PulseNum; i ++)
             if(Dest -> Data.PulseOffsets[i] > CSynth_GetVOT(Dest) + CSynth_CycleDelay)
@@ -124,25 +141,25 @@ CSynthSendback CSynth_Synthesis(CSynth* Dest, PSOLAFrame* Output)
         Boost_FloatAddArr(Output -> Data, Temp.Data, Output -> Data, Temp.Length);
         PSOLAFrame_Dtor(& Temp);
         //printf("%d : %d\n", DPlayIndex, Dest -> CycleStart + ExceedLength);
-        ALblLog_Print("T");
+        //ALblLog_Print("T");
     }else
     {
+        int GetPos = DPlayIndex <= (int)Dest -> Data.Header.VOI ? DPlayPos : (int)DPulseOffsets[DPlayIndex];
         PSOLAFrame_SecureGet(Output,
                              Dest -> Data.Wave,
                              Dest -> Data.Header.WaveSize,
-                             DPulseOffsets[DPlayIndex]);
+                             GetPos);
         //printf("%d\n", DPlayIndex);
     }
     if(DPlayIndex < (signed int)Dest -> Data.Header.VOI)
     {
         //In Consonant
-        Ret.PSOLAFrameHopSize = 512;
+        Ret.PSOLAFrameHopSize = 500;
         Ret.BeforeVOT = 1;
         DPlayPos += Ret.PSOLAFrameHopSize * Dest -> ConsonantRatio;
 
         if(DPlayPos > CSynth_GetVOT(Dest))
         {
-            Ret.PSOLAFrameHopSize = CSynth_GetVOT(Dest) + 1 - DPlayPos + 512;
             DPlayPos = CSynth_GetVOT(Dest);
         }
         ALblLog_Print("Before %f (%d, %f)", Ret.PSOLAFrameHopSize, DPlayIndex, Dest -> FPlayIndex);

@@ -3,11 +3,16 @@
 
 #include "../Structure/String.h"
 #include <stdint.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
+extern int GetFileExistence(String* Path);
+extern time_t GetLastModifyTime(String* Path);
 extern int64_t GetFileLength(String* Path);
 
 extern int64_t LoadFileAll(void* Dest, String* Path);

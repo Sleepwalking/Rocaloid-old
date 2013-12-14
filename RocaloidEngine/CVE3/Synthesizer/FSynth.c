@@ -38,6 +38,11 @@ void FSynth_SetVowelRatio(FSynth* Dest, float VRatio)
     CSynth_SetVowelRatio(& Dest -> SubSynth, VRatio);
 }
 
+void FSynth_SetSkipTime(FSynth *Dest, float STime)
+{
+    CSynth_SetSkipTime(& Dest -> SubSynth, STime);
+}
+
 void FSynth_Reset(FSynth* Dest)
 {
     CSynth_Reset(& Dest -> SubSynth);
@@ -155,14 +160,11 @@ FSynthSendback FSynth_Synthesis(FSynth* Dest, FDFrame* Output)
         unsigned int* DPulseOffsets = Dest -> SubSynth.Data.PulseOffsets;
         float AvgPeriod = ((float)DPulseOffsets[DPlayIndex + 1] - (float)DPulseOffsets[DPlayIndex - 1]) / 2.0;
         BF = (float)SampleRate / AvgPeriod;
-        if(Dest -> SynthFreq > BF)
-        {
+        #ifdef FSynth_PSOLA
+            Boost_FloatCopy(TempWave.Data, BFWave.Data + 512, 1024);
+        #else
             FSynth_Resample(& TempWave, & BFWave, Dest -> SynthFreq / BF);
-        }else
-        {
-            //This will be the equivalent to PSOLA pitch change.
-            FSynth_Resample(& TempWave, & BFWave, 1);
-        }
+        #endif
         Ret.PSOLAFrameHopSize = SubRet.PSOLAFrameHopSize * BF / Dest -> SynthFreq;
         //Maintain Spectral Envelope
         #include "FSynthSpectrumModification.h"

@@ -16,7 +16,7 @@
 //#include "CVEDSP/DFT/SplitRadixGen.h"
 //#include "CVEDSP/DFT/SplitRadix.h"
 
-#define CDT_PATH "/tmp/Rocaloid_LuoTianYi_Build/Dict.cdt"
+#define CDT_PATH "/home/sleepwalking/ExtHome/RocaloidDB/Rocaloid_Cyan_Build/Dict.cdt"
 //#define CDT_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CDT3Example.cdt"
 #define CVS_PATH "/home/sleepwalking/Documents/Rocaloid/Rocaloid/RDesign/RocaloidEngine3/CVS3example.cvs"
 #define AUP_PATH "/tmp/cvedebug.txt"
@@ -24,7 +24,7 @@
 
 int main(void)
 {
-    chdir("/tmp/Rocaloid_LuoTianYi_Build");
+    chdir("/home/sleepwalking/ExtHome/RocaloidDB/Rocaloid_Cyan_Build/");
     GenerateHanning(Hanning2048, 2048);
     GenerateHanning(Hanning1024, 1024);
     Boost_FloatAdd(Hanning2048, Hanning2048, 0.00001, 2048);

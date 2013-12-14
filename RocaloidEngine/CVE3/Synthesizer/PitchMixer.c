@@ -55,6 +55,12 @@ void PitchMixer_SetVowelRatio(PitchMixer* Dest, float VRatio)
     FSynth_SetVowelRatio(& Dest -> SubSynth2, VRatio);
 }
 
+void PitchMixer_SetSkipTime(PitchMixer *Dest, float STime)
+{
+    FSynth_SetSkipTime(& Dest -> SubSynth1, STime);
+    FSynth_SetSkipTime(& Dest -> SubSynth2, STime);
+}
+
 void PitchMixer_Reset(PitchMixer* Dest)
 {
     FSynth_Reset(& Dest -> SubSynth1);

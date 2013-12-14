@@ -11,8 +11,6 @@
 #include "../../../RUtil/RUtil.h"
 #include "../../../RUtil/IO/FileUtil.h"
 #include "../../../RUtil/Misc/Converter.h"
-#include "DSP.h"
-#include "CONFIO.h"
 
 #include <math.h>
 #include <unistd.h>
@@ -25,6 +23,9 @@ connect(S1Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
 connect(S2Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
 connect(S3Slider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)));\
 connect(SSlider, SIGNAL(valueChanged(int)), SLOT(UpdateFilter(int)))
+
+#include "DSP.h"
+#include "CONFIO.h"
 
 MainWindow::MainWindow(QWidget*)
 {

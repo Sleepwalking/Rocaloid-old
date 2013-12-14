@@ -2,6 +2,7 @@
 #include "CVEGlobal.h"
 #include "DSPInclude.h"
 #include "../DSPEx/FDFrame.h"
+#include "../Debug/ALblLog.h"
 #include <malloc.h>
 
 _Constructor_ (Synthesizer)
@@ -36,7 +37,10 @@ void Synthesizer_RightWindow(float* Dest, int Length)
     printf("%d\n", Length);
     Boost_FloatSet(Dest + Length, 0, CVE_FFTSize - Length);
     for(i = 0; i < Length; i ++)
+    {
+        //Dest[i] *= 0.5 * (cos((float)i / Length * 3.1415926) + 1.0);
         Dest[i] *= 1.0f - (float)i / Length;
+    }
 }
 
 //The window applied to new wave(PSOLAFrame)
@@ -45,7 +49,10 @@ void Synthesizer_LeftWindow(float* Dest, int Length)
     int i;
     Boost_FloatSet(Dest, 0, CVE_FFTHalf - Length);
     for(i = 0; i < Length; i ++)
+    {
+        //Dest[i + CVE_FFTHalf - Length] *= 0.5 * (cos(3.1415926 - (float)i / Length * 3.1415926) + 1.0);
         Dest[i + CVE_FFTHalf - Length] *= (float)i / Length;
+    }
 }
 
 #define VocalScript (Dest -> VocalScript)
@@ -123,6 +130,9 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
         //Move
         Boost_FloatCopy(SynthBuffer, SynthBuffer + Ret.Length, CVE_FFTHalf);
         CurrentTime += (float)Ret.Length / SampleRate;
+
+        ALblLog_SetTime(CurrentTime);
+        ALblLog_Print("Normal");
     }else if(CurrentSyllable.EndTime < NextSyllable.StartTime)
     {
         //Silence Synthesis
@@ -185,15 +195,20 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
         //-----\_____                               (Right Window)
         //~~~~~~~~~~~...............................(Synth Buffer)
 
+        ALblLog_SetTime(CurrentTime);
+
         //Synthesize
         BufferPos    = 0;
         MixBufferPos = 0;
         SubRet.PSOLAFrameHopSize = 0;
-        Boost_FloatSet(SynthBuffer   , 0, SampleRate * 1);
+        Boost_FloatSet(SynthBuffer + CVE_FFTHalf, 0, SampleRate * 1 - CVE_FFTHalf);
         Boost_FloatSet(SynthMixBuffer, 0, SampleRate * 1);
         //Synthesize CurrentSyllable
+
         while(CurrentTime < CurrentSyllable.EndTime)
         {
+            ALblLog_SetTime(CurrentTime);
+            ALblLog_Print("S1");
             SynthesisBlock(CurrentTime - CurrentSyllable.StartTime);
             WindowBlock(SynthBuffer + BufferPos);
             BufferPos += SubRet.PSOLAFrameHopSize;
@@ -204,9 +219,14 @@ SynthesizerSendback Synthesizer_Synthesis(Synthesizer *Dest)
         SpeechMixer_Reset(& SubSynth);
         SpeechMixer_SetSyllable(& SubSynth, & NextSyllable);
         CurrentTime = NextSyllable.StartTime;
+
+        ALblLog_SetTime(CurrentTime);
         //Synthesizer NextSyllable
+
         while(CurrentTime < CurrentSyllable.EndTime + (float)CVE_FFTHalf / SampleRate)
         {
+            ALblLog_SetTime(CurrentTime);
+            ALblLog_Print("S2");
             SynthesisBlock(CurrentTime - NextSyllable.StartTime);
             WindowBlock(SynthMixBuffer + MixBufferPos);
             MixBufferPos += SubRet.PSOLAFrameHopSize;

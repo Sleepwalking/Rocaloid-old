@@ -39,6 +39,7 @@ int main(void)
     GeneticSimulator_SetDisplayFunc(& GSim, GDetect_Display);
     GDetect_LoadFileList(& GSim, & Path);*/
 
+
     GeneticSimulator_SetParameter(& GSim, sizeof(FormantAnalyzerParameters), 100);
     GeneticSimulator_SetInitialParam(& GSim, & APara);
     GeneticSimulator_SetTask(& GSim, sizeof(Wave), 1000);
@@ -66,7 +67,7 @@ int main(void)
     GeneticSimulator_SetDisplayFunc(& GSim, GPitch_Display);
     GPitch_LoadFileList(& GSim, & Path);
 */
-    GeneticSimulator_RunSimulation(& GSim, 50);
+    GeneticSimulator_RunSimulation(& GSim, 10000);
 
 /*
     int i;

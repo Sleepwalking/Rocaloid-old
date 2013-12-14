@@ -1,4 +1,4 @@
-#CVS 3.0
+#CVS 3.01
 CVS
 	SyllableList
 		Syllable
@@ -11,12 +11,12 @@ CVS
 				>	2.6	0.2
 			End
 #
-
-			TransPhoneList	cha	a	i	i	a	a	End
-			TransTickList	0	0.5	1.0	1.5	2.0	3	End
+#
+			TransPhoneList	do-	a	i	i	a	_n	End
+			TransTickList	0	0.35	1.0	1.5	2.0	3	End
 			TransRatioList
 			End
-
+#
 #
 			TransPhoneList	a	i	a	a	i	a	a	End
 			TransTickList	0	0.7	1.1	1.5	2.1	2.7	3	End
@@ -29,47 +29,15 @@ CVS
 			TransRatioList
 			End
 #
-			TransEndRatio 0
-			ConsonantRatio 0.5
-			FormantDeviation
-				F1List
-					>	0.0	0
-				End
-				F2List
-					>	0.0	0
-				End
-				F3List
-					>	0.0	0
-				End
-				S1List
-					>	0.0	1
-				End
-				S2List
-					>	0.0	1
-				End
-				S3List
-					>	0.0	1
-				End
-			End
-			FreqList
-				>	0	355
-				>	3	355
-			End
-			Effects
-				EnvelopeList
-					>	0	1
-					>	2.8	0.2
-					>	3	0
-				End
-			End
-			StartTime 0.0
-		End
-		Syllable
-			TransPhoneList	cha	a	_n	End
-			TransTickList	0	0.3	1.0	End
+
+			TransPhoneList	ha	a	o-	i	u	End
+			TransTickList	0	0.2	0.65	0.79	1.04	End
 			TransRatioList
+				>	0.3	0.3
+				>	0.95	0.1
 			End
-			TransEndRatio 1.0
+
+			TransEndRatio 0.7
 			ConsonantRatio 1
 			FormantDeviation
 				F1List
@@ -92,24 +60,28 @@ CVS
 				End
 			End
 			FreqList
-				>	0	300
-				>	0.3	300
-				>	0.6	300
+				>	0	324
+				>	1.04	324
 			End
 			Effects
 				EnvelopeList
-					>	0	1
+					>	0	0.67
+					>	0.65	0.67
+					>	0.73	0.35
+					>	1.01	0.35
+					>	1.04	0
 				End
 			End
-			StartTime 2.8
+			StartTime 0
 		End
 		Syllable
-			TransPhoneList	bi	i	_n	End
-			TransTickList	0	0.3	1.1	End
+			TransPhoneList	du	o	o-	e-	End
+			TransTickList	0	0.208	0.290	0.301	End
 			TransRatioList
+				>	0.165	0.7
 			End
-			TransEndRatio 1.0
-			ConsonantRatio 0.5
+			TransEndRatio 0.7
+			ConsonantRatio 1
 			FormantDeviation
 				F1List
 					>	0.0	0
@@ -131,28 +103,33 @@ CVS
 				End
 			End
 			FreqList
-				>	0	362
-				>	0.3	362
-				>	0.5	362
+				>	0	389
+				>	0.301	389
 			End
 			Effects
 				EnvelopeList
-					>	0	1
-					>	1	0.5
-					>	1.1	0
+					>	0	0.6
+					>	0.208	0.6
+					>	0.245	0.8
+					>	0.284	0.7
+					>	0.301	0
 				End
 			End
-			StartTime 8.0
+			StartTime 1.10
 		End
 		Syllable
-			TransPhoneList	pe	i	End
-			TransTickList	0	0.6	End
+			TransPhoneList	me-	e-	i	End
+			TransTickList	0	0.2	0.750	End
 			TransRatioList
-				>	0.25	0.3
-				>	0.5	0.8
+				>	0.18	0
+				>	0.3	0.2
+				>	0.388	0.25
+				>	0.507	0.8
+				>	0.610	1.0
 			End
 			TransEndRatio 1.0
-			ConsonantRatio 0.5
+			ConsonantRatio 1
+			SkipTime 0.03
 			FormantDeviation
 				F1List
 					>	0.0	0
@@ -174,29 +151,114 @@ CVS
 				End
 			End
 			FreqList
-				>	0	262
-				>	0.3	270
-				>	0.5	262
+				>	0	437
+				>	0.373	437
+				>	0.506	520
+				>	0.746	520
+			End
+			Effects
+				EnvelopeList
+					>	0	0
+					>	0.03	0.67
+					>	0.410	0.67
+					>	0.547	0.30
+					>	0.725	0.3
+					>	0.750	0.0
+				End
+			End
+			StartTime 1.40
+		End
+		Syllable
+			TransPhoneList	li	i	End
+			TransTickList	0	0.233	End
+			TransRatioList
+			End
+			TransEndRatio 0
+			ConsonantRatio 1
+			SkipTime 0.03
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	517
+				>	0.233	517
+			End
+			Effects
+				EnvelopeList
+					>	0	0
+					>	0.02	0.5
+					>	0.225	0.5
+					>	0.233	0
+				End
+			End
+			StartTime 2.14
+		End
+		Syllable
+			TransPhoneList	di	i	o-	End
+			TransTickList	0	0.25	0.284	End
+			TransRatioList
+			End
+			TransEndRatio 0.7
+			ConsonantRatio 1
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	439
+				>	0.315	439
 			End
 			Effects
 				EnvelopeList
 					>	0	0.5
-					>	0.1	1.2
-					>	0.2	1.0
-					>	0.6	0.6
+					>	0.27	0.4
+					>	0.287	0.0
 				End
 			End
-			StartTime 9
+			StartTime 2.457
 		End
 		Syllable
-			TransPhoneList	pu	u	o	End
-			TransTickList	0	0.2	1.0	End
+			TransPhoneList	mo	o-	i	End
+			TransTickList	0	0.25	0.667	End
 			TransRatioList
-				>	0.25	0.3
-				>	0.62	0.8
+				>	0.116	0
+				>	0.587	0
 			End
-			TransEndRatio 1.0
-			ConsonantRatio 0.5
+			TransEndRatio 0.5
+			ConsonantRatio 1
 			FormantDeviation
 				F1List
 					>	0.0	0
@@ -218,20 +280,145 @@ CVS
 				End
 			End
 			FreqList
-				>	0	262
-				>	0.3	270
-				>	0.5	262
+				>	0	392
+				>	0.115	392
+				>	0.184	388
+				>	0.667	388
 			End
 			Effects
 				EnvelopeList
-					>	0	0.5
-					>	0.1	1.2
-					>	0.2	1.0
-					>	0.6	0.6
-					>	0.7	0
+					>	0	0.3
+					>	0.463	0.65
+					>	0.600	0.65
+					>	0.660	0.4
+					>	0.667	0
 				End
 			End
-			StartTime 10
+			StartTime 2.74
+		End
+		Syllable
+			TransPhoneList	li	i	u	End
+			TransTickList	0	0.555	0.560	End
+			TransRatioList
+				>	0.2	0
+			End
+			TransEndRatio 0.5
+			ConsonantRatio 1
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	387
+				>	0.350	392
+				>	0.391	435
+				>	0.560	431
+			End
+			Effects
+				EnvelopeList
+					>	0	0.3
+					>	0.540	0.3
+					>	0.560	0
+				End
+			End
+			StartTime 3.43
+		End
+		Syllable
+			TransPhoneList	hu	a	a	End
+			TransTickList	0	0.2	1.606	End
+			TransRatioList
+			End
+			TransEndRatio 0
+			ConsonantRatio 1
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	388
+				>	1.606	388
+			End
+			Effects
+				EnvelopeList
+					>	0	0.7
+					>	0.3	0.6
+					>	0.35	0.4
+					>	1.514	0.4
+					>	1.606	0
+				End
+			End
+			StartTime 3.97
+		End
+		Syllable
+			TransPhoneList	a	a	a	End
+			TransTickList	0	0.2	1.606	End
+			TransRatioList
+			End
+			TransEndRatio 0
+			ConsonantRatio 1
+			FormantDeviation
+				F1List
+					>	0.0	0
+				End
+				F2List
+					>	0.0	0
+				End
+				F3List
+					>	0.0	0
+				End
+				S1List
+					>	0.0	1
+				End
+				S2List
+					>	0.0	1
+				End
+				S3List
+					>	0.0	1
+				End
+			End
+			FreqList
+				>	0	328
+				>	1	420
+			End
+			Effects
+				EnvelopeList
+					>	0	0
+					>	0.1	0.4
+				End
+			End
+			StartTime 6
 		End
 	End
 End

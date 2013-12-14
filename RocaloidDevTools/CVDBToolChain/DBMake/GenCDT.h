@@ -4,7 +4,8 @@
 
 int GenCDT()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
 
     String_FromChars(CDSPath, "./Scheme.cds");
     String_FromChars(WCONFPath, "./Fragments.wconf");
@@ -113,12 +114,12 @@ int GenCDT()
             DestFormantEntry -> S2 = Scheme.SrcVList[SrcVIndex].S2;
             DestFormantEntry -> S3 = Scheme.SrcVList[SrcVIndex].S3;
             */
-            DestSymbolEntry -> F1 = Frag.SampleList[i].F1;
-            DestSymbolEntry -> F2 = Frag.SampleList[i].F2;
-            DestSymbolEntry -> F3 = Frag.SampleList[i].F3;
-            DestSymbolEntry -> S1 = Frag.SampleList[i].S1;
-            DestSymbolEntry -> S2 = Frag.SampleList[i].S2;
-            DestSymbolEntry -> S3 = Frag.SampleList[i].S3;
+            DestFormantEntry -> F1 = Frag.SampleList[i].F1;
+            DestFormantEntry -> F2 = Frag.SampleList[i].F2;
+            DestFormantEntry -> F3 = Frag.SampleList[i].F3;
+            DestFormantEntry -> S1 = Frag.SampleList[i].S1;
+            DestFormantEntry -> S2 = Frag.SampleList[i].S2;
+            DestFormantEntry -> S3 = Frag.SampleList[i].S3;
         }
     }
     CVDB3_Dtor(& DFrag);

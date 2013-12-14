@@ -35,6 +35,7 @@ typedef struct
 extern void PitchMixer_SetSymbol(PitchMixer* Dest, String* Symbol);
 extern void PitchMixer_SetConsonantRatio(PitchMixer* Dest, float CRatio);
 extern void PitchMixer_SetVowelRatio(PitchMixer* Dest, float VRatio);
+extern void PitchMixer_SetSkipTime(PitchMixer* Dest, float STime);
 extern void PitchMixer_Reset(PitchMixer* Dest);
 extern void PitchMixer_SetFrequency(PitchMixer* Dest, float Freq);
 extern void PitchMixer_SetLimitedFrequency(PitchMixer* Dest, float Freq);

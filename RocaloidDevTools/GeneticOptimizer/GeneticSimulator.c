@@ -127,7 +127,7 @@ void GeneticSimulator_RunSimulation(GeneticSimulator* Dest, int Round)
 /*
                 if(k < 7)
                 {
-                    //Emphasis "a"
+                    //Emphasize "a"
                     Score *= 2;
                 }*/
                 //if(Score < Dest -> EvaluationList[j])

@@ -17,6 +17,7 @@
 char* Temp;
 int CVSLen;
 StringStream* Reader;
+float CVSVersion;
 
 int CVSRDLReader_Open(String* Src)
 {
@@ -121,6 +122,12 @@ int TemplateReadFunc(Syllable)
         Dest -> TransitionEndingRatio = CFloatStr(& Buffer);
     }
 
+    IfBufferIs("SkipTime")
+    {
+        RNext();
+        Dest -> SkipTime = CFloatStr(& Buffer);
+    }
+
     IfBufferIs("ConsonantRatio")
     {
         RNext();
@@ -160,7 +167,9 @@ int TemplateReadFunc(CVS3)
     IfBufferIsNot("#CVS")
         return 0;
     RNext();
-    IfBufferIsNot("3.0")
+
+    CVSVersion = CFloatStr(& Buffer);
+    if(CVSVersion < 2.99999)
         return 0;
 
     RNext();

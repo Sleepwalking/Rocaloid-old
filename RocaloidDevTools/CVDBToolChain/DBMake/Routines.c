@@ -9,6 +9,7 @@
 #include "../TCFILE/SCONF.h"
 #include "../TCFILE/WCONF.h"
 #include "../../../RUtil/IO/FileStream.h"
+#include "../../../RUtil/IO/FileUtil.h"
 
 String Dir;
 String Dir_CVDB;
@@ -69,7 +70,8 @@ int Config()
 
 int GenSCONF()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     String_FromChars(Path, "./Scheme.cds");
 
     CDS Scheme;
@@ -130,7 +132,8 @@ int GenSCONF()
 
 int GenRecDictionary()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     SCONF Split;
     SCONF_Ctor(& Split);
     String_FromChars(Path, "./Split.sconf");
@@ -183,7 +186,8 @@ int GenRecDictionary()
 
 int Scan()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     if(fork() == 0)
     {
         execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav",
@@ -197,7 +201,8 @@ int Scan()
 
 int Split()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     if(fork() == 0)
     {
         execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav",
@@ -213,7 +218,8 @@ int Split()
 
 int Preprocess()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     WCONF Frag;
     String File;
     String_FromChars(Path, "./Fragments.wconf");
@@ -234,6 +240,7 @@ int Preprocess()
         CStrInt(& Tmp, Frag.SampleList[i].Num);
         String_Join(& File, & Tmp);
         String_JoinChars(& File, ".wsp");
+        printf("%s\n", String_GetChars(& File));
 
         CStrFloat(& Tmp, Frag.AverageMagnitude);
         if(fork() == 0)
@@ -254,15 +261,18 @@ int Preprocess()
 
 int GenCVDB()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     WCONF Frag;
-    String FileIn, FileOut;
+    String FileIn, FileOut, PathOut;
     String_Ctor(& FileIn);
     String_Ctor(& FileOut);
+    String_Ctor(& PathOut);
     String_FromChars(Path, "./Fragments.wconf");
     WCONF_Ctor(& Frag);
     if(! LoadWCONF(& Frag, & Path))
         return 0;
+    time_t WCONFTime = GetLastModifyTime(& Path);
 
     String_SetChars(& Path, "./Scheme.cds");
     CDS Scheme;
@@ -272,7 +282,7 @@ int GenCVDB()
 
     printf("CDS loaded.\n");
 
-    String_SetChars(& FileOut, "./CVDB");
+    String_SetChars(& PathOut, "./CVDB/");
     String Tmp, F1Str, F2Str, F3Str, LenStr;
     String_Ctor(& Tmp);
     String_Ctor(& F1Str);
@@ -287,12 +297,23 @@ int GenCVDB()
         int SrcVIndex = CDS_SearchByVowel(& Scheme, & Frag.SampleList[i].Vowel);
 
         String_SetChars(& FileIn, "./Frag/");
+        String_Copy(& FileOut, & PathOut);
         if(! Vowel)
+        {
             String_Join(& FileIn, & Frag.SampleList[i].Consonant);
+            String_Join(& FileOut, & Frag.SampleList[i].Consonant);
+        }
         String_Join(& FileIn, & Frag.SampleList[i].Vowel);
+        String_Join(& FileOut, & Frag.SampleList[i].Vowel);
         CStrInt(& Tmp, Frag.SampleList[i].Num);
         String_Join(& FileIn, & Tmp);
+        String_Join(& FileOut, & Tmp);
         String_JoinChars(& FileIn, ".wsp");
+        String_JoinChars(& FileOut, ".cvdb");
+        time_t WSPTime = GetLastModifyTime(& FileIn);
+        time_t CVDBTime = GetLastModifyTime(& FileOut);
+        if(CVDBTime > 0 && CVDBTime > WSPTime && CVDBTime > WCONFTime)
+            continue;
 
         if(Vowel)
             CStrFloat(& LenStr, Scheme.VowelLen);
@@ -302,7 +323,8 @@ int GenCVDB()
         CStrFloat(& F1Str, Frag.SampleList[i].F1);
         CStrFloat(& F2Str, Frag.SampleList[i].F2);
         CStrFloat(& F3Str, Frag.SampleList[i].F3);
-        if(fork() == 0)
+        pid_t Branch = fork();
+        if(Branch == 0)
         {
             if(Vowel)
                 execl("./Bin/CMin", "CMin", String_GetChars(& FileIn), "-V",
@@ -311,7 +333,7 @@ int GenCVDB()
                       "-F2", String_GetChars(& F2Str),
                       "-F3", String_GetChars(& F3Str),
                       "-L", String_GetChars(& LenStr),
-                      "-o", String_GetChars(& FileOut), (char*)0);
+                      "-o", String_GetChars(& PathOut), (char*)0);
             else
                 execl("./Bin/CMin", "CMin", String_GetChars(& FileIn), "-C",
                       "-F0", String_GetChars(& Tmp),
@@ -319,10 +341,14 @@ int GenCVDB()
                       "-F2", String_GetChars(& F2Str),
                       "-F3", String_GetChars(& F3Str),
                       "-L", String_GetChars(& LenStr),
-                      "-o", String_GetChars(& FileOut), (char*)0);
+                      "-o", String_GetChars(& PathOut), (char*)0);
             exit(0);
         }else
-            wait(0);
+        {
+            int code;
+            waitpid(Branch, & code, 0);
+            printf("Ret: %d\n", code);
+        }
     }
     String_Dtor(& Tmp);
     String_Dtor(& F1Str);
@@ -332,6 +358,7 @@ int GenCVDB()
     String_Dtor(& Path);
     String_Dtor(& FileIn);
     String_Dtor(& FileOut);
+    String_Dtor(& PathOut);
     CDS_Dtor(& Scheme);
     WCONF_Dtor(& Frag);
     return 1;
@@ -339,7 +366,8 @@ int GenCVDB()
 
 int DebugWav()
 {
-    chdir(String_GetChars(& Dir));
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
     WCONF Frag;
     String FileIn, FileOut;
     String_Ctor(& FileIn);

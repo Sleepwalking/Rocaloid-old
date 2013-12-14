@@ -33,6 +33,8 @@ void SpeechMixer_SetSyllable(SpeechMixer* Dest, Syllable* _Syllable)
     Dest -> CurrentSyl = _Syllable;
     SyllableVariator_LoadSyllable(& Dest -> CurrentVar, _Syllable);
     SpeechMixer_SetConsonantRatio(Dest, _Syllable -> ConsonantRatio);
+    PitchMixer_SetSkipTime(& Dest -> SubSynth1, _Syllable -> SkipTime);
+    PitchMixer_SetSkipTime(& Dest -> SubSynth2, _Syllable -> SkipTime);
     ALblLog_Print("SpeechMixer SetSyllable");
 }
 
@@ -127,6 +129,7 @@ void SpeechMixer_SetTime(SpeechMixer* Dest, float Time)
 */
 }
 
+#define FreqToIndex(x) ((x) * 1024 / SampleRate)
 SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
 {
     SpeechMixerSendback Ret;
@@ -229,12 +232,30 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     #if SpeechMixer_SkipSynth == 1
     JMP_SkipSynth:
     #endif
+/*
+    int i;
+    float MagnO[1024];
+    MagnitudeFromComplex(MagnO, Output -> Re, Output -> Im, 1024);
+    for(i = 0; i < 1024; i ++)
+        MagnO[i] = Boost_Ln(MagnO[i] + 0.1) + 3;
+    GNUPlot_PlotFloat(MagnO, 120);
+    getchar();
+*/
 
+    float InstF0 = Dest -> SubSynth1.SynthFreq;
+    double x, x2, x3, x4, x5;
+    float Mul;
+    x = InstF0;
+    x2 = x * x;
+    x3 = x2 * x;
+    x4 = x3 * x;
+    x5 = x4 * x;
+    Mul = 4.47593e-10 + 9.66456e-8 * x + 0.0000151011 * x2 - 3.55347e-8 * x3 + 2.84867e-11 * x4 - 7.67248e-15 * x5;
     Boost_FloatMul(Output -> Re, Output -> Re,
-                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime),
+                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime) * CVE_GlobalGain * Mul,
                    CVE_FFTSize);
     Boost_FloatMul(Output -> Im, Output -> Im,
-                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime),
+                   SyllableVariator_QueryEnv(& Dest -> CurrentVar, Dest -> CurrentTime) * CVE_GlobalGain * Mul,
                    CVE_FFTSize);
 
     free(Magn);
@@ -248,4 +269,3 @@ SpeechMixerSendback SpeechMixer_Synthesis(SpeechMixer* Dest, FDFrame* Output)
     FDFrame_Dtor(& Tmp2);
     return Ret;
 }
-

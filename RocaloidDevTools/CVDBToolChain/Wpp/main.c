@@ -50,9 +50,9 @@ int main(int argc, char** argv)
     for(i = 1; i < argc; i ++)
     {
         String_SetChars(& Tmp, argv[i]);
-        LowerCase(& Tmp, & Tmp);
         if(! NextVal && String_GetChar(& Tmp, 0) == '-')
         {
+            LowerCase(& Tmp, & Tmp);
             if(String_EqualChars(& Tmp, "-balance"))
                 ArrayType_Push(Process, ProcessList, P_Balance);
             else if(String_EqualChars(& Tmp, "-normalize"))
@@ -92,7 +92,7 @@ int main(int argc, char** argv)
                 PitchCorrect_Auto = 1;
             }else if(String_EqualChars(& Tmp, "--help"))
             {
-                printf("Rocaloid Wave Preprocessor 0.1\n");
+                printf("Rocaloid Wave Preprocessor 0.11 20131211A\n");
                 printf("  Wpp Wave [-balance] [-normalize magnitude] [-lpf frequency] [-hpf frequency]\n"
                        "    [-harmonicize factor] [-pitchcorrect frequency]\n"
                        "    [-pitchcorrect--auto] [-f0--auto] [-f0 frequency]\n");
@@ -154,6 +154,7 @@ int main(int argc, char** argv)
     Boost_FloatSet(Wave, 0, WaveSize + 44100);
     if(! (WaveSize = LoadWaveAll(Wave, & WavePath)))
     {
+        printf("Wave: %s\n", String_GetChars(& WavePath));
         printf("Error: cannot open wave.\n");
         return 0;
     }

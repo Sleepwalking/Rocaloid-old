@@ -2,6 +2,20 @@
 #include "FileStream.h"
 #include "Wave.h"
 
+int GetFileExistence(String* Path)
+{
+    struct stat FStat;
+    return stat(String_GetChars(Path), & FStat) != - 1;
+}
+
+time_t GetLastModifyTime(String* Path)
+{
+    struct stat FStat;
+    if(stat(String_GetChars(Path), & FStat) == - 1)
+        FStat.st_mtime = 0;
+    return FStat.st_mtime;
+}
+
 int64_t GetFileLength(String* Path)
 {
     int64_t Ret;

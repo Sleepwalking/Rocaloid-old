@@ -42,7 +42,7 @@ void GDetect_LoadFileList(GeneticSimulator* Dest, String* Path)
             break;
         GDWave_Ctor((GDWave*)Dest -> TaskList + i);
         ((GDWave*)Dest -> TaskList + i) -> Length = LoadWaveAll(((GDWave*)Dest -> TaskList + i) -> Data, & Temp);
-\
+
         StringStream_ReadWord(& Temp, & StringReader);
         float* VOT = ((float*)Dest -> ResultList) + i;
         *VOT = CFloatStr(& Temp);

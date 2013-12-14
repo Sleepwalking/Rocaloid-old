@@ -92,6 +92,11 @@ int TemplateWriteFunc(Syllable)
     RDL_WriteString(& Buffer);
     RDL_WriteNewLine();
 
+    RDL_WriteChars("SkipTime");
+    CStrFloat(& Buffer, Src -> SkipTime);
+    RDL_WriteString(& Buffer);
+    RDL_WriteNewLine();
+
     FormantInfo_Write(& Src -> FormantDeviation);
 
     TemplateWriteFuncList(TimeFreqPair, FreqList, "FreqList", 0);
@@ -108,7 +113,7 @@ int TemplateWriteFunc(Syllable)
 
 int TemplateWriteFunc(CVS3)
 {
-    RDL_WriteChars("#CVS 3.0");
+    RDL_WriteChars("#CVS 3.01");
     RDL_WriteNewLine();
     TemplateWriteFuncHead("CVS");
 

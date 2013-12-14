@@ -21,11 +21,14 @@
 //Length of wave loop transition (unit: samples).
 #define CSynth_CycleTransition 12000
 
-//[Debug Use] 0: maintain spectral envelope in FSynth, 1: Only resample in FSynth.
+//[Debug Use] 0: maintain spectral envelope in FSynth, 1: do not modify spectrum.
 #define FSynth_SkipSynth 0
 
 //Enable LCFECSOLA in FSynth, otherwise use FECSOLA.
-#define FSynth_LCEnabled
+//#define FSynth_LCEnabled
+
+//Disable Resample, equivalent to PSOLA.
+//#define FSynth_PSOLA
 
 //Length of samples to be smoothly transitted before VOT.
 #define FSynth_ConsonantTransition 1000
@@ -50,3 +53,5 @@
 
 //Use Linear transition in SpeechMixer
 //#define SpeechMixer_Linear
+
+#define CVE_GlobalGain 5.0

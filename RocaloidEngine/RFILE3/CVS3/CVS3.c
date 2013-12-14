@@ -50,6 +50,11 @@ _Constructor_ (Syllable)
 
     FormantInfo_Ctor(& Dest -> FormantDeviation);
     EffectInfo_Ctor(& Dest -> Effects);
+
+    Dest -> SkipTime = 0;
+    Dest -> StartTime = 0;
+    Dest -> Duration = 0;
+    Dest -> EndTime = 0;
 }
 
 _Destructor_ (Syllable)
@@ -63,9 +68,6 @@ _Destructor_ (Syllable)
 
     FormantInfo_Dtor(& Dest -> FormantDeviation);
     EffectInfo_Dtor(& Dest -> Effects);
-    Dest -> StartTime = 0;
-    Dest -> Duration = 0;
-    Dest -> EndTime = 0;
 }
 
 _Constructor_ (CVS3)

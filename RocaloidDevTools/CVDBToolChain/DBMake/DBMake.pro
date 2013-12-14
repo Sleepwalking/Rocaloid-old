@@ -20,7 +20,8 @@ HEADERS += \
     GenCDT.h \
     ../../../RocaloidEngine/RFILE3/CDT3/CDT3Writer.h \
     ../../../RocaloidEngine/RFILE3/CDT3/CDT3.h \
-    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.h
+    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.h \
+    ../../../RUtil/IO/FilePath.h
 
 SOURCES += \
     ../../../RUtil/IO/Wave.c \
@@ -37,4 +38,5 @@ SOURCES += \
     ../../../RocaloidEngine/RFILE3/RDL.c \
     ../../../RocaloidEngine/RFILE3/CDT3/CDT3Writer.c \
     ../../../RocaloidEngine/RFILE3/CDT3/CDT3.c \
-    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.c
+    ../../../RocaloidEngine/RFILE3/CVDB3/CVDB3IO.c \
+    ../../../RUtil/IO/FilePath.c

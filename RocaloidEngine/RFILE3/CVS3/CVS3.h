@@ -51,6 +51,7 @@ AutoClass
     ArrayType_Define(TimeRatioPair, TransitionRatioList);
     float TransitionEndingRatio;
     float ConsonantRatio;
+    float SkipTime;
 
     FormantInfo FormantDeviation;
     EffectInfo Effects;
