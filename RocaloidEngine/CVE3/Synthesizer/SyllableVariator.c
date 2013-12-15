@@ -102,7 +102,7 @@ float SyllableVariator_QueryEnv(SyllableVariator* Src, float Time)
 #define FDefVariator(Descriptor, Num) \
     float SyllableVariator_Query##Descriptor##Num(SyllableVariator* Src, float Time) \
     { \
-        return VariationList_Query(& Src -> Descriptor##Num##Variator, Time).Weighted; \
+        return VariationList_Query(& Src -> Descriptor##Num##Variator, Time).Weighted + 1; \
     }
 
 FDefVariator(F, 0)

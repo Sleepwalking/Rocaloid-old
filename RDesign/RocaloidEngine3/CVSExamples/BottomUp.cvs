@@ -1,0 +1,155 @@
+#CVS 3.01
+CVS
+	SyllableList
+		Syllable
+			TransPhoneList	bi	i	End
+			TransTickList	0	0.4	End
+			TransRatioList
+			End
+			TransEndRatio 0
+			ConsonantRatio 1
+			FreqList
+				>	0	521
+				>	0.4	400
+			End
+			Effects
+				EnvelopeList
+					>	0	0.4
+					>	0.26	0.3
+					>	0.4	0
+				End
+			End
+			StartTime 0
+		End
+		Syllable
+			TransPhoneList	xi	i	a	End
+			TransTickList	0	0.3	1	End
+			TransRatioList
+				>	0.4	0.7
+			End
+			TransEndRatio 1
+			ConsonantRatio 1.6
+			FreqList
+				>	0	520
+				>	1	350
+			End
+			Effects
+				EnvelopeList
+					>	0	0.3
+					>	0.5	0.4
+					>	1	0
+				End
+			End
+			StartTime 0.31
+		End
+		Syllable
+			TransPhoneList	za	i	End
+			TransTickList	0	0.5	End
+			TransRatioList
+				>	0.3	0.3
+			End
+			TransEndRatio 0.6
+			ConsonantRatio 1.6
+			FreqList
+				>	0	500
+				>	1	380
+			End
+			Effects
+				EnvelopeList
+					>	0	0.3
+					>	0.4	0.25
+					>	0.5	0
+				End
+			End
+			StartTime 1.5
+		End
+		Syllable
+			TransPhoneList	la	i	End
+			TransTickList	0	0.7	End
+			TransRatioList
+				>	0.3	0.3
+			End
+			TransEndRatio 0.6
+			ConsonantRatio 1.6
+			SkipTime 0.05
+			FreqList
+				>	0	430
+				>	1	480
+			End
+			Effects
+				EnvelopeList
+					>	0	0
+					>	0.01	0.15
+					>	0.05	0.2
+					>	0.4	0.25
+					>	0.7	0
+				End
+			End
+			StartTime 1.97
+		End
+		Syllable
+			TransPhoneList	i	i	End
+			TransTickList	0	0.5	End
+			TransRatioList
+			End
+			TransEndRatio 0
+			ConsonantRatio 1
+			FreqList
+				>	0	521
+				>	0.5	450
+			End
+			Effects
+				EnvelopeList
+					>	0	0
+					>	0.1	0.15
+					>	0.4	0.15
+					>	0.5	0
+				End
+			End
+			StartTime 2.6
+		End
+		Syllable
+			TransPhoneList	be	e	i	End
+			TransTickList	0	0.1	0.5	End
+			TransRatioList
+			End
+			TransEndRatio 1
+			ConsonantRatio 1
+			FreqList
+				>	0	541
+				>	0.5	540
+			End
+			Effects
+				EnvelopeList
+					>	0	0.3
+					>	0.4	0.25
+					>	0.5	0
+				End
+			End
+			StartTime 3.1
+		End
+		Syllable
+			TransPhoneList	ba	a	End
+			TransTickList	0	0.8	End
+			TransRatioList
+				>	0.3	1
+			End
+			TransEndRatio 1
+			ConsonantRatio 1.6
+			FreqList
+				>	0	520
+				>	0.8	350
+			End
+			Effects
+				EnvelopeList
+					>	0	0.3
+					>	0.4	0.3
+					>	0.8	0
+				End
+			End
+			StartTime 3.6
+		End
+	End
+End
+
+

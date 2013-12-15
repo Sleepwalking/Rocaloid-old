@@ -74,6 +74,7 @@ void WaveBox::paintEvent(QPaintEvent*)
     int Height = this -> height();
     QPainter Canvas(this);
     Canvas.fillRect(0, 0, Width, Height, QColor(255, 255, 255));
+
     for(i = 0; i <= this -> WaveList.SubWave_Index; i ++)
     {
         switch(i)

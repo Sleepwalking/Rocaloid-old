@@ -2,8 +2,9 @@
 #include "../../../RUtil/RUtil.h"
 #include "Scanner.h"
 #include "Spliter.h"
+#include "Updater.h"
 /*
-    WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF] [-cds] [CDS]
+    WSplit [Raw Data] -conf [SCONF] [-scan | -split | -update] [FragDir] [-wconf] [WCONF] [-cds] [CDS]
 */
 
 String RawPath;
@@ -25,6 +26,7 @@ int NextFrag = 0;
 
 int Task_Scan = 0;
 int Task_Split = 0;
+int Task_Update = 0;
 
 int main(int argc, char** argv)
 {
@@ -61,7 +63,7 @@ int main(int argc, char** argv)
                     return 1;
                 }
                 Task_Split = 1;
-                if(Task_Scan)
+                if(Task_Scan || Task_Update)
                 {
                     printf("Error: multiple tasks.\n");
                     return 1;
@@ -69,7 +71,22 @@ int main(int argc, char** argv)
             }else if(String_EqualChars(& Tmp, "-scan"))
             {
                 Task_Scan = 1;
-                if(Task_Split)
+                if(Task_Split || Task_Update)
+                {
+                    printf("Error: multiple tasks.\n");
+                    return 1;
+                }
+            }else if(String_EqualChars(& Tmp, "-update"))
+            {
+                Task_Update = 1;
+                if(! GotFrag)
+                    NextFrag = 1;
+                else
+                {
+                    printf("Error: multiple fragment paths!\n");
+                    return 1;
+                }
+                if(Task_Split || Task_Scan)
                 {
                     printf("Error: multiple tasks.\n");
                     return 1;
@@ -132,31 +149,33 @@ int main(int argc, char** argv)
     }
     String_Dtor(& Tmp);
 
-    if(! GotRaw)
-    {
-        printf("Error: raw data not specified.\n");
-        return 1;
-    }
-    if(! GotSCONF)
-    {
-        printf("Error: sconf not specified.\n");
-        return 1;
-    }
 
     SCONF Split;
     SCONF_Ctor(& Split);
-    if(! SCONFReader_Open(& SCONFPath))
+    if(Task_Split || Task_Scan)
     {
-        printf("Error: cannot open SCONF.\n");
-        return 1;
+        if(! GotSCONF)
+        {
+            printf("Error: sconf not specified.\n");
+            return 1;
+        }
+        if(! GotRaw)
+        {
+            printf("Error: raw data not specified.\n");
+            return 1;
+        }
+        if(! SCONFReader_Open(& SCONFPath))
+        {
+            printf("Error: cannot open SCONF.\n");
+            return 1;
+        }
+        if(! SCONF_Read(& Split))
+        {
+            printf("Error: wrong SCONF format.\n");
+            return 1;
+        }
+        SCONFReader_Close();
     }
-    if(! SCONF_Read(& Split))
-    {
-        printf("Error: wrong SCONF format.\n");
-        return 1;
-    }
-    SCONFReader_Close();
-
     if(Task_Split)
     {
         if(! GotWCONF)
@@ -192,10 +211,30 @@ int main(int argc, char** argv)
         SCONF_Write(& Split);
         SCONFWriter_Write(& SCONFPath);
         printf("SCONF regenerated.\n");
+    }else if(Task_Update)
+    {
+        if(! GotWCONF)
+        {
+            printf("Error: wconf not specified.\n");
+            return 1;
+        }
+        WCONF SampleConf;
+        WCONF_Ctor(& SampleConf);
+        WCONFReader_Open(& WCONFPath);
+        WCONF_Read(& SampleConf);
+        WCONFReader_Close();
+
+        Update(& SampleConf, & FragPath);
+
+        WCONFWriter_Save();
+        WCONF_Write(& SampleConf);
+        WCONFWriter_Write(& WCONFPath);
+        printf("WCONF generated.\n");
+        WCONF_Dtor(& SampleConf);
     }else
     {
-        printf("Rocaloid WSplit 0.2\n");
-        printf("WSplit [Raw Data] -conf [SCONF] [-scan | -split] [FragDir] [-wconf] [WCONF] [-cds] [CDS]\n");
+        printf("Rocaloid WSplit 0.3 20131215C\n");
+        printf("WSplit [Raw Data] -conf [SCONF] [-scan | -split | -update] [FragDir] [-wconf] [WCONF] [-cds] [CDS]\n");
     }
 
     SCONF_Dtor(& Split);

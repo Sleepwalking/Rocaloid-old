@@ -17,6 +17,7 @@ extern int GenSCONF();
 extern int GenRecDictionary();
 extern int Scan();
 extern int Split();
+extern int UpdateWCONF();
 extern int Preprocess();
 extern int GenCVDB();
 extern int GenCDT();

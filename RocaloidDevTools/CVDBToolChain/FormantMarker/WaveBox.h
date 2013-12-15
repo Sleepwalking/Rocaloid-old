@@ -23,6 +23,7 @@ public:
     void SetWaveNum(int Num);
     void LoadWave(float* Src, int Index);
     void Redraw();
+
     
 signals:
     
@@ -33,6 +34,7 @@ protected:
     
 private:
     WaveSet WaveList;
+    QPainter* Canvas;
 };
 
 #endif // WAVEBOX_H

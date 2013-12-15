@@ -3,7 +3,7 @@
 #include "Routines.h"
 
 /*
-    DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]
+    DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -upwconf | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]
 */
 
 rFunc Operation;
@@ -41,6 +41,9 @@ int main(int argc, char** argv)
             }else if(String_EqualChars(& Arg, "-split"))
             {
                 Operation = Split;
+            }else if(String_EqualChars(& Arg, "-upwconf"))
+            {
+                Operation = UpdateWCONF;
             }else if(String_EqualChars(& Arg, "-prep"))
             {
                 Operation = Preprocess;
@@ -78,8 +81,8 @@ int main(int argc, char** argv)
 
     if(! GotOperation || ! GotDir)
     {
-        printf("Rocaloid DBMake 0.16  2013.12.12B\n");
-        printf("DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
+        printf("Rocaloid DBMake 0.17  2013.12.15B\n");
+        printf("DBMake [dir] [-config | -gsconf | -grecdict | -scan | -split | -upwconf | -prep | -gcvdb | -gcdt | -gcdb | -dbg-wav]\n");
         return 0;
     }
 

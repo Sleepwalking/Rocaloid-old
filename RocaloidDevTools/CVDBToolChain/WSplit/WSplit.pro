@@ -55,7 +55,8 @@ HEADERS += \
     ../../../CVEDSP/IntrinUtil/FloatArray.h \
     ../../../CVEDSP/IntrinUtil/Calculation.h \
     Spliter.h \
-    Scanner.h
+    Scanner.h \
+    Updater.h
 
 SOURCES += \
     ../../../RUtil/IO/Wave.c \
@@ -70,7 +71,8 @@ SOURCES += \
     ../TCFILE/CDS.c \
     ../../../RocaloidEngine/RFILE3/RDL.c \
     Spliter.c \
-    Scanner.c
+    Scanner.c \
+    Updater.c
 
 
 

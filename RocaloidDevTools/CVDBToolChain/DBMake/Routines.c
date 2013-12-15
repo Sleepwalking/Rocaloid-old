@@ -208,7 +208,22 @@ int Split()
         execl("./Bin/WSplit", "WSplit", "./Raw/raw.wav",
               "-conf", "./Split.sconf",
               "-cds", "./Scheme.cds",
-              "-split", "./Frag/",
+              "-split", "./Frag",
+              "-wconf", "./Fragments.wconf", (char*)0);
+        exit(0);
+    }else
+        wait(0);
+    return 1;
+}
+
+int UpdateWCONF()
+{
+    if(chdir(String_GetChars(& Dir)))
+        return 0;
+    if(fork() == 0)
+    {
+        execl("./Bin/WSplit", "WSplit",
+              "-update", "./Frag",
               "-wconf", "./Fragments.wconf", (char*)0);
         exit(0);
     }else
