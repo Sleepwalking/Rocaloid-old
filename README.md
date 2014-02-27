@@ -1,3 +1,11 @@
+**This repository is obsoleted. Legacy versions of Rocaloid are stored here.**
+
+**Moved to [Rocaloid Dev Team](http://github.com/Rocaloid).**
+
+**本代码仓库已废弃。旧版本的Rocaloid存放于此。**
+
+**已移至[Rocaloid开发组](http://github.com/Rocaloid)。**
+
 Rocaloid is a vocal synthesis system which aims at synthesizing songs with outstanding quality, flexibility and speed.
 
 The Rocaloid Project not only contains a synthesizer, but also provides a set of tools from signal processing library to music score editor.
